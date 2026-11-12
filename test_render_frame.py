@@ -145,7 +145,7 @@ def draw_app_frame(canvas, img_path, zoom=1.0, pan_x=0, pan_y=0):
 
 # Render one frame for each scene
 test_scenes = [
-    ("frame_scene1.png", "landing", "DUAL-TRACK QUALITY ASSURANCE", "Construction progress you can trust.", "SiteIQ • Quality Austria Central Asia", 0.15),
+    ("frame_scene1.png", "landing", "DUAL-TRACK QUALITY ASSURANCE", "Construction progress you can trust.", "SiteIQ • SiteIQ Platform", 0.15),
     ("frame_scene2.png", "cameras_field", "DUAL-MODE VERIFICATION STREAM", "SiteIQ checks site cameras and field photos...", "Fixed Autonomous Cameras (Mode A) & Mobile Field Evidence (Mode B)", 0.35),
     ("frame_scene3.png", "schedule", "L4 MASTER BASELINE ENGINE", "...against your schedule.", "311 Canonical WBS Activities • 100% Weight Validated", 0.50),
     ("frame_scene4.png", "dashboard", "INTEGRATED 4-STREAM TRUTH", "Track progress on the dashboard,", "Planned vs AI Automated vs Field Observed vs PM Approved", 0.70),

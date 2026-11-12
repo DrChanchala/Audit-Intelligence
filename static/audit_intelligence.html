@@ -431,7 +431,7 @@ input:focus, select:focus, textarea:focus {
     <div class="top-in">
       <button class="icon-btn" id="backBtn" type="button" data-back aria-label="Back" hidden></button>
       <div class="brand" id="brand">
-        <span class="logo-chip" aria-label="Quality Austria Central Asia"><b></b><span>quality austria<br>central asia</span></span>
+        <span class="logo-chip" aria-label="SiteIQ Platform"><b></b><span>SiteIQ<br>Audit Intelligence</span></span>
         <span class="wordmark">Audit Intelligence</span>
         <span class="live-badge" title="Connected to FastAPI backend">LIVE</span>
       </div>
@@ -703,7 +703,7 @@ function renderLoginGateway() {
       <div class="login-modal" role="dialog" aria-modal="true" aria-labelledby="loginTitle">
         <div style="text-align:center; margin-bottom:24px">
           <div style="display:inline-flex; align-items:center; gap:8px; background:var(--mint-soft); color:var(--mint-ink); padding:4px 14px; border-radius:20px; font-size:11.5px; font-weight:800; text-transform:uppercase; letter-spacing:0.06em">
-            <span>🛡️ Quality Austria Central Asia</span>
+            <span>🛡️ SiteIQ Construction Quality Intelligence</span>
           </div>
           <h1 id="loginTitle" style="font-size:28px; font-weight:700; margin:12px 0 6px; letter-spacing:-0.02em; color:var(--ink)">
             SiteIQ CQMS — Role Login Gateway
@@ -934,7 +934,7 @@ const VIEWS = {};
 VIEWS.home = () => {
   const h = new Date().getHours(), greet = h < 12 ? 'Good morning' : h < 17 ? 'Good afternoon' : 'Good evening';
   const resume = S.ctx ? (() => { const p = byId(S.ctx); return p ? `<button class="resume" type="button" data-go="project:${p.id}"><span class="ri">${ico('clock',18)}</span><span class="rt"><span class="muted">Continue where you left off</span><b>${esc(p.name)}</b></span>${ico('chev',18)}</button>` : ''; })() : '';
-  return `<section class="hello"><div class="eyebrow">QC Lead · Quality Austria Central Asia</div><h1>${greet}, Priya</h1><p>Sunday, 1 November 2026</p></section>
+  return `<section class="hello"><div class="eyebrow">QC Lead · Quality Assurance & Governance</div><h1>${greet}, Priya</h1><p>Sunday, 1 November 2026</p></section>
   <section class="sum" aria-label="Needs your attention">
     <button class="sum-btn crit" type="button" data-sheet="critical"><span class="v num">${critOpen().length}</span><span class="l">Critical NCs open</span></button>
     <button class="sum-btn" type="button" data-sheet="approvals"><span class="v num">${allApprovals().length}</span><span class="l">Awaiting your approval</span></button>
@@ -1329,7 +1329,7 @@ function renderChrome(){
     if (isEng) {
       brandEl.innerHTML = `<span class="logo-chip" aria-label="SiteIQ Field Workspace" style="background:var(--mint); color:var(--on-mint)"><b></b><span>SiteIQ<br>Field Portal</span></span><span class="wordmark">Inspection Workspace</span><span class="live-badge" style="background:var(--mint); color:var(--on-mint); font-weight:800">ENGINEER</span>`;
     } else {
-      brandEl.innerHTML = `<span class="logo-chip" aria-label="Quality Austria Central Asia"><b></b><span>quality austria<br>central asia</span></span><span class="wordmark">Audit Intelligence</span><span class="live-badge" title="Connected to FastAPI backend">QC LEAD</span>`;
+      brandEl.innerHTML = `<span class="logo-chip" aria-label="SiteIQ Platform"><b></b><span>SiteIQ<br>Audit Intelligence</span></span><span class="wordmark">Audit Intelligence</span><span class="live-badge" title="Connected to FastAPI backend">QC LEAD</span>`;
     }
   }
 
@@ -1450,7 +1450,7 @@ function renderChrome(){
     } else {
       const ctx = S.ctx ? byId(S.ctx) : null;
       sideEl.innerHTML = `
-        <div class="brand"><span class="logo-chip" aria-label="Quality Austria Central Asia"><b></b><span>quality austria<br>central asia</span></span><span class="wordmark">Audit Intelligence</span></div>
+        <div class="brand"><span class="logo-chip" aria-label="SiteIQ Platform"><b></b><span>SiteIQ<br>Audit Intelligence</span></span><span class="wordmark">Audit Intelligence</span></div>
         
         <div style="padding:0 4px; margin-bottom:8px">
           <div style="font-size:10px; font-weight:800; color:var(--mint-ink); text-transform:uppercase; letter-spacing:0.08em; padding:0 8px 4px">QC Lead Console</div>

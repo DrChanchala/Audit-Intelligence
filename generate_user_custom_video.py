@@ -165,7 +165,7 @@ def render_outro_scene(progress, local_t):
     draw.rectangle([(card_x, card_y + 6), (card_x + card_w, card_y + 12)], fill=(29, 78, 216, 255))
 
     draw.text((card_x + 60, card_y + 36), "SiteIQ", fill=(15, 23, 42, 255), font=get_font(FONT_BOLD, 46))
-    draw.text((card_x + 60, card_y + 96), "QUALITY AUSTRIA CENTRAL ASIA", fill=(13, 148, 136, 255), font=get_font(FONT_BOLD, 15))
+    draw.text((card_x + 60, card_y + 96), "SITEIQ PLATFORM", fill=(13, 148, 136, 255), font=get_font(FONT_BOLD, 15))
     draw.text((card_x + 60, card_y + 122), "Construction progress you can trust.", fill=(30, 41, 59, 255), font=get_font(FONT_BOLD, 22))
     draw.text((card_x + 60, card_y + 158), "Automated camera vision • Field mobile capture • L4 Schedule Baseline • 4-Stream S-Curve", fill=(100, 116, 139, 255), font=get_font(FONT_REG, 15))
 
@@ -207,7 +207,7 @@ scenes = [
         "end_frame": 91,
         "render": lambda p, lt: render_image_scene(
             "landing",
-            "QUALITY AUSTRIA CENTRAL ASIA",
+            "SITEIQ PLATFORM",
             "Construction progress you can trust.",
             "SiteIQ • AI-Powered Construction Intelligence",
             p, lt

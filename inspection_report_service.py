@@ -77,7 +77,7 @@ class InspectionReportService:
         
         # Build prompt for LLM
         prompt = f"""
-You are an expert Senior Quality Assurance & Quality Control (QA/QC) Lead Auditor at Quality Austria Central Asia.
+You are an expert Senior Quality Assurance & Quality Control (QA/QC) Lead Auditor for the SiteIQ Construction Quality Management System.
 You are generating an exhaustive, formal, and authoritative Inspection Audit & Quality Compliance Report based on an on-site inspection.
 
 === ON-SITE INSPECTION DATA ===
@@ -264,7 +264,7 @@ Tone: Strictly professional, precise, authoritative, and actionable for site eng
 ---
 
 ## 1. Executive Summary
-This formal Quality Assurance audit was conducted for **{ins['title']}** at **{ins['zone']}** under the Quality Austria Central Asia technical surveillance framework.
+This formal Quality Assurance audit was conducted for **{ins['title']}** at **{ins['zone']}** under the SiteIQ Quality Assurance & Surveillance framework.
 * **Overall Audit Verdict:** **CONDITIONAL APPROVAL / HOLD POINT ACTIVE**
 * **Checklist Evaluation:** Total **{ins['items_count']}** inspection parameters audited: **{ins['items_pass']} Passed**, **{ins['items_nc']} Non-Conformities**, and **{ins['items_na']} N/A**.
 * **Compliance Pass Rate:** **{pass_rate}%**

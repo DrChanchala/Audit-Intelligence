@@ -314,7 +314,7 @@ dd{margin:0;font-weight:600;font-size:13.5px}
   <header class="top">
     <div class="top-in">
       <button class="icon-btn" id="backBtn" type="button" data-back aria-label="Back" hidden></button>
-      <div class="brand" id="brand"><span class="logo-chip" aria-label="Quality Austria Central Asia"><b></b><span>quality austria<br>central asia</span></span><span class="wordmark">SiteIQ</span></div>
+      <div class="brand" id="brand"><span class="logo-chip" aria-label="SiteIQ Platform"><b></b><span>SiteIQ<br>Audit Intelligence</span></span><span class="wordmark">SiteIQ</span></div>
       <div class="tt" id="tt" hidden><div class="c" id="ttC"></div><div class="t" id="ttT"></div></div>
       <nav class="crumbs" id="crumbs" aria-label="Breadcrumb"></nav>
       <span class="spacer"></span>
@@ -565,7 +565,7 @@ const VIEWS = {};
 VIEWS.home = () => {
   const h = new Date().getHours(), greet = h < 12 ? 'Good morning' : h < 17 ? 'Good afternoon' : 'Good evening';
   const resume = S.ctx ? (() => { const p = byId(S.ctx); return `<button class="resume" type="button" data-go="project:${p.id}"><span class="ri">${ico('clock',18)}</span><span class="rt"><span class="muted">Continue where you left off</span><b>${esc(p.name)}</b></span>${ico('chev',18)}</button>`; })() : '';
-  return `<section class="hello"><div class="eyebrow">QC Lead · Quality Austria Central Asia</div><h1>${greet}, Priya</h1><p>Sunday, 1 November 2026</p></section>
+  return `<section class="hello"><div class="eyebrow">QC Lead · Quality Assurance & Governance</div><h1>${greet}, Priya</h1><p>Sunday, 1 November 2026</p></section>
   <section class="sum" aria-label="Needs your attention">
     <button class="sum-btn crit" type="button" data-sheet="critical"><span class="v num">${critOpen().length}</span><span class="l">Critical NCs open</span></button>
     <button class="sum-btn" type="button" data-sheet="approvals"><span class="v num">${allApprovals().length}</span><span class="l">Awaiting your approval</span></button>
@@ -759,7 +759,7 @@ function renderChrome(){
   $('crumbs').innerHTML = S.stack.map((s,i) => i < S.stack.length - 1 ? `<button type="button" data-crumb="${i}">${esc(label(s))}</button><span aria-hidden="true">›</span>` : `<span aria-current="page">${esc(label(s))}</span>`).join('');
   $('bnav').innerHTML = navItems().map(([k,ic,c,hot]) => `<button class="bn" type="button" data-nav="${k}" ${mod === k ? 'aria-current="page"' : ''}><span class="bn-ic">${ico(ic,21)}</span>${MODS[k]}${c && k !== 'inspections' ? `<span class="cnt num">${c}</span>` : ''}</button>`).join('');
   const ctx = S.ctx ? byId(S.ctx) : null;
-  $('side').innerHTML = `<div class="brand"><span class="logo-chip" aria-label="Quality Austria Central Asia"><b></b><span>quality austria<br>central asia</span></span><span class="wordmark">SiteIQ</span></div>
+  $('side').innerHTML = `<div class="brand"><span class="logo-chip" aria-label="SiteIQ Platform"><b></b><span>SiteIQ<br>Audit Intelligence</span></span><span class="wordmark">SiteIQ</span></div>
     <nav class="snav">${navItems().map(([k,ic,c,hot]) => `<button class="sn" type="button" data-nav="${k}" ${mod === k ? 'aria-current="page"' : ''}>${ico(ic,19)}${MODS[k]}${c ? `<span class="cnt num ${hot ? 'hot' : ''}">${c}</span>` : ''}</button>`).join('')}</nav>
     ${ctx ? `<div class="sctx"><span class="lbl">Current project</span><button class="nm" type="button" data-go="project:${ctx.id}">${esc(ctx.name)}</button><button class="clr" type="button" data-ctx-clear>Clear project filter</button></div>` : ''}
     <div class="suser"><span class="avatar">PD</span><span><b>Priya Deshmukh</b><small>QC Lead · EMP-1001</small></span></div>`;

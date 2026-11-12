@@ -29,7 +29,7 @@ def draw_outro_card(canvas):
     draw.text((card_x + 60, card_y + 40), "SiteIQ", fill=(15, 23, 42, 255), font=get_font(FONT_PATH_BOLD, 46))
     
     # Tagline
-    draw.text((card_x + 60, card_y + 100), "QUALITY AUSTRIA CENTRAL ASIA", fill=(13, 148, 136, 255), font=get_font(FONT_PATH_BOLD, 15))
+    draw.text((card_x + 60, card_y + 100), "SITEIQ PLATFORM", fill=(13, 148, 136, 255), font=get_font(FONT_PATH_BOLD, 15))
     draw.text((card_x + 60, card_y + 125), "Construction progress you can trust.", fill=(30, 41, 59, 255), font=get_font(FONT_PATH_BOLD, 22))
     draw.text((card_x + 60, card_y + 160), "Automated camera vision • Field mobile capture • L4 Schedule Baseline • 4-Stream S-Curve", fill=(100, 116, 139, 255), font=get_font(FONT_PATH_REG, 15))
 

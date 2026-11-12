@@ -148,4 +148,4 @@ Railway will automatically detect `railway.toml` and `Dockerfile`, build the con
 ---
 
 ## 📄 License
-Enterprise Proprietary — Quality Austria Central Asia & Purvanchal Projects.
+Enterprise Proprietary — SiteIQ CQMS Platform & Purvanchal Projects.
