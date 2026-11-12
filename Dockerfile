@@ -11,10 +11,9 @@ ENV PYTHONUNBUFFERED=1 \
 
 WORKDIR /app
 
-# Install minimal OS dependencies for network operations & PostgreSQL client libs
+# Install minimal OS dependencies for health check
 RUN apt-get update && apt-get install -y --no-install-recommends \
     curl \
-    libpq5 \
     && rm -rf /var/lib/apt/lists/*
 
 # Install python dependencies
