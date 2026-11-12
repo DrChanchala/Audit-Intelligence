@@ -1,0 +1,4967 @@
+[
+  {
+    "id": "01",
+    "name": "Site Preparation & Survey",
+    "badge": "Site",
+    "bc": "#e6f1fb",
+    "btc": "#185FA5",
+    "groups": [
+      {
+        "sub": "Survey & Setting Out",
+        "items": [
+          [
+            "Site boundary demarcation as per approved layout plan",
+            "H",
+            "all"
+          ],
+          [
+            "Bench mark established and levelled, protected from damage",
+            "H",
+            "all"
+          ],
+          [
+            "Building setting out done with total station/theodolite",
+            "H",
+            "all"
+          ],
+          [
+            "Grid lines established, column positions pegged and verified",
+            "H",
+            "all"
+          ],
+          [
+            "Offset lines marked and protected",
+            "M",
+            "all"
+          ],
+          [
+            "Existing ground levels verified against survey data",
+            "H",
+            "all"
+          ],
+          [
+            "Underground utilities (water, sewer, electric, gas, telecom) located and marked",
+            "H",
+            "all"
+          ],
+          [
+            "NOC from utilities obtained before excavation begins",
+            "H",
+            "all"
+          ],
+          [
+            "Soil investigation report reviewed, bearing capacity confirmed",
+            "H",
+            "all"
+          ],
+          [
+            "Foundation type matches soil report recommendation",
+            "H",
+            "all"
+          ]
+        ]
+      },
+      {
+        "sub": "Site Clearance & Temporary Works",
+        "items": [
+          [
+            "Existing vegetation, debris, old structures removed",
+            "M",
+            "all"
+          ],
+          [
+            "Top soil stripped and stockpiled separately for reuse",
+            "L",
+            "all"
+          ],
+          [
+            "Site graded and leveled as per drawing",
+            "M",
+            "all"
+          ],
+          [
+            "Surface water drainage provisions made before work starts",
+            "H",
+            "all"
+          ],
+          [
+            "Haul roads established with hard standing at gate (no mud track-out)",
+            "M",
+            "all"
+          ],
+          [
+            "Site fencing: min 2.4m height with bracing at corners",
+            "H",
+            "all"
+          ],
+          [
+            "Temporary power \u2014 ELCB protected, earthed, tested",
+            "H",
+            "all"
+          ],
+          [
+            "Temporary water supply with potable water certificate",
+            "H",
+            "all"
+          ],
+          [
+            "Labour welfare: clean drinking water, toilets, rest area as per norm",
+            "H",
+            "all"
+          ],
+          [
+            "Safety signboards, hoardings and emergency numbers displayed",
+            "H",
+            "all"
+          ],
+          [
+            "Anti-termite pre-treatment of soil before PCC",
+            "H",
+            "all"
+          ],
+          [
+            "Dewatering arrangement planned for groundwater table",
+            "H",
+            "all"
+          ],
+          [
+            "Noise and dust mitigation measures in place",
+            "M",
+            "all"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "id": "02",
+    "name": "Foundation & Substructure",
+    "badge": "Foundation",
+    "bc": "#faeeda",
+    "btc": "#854F0B",
+    "groups": [
+      {
+        "sub": "Excavation",
+        "items": [
+          [
+            "Excavation depth and plan dimensions as per drawing \u2014 checked",
+            "H",
+            "all"
+          ],
+          [
+            "Shoring or sheet piling for deep excavation >3m provided",
+            "H",
+            "all"
+          ],
+          [
+            "Stable cut slopes maintained (1:0.5 min) or shored",
+            "H",
+            "all"
+          ],
+          [
+            "Excavated soil not stacked within 1.5m of excavation edge",
+            "H",
+            "all"
+          ],
+          [
+            "Continuous dewatering pump operational",
+            "H",
+            "all"
+          ],
+          [
+            "Bottom of pit inspected and approved by engineer before PCC",
+            "H",
+            "all"
+          ],
+          [
+            "Sub-base compacted to 95% MDD, plate load test done",
+            "H",
+            "all"
+          ]
+        ]
+      },
+      {
+        "sub": "PCC (Plain Cement Concrete)",
+        "items": [
+          [
+            "PCC mix M10 minimum, thickness as per drawing",
+            "H",
+            "all"
+          ],
+          [
+            "PCC surface level within \u00b15mm",
+            "H",
+            "all"
+          ],
+          [
+            "PCC cured minimum 3 days before footing work starts",
+            "M",
+            "all"
+          ],
+          [
+            "PCC surface clean and free from loose material before casting footing",
+            "M",
+            "all"
+          ]
+        ]
+      },
+      {
+        "sub": "Piling (where applicable)",
+        "items": [
+          [
+            "Pile layout drawing verified \u2014 pile positions checked by survey",
+            "H",
+            "all"
+          ],
+          [
+            "Pile boring/driving log maintained for each pile",
+            "H",
+            "all"
+          ],
+          [
+            "Pile integrity test (PIT) conducted as per specification",
+            "H",
+            "all"
+          ],
+          [
+            "Static or dynamic load test as per structural consultant requirement",
+            "H",
+            "all"
+          ],
+          [
+            "Pile head cut to correct level \u2014 cleaned and inspected",
+            "H",
+            "all"
+          ],
+          [
+            "Pile cap reinforcement, dimensions and cover as per drawing",
+            "H",
+            "all"
+          ],
+          [
+            "Pile cap starters correctly positioned and plumbed",
+            "H",
+            "all"
+          ],
+          [
+            "Concreting record for each pile maintained",
+            "H",
+            "all"
+          ]
+        ]
+      },
+      {
+        "sub": "Raft / Isolated Footings",
+        "items": [
+          [
+            "Footing plan position within \u00b125mm tolerance from set-out",
+            "H",
+            "all"
+          ],
+          [
+            "Footing depth as per drawing and soil conditions",
+            "H",
+            "all"
+          ],
+          [
+            "Reinforcement of footing as per bar bending schedule (BBS)",
+            "H",
+            "all"
+          ],
+          [
+            "Cover to reinforcement: 75mm for footing \u2014 check with cover blocks",
+            "H",
+            "all"
+          ],
+          [
+            "Waterproofing membrane under raft laid and lapped correctly",
+            "H",
+            "all"
+          ],
+          [
+            "Column starters correctly positioned, tied and plumbed before casting",
+            "H",
+            "all"
+          ],
+          [
+            "Concrete pour continuous for raft \u2014 no cold joint in single pour zone",
+            "H",
+            "all"
+          ],
+          [
+            "Anti-buoyancy check done for basement in high water table area",
+            "H",
+            "all"
+          ],
+          [
+            "Concrete cube samples taken per 50cum minimum",
+            "H",
+            "all"
+          ]
+        ]
+      },
+      {
+        "sub": "Basement & Retaining Wall",
+        "items": [
+          [
+            "Retaining wall thickness and reinforcement as per structural drawing",
+            "H",
+            "all"
+          ],
+          [
+            "Waterproofing system applied on positive face before backfill",
+            "H",
+            "all"
+          ],
+          [
+            "Drainage layer (geocomposite/gravel) and filter fabric behind wall",
+            "H",
+            "all"
+          ],
+          [
+            "Water bar at all construction joints in basement walls and slab",
+            "H",
+            "all"
+          ],
+          [
+            "Lift pit waterproofed and flood tested 24 hours",
+            "H",
+            "all"
+          ],
+          [
+            "UG sump and water tank waterproofed and tested",
+            "H",
+            "all"
+          ],
+          [
+            "Basement slab blind side waterproofing before PCC",
+            "H",
+            "all"
+          ],
+          [
+            "Backfill material as per specification \u2014 no large boulders",
+            "M",
+            "all"
+          ],
+          [
+            "Backfill compacted in 200mm layers to 95% MDD",
+            "H",
+            "all"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "id": "03",
+    "name": "RCC Structural Works",
+    "badge": "Structural",
+    "bc": "#fcebeb",
+    "btc": "#A32D2D",
+    "groups": [
+      {
+        "sub": "Materials \u2014 Steel",
+        "items": [
+          [
+            "Steel stacked min 150mm above ground on sleepers",
+            "H",
+            "all"
+          ],
+          [
+            "Steel segregated by grade (Fe415/Fe500/Fe550), dia and length with labels",
+            "H",
+            "all"
+          ],
+          [
+            "Mill certificates verified for each steel lot \u2014 IS 1786 compliance",
+            "H",
+            "all"
+          ],
+          [
+            "Steel free from loose rust, mud, oil, paint or harmful coatings",
+            "H",
+            "all"
+          ],
+          [
+            "Bend test and tensile test done as per IS 1786 \u2014 results pass",
+            "H",
+            "all"
+          ],
+          [
+            "No material used without test certificate",
+            "H",
+            "all"
+          ]
+        ]
+      },
+      {
+        "sub": "Materials \u2014 Cement & Aggregates",
+        "items": [
+          [
+            "Cement stored in waterproof godown, FIFO maintained",
+            "H",
+            "all"
+          ],
+          [
+            "Cement bags stacked max 15 high, not directly on floor",
+            "M",
+            "all"
+          ],
+          [
+            "Cement age verified \u2014 not older than 3 months from manufacture",
+            "H",
+            "all"
+          ],
+          [
+            "Coarse aggregate grading (IS 383) tested \u2014 20mm/10mm as per drawing",
+            "H",
+            "all"
+          ],
+          [
+            "Fine aggregate FM 2.2\u20133.2, silt content <8%",
+            "H",
+            "all"
+          ],
+          [
+            "Water for concrete \u2014 potable, pH 6\u20139, tested",
+            "H",
+            "all"
+          ],
+          [
+            "Admixtures brand, type and dosage as per approved mix design",
+            "H",
+            "all"
+          ],
+          [
+            "Aggregates stored on raised platform, separate by size",
+            "M",
+            "all"
+          ]
+        ]
+      },
+      {
+        "sub": "Concrete Mix Design & RMC",
+        "items": [
+          [
+            "Mix design by approved lab for each grade of concrete",
+            "H",
+            "all"
+          ],
+          [
+            "Trial mix cube strengths verified before production",
+            "H",
+            "all"
+          ],
+          [
+            "Mix design approved by structural consultant",
+            "H",
+            "all"
+          ],
+          [
+            "RMC plant TPI (Third Party Inspection) done",
+            "H",
+            "all"
+          ],
+          [
+            "Slump value target defined per element type",
+            "H",
+            "all"
+          ],
+          [
+            "Water-cement ratio within approved limits",
+            "H",
+            "all"
+          ]
+        ]
+      },
+      {
+        "sub": "Formwork",
+        "items": [
+          [
+            "Formwork material \u2014 ply thickness and prop size approved",
+            "H",
+            "all"
+          ],
+          [
+            "Props plumb, base plates and U-heads in position",
+            "H",
+            "all"
+          ],
+          [
+            "Props bearing on hard surface \u2014 spreader plates used on soft soil",
+            "H",
+            "all"
+          ],
+          [
+            "Formwork joints sealed to prevent grout leakage",
+            "H",
+            "all"
+          ],
+          [
+            "Form release oil applied uniformly before steel fixing",
+            "M",
+            "all"
+          ],
+          [
+            "Beam soffit level checked with spirit level or laser",
+            "H",
+            "all"
+          ],
+          [
+            "Slab soffit props adequately spaced for span",
+            "H",
+            "all"
+          ],
+          [
+            "Reshoring provided at floors below as per specification",
+            "H",
+            "all"
+          ],
+          [
+            "MEP sleeves formed correctly before casting",
+            "H",
+            "all"
+          ],
+          [
+            "Chamfer strips at edges and corners where specified",
+            "M",
+            "all"
+          ],
+          [
+            "Formwork removal: columns 24hr, walls 24hr, slab soffit 14\u201321 days per IS 456",
+            "H",
+            "all"
+          ]
+        ]
+      },
+      {
+        "sub": "Reinforcement Placement",
+        "items": [
+          [
+            "Bar diameter and spacing matches structural drawing",
+            "H",
+            "all"
+          ],
+          [
+            "Lap length as per IS 456, no unauthorized lap in tension zone",
+            "H",
+            "all"
+          ],
+          [
+            "Cover blocks correct size: footing 75mm, column 40mm, beam 25mm, slab 20mm",
+            "H",
+            "all"
+          ],
+          [
+            "Stirrups: closer spacing at beam-column junction verified",
+            "H",
+            "all"
+          ],
+          [
+            "Column verticals plumb within 3mm of specified position",
+            "H",
+            "all"
+          ],
+          [
+            "Slab top steel in correct position \u2014 chairs provided",
+            "H",
+            "all"
+          ],
+          [
+            "Additional bars at openings and re-entrant corners as per drawing",
+            "H",
+            "all"
+          ],
+          [
+            "Shear wall horizontal and vertical reinforcement matches drawing",
+            "H",
+            "all"
+          ],
+          [
+            "No unauthorized welding or cutting of bars",
+            "H",
+            "all"
+          ],
+          [
+            "Pre-pour inspection checklist signed by engineer before casting",
+            "H",
+            "all"
+          ]
+        ]
+      },
+      {
+        "sub": "Concrete Pouring & Compaction",
+        "items": [
+          [
+            "Pre-pour checklist: formwork, steel, sleeves, cover all verified",
+            "H",
+            "all"
+          ],
+          [
+            "Concrete grade, mix and source confirmed before pour starts",
+            "H",
+            "all"
+          ],
+          [
+            "Slump test at point of delivery for each transit mixer",
+            "H",
+            "all"
+          ],
+          [
+            "Cube samples: minimum 1 set (6 cubes) per 50cum or per pour",
+            "H",
+            "all"
+          ],
+          [
+            "Concrete placed within 90 minutes of batching",
+            "H",
+            "all"
+          ],
+          [
+            "Free fall of concrete not more than 1.5m",
+            "H",
+            "all"
+          ],
+          [
+            "Needle vibrator inserted at 450mm intervals, 50mm from formwork face",
+            "H",
+            "all"
+          ],
+          [
+            "No over-vibration or using vibrator to spread concrete",
+            "H",
+            "all"
+          ],
+          [
+            "Continuous pour within single structural element to avoid cold joint",
+            "H",
+            "all"
+          ],
+          [
+            "Concrete pour record maintained (time, truck no., test results)",
+            "H",
+            "all"
+          ]
+        ]
+      },
+      {
+        "sub": "Post-Casting Quality",
+        "items": [
+          [
+            "Honeycombs within IS 456 acceptance limit \u2014 classified and treated",
+            "H",
+            "all"
+          ],
+          [
+            "Offset at construction joints within 6mm",
+            "H",
+            "all"
+          ],
+          [
+            "Rebar not exposed after deshuttering",
+            "H",
+            "all"
+          ],
+          [
+            "No embedded debris, PVC waste, wood or tobacco packet in concrete",
+            "H",
+            "all"
+          ],
+          [
+            "No deep pockets beyond specified limit",
+            "H",
+            "all"
+          ],
+          [
+            "Beam bottom and sides in true alignment",
+            "H",
+            "all"
+          ],
+          [
+            "Column plumb: max 3mm in 3m, 10mm per floor",
+            "H",
+            "all"
+          ],
+          [
+            "Pin holes and roughness within acceptance limits",
+            "H",
+            "all"
+          ],
+          [
+            "RCC members undamaged post deshuttering",
+            "H",
+            "all"
+          ],
+          [
+            "Concealed switch boxes not tilted or displaced after casting",
+            "M",
+            "all"
+          ],
+          [
+            "Slab soffit level within \u00b110mm",
+            "H",
+            "all"
+          ],
+          [
+            "Wet curing minimum 7 days OPC, 10 days blended cement",
+            "H",
+            "all"
+          ],
+          [
+            "No premature loading on freshly cast structure",
+            "H",
+            "all"
+          ],
+          [
+            "28-day cube test result \u2265 characteristic strength \u2014 all mixes",
+            "H",
+            "all"
+          ],
+          [
+            "NDT (rebound hammer / UPV) done where cube tests fail",
+            "H",
+            "all"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "id": "04",
+    "name": "Waterproofing",
+    "badge": "Waterproofing",
+    "bc": "#e1f5ee",
+    "btc": "#0F6E56",
+    "groups": [
+      {
+        "sub": "Basement Waterproofing",
+        "items": [
+          [
+            "Waterproofing system (crystalline/bituminous/sheet membrane) as per spec",
+            "H",
+            "all"
+          ],
+          [
+            "Substrate clean, dry, free from honeycombs before application",
+            "H",
+            "all"
+          ],
+          [
+            "Construction joint treatment \u2014 hydrophilic water bar/crystalline coating",
+            "H",
+            "all"
+          ],
+          [
+            "Corner fillets 75\u00d775mm formed at all internal angles",
+            "H",
+            "all"
+          ],
+          [
+            "Membrane lapped minimum 150mm at joints",
+            "H",
+            "all"
+          ],
+          [
+            "Protection screed laid before backfill, not to damage membrane",
+            "H",
+            "all"
+          ],
+          [
+            "Flood test 24 hours \u2014 no seepage observed",
+            "H",
+            "all"
+          ],
+          [
+            "Drainage cell board on positive side before backfill",
+            "M",
+            "all"
+          ]
+        ]
+      },
+      {
+        "sub": "Terrace & Roof Waterproofing",
+        "items": [
+          [
+            "Substrate concrete cured, clean and level before waterproofing",
+            "H",
+            "all"
+          ],
+          [
+            "Primer applied uniformly before membrane application",
+            "H",
+            "all"
+          ],
+          [
+            "Corner and edge reinforcement (fillet/apex) formed",
+            "H",
+            "all"
+          ],
+          [
+            "Membrane extended up parapet walls minimum 300mm",
+            "H",
+            "all"
+          ],
+          [
+            "Membrane turned over parapet cap and secured",
+            "H",
+            "all"
+          ],
+          [
+            "Expansion joints at max 4.5m centres and at structural joints",
+            "H",
+            "all"
+          ],
+          [
+            "Protection screed minimum 50mm with mesh over waterproofing",
+            "H",
+            "all"
+          ],
+          [
+            "Slope to drain minimum 1:100 maintained",
+            "H",
+            "all"
+          ],
+          [
+            "Flood test 24 hours before laying protection",
+            "H",
+            "all"
+          ],
+          [
+            "All pipe penetrations sealed with collars/flashing",
+            "H",
+            "all"
+          ],
+          [
+            "Drain outlets at low points, not at wall junctions",
+            "H",
+            "all"
+          ],
+          [
+            "Waterproofing of overhead tanks both inside and outside",
+            "H",
+            "all"
+          ]
+        ]
+      },
+      {
+        "sub": "Wet Area Waterproofing (Toilets, Balconies, Utility)",
+        "items": [
+          [
+            "Substrate free from dust and loose material",
+            "H",
+            "all"
+          ],
+          [
+            "Waterproofing applied 300mm up all walls in toilets",
+            "H",
+            "all"
+          ],
+          [
+            "Waterproofing applied 1800mm up walls at shower area",
+            "H",
+            "all"
+          ],
+          [
+            "Membrane around floor trap and waste outlets fully sealed",
+            "H",
+            "all"
+          ],
+          [
+            "Flood test 24 hours before tiling \u2014 no drop in water level",
+            "H",
+            "all"
+          ],
+          [
+            "Slope to drain correct: 1:80 toilet, 1:100 balcony",
+            "H",
+            "all"
+          ],
+          [
+            "Expansion joint at wall-floor junction (silicone, not rigid grout)",
+            "H",
+            "all"
+          ]
+        ]
+      },
+      {
+        "sub": "Swimming Pool Waterproofing",
+        "items": [
+          [
+            "Pool shell constructed as per structural drawing",
+            "H",
+            "luxury,hotel"
+          ],
+          [
+            "Crystalline waterproofing on all internal pool surfaces",
+            "H",
+            "luxury,hotel"
+          ],
+          [
+            "Cove/fillet at all floor-wall junctions",
+            "H",
+            "luxury,hotel"
+          ],
+          [
+            "Flood test 72 hours \u2014 water level drop <5mm",
+            "H",
+            "luxury,hotel"
+          ],
+          [
+            "Tile adhesive suitable for permanent wet immersion (C2TE grade)",
+            "H",
+            "luxury,hotel"
+          ],
+          [
+            "Grouting with epoxy or anti-fungal grout",
+            "H",
+            "luxury,hotel"
+          ]
+        ]
+      },
+      {
+        "sub": "External Wall Waterproofing",
+        "items": [
+          [
+            "Crack filling on external walls before waterproofing coat",
+            "H",
+            "all"
+          ],
+          [
+            "Masonry primer applied on all external surfaces",
+            "H",
+            "all"
+          ],
+          [
+            "Minimum 2 coats waterproofing applied \u2014 thickness verified",
+            "H",
+            "all"
+          ],
+          [
+            "No paint applied over wet, damp or efflorescent surface",
+            "H",
+            "all"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "id": "05",
+    "name": "Masonry & Shell Works",
+    "badge": "Masonry",
+    "bc": "#eaf3de",
+    "btc": "#3B6D11",
+    "groups": [
+      {
+        "sub": "Materials \u2014 Masonry Units",
+        "items": [
+          [
+            "Bricks/AAC blocks with IS certificate \u2014 size, compressive strength tested",
+            "H",
+            "all"
+          ],
+          [
+            "Masonry units stacked level, max 1.5m height",
+            "H",
+            "all"
+          ],
+          [
+            "AAC blocks stored dry, protected from rain",
+            "H",
+            "all"
+          ],
+          [
+            "Mortar mix (cement:sand) as per specification",
+            "H",
+            "all"
+          ],
+          [
+            "Water for mortar \u2014 potable and pH tested",
+            "M",
+            "all"
+          ]
+        ]
+      },
+      {
+        "sub": "Masonry Workmanship",
+        "items": [
+          [
+            "Masonry not started before beam/slab concrete cured 24 hours",
+            "H",
+            "all"
+          ],
+          [
+            "Course height and alignment checked with string line",
+            "H",
+            "all"
+          ],
+          [
+            "Wall thickness uniform and as per drawing",
+            "H",
+            "all"
+          ],
+          [
+            "Clay bricks soaked in water before laying",
+            "M",
+            "all"
+          ],
+          [
+            "AAC block surface wetted before mortar application",
+            "M",
+            "all"
+          ],
+          [
+            "Horizontal and vertical mortar joints fully filled \u2014 no hollow joints",
+            "H",
+            "all"
+          ],
+          [
+            "Joints raked for plaster key on clay brick walls",
+            "M",
+            "all"
+          ],
+          [
+            "Bond pattern correct \u2014 no continuous vertical joint through 2+ courses",
+            "H",
+            "all"
+          ],
+          [
+            "Masonry not damaged during electrical box/conduit fixing",
+            "H",
+            "all"
+          ],
+          [
+            "Expansion/control joint at every 7m run and at structural members",
+            "H",
+            "all"
+          ],
+          [
+            "No gap between last masonry course and beam/slab bottom",
+            "H",
+            "all"
+          ],
+          [
+            "Toothing at junction of new and existing masonry",
+            "M",
+            "all"
+          ],
+          [
+            "DPC membrane at plinth level \u2014 lapped and sealed",
+            "H",
+            "all"
+          ],
+          [
+            "Lintel provided above all openings >600mm span",
+            "H",
+            "all"
+          ],
+          [
+            "Lintel bearing minimum 150mm each side",
+            "H",
+            "all"
+          ],
+          [
+            "Wire mesh/reinforcement in mortar at every 3rd course for AAC",
+            "M",
+            "all"
+          ]
+        ]
+      },
+      {
+        "sub": "Masonry Geometry",
+        "items": [
+          [
+            "Wall plumb: maximum 20mm per floor",
+            "H",
+            "all"
+          ],
+          [
+            "Right angle of walls: \u22646mm in 150mm",
+            "H",
+            "all"
+          ],
+          [
+            "Wall flatness: \u226410mm undulation in 2m straight edge",
+            "H",
+            "all"
+          ],
+          [
+            "Mortar joint thickness: 10mm\u00b13mm clay brick, 3mm AAC block",
+            "H",
+            "all"
+          ],
+          [
+            "Openings at correct position \u2014 \u00b110mm tolerance from drawing",
+            "H",
+            "all"
+          ],
+          [
+            "Sill level uniform across all openings in same room",
+            "M",
+            "all"
+          ]
+        ]
+      },
+      {
+        "sub": "Cement Sand Plaster \u2014 Internal",
+        "items": [
+          [
+            "Plastering minimum 14 days after masonry, 21 days preferred",
+            "H",
+            "all"
+          ],
+          [
+            "Surface hacked, dusted and cleaned before plastering",
+            "H",
+            "all"
+          ],
+          [
+            "Chicken wire mesh at all concrete-masonry junctions (150mm each side)",
+            "H",
+            "all"
+          ],
+          [
+            "Dot and screed method to control thickness",
+            "M",
+            "all"
+          ],
+          [
+            "First coat (backing coat) 12\u201315mm thick",
+            "H",
+            "all"
+          ],
+          [
+            "Finish coat 6\u20138mm thick",
+            "H",
+            "all"
+          ],
+          [
+            "Metal beads at edges, corners and openings",
+            "H",
+            "all"
+          ],
+          [
+            "Right angle at corners: \u22645mm deviation in 150mm",
+            "H",
+            "all"
+          ],
+          [
+            "Surface undulation: \u22644mm under 2m straight edge",
+            "H",
+            "all"
+          ],
+          [
+            "Cracks absent \u2014 no map cracking or shrinkage cracking",
+            "H",
+            "all"
+          ],
+          [
+            "Plumb of plastered wall: \u22646mm per floor",
+            "H",
+            "all"
+          ],
+          [
+            "Dampness or efflorescence absent on finished plaster",
+            "H",
+            "all"
+          ],
+          [
+            "Plaster moist-cured for 7 days after application",
+            "H",
+            "all"
+          ],
+          [
+            "No hollow sound on tapping finished surface",
+            "H",
+            "all"
+          ]
+        ]
+      },
+      {
+        "sub": "External Plaster",
+        "items": [
+          [
+            "Mix ratio suitable for external exposure (1:4 cement:sand)",
+            "H",
+            "all"
+          ],
+          [
+            "Drip groove/drip course at sill and lintel level",
+            "H",
+            "all"
+          ],
+          [
+            "External plaster thickness 12\u201320mm as per drawing",
+            "H",
+            "all"
+          ],
+          [
+            "Chicken mesh at all junctions and recesses",
+            "H",
+            "all"
+          ],
+          [
+            "Expansion joints in external plaster at max 4.5m",
+            "H",
+            "all"
+          ],
+          [
+            "Waterproofing compound added as per specification",
+            "M",
+            "all"
+          ],
+          [
+            "Surface finish matches approved texture sample",
+            "H",
+            "all"
+          ],
+          [
+            "No cracks in finished external plaster",
+            "H",
+            "all"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "id": "06",
+    "name": "Tiles, Granite, Marble & Stone Flooring",
+    "badge": "Flooring",
+    "bc": "#eeedfe",
+    "btc": "#3C3489",
+    "groups": [
+      {
+        "sub": "Materials \u2014 Pre-installation Checks",
+        "items": [
+          [
+            "Material brand, size, thickness, finish as per approved BOQ and sample",
+            "H",
+            "all"
+          ],
+          [
+            "Tiles/stone from same manufacturing lot/batch \u2014 batch number recorded",
+            "H",
+            "all"
+          ],
+          [
+            "All material visually inspected \u2014 no cracks, chips, warping before fixing",
+            "H",
+            "all"
+          ],
+          [
+            "Calibrated tiles verified for size uniformity (\u00b10.5mm)",
+            "H",
+            "all"
+          ],
+          [
+            "Water absorption tested per IS 13630 \u2014 \u22640.5% for polished stone",
+            "H",
+            "all"
+          ],
+          [
+            "Anti-skid rating for non-slip areas: R9 minimum",
+            "H",
+            "all"
+          ],
+          [
+            "Material stored on edge in dry area \u2014 not stacked flat more than 10 high",
+            "M",
+            "all"
+          ]
+        ]
+      },
+      {
+        "sub": "Ceramic & Vitrified Tiles",
+        "items": [
+          [
+            "Substrate surface clean, level and free from dust before fixing",
+            "H",
+            "all"
+          ],
+          [
+            "Substrate sound \u2014 no hollow areas under plaster",
+            "H",
+            "all"
+          ],
+          [
+            "Adhesive grade: C1 standard, C2 enhanced, C2TE for large format",
+            "H",
+            "all"
+          ],
+          [
+            "Back buttering done on tile and substrate for large format tiles >600mm",
+            "H",
+            "all"
+          ],
+          [
+            "Adhesive coverage minimum 80% of tile back \u2014 no voids",
+            "H",
+            "all"
+          ],
+          [
+            "Tile joints uniform: 2\u20133mm minimum for vitrified tiles",
+            "H",
+            "all"
+          ],
+          [
+            "Lippage between adjacent tiles: \u22641mm polished, \u22642mm matt",
+            "H",
+            "all"
+          ],
+          [
+            "No hollowness at center of tile \u2014 drum test every tile in critical areas",
+            "H",
+            "all"
+          ],
+          [
+            "Spacers removed before grouting",
+            "H",
+            "all"
+          ],
+          [
+            "Grout type as per specification \u2014 anti-fungal in wet areas",
+            "H",
+            "all"
+          ],
+          [
+            "Grout color and finish uniform throughout area",
+            "M",
+            "all"
+          ],
+          [
+            "Tile shade uniform \u2014 from same batch, no visible variation",
+            "H",
+            "all"
+          ],
+          [
+            "Flooring level: \u22643mm in 3m straight edge",
+            "H",
+            "all"
+          ],
+          [
+            "Expansion joint at max 4.5m c/c and at all column locations",
+            "H",
+            "all"
+          ],
+          [
+            "Movement joint (silicone) at perimeter \u2014 wall-floor junction",
+            "H",
+            "all"
+          ],
+          [
+            "Slope correct: 1:80 wet areas, 1:100 balcony, level in dry areas",
+            "H",
+            "all"
+          ],
+          [
+            "Flooring tile joints aligned with skirting joints",
+            "H",
+            "all"
+          ],
+          [
+            "Skirting height uniform throughout room",
+            "H",
+            "all"
+          ],
+          [
+            "Skirting top level straight \u2014 \u22642mm deviation",
+            "H",
+            "all"
+          ],
+          [
+            "Skirting offset from wall uniform throughout",
+            "H",
+            "all"
+          ],
+          [
+            "Gap between skirting and floor tile absent",
+            "H",
+            "all"
+          ],
+          [
+            "Right angle of skirting at corners: \u22644mm deviation",
+            "H",
+            "all"
+          ]
+        ]
+      },
+      {
+        "sub": "Natural Granite Flooring",
+        "items": [
+          [
+            "Granite thickness minimum 18mm for flooring",
+            "H",
+            "all"
+          ],
+          [
+            "Granite grade as per approved sample \u2014 no colour variation within supply",
+            "H",
+            "all"
+          ],
+          [
+            "Granite surface free from pinholes, cracks and fissures",
+            "H",
+            "all"
+          ],
+          [
+            "Granite polished to approved gloss level (>70 GU \u2014 Gloss Units)",
+            "H",
+            "all"
+          ],
+          [
+            "Joints filled with matching colour epoxy/cement filler \u2014 no gaps",
+            "H",
+            "all"
+          ],
+          [
+            "Granite anchored to substrate with heavy duty C2TE adhesive",
+            "H",
+            "all"
+          ],
+          [
+            "Grout/joint filler flush with surface \u2014 no raised ridges",
+            "H",
+            "all"
+          ],
+          [
+            "Lippage between slabs: \u22641.5mm after polishing",
+            "H",
+            "all"
+          ],
+          [
+            "Chamfering of slab edges as per approved detail",
+            "M",
+            "all"
+          ],
+          [
+            "Skirting height uniform, top edge polished and smooth",
+            "H",
+            "all"
+          ]
+        ]
+      },
+      {
+        "sub": "High-End Marble Flooring",
+        "items": [
+          [
+            "Marble species, origin, veining as per approved quarry sample",
+            "H",
+            "luxury,hotel"
+          ],
+          [
+            "Marble slab thickness minimum 18mm, premium areas 20mm",
+            "H",
+            "luxury,hotel"
+          ],
+          [
+            "Marble free from cracks, hairline fractures and stains before fixing",
+            "H",
+            "luxury,hotel"
+          ],
+          [
+            "Marble sorted and laid out in pattern on dry floor before fixing \u2014 approved",
+            "H",
+            "luxury,hotel"
+          ],
+          [
+            "Book matching / directional laying as per approved pattern drawing",
+            "H",
+            "luxury,hotel"
+          ],
+          [
+            "Marble fixed with white cement-based adhesive to avoid staining",
+            "H",
+            "luxury,hotel"
+          ],
+          [
+            "Joints minimum 1mm \u2014 filled with matching grout or natural joint",
+            "H",
+            "luxury,hotel"
+          ],
+          [
+            "Lippage: \u22641mm after final grinding",
+            "H",
+            "luxury,hotel"
+          ],
+          [
+            "Marble ground, honed and polished on-site to uniform finish",
+            "H",
+            "luxury,hotel"
+          ],
+          [
+            "Final gloss level: minimum 80 GU after crystallization",
+            "H",
+            "luxury,hotel"
+          ],
+          [
+            "Marble protection coating applied after polishing",
+            "H",
+            "luxury,hotel"
+          ],
+          [
+            "Marble skirting: same batch, bookmatched where visible",
+            "H",
+            "luxury,hotel"
+          ],
+          [
+            "Inlay strips, borders and feature bands as per approved design",
+            "M",
+            "luxury,hotel"
+          ],
+          [
+            "No staining from mortar, paint or water during construction after laying",
+            "H",
+            "luxury,hotel"
+          ]
+        ]
+      },
+      {
+        "sub": "Kota Stone, Tandur & Natural Stone",
+        "items": [
+          [
+            "Stone thickness and grade as per specification",
+            "H",
+            "all"
+          ],
+          [
+            "Stone surface treated and sealed for non-absorbent finish",
+            "M",
+            "all"
+          ],
+          [
+            "Joints uniform and filled with matching grout",
+            "H",
+            "all"
+          ],
+          [
+            "Slope and drainage pattern correct",
+            "H",
+            "all"
+          ]
+        ]
+      },
+      {
+        "sub": "Wall Dado \u2014 Tiles & Marble",
+        "items": [
+          [
+            "Tile/marble for dado \u2014 same batch as flooring where required",
+            "H",
+            "all"
+          ],
+          [
+            "No hollowness in dado \u2014 full bond with wall",
+            "H",
+            "all"
+          ],
+          [
+            "Dado joint sizes uniform throughout",
+            "H",
+            "all"
+          ],
+          [
+            "No cracks or chips in dado tiles",
+            "H",
+            "all"
+          ],
+          [
+            "Undulations between tiles: \u22642mm",
+            "H",
+            "all"
+          ],
+          [
+            "Tile joints in straight vertical and horizontal lines",
+            "H",
+            "all"
+          ],
+          [
+            "Cutouts for electrical points finished neatly",
+            "H",
+            "all"
+          ],
+          [
+            "Right angle of dado walls: \u22643mm deviation",
+            "H",
+            "all"
+          ],
+          [
+            "Dado height consistent throughout room",
+            "H",
+            "all"
+          ],
+          [
+            "Silicone joint at all internal corners \u2014 no rigid grout at corner",
+            "H",
+            "all"
+          ],
+          [
+            "Spacers removed and joints grouted uniform",
+            "H",
+            "all"
+          ],
+          [
+            "Marble dado: polished, book-matched where visible",
+            "H",
+            "luxury,hotel"
+          ],
+          [
+            "Feature band / decorative insert as per approved drawing",
+            "M",
+            "luxury,hotel"
+          ]
+        ]
+      },
+      {
+        "sub": "Epoxy Flooring (Basement, Parking, Commercial)",
+        "items": [
+          [
+            "Substrate concrete cured min 28 days, moisture <5%",
+            "H",
+            "commercial,office"
+          ],
+          [
+            "Surface shot blasted and vacuumed before application",
+            "H",
+            "commercial,office"
+          ],
+          [
+            "Primer coat applied \u2014 coverage as per manufacturer spec",
+            "H",
+            "commercial,office"
+          ],
+          [
+            "Epoxy layer thickness as per specification (min 2mm)",
+            "H",
+            "commercial,office"
+          ],
+          [
+            "Anti-static or anti-slip broadcast aggregate where specified",
+            "H",
+            "commercial,office"
+          ],
+          [
+            "Topcoat applied and cured as per manufacturer specification",
+            "H",
+            "commercial,office"
+          ],
+          [
+            "No pinholes, blistering or delamination on finished surface",
+            "H",
+            "commercial,office"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "id": "07",
+    "name": "Wall Finishes \u2014 POP, Gypsum & Paint",
+    "badge": "Wall Finish",
+    "bc": "#fbeaf0",
+    "btc": "#993556",
+    "groups": [
+      {
+        "sub": "POP (Plaster of Paris) Wall Finish",
+        "items": [
+          [
+            "Substrate plaster cured and dry before POP application",
+            "H",
+            "all"
+          ],
+          [
+            "POP applied in two coats \u2014 base (8\u201310mm) + finishing coat (2\u20133mm)",
+            "H",
+            "all"
+          ],
+          [
+            "Surface sanded between coats for uniformity",
+            "H",
+            "all"
+          ],
+          [
+            "Metal corner bead used at all external corners",
+            "H",
+            "all"
+          ],
+          [
+            "Surface smooth \u2014 no trowel marks, waves or rough patches",
+            "H",
+            "all"
+          ],
+          [
+            "Right angle at corners: \u22643mm deviation in 150mm",
+            "H",
+            "all"
+          ],
+          [
+            "Plumb of POP wall: \u22643mm per floor",
+            "H",
+            "all"
+          ],
+          [
+            "Cracks absent in POP surface",
+            "H",
+            "all"
+          ],
+          [
+            "No hollow sound on tapping (good bond with plaster)",
+            "H",
+            "all"
+          ],
+          [
+            "Paint-ready surface \u2014 dust free, smooth, uniform",
+            "H",
+            "all"
+          ]
+        ]
+      },
+      {
+        "sub": "Gypsum Board Wall Partition",
+        "items": [
+          [
+            "Stud framing \u2014 GI track size and spacing as per manufacturer specification",
+            "H",
+            "all"
+          ],
+          [
+            "Studs at 400\u2013600mm c/c depending on board thickness",
+            "H",
+            "all"
+          ],
+          [
+            "Double stud at door jambs and partition ends",
+            "H",
+            "all"
+          ],
+          [
+            "Gypsum board thickness as per specification (12.5mm standard, 15mm fire rated)",
+            "H",
+            "all"
+          ],
+          [
+            "Board joints staggered \u2014 no cross joints",
+            "H",
+            "all"
+          ],
+          [
+            "Screw spacing: 200mm field, 150mm edge",
+            "H",
+            "all"
+          ],
+          [
+            "Acoustic insulation (glasswool) fully packed in cavity",
+            "H",
+            "luxury,hotel,office"
+          ],
+          [
+            "Board joints taped and jointed \u2014 3-coat jointing compound",
+            "H",
+            "all"
+          ],
+          [
+            "Screw heads filled flush \u2014 no exposed screw head",
+            "H",
+            "all"
+          ],
+          [
+            "Surface sanded to uniform flat finish",
+            "H",
+            "all"
+          ],
+          [
+            "Plumb of partition wall: \u22643mm in 3m",
+            "H",
+            "all"
+          ],
+          [
+            "Fire-rated board (type X) used in required areas",
+            "H",
+            "all"
+          ],
+          [
+            "Moisture-resistant board (MR) used in wet areas",
+            "H",
+            "all"
+          ],
+          [
+            "No hollow or broken boards \u2014 tap test",
+            "H",
+            "all"
+          ]
+        ]
+      },
+      {
+        "sub": "Wall Putty",
+        "items": [
+          [
+            "Putty applied on fully dry gypsum/plaster surface",
+            "H",
+            "all"
+          ],
+          [
+            "Minimum 2 coats putty applied \u2014 sanding between coats",
+            "H",
+            "all"
+          ],
+          [
+            "Surface dust-free and uniform before primer",
+            "H",
+            "all"
+          ],
+          [
+            "No cracks in putty coat",
+            "H",
+            "all"
+          ]
+        ]
+      },
+      {
+        "sub": "Interior Paint",
+        "items": [
+          [
+            "Primer coat applied and dried \u2014 correct primer for substrate",
+            "H",
+            "all"
+          ],
+          [
+            "Paint brand, grade and shade from approved sample/BOQ",
+            "H",
+            "all"
+          ],
+          [
+            "Minimum 2 finish coats over primer \u2014 3 coats for luxury/hotel",
+            "H",
+            "all"
+          ],
+          [
+            "No brush marks, laps, runs, sags or drips",
+            "H",
+            "all"
+          ],
+          [
+            "Uniform sheen and colour throughout \u2014 no patchy areas",
+            "H",
+            "all"
+          ],
+          [
+            "Doorframes, skirtings, fixtures and glazing masked before painting",
+            "M",
+            "all"
+          ],
+          [
+            "Paint not applied in rain, humidity >80%, temp <5\u00b0C or >40\u00b0C",
+            "H",
+            "all"
+          ],
+          [
+            "Roller applied paint checked for texture uniformity",
+            "M",
+            "all"
+          ]
+        ]
+      },
+      {
+        "sub": "Exterior Paint & Texture Coat",
+        "items": [
+          [
+            "Exterior grade paint or textured finish as per specification and sample",
+            "H",
+            "all"
+          ],
+          [
+            "Masonry sealer or primer applied first on external surfaces",
+            "H",
+            "all"
+          ],
+          [
+            "Texture pattern matches approved sample in size and depth",
+            "H",
+            "all"
+          ],
+          [
+            "Minimum 2 coats of finish over primer",
+            "H",
+            "all"
+          ],
+          [
+            "No cracks or peeling in finished coat",
+            "H",
+            "all"
+          ],
+          [
+            "Colour and finish uniform throughout same elevation",
+            "H",
+            "all"
+          ],
+          [
+            "Paint film thickness tested where specified",
+            "M",
+            "all"
+          ]
+        ]
+      },
+      {
+        "sub": "Wallcovering, Fabric & Specialty Finishes",
+        "items": [
+          [
+            "Wall dry and free from efflorescence before wallpaper/fabric",
+            "H",
+            "luxury,hotel"
+          ],
+          [
+            "Wall primer compatible with wallcovering adhesive used",
+            "H",
+            "luxury,hotel"
+          ],
+          [
+            "Pattern matching at joints \u2014 no misalignment",
+            "H",
+            "luxury,hotel"
+          ],
+          [
+            "No bubbles or lifting on wallpaper/fabric surface",
+            "H",
+            "luxury,hotel"
+          ],
+          [
+            "Seams not visible at joints under normal lighting",
+            "H",
+            "luxury,hotel"
+          ],
+          [
+            "Fireproofing treatment on fabric wall where required",
+            "H",
+            "hotel"
+          ],
+          [
+            "Vinyl/fabric wallcovering in hotel corridors \u2014 Type II commercial grade",
+            "H",
+            "hotel"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "id": "08",
+    "name": "False Ceiling \u2014 All Types",
+    "badge": "False Ceiling",
+    "bc": "#f1efe8",
+    "btc": "#5F5E5A",
+    "groups": [
+      {
+        "sub": "Gypsum Board False Ceiling",
+        "items": [
+          [
+            "Ceiling level confirmed with laser before hanger installation",
+            "H",
+            "all"
+          ],
+          [
+            "Hanger wire (4mm GI) at 600mm max c/c in both directions",
+            "H",
+            "all"
+          ],
+          [
+            "Main runner (C-channel) at 1200mm c/c maximum",
+            "H",
+            "all"
+          ],
+          [
+            "Cross tee spacing 600mm or 400mm as per board size",
+            "H",
+            "all"
+          ],
+          [
+            "Perimeter wall angle/channel fixed at correct level with proper anchors",
+            "H",
+            "all"
+          ],
+          [
+            "Gypsum board thickness as per specification: 9.5mm or 12.5mm",
+            "H",
+            "all"
+          ],
+          [
+            "Board screwed at 200mm c/c field, 150mm c/c perimeter",
+            "H",
+            "all"
+          ],
+          [
+            "Board joints staggered \u2014 no T or cross joints",
+            "H",
+            "all"
+          ],
+          [
+            "Joints taped and jointed with 3-coat system",
+            "H",
+            "all"
+          ],
+          [
+            "Screw heads filled flush with jointing compound",
+            "H",
+            "all"
+          ],
+          [
+            "Surface sanded smooth \u2014 no trowel ridges or screw bumps",
+            "H",
+            "all"
+          ],
+          [
+            "Ceiling level uniform: \u22643mm in any 3m run",
+            "H",
+            "all"
+          ],
+          [
+            "Access panels provided at all service locations",
+            "H",
+            "all"
+          ],
+          [
+            "Fire-rated board (Type X, 15mm) at escape routes and plant areas",
+            "H",
+            "all"
+          ],
+          [
+            "Moisture-resistant (MR) board in bathrooms and kitchens",
+            "H",
+            "all"
+          ],
+          [
+            "Reveal/shadow gap detail at perimeter as per drawing",
+            "M",
+            "luxury,hotel"
+          ],
+          [
+            "Curved surfaces \u2014 board kerfed, appropriate radius maintained",
+            "M",
+            "luxury,hotel"
+          ],
+          [
+            "Integrated lighting coves with indirect lighting as per drawing",
+            "M",
+            "luxury,hotel"
+          ]
+        ]
+      },
+      {
+        "sub": "Grid / Modular False Ceiling (T-Bar)",
+        "items": [
+          [
+            "Grid level checked with laser \u2014 tolerance \u00b13mm in any 3m",
+            "H",
+            "all"
+          ],
+          [
+            "Main tee at 1200mm c/c, cross tee at 600mm c/c",
+            "H",
+            "all"
+          ],
+          [
+            "Hanger wire at max 1200mm c/c \u2014 tight and vertical",
+            "H",
+            "all"
+          ],
+          [
+            "Tile layout starts from geometric centre of room",
+            "M",
+            "all"
+          ],
+          [
+            "Perimeter tiles cut cleanly \u2014 uniform border width",
+            "M",
+            "all"
+          ],
+          [
+            "Ceiling tiles not broken, scratched or discoloured",
+            "H",
+            "all"
+          ],
+          [
+            "Grid straight with no visible sag or deflection",
+            "H",
+            "all"
+          ],
+          [
+            "Tegular or square edge tiles as per specification",
+            "M",
+            "all"
+          ],
+          [
+            "No loose tiles \u2014 all properly seated in grid",
+            "H",
+            "all"
+          ],
+          [
+            "Lighting fixtures, AC grilles, sprinkler heads flush with grid",
+            "H",
+            "all"
+          ]
+        ]
+      },
+      {
+        "sub": "Metal False Ceiling (Linear / Baffle / Clip-in)",
+        "items": [
+          [
+            "Carrier/primary grid level verified with laser",
+            "H",
+            "all"
+          ],
+          [
+            "Metal panels/blades material and finish as per approved sample",
+            "H",
+            "all"
+          ],
+          [
+            "Panel ends and cuts finished with matching edge trim",
+            "M",
+            "all"
+          ],
+          [
+            "No visible scratch, dent or mill marks on metal panels",
+            "H",
+            "all"
+          ],
+          [
+            "Panels clipped securely \u2014 no rattling or movement",
+            "H",
+            "all"
+          ],
+          [
+            "Joints between panels uniform and aligned",
+            "H",
+            "all"
+          ],
+          [
+            "Open cell or baffle \u2014 shadow lines uniform and parallel",
+            "M",
+            "all"
+          ],
+          [
+            "Concealed MEP services accessible behind open-cell ceiling",
+            "M",
+            "all"
+          ]
+        ]
+      },
+      {
+        "sub": "Wooden / Veneer False Ceiling",
+        "items": [
+          [
+            "Timber species and finish as per approved sample",
+            "H",
+            "luxury,hotel"
+          ],
+          [
+            "Substrate frame (MS/GI) level and securely anchored",
+            "H",
+            "luxury,hotel"
+          ],
+          [
+            "Wood moisture content <12% before installation",
+            "H",
+            "luxury,hotel"
+          ],
+          [
+            "Veneer direction and grain matching as per pattern drawing",
+            "H",
+            "luxury,hotel"
+          ],
+          [
+            "All cut edges sealed to prevent moisture ingress",
+            "M",
+            "luxury,hotel"
+          ],
+          [
+            "Fire retardant treatment applied as per fire safety requirement",
+            "H",
+            "luxury,hotel"
+          ],
+          [
+            "No warping, twisting or gap in finished ceiling",
+            "H",
+            "luxury,hotel"
+          ],
+          [
+            "Lighting cut-outs neat, finished with edge trim",
+            "H",
+            "luxury,hotel"
+          ]
+        ]
+      },
+      {
+        "sub": "Stretch / Printed / Acoustic Ceiling",
+        "items": [
+          [
+            "Frame perimeter track level and securely fixed",
+            "H",
+            "luxury,hotel"
+          ],
+          [
+            "Stretch fabric tension uniform \u2014 no sag or wrinkle",
+            "H",
+            "luxury,hotel"
+          ],
+          [
+            "Printed pattern aligned as per approved drawing",
+            "H",
+            "luxury,hotel"
+          ],
+          [
+            "Acoustic panel NRC value as per specification",
+            "H",
+            "hotel,office"
+          ],
+          [
+            "Acoustic panels correctly installed \u2014 no gaps at edges",
+            "H",
+            "hotel,office"
+          ],
+          [
+            "Access provisions maintained for services behind ceiling",
+            "M",
+            "all"
+          ]
+        ]
+      },
+      {
+        "sub": "Cornices, Coves & Decorative Plaster",
+        "items": [
+          [
+            "Cornice profile matches approved sample",
+            "H",
+            "luxury,hotel"
+          ],
+          [
+            "Cornice fixed level and aligned \u2014 no sagging segments",
+            "H",
+            "luxury,hotel"
+          ],
+          [
+            "Joints at cornice lapped neatly \u2014 no visible joint line",
+            "H",
+            "luxury,hotel"
+          ],
+          [
+            "Cornice painted/finished to match ceiling and wall",
+            "H",
+            "luxury,hotel"
+          ],
+          [
+            "Decorative ceiling medallions \u2014 plumb centered and secure",
+            "M",
+            "luxury,hotel"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "id": "09",
+    "name": "Doors, Windows & Glazing",
+    "badge": "Doors & Windows",
+    "bc": "#e6f1fb",
+    "btc": "#185FA5",
+    "groups": [
+      {
+        "sub": "Door Frames & Shutters",
+        "items": [
+          [
+            "Door frame plumb and square \u2014 diagonal check within 3mm",
+            "H",
+            "all"
+          ],
+          [
+            "Frame fixed to masonry with lugs at max 600mm c/c",
+            "H",
+            "all"
+          ],
+          [
+            "Frame anchored with min 3 fixings per side",
+            "H",
+            "all"
+          ],
+          [
+            "Gap between frame and masonry sealed with mortar/sealant",
+            "H",
+            "all"
+          ],
+          [
+            "Door shutter opens and closes smoothly",
+            "H",
+            "all"
+          ],
+          [
+            "Gap between shutter and frame: 3mm top, 6mm bottom, 3mm sides",
+            "H",
+            "all"
+          ],
+          [
+            "All hardware installed: hinges, handle, lock set, tower bolt, door stop",
+            "H",
+            "all"
+          ],
+          [
+            "Ironmongery grade as per specification \u2014 heavy duty for main doors",
+            "H",
+            "all"
+          ],
+          [
+            "Veneer/laminate/paint finish as per approved sample",
+            "H",
+            "all"
+          ],
+          [
+            "Main apartment/hotel room door: multipoint lock, anti-saw bolts, door viewer",
+            "H",
+            "luxury,hotel"
+          ],
+          [
+            "Fire door: fire rating label, auto-closer, intumescent strip, smoke seal",
+            "H",
+            "all"
+          ],
+          [
+            "Fire door clearances within specification \u2014 self-closing tested",
+            "H",
+            "all"
+          ],
+          [
+            "Acoustic door: seals and STC rating verified",
+            "H",
+            "luxury,hotel"
+          ],
+          [
+            "Flush door: hollow vs solid core as per specification and location",
+            "H",
+            "all"
+          ],
+          [
+            "Concealed door closer adjustment \u2014 closing speed correct",
+            "M",
+            "luxury,hotel"
+          ]
+        ]
+      },
+      {
+        "sub": "Windows \u2014 UPVC / Aluminium",
+        "items": [
+          [
+            "Window frame plumb and square \u2014 no twist",
+            "H",
+            "all"
+          ],
+          [
+            "Section size as per approved drawing",
+            "H",
+            "all"
+          ],
+          [
+            "Thermal break in UPVC/aluminium where energy compliance required",
+            "H",
+            "all"
+          ],
+          [
+            "DGU specification (U-value, SHGC, gap) as per energy/acoustic design",
+            "H",
+            "all"
+          ],
+          [
+            "Sealant applied at frame-wall junction inside and outside \u2014 continuous",
+            "H",
+            "all"
+          ],
+          [
+            "Drainage weep holes clear and draining externally",
+            "H",
+            "all"
+          ],
+          [
+            "All opening sashes operate smoothly with no binding",
+            "H",
+            "all"
+          ],
+          [
+            "Locking mechanism and handle functional",
+            "H",
+            "all"
+          ],
+          [
+            "Safety handle/restrictor for high-rise openable windows (above 4th floor)",
+            "H",
+            "all"
+          ],
+          [
+            "Toughened/laminated glass per IS/NBC at vulnerable locations",
+            "H",
+            "all"
+          ],
+          [
+            "Mosquito mesh in stainless steel frame where specified",
+            "M",
+            "luxury"
+          ],
+          [
+            "Water tightness test by hose on completed facade",
+            "H",
+            "all"
+          ]
+        ]
+      },
+      {
+        "sub": "Curtain Wall & Structural Glazing",
+        "items": [
+          [
+            "Structural calculation for curtain wall reviewed and approved",
+            "H",
+            "commercial,office,hotel"
+          ],
+          [
+            "Mullion and transom sizes as per approved shop drawing",
+            "H",
+            "commercial,office,hotel"
+          ],
+          [
+            "Anchor bracket dimensions, embedment and spacing as per drawing",
+            "H",
+            "commercial,office,hotel"
+          ],
+          [
+            "Curtain wall plumb: \u22643mm in 3m, \u226410mm per floor",
+            "H",
+            "commercial,office,hotel"
+          ],
+          [
+            "DGU specification (U-value, SHGC, safety) as per energy/fire design",
+            "H",
+            "commercial,office,hotel"
+          ],
+          [
+            "Silicone structural bite on glass: minimum 18mm",
+            "H",
+            "commercial,office,hotel"
+          ],
+          [
+            "Setting blocks at sill of each glass unit correctly positioned",
+            "H",
+            "commercial,office,hotel"
+          ],
+          [
+            "Weep hole and drainage path unobstructed",
+            "H",
+            "commercial,office,hotel"
+          ],
+          [
+            "Air and water tightness test per ASTM E283/E331 or equivalent",
+            "H",
+            "commercial,office,hotel"
+          ],
+          [
+            "Facade cleaning provisions (gondola/BMU) installed and tested",
+            "H",
+            "commercial,office,hotel"
+          ],
+          [
+            "Expansion joints in curtain wall at structural joints",
+            "H",
+            "commercial,office,hotel"
+          ]
+        ]
+      },
+      {
+        "sub": "Aluminium Composite Panel (ACP) Facade",
+        "items": [
+          [
+            "ACP core: FR (fire retardant) or A2 (non-combustible) as per code",
+            "H",
+            "all"
+          ],
+          [
+            "Panel thickness and colour as per approved drawing",
+            "H",
+            "all"
+          ],
+          [
+            "Subframe/bracket centres as per structural calculation",
+            "H",
+            "all"
+          ],
+          [
+            "Sealant joint width uniform: 8\u201310mm minimum",
+            "H",
+            "all"
+          ],
+          [
+            "Panel surface free from scratches, dents, buckling or oil-canning",
+            "H",
+            "all"
+          ],
+          [
+            "Expansion gap maintained at panel edges",
+            "H",
+            "all"
+          ],
+          [
+            "Panel surfaces flush \u2014 no lipping between panels",
+            "H",
+            "all"
+          ],
+          [
+            "Perimeter flashing and parapet cap detail watertight",
+            "H",
+            "all"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "id": "10",
+    "name": "MEP \u2014 Plumbing & Drainage",
+    "badge": "Plumbing",
+    "bc": "#e1f5ee",
+    "btc": "#0F6E56",
+    "groups": [
+      {
+        "sub": "Water Supply",
+        "items": [
+          [
+            "Pipe material, class and pressure rating as per specification",
+            "H",
+            "all"
+          ],
+          [
+            "Water supply lines pressure tested: 1.5\u00d7 working pressure for 2 hrs",
+            "H",
+            "all"
+          ],
+          [
+            "Concealed pipes sleeved at all wall and slab crossings",
+            "H",
+            "all"
+          ],
+          [
+            "Hot water pipes insulated: minimum 20mm closed-cell foam",
+            "H",
+            "all"
+          ],
+          [
+            "Water meter with isolation valve at each unit as per authority requirement",
+            "H",
+            "all"
+          ],
+          [
+            "Pressure reducing valve (PRV) installed at floors where pressure >3 bar",
+            "H",
+            "all"
+          ],
+          [
+            "Non-return valve on incoming main line",
+            "H",
+            "all"
+          ],
+          [
+            "Anti-scald thermostatic mixing valve (TMV) in showers and bathtubs",
+            "H",
+            "luxury,hotel"
+          ],
+          [
+            "Flow rate and pressure verified at all fixtures on commissioning",
+            "H",
+            "all"
+          ],
+          [
+            "All connections leak-tested under pressure before concealment",
+            "H",
+            "all"
+          ],
+          [
+            "Header/manifold system for hot and cold as per drawing",
+            "M",
+            "all"
+          ],
+          [
+            "Water softener/purification system installed where specified",
+            "H",
+            "luxury,hotel"
+          ]
+        ]
+      },
+      {
+        "sub": "Cold Water Storage & Distribution",
+        "items": [
+          [
+            "Underground sump tank capacity as per design calculation",
+            "H",
+            "all"
+          ],
+          [
+            "Overhead tank capacity and material as per specification",
+            "H",
+            "all"
+          ],
+          [
+            "Tanks waterproofed and tested before commissioning",
+            "H",
+            "all"
+          ],
+          [
+            "Float valve and overflow with visual/audible indicator",
+            "H",
+            "all"
+          ],
+          [
+            "Ball valves on all inlet and outlet connections",
+            "H",
+            "all"
+          ],
+          [
+            "Booster pump set \u2014 duty/standby arrangement tested",
+            "H",
+            "all"
+          ],
+          [
+            "Chlorination/UV sterilization system installed",
+            "H",
+            "all"
+          ],
+          [
+            "Tank cleaning access hatch with lockable cover",
+            "H",
+            "all"
+          ]
+        ]
+      },
+      {
+        "sub": "Sanitary & Drainage",
+        "items": [
+          [
+            "Drainage pipe gradient: 1:40 for 100mm, 1:80 for 150mm",
+            "H",
+            "all"
+          ],
+          [
+            "Vent stack connected and terminated 900mm above roof level",
+            "H",
+            "all"
+          ],
+          [
+            "Access/clean-out at every change of direction and max 15m",
+            "H",
+            "all"
+          ],
+          [
+            "Trap at every sanitary fixture: minimum 50mm water seal depth",
+            "H",
+            "all"
+          ],
+          [
+            "Anti-siphon valve where self-sealing trap used",
+            "H",
+            "all"
+          ],
+          [
+            "Floor drain with removable trap in all wet areas",
+            "H",
+            "all"
+          ],
+          [
+            "Drain pipes water-tightness tested before concealment",
+            "H",
+            "all"
+          ],
+          [
+            "Rainwater downpipes \u2014 size per catchment area, separate from sewer",
+            "H",
+            "all"
+          ],
+          [
+            "Grease trap provided for kitchen outlets \u2014 cleanable",
+            "H",
+            "hotel,commercial"
+          ],
+          [
+            "STP inlet/outlet piping and levels as per design",
+            "H",
+            "all"
+          ],
+          [
+            "No sewer gas smell \u2014 traps all sealed during commissioning",
+            "H",
+            "all"
+          ],
+          [
+            "Drainage CCTV inspection where specified",
+            "M",
+            "all"
+          ]
+        ]
+      },
+      {
+        "sub": "Sanitary Fixtures & Fittings",
+        "items": [
+          [
+            "All fixtures brand, model as per approved BOQ",
+            "H",
+            "all"
+          ],
+          [
+            "WC pan level \u2014 properly fixed, jointed and sealed to floor",
+            "H",
+            "all"
+          ],
+          [
+            "Flush tank/cistern functions correctly \u2014 no running water",
+            "H",
+            "all"
+          ],
+          [
+            "Wash basin level, sealed to wall with silicone",
+            "H",
+            "all"
+          ],
+          [
+            "Shower valve (thermostatic where specified) position and type as per drawing",
+            "H",
+            "all"
+          ],
+          [
+            "Bathtub level, fixed and waterproofed around surround",
+            "H",
+            "luxury,hotel"
+          ],
+          [
+            "Jacuzzi/spa \u2014 pump, jets and controls tested",
+            "H",
+            "luxury,hotel"
+          ],
+          [
+            "All exposed pipes chrome-plated and free from corrosion or defect",
+            "M",
+            "all"
+          ],
+          [
+            "Mirror and bathroom accessories anchored properly",
+            "M",
+            "all"
+          ],
+          [
+            "Bidet/health faucet installed as per specification",
+            "M",
+            "luxury,hotel"
+          ]
+        ]
+      },
+      {
+        "sub": "Gas Supply (PNG/LPG)",
+        "items": [
+          [
+            "Pipe material (copper/GI/MDPE) as per specification",
+            "H",
+            "all"
+          ],
+          [
+            "Gas line pressure tested at 1.5\u00d7 operating pressure for 2 hrs",
+            "H",
+            "all"
+          ],
+          [
+            "Gas meter and regulator installed as per utility specifications",
+            "H",
+            "all"
+          ],
+          [
+            "Flexible hose at appliance with flame failure device",
+            "H",
+            "all"
+          ],
+          [
+            "Gas detector and automatic solenoid valve where specified",
+            "H",
+            "all"
+          ],
+          [
+            "Adequate ventilation in gas meter room",
+            "H",
+            "all"
+          ],
+          [
+            "No gas pipe concealed in inaccessible area without sleeve",
+            "H",
+            "all"
+          ],
+          [
+            "Shut-off valve accessible at each appliance",
+            "H",
+            "all"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "id": "11",
+    "name": "MEP \u2014 Electrical Works",
+    "badge": "Electrical",
+    "bc": "#faeeda",
+    "btc": "#854F0B",
+    "groups": [
+      {
+        "sub": "Conduit & Cable Infrastructure",
+        "items": [
+          [
+            "Conduit material (GI/PVC/FRLS) as per specification and zone",
+            "H",
+            "all"
+          ],
+          [
+            "Conduit size minimum 20mm dia; maximum 3 cables per conduit",
+            "H",
+            "all"
+          ],
+          [
+            "Conduit bends smooth \u2014 no kinks, flat spots or cracks",
+            "H",
+            "all"
+          ],
+          [
+            "Conduit embedded minimum 25mm from finished surface",
+            "H",
+            "all"
+          ],
+          [
+            "Junction boxes accessible \u2014 not concealed without access provision",
+            "H",
+            "all"
+          ],
+          [
+            "Earth continuity bonding at each junction box tested",
+            "H",
+            "all"
+          ],
+          [
+            "Cable pulled without damage to insulation \u2014 check insulation resistance",
+            "H",
+            "all"
+          ],
+          [
+            "Colour coding per IS 3961: R/Y/B phase, Black neutral, Green/Yellow earth",
+            "H",
+            "all"
+          ],
+          [
+            "No cable joint inside conduit \u2014 all joints in junction boxes only",
+            "H",
+            "all"
+          ],
+          [
+            "FRLS cables used in riser shafts, escape routes and concealed areas",
+            "H",
+            "all"
+          ],
+          [
+            "HT cable route markers installed above ground",
+            "M",
+            "all"
+          ],
+          [
+            "Cable tray \u2014 size, material and grade as per drawing",
+            "H",
+            "all"
+          ],
+          [
+            "Cable tray supports at max 1200mm c/c \u2014 earth bonded",
+            "H",
+            "all"
+          ]
+        ]
+      },
+      {
+        "sub": "LV Switchgear & Panels",
+        "items": [
+          [
+            "Main LV panel brand and rating as per approved single line diagram",
+            "H",
+            "all"
+          ],
+          [
+            "Busbar sizing verified against load calculation",
+            "H",
+            "all"
+          ],
+          [
+            "MCB/MCCB/RCCB/RCBO ratings as per approved design",
+            "H",
+            "all"
+          ],
+          [
+            "RCCB (30mA) on all socket and bathroom circuits",
+            "H",
+            "all"
+          ],
+          [
+            "DB labels and circuit schedules pasted inside panel",
+            "H",
+            "all"
+          ],
+          [
+            "All terminals tightened \u2014 IR test (>1M\u03a9) before energization",
+            "H",
+            "all"
+          ],
+          [
+            "Proper cable entry with glands \u2014 no sharp edges on cables",
+            "H",
+            "all"
+          ],
+          [
+            "Anti-condensation heater in all outdoor and substation panels",
+            "M",
+            "all"
+          ],
+          [
+            "Inter-lock and mechanical protection as per approved schematic",
+            "H",
+            "all"
+          ],
+          [
+            "Main incoming MCB trip levels set as per design",
+            "H",
+            "all"
+          ],
+          [
+            "Power factor correction (APFC) panel installed as per design",
+            "H",
+            "commercial,office,hotel"
+          ],
+          [
+            "HT panel and transformer ratings as per load study",
+            "H",
+            "commercial,office,hotel"
+          ]
+        ]
+      },
+      {
+        "sub": "DG Set & UPS",
+        "items": [
+          [
+            "DG set kVA rating and make as per approved specification",
+            "H",
+            "all"
+          ],
+          [
+            "DG set on anti-vibration mountings in acoustically treated room",
+            "H",
+            "all"
+          ],
+          [
+            "Exhaust silencer and chimney height as per PCB norms",
+            "H",
+            "all"
+          ],
+          [
+            "Fuel tank capacity for 8 hours minimum running",
+            "H",
+            "all"
+          ],
+          [
+            "ATS (auto transfer switch) load transfer test done",
+            "H",
+            "all"
+          ],
+          [
+            "DG set load test at 100% rated load for 2 hours",
+            "H",
+            "all"
+          ],
+          [
+            "UPS system kVA rating for critical loads as per specification",
+            "H",
+            "all"
+          ],
+          [
+            "Battery bank capacity for 30 minutes minimum backup",
+            "H",
+            "all"
+          ],
+          [
+            "UPS bypass switch and maintenance isolator in place",
+            "H",
+            "all"
+          ]
+        ]
+      },
+      {
+        "sub": "Earthing & Lightning Protection",
+        "items": [
+          [
+            "Main earth pit resistance <1\u03a9 \u2014 test certificate available",
+            "H",
+            "all"
+          ],
+          [
+            "Individual equipment earth <5\u03a9",
+            "H",
+            "all"
+          ],
+          [
+            "Earthing conductor cross-section as per IS 3043",
+            "H",
+            "all"
+          ],
+          [
+            "Earth mat/ring earthing around building as per design",
+            "H",
+            "all"
+          ],
+          [
+            "Lightning conductor installed as per IS 2309/NBC",
+            "H",
+            "all"
+          ],
+          [
+            "Down conductors at max 20m spacing around building perimeter",
+            "H",
+            "all"
+          ],
+          [
+            "Air terminals at roof ridge, parapet corners and projections",
+            "H",
+            "all"
+          ],
+          [
+            "Earth test pits accessible \u2014 test done post-monsoon",
+            "H",
+            "all"
+          ]
+        ]
+      },
+      {
+        "sub": "Electrical Fixtures & Fittings",
+        "items": [
+          [
+            "All fixtures flush, aligned and per approved lighting layout",
+            "H",
+            "all"
+          ],
+          [
+            "Switch height uniform: 900mm from FFL \u2014 450mm for 2-way low",
+            "H",
+            "all"
+          ],
+          [
+            "Socket height: 300mm from FFL (standard); 1200mm kitchen/workstation",
+            "H",
+            "all"
+          ],
+          [
+            "Light fitting type, wattage and CCT (colour temperature) as per specification",
+            "H",
+            "all"
+          ],
+          [
+            "Downlight and recessed fitting: fire-rated housing in fire-rated ceiling",
+            "H",
+            "all"
+          ],
+          [
+            "Emergency lights on independent circuit with battery: 3-hour minimum",
+            "H",
+            "all"
+          ],
+          [
+            "Exit signs: maintained type, visible from 30m, tested",
+            "H",
+            "all"
+          ],
+          [
+            "Outdoor fittings: IP65 minimum rating",
+            "H",
+            "all"
+          ],
+          [
+            "Pool and water feature lights: IP68, 12V SELV safety extra-low voltage",
+            "H",
+            "luxury,hotel"
+          ],
+          [
+            "Dimmer switches installed and tested where specified",
+            "M",
+            "luxury,hotel"
+          ],
+          [
+            "USB charging outlets at bedside and workstation where specified",
+            "M",
+            "luxury,hotel"
+          ],
+          [
+            "Occupancy sensors in corridors, toilets, meeting rooms as specified",
+            "M",
+            "commercial,office,hotel"
+          ],
+          [
+            "DALI/DMX lighting control system commissioned",
+            "M",
+            "luxury,hotel"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "id": "12",
+    "name": "MEP \u2014 HVAC & Ventilation",
+    "badge": "HVAC",
+    "bc": "#fcebeb",
+    "btc": "#A32D2D",
+    "groups": [
+      {
+        "sub": "Ductwork",
+        "items": [
+          [
+            "Duct gauge and size as per HVAC design drawings",
+            "H",
+            "all"
+          ],
+          [
+            "Duct fabrication as per SMACNA standards",
+            "H",
+            "all"
+          ],
+          [
+            "All duct joints sealed with approved mastic sealant",
+            "H",
+            "all"
+          ],
+          [
+            "Hanger and support at maximum 1200mm c/c",
+            "H",
+            "all"
+          ],
+          [
+            "Duct insulation: 50mm glass wool or equivalent with aluminium foil facing",
+            "H",
+            "all"
+          ],
+          [
+            "Duct insulation joints sealed with foil tape \u2014 no gaps",
+            "H",
+            "all"
+          ],
+          [
+            "Duct leak test conducted \u2014 Class B leakage per SMACNA",
+            "H",
+            "all"
+          ],
+          [
+            "Fire dampers at all fire/smoke compartment penetrations",
+            "H",
+            "all"
+          ],
+          [
+            "Fire damper access panels in ceiling provided",
+            "H",
+            "all"
+          ],
+          [
+            "Volume control damper at each branch for balancing",
+            "H",
+            "all"
+          ],
+          [
+            "Flexible connection at AHU/FCU to prevent vibration transfer",
+            "H",
+            "all"
+          ],
+          [
+            "Duct cleaning done before final commissioning",
+            "H",
+            "all"
+          ]
+        ]
+      },
+      {
+        "sub": "AHU / FCU / VRF Equipment",
+        "items": [
+          [
+            "AHU/FCU schedule matches approved design \u2014 capacity, ESP, CFM",
+            "H",
+            "all"
+          ],
+          [
+            "Equipment installed level, vibration-isolated with anti-vibration pads",
+            "H",
+            "all"
+          ],
+          [
+            "Condensate drain pipe: correct slope, P-trap and accessible clean-out",
+            "H",
+            "all"
+          ],
+          [
+            "Refrigerant piping: correct diameter, insulated, no thermal bridging",
+            "H",
+            "all"
+          ],
+          [
+            "Refrigerant piping leak test (nitrogen) before evacuation and charging",
+            "H",
+            "all"
+          ],
+          [
+            "VRF outdoor unit on structural pad with adequate clearance",
+            "H",
+            "all"
+          ],
+          [
+            "VRF pipe length and height difference within manufacturer limits",
+            "H",
+            "all"
+          ],
+          [
+            "Fresh air intake >10m from exhaust, cooling tower and generators",
+            "H",
+            "all"
+          ],
+          [
+            "Filter access door operational \u2014 filter type and MERV rating per spec",
+            "H",
+            "all"
+          ],
+          [
+            "Drain pan tested for proper drainage \u2014 no overflow",
+            "H",
+            "all"
+          ]
+        ]
+      },
+      {
+        "sub": "Air Distribution & Balancing",
+        "items": [
+          [
+            "Diffusers and grilles aligned with false ceiling grid",
+            "H",
+            "all"
+          ],
+          [
+            "Diffuser neck size matched to duct as per drawing",
+            "H",
+            "all"
+          ],
+          [
+            "TAB (test, adjust, balance) report \u2014 each zone airflow within \u00b110%",
+            "H",
+            "all"
+          ],
+          [
+            "Supply and return air balance checked",
+            "H",
+            "all"
+          ],
+          [
+            "Space temperature achieved as per ASHRAE 55 comfort conditions",
+            "H",
+            "all"
+          ],
+          [
+            "Noise level in occupied areas: \u2264NC-35 (luxury/hotel), \u2264NC-40 office",
+            "H",
+            "all"
+          ]
+        ]
+      },
+      {
+        "sub": "Chiller Plant & Cooling Tower",
+        "items": [
+          [
+            "Chiller type, kW and COP as per energy design",
+            "H",
+            "commercial,hotel,office"
+          ],
+          [
+            "Chiller on anti-vibration isolation, pipe connections flexible",
+            "H",
+            "commercial,hotel,office"
+          ],
+          [
+            "Condenser water system (cooling tower) \u2014 fill, distribution, drift eliminators checked",
+            "H",
+            "commercial,hotel,office"
+          ],
+          [
+            "Water treatment dosing for chilled water and condenser water",
+            "H",
+            "commercial,hotel,office"
+          ],
+          [
+            "Chiller sequencing and plant BMS integration tested",
+            "H",
+            "commercial,hotel,office"
+          ],
+          [
+            "Safety controls: high/low pressure cutout tested",
+            "H",
+            "commercial,hotel,office"
+          ]
+        ]
+      },
+      {
+        "sub": "Ventilation \u2014 Basements, Toilets & Kitchens",
+        "items": [
+          [
+            "Basement car park ventilation: 6 ACH minimum or CO detector controlled",
+            "H",
+            "all"
+          ],
+          [
+            "CO detector system: sensors, panels and fan interlocks tested",
+            "H",
+            "all"
+          ],
+          [
+            "Toilet exhaust: 10 ACH minimum, ducted to exterior",
+            "H",
+            "all"
+          ],
+          [
+            "Kitchen exhaust: 30\u201360 ACH \u2014 commercial kitchen exhaust system tested",
+            "H",
+            "hotel,commercial"
+          ],
+          [
+            "Exhaust air not recirculated \u2014 discharged externally",
+            "H",
+            "all"
+          ],
+          [
+            "Smoke extract system: extract rate per NBC/BS 7346 fire engineered solution",
+            "H",
+            "commercial,hotel"
+          ]
+        ]
+      },
+      {
+        "sub": "BMS Integration for HVAC",
+        "items": [
+          [
+            "All AHU/FCU start/stop and status on BMS",
+            "H",
+            "all"
+          ],
+          [
+            "Temperature and humidity sensors calibrated and verified",
+            "H",
+            "all"
+          ],
+          [
+            "Chilled water supply and return temperature monitoring",
+            "H",
+            "commercial,hotel,office"
+          ],
+          [
+            "Energy metering for each HVAC plant",
+            "H",
+            "commercial,hotel,office"
+          ],
+          [
+            "Schedule-based operation programmed and verified",
+            "H",
+            "all"
+          ],
+          [
+            "Alarm management for equipment trip, filter clog, high temp",
+            "H",
+            "all"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "id": "13",
+    "name": "MEP \u2014 Fire Fighting & Safety Systems",
+    "badge": "Fire Fighting",
+    "bc": "#fcebeb",
+    "btc": "#A32D2D",
+    "groups": [
+      {
+        "sub": "Fire Hydrant System",
+        "items": [
+          [
+            "Underground fire main pipe material, class and size as per drawing",
+            "H",
+            "all"
+          ],
+          [
+            "External fire hydrant posts at max 45m spacing around building",
+            "H",
+            "all"
+          ],
+          [
+            "Internal rising main (wet riser) diameter as per NBC/TAC",
+            "H",
+            "all"
+          ],
+          [
+            "Fire hose reel cabinet: accessible, glass-break box, 30m hose",
+            "H",
+            "all"
+          ],
+          [
+            "Hydrant outlet pressure: 3.5 bar minimum at any outlet",
+            "H",
+            "all"
+          ],
+          [
+            "System hydrostatic pressure test: 10.5 bar for 2 hours",
+            "H",
+            "all"
+          ],
+          [
+            "Breeching inlet on external face \u2014 accessible for fire brigade",
+            "H",
+            "all"
+          ],
+          [
+            "Landing valve at each floor \u2014 quarter-turn brass body",
+            "H",
+            "all"
+          ],
+          [
+            "Fire pump (electric + diesel standby) capacity and head as per design",
+            "H",
+            "all"
+          ],
+          [
+            "Jockey pump: starts at -0.5 bar, stops at normal pressure",
+            "H",
+            "all"
+          ],
+          [
+            "Diesel fire pump: auto start on pressure drop, tested monthly",
+            "H",
+            "all"
+          ],
+          [
+            "UG fire storage tank capacity per design (min 1 hour fighting duration)",
+            "H",
+            "all"
+          ],
+          [
+            "Fire pump room \u2014 ventilated, accessible, firefighter-rated power supply",
+            "H",
+            "all"
+          ]
+        ]
+      },
+      {
+        "sub": "Automatic Sprinkler System",
+        "items": [
+          [
+            "Sprinkler system type: wet pipe/dry pipe/pre-action as per design",
+            "H",
+            "all"
+          ],
+          [
+            "Sprinkler head coverage area per IS 15105/NFPA 13 or as approved",
+            "H",
+            "all"
+          ],
+          [
+            "Sprinkler head type: standard/ESFR/residential as per design",
+            "H",
+            "all"
+          ],
+          [
+            "Sprinkler head colour-coded temperature rating correct for location",
+            "H",
+            "all"
+          ],
+          [
+            "Minimum 300mm clearance below sprinkler head deflector",
+            "H",
+            "all"
+          ],
+          [
+            "No obstruction within 450mm of sprinkler head",
+            "H",
+            "all"
+          ],
+          [
+            "Sprinkler system pressure: 1.5\u00d7 working pressure hydraulic test",
+            "H",
+            "all"
+          ],
+          [
+            "Flow switch and alarm valve tested for activation",
+            "H",
+            "all"
+          ],
+          [
+            "Inspector test valve at end of each branch \u2014 tested",
+            "H",
+            "all"
+          ],
+          [
+            "Anti-freeze in below-0\u00b0C areas (if applicable)",
+            "M",
+            "all"
+          ],
+          [
+            "Sprinkler in concealed ceiling: flush pattern escutcheon plates fitted",
+            "H",
+            "luxury,hotel"
+          ],
+          [
+            "Concealed sprinkler cover plate level with false ceiling",
+            "H",
+            "luxury,hotel"
+          ]
+        ]
+      },
+      {
+        "sub": "Fire Detection & Alarm",
+        "items": [
+          [
+            "Smoke detector spacing: max 7.5m radius in open area per IS 2189",
+            "H",
+            "all"
+          ],
+          [
+            "Heat detector in kitchen, boiler, battery room as specified",
+            "H",
+            "all"
+          ],
+          [
+            "Beam detector in large open spaces where applicable",
+            "H",
+            "commercial,hotel"
+          ],
+          [
+            "VESDA (aspirating smoke detection) in data centres, server rooms",
+            "H",
+            "commercial,office,hotel"
+          ],
+          [
+            "Manual call point (MCP) at each floor exit landing",
+            "H",
+            "all"
+          ],
+          [
+            "Fire alarm control panel (FACP) addressable type for large buildings",
+            "H",
+            "all"
+          ],
+          [
+            "Sounder/visual alarm at each floor \u2014 dB level >65dB at 3m",
+            "H",
+            "all"
+          ],
+          [
+            "Voice evacuation (PA) system integrated with fire alarm",
+            "H",
+            "hotel,commercial"
+          ],
+          [
+            "Detector response function test (use aerosol/heat gun) \u2014 all detectors",
+            "H",
+            "all"
+          ],
+          [
+            "Fault monitoring: short circuit, open circuit on all loops tested",
+            "H",
+            "all"
+          ],
+          [
+            "Fire alarm interface to lifts, HVAC, access control \u2014 all tested",
+            "H",
+            "all"
+          ],
+          [
+            "Firefighter communication system (telephone) in stairwells",
+            "H",
+            "commercial,hotel"
+          ]
+        ]
+      },
+      {
+        "sub": "Fire Suppression \u2014 Special Systems",
+        "items": [
+          [
+            "Gaseous suppression (FM200/Novec/CO2/Inert gas) in server/UPS rooms",
+            "H",
+            "commercial,office,hotel"
+          ],
+          [
+            "Gas suppression cylinder weight verified \u2014 agent charge correct",
+            "H",
+            "commercial,office,hotel"
+          ],
+          [
+            "Pre-discharge alarm and abort switch functional",
+            "H",
+            "commercial,office,hotel"
+          ],
+          [
+            "Room integrity blower door test before commissioning",
+            "H",
+            "commercial,office,hotel"
+          ],
+          [
+            "Foam deluge in basement car park (where designed)",
+            "H",
+            "commercial,hotel"
+          ],
+          [
+            "Kitchen hood ansul/wet chemical suppression system tested",
+            "H",
+            "hotel,commercial"
+          ],
+          [
+            "Thermal/UV/IR flame detector in special risk areas",
+            "H",
+            "commercial,hotel"
+          ]
+        ]
+      },
+      {
+        "sub": "Fire Compartmentation & Passive Protection",
+        "items": [
+          [
+            "All wall, floor and ceiling penetrations fire-stopped per design",
+            "H",
+            "all"
+          ],
+          [
+            "Fire-stopping materials certified to BS EN 1366 or equivalent",
+            "H",
+            "all"
+          ],
+          [
+            "Fire-rated walls and floors \u2014 construction verified against design",
+            "H",
+            "all"
+          ],
+          [
+            "Fire-rated door assemblies \u2014 rating, seals and closer tested",
+            "H",
+            "all"
+          ],
+          [
+            "Intumescent paint on structural steel \u2014 DFT checked",
+            "H",
+            "commercial,hotel,office"
+          ],
+          [
+            "Spray-applied fire protection on steel \u2014 thickness checked",
+            "H",
+            "commercial,hotel,office"
+          ],
+          [
+            "Smoke seals on service penetrations \u2014 cold smoke barrier",
+            "H",
+            "all"
+          ],
+          [
+            "Fire safety audit by specialist before occupancy certificate",
+            "H",
+            "all"
+          ]
+        ]
+      },
+      {
+        "sub": "Emergency & Safety Signage",
+        "items": [
+          [
+            "Exit signs: illuminated (maintained), green, \u2265300mm high at each exit",
+            "H",
+            "all"
+          ],
+          [
+            "Exit route signs directional \u2014 visible from all points on egress route",
+            "H",
+            "all"
+          ],
+          [
+            "Assembly point signage outside building",
+            "H",
+            "all"
+          ],
+          [
+            "Fire extinguisher type sign above each extinguisher",
+            "H",
+            "all"
+          ],
+          [
+            "Floor plan with fire escape route on each floor",
+            "H",
+            "all"
+          ],
+          [
+            "No-smoking and hazard signage at appropriate locations",
+            "H",
+            "all"
+          ],
+          [
+            "Staircase identification numbers at each floor landing",
+            "H",
+            "all"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "id": "14",
+    "name": "MEP \u2014 Building Management System (BMS)",
+    "badge": "BMS",
+    "bc": "#e1f5ee",
+    "btc": "#0F6E56",
+    "groups": [
+      {
+        "sub": "BMS Infrastructure",
+        "items": [
+          [
+            "BMS server, workstation and monitor installed in control room",
+            "H",
+            "all"
+          ],
+          [
+            "BMS software licensed and installed \u2014 version as per specification",
+            "H",
+            "all"
+          ],
+          [
+            "Fieldbus network (BACnet/Modbus/LON) wiring complete and tested",
+            "H",
+            "all"
+          ],
+          [
+            "IP network for BMS on dedicated VLAN",
+            "H",
+            "all"
+          ],
+          [
+            "Uninterruptible power supply for BMS server \u2014 1 hour minimum",
+            "H",
+            "all"
+          ],
+          [
+            "Remote access (VPN/web interface) for facility manager tested",
+            "H",
+            "all"
+          ]
+        ]
+      },
+      {
+        "sub": "HVAC Monitoring & Control via BMS",
+        "items": [
+          [
+            "All AHU start/stop, status and fault on BMS",
+            "H",
+            "all"
+          ],
+          [
+            "All FCU/VAV temperature and airflow monitoring",
+            "H",
+            "all"
+          ],
+          [
+            "Chiller plant sequencing and load management on BMS",
+            "H",
+            "commercial,hotel,office"
+          ],
+          [
+            "Cooling tower fan speed and water level monitoring",
+            "H",
+            "commercial,hotel,office"
+          ],
+          [
+            "Zone temperature sensors calibrated \u00b10.5\u00b0C",
+            "H",
+            "all"
+          ],
+          [
+            "Schedule-based HVAC operation tested on commissioning",
+            "H",
+            "all"
+          ],
+          [
+            "Demand-controlled ventilation via CO\u2082 sensors",
+            "H",
+            "commercial,hotel,office"
+          ]
+        ]
+      },
+      {
+        "sub": "Electrical Monitoring via BMS",
+        "items": [
+          [
+            "Main incomer energy meter integrated on BMS",
+            "H",
+            "all"
+          ],
+          [
+            "Sub-meter reading for each floor or tenant (AMR)",
+            "H",
+            "commercial,office,hotel"
+          ],
+          [
+            "DG set status, load and running hours on BMS",
+            "H",
+            "all"
+          ],
+          [
+            "Power quality parameters (PF, THD, voltage) monitored",
+            "H",
+            "commercial,hotel,office"
+          ],
+          [
+            "Transformer temperature and oil level monitoring",
+            "H",
+            "commercial,hotel,office"
+          ],
+          [
+            "Renewable energy generation (solar) metering on BMS",
+            "M",
+            "all"
+          ]
+        ]
+      },
+      {
+        "sub": "Lighting Control via BMS",
+        "items": [
+          [
+            "Lighting zones controlled via DALI/KNX/relay as per design",
+            "H",
+            "commercial,hotel,office"
+          ],
+          [
+            "Occupancy sensor override in all meeting rooms and common areas",
+            "H",
+            "commercial,office"
+          ],
+          [
+            "Daylight harvesting via lux sensors in perimeter zones",
+            "H",
+            "commercial,office"
+          ],
+          [
+            "Scene programming for hotel public areas and lobbies",
+            "H",
+            "hotel"
+          ],
+          [
+            "Emergency lighting test mode via BMS",
+            "H",
+            "all"
+          ]
+        ]
+      },
+      {
+        "sub": "Water & Energy Management",
+        "items": [
+          [
+            "Water meter reading on BMS \u2014 domestic and irrigation",
+            "H",
+            "all"
+          ],
+          [
+            "Leak detection system in mechanical plant rooms",
+            "H",
+            "all"
+          ],
+          [
+            "UG sump and overhead tank level monitoring with alarms",
+            "H",
+            "all"
+          ],
+          [
+            "STP monitoring (inlet flow, treated water quality) on BMS",
+            "H",
+            "all"
+          ],
+          [
+            "Energy dashboard showing all utility consumption",
+            "H",
+            "commercial,hotel,office"
+          ],
+          [
+            "Energy sub-metering for HVAC, lighting, lifts, plug loads",
+            "H",
+            "commercial,hotel,office"
+          ]
+        ]
+      },
+      {
+        "sub": "Security & Access Control Integration",
+        "items": [
+          [
+            "Access control system integrated with BMS for door status",
+            "H",
+            "commercial,hotel,office"
+          ],
+          [
+            "CCTV system integrated \u2014 alarm-triggered camera call-up",
+            "H",
+            "all"
+          ],
+          [
+            "Intrusion alarm integrated with BMS",
+            "H",
+            "commercial,hotel,office"
+          ],
+          [
+            "Visitor management system integrated where specified",
+            "M",
+            "commercial,hotel,office"
+          ],
+          [
+            "Fire alarm integration \u2014 fan shut-down, door release on BMS",
+            "H",
+            "all"
+          ],
+          [
+            "Lift recall and overrides on BMS in fire mode",
+            "H",
+            "all"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "id": "15",
+    "name": "Lifts, Escalators & Special Transport",
+    "badge": "Lifts",
+    "bc": "#eeedfe",
+    "btc": "#3C3489",
+    "groups": [
+      {
+        "sub": "Lift Shaft & Pit",
+        "items": [
+          [
+            "Lift shaft plumb throughout height: \u22641:5000",
+            "H",
+            "all"
+          ],
+          [
+            "Shaft dimensions correct \u2014 clearances to guide rails per manufacturer",
+            "H",
+            "all"
+          ],
+          [
+            "Lift pit waterproofed, depth as per specification",
+            "H",
+            "all"
+          ],
+          [
+            "Pit ladder, pit lighting (min 50 lux) and stop switch in pit",
+            "H",
+            "all"
+          ],
+          [
+            "Pit sump pump where groundwater risk exists",
+            "H",
+            "all"
+          ],
+          [
+            "Shaft ventilation provided at top",
+            "H",
+            "all"
+          ]
+        ]
+      },
+      {
+        "sub": "Lift Equipment",
+        "items": [
+          [
+            "Guide rail alignment: top-of-rail deviation \u22640.5mm over full height",
+            "H",
+            "all"
+          ],
+          [
+            "Machine room (MRL or traditional) ventilated, lighting, access per NBC",
+            "H",
+            "all"
+          ],
+          [
+            "Lift motor and controller brand, speed, capacity as per approved design",
+            "H",
+            "all"
+          ],
+          [
+            "Safety gear, buffers and over-speed governor installed and tested",
+            "H",
+            "all"
+          ],
+          [
+            "Door lock and reopening safety device (light curtain) functional",
+            "H",
+            "all"
+          ],
+          [
+            "Levelling accuracy: \u00b15mm from floor level",
+            "H",
+            "all"
+          ],
+          [
+            "Noise level in car: \u226455dB in transit",
+            "H",
+            "all"
+          ],
+          [
+            "Ride quality smooth \u2014 no jerks, bouncing or vibration",
+            "H",
+            "all"
+          ],
+          [
+            "Emergency communication (intercom/ARD) in car operational",
+            "H",
+            "all"
+          ],
+          [
+            "Firefighters lift features installed where required by code",
+            "H",
+            "all"
+          ],
+          [
+            "Load test at 100% and 110% rated capacity done",
+            "H",
+            "all"
+          ],
+          [
+            "Inspection and acceptance certificate from statutory authority",
+            "H",
+            "all"
+          ],
+          [
+            "Car interior finish, lighting and mirror as per approved drawing",
+            "H",
+            "all"
+          ],
+          [
+            "Lobby finish at lift doors matches approved interior drawing",
+            "H",
+            "all"
+          ]
+        ]
+      },
+      {
+        "sub": "Escalators (where applicable)",
+        "items": [
+          [
+            "Escalator speed: 0.5m/s for public, 0.75m/s with caution",
+            "H",
+            "commercial,hotel"
+          ],
+          [
+            "Step demarcation strips yellow \u2014 anti-slip",
+            "H",
+            "commercial,hotel"
+          ],
+          [
+            "Emergency stop buttons at top and bottom accessible",
+            "H",
+            "commercial,hotel"
+          ],
+          [
+            "Handrail speed synchronized with step speed",
+            "H",
+            "commercial,hotel"
+          ],
+          [
+            "Pit lighting and drainage in escalator pit",
+            "M",
+            "commercial,hotel"
+          ],
+          [
+            "Load and safety test certificate obtained",
+            "H",
+            "commercial,hotel"
+          ]
+        ]
+      },
+      {
+        "sub": "Car Parking Management",
+        "items": [
+          [
+            "Parking guidance sensors installed and fully functional",
+            "M",
+            "commercial,office,hotel"
+          ],
+          [
+            "Boom barriers at entry/exit with intercom",
+            "M",
+            "commercial,office,hotel"
+          ],
+          [
+            "ANPR camera system tested",
+            "M",
+            "commercial,office,hotel"
+          ],
+          [
+            "EV charging infrastructure installed and tested",
+            "H",
+            "all"
+          ],
+          [
+            "EV load management system operational",
+            "M",
+            "all"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "id": "16",
+    "name": "External Development & Landscape",
+    "badge": "External",
+    "bc": "#eaf3de",
+    "btc": "#3B6D11",
+    "groups": [
+      {
+        "sub": "External Roads & Paving",
+        "items": [
+          [
+            "Sub-base compacted to 97% MDD \u2014 test done",
+            "H",
+            "all"
+          ],
+          [
+            "Base course and bituminous layer thickness as per drawing",
+            "H",
+            "all"
+          ],
+          [
+            "Road surface level, gradient for drainage correct",
+            "H",
+            "all"
+          ],
+          [
+            "Kerb and edging aligned and firmly bedded",
+            "H",
+            "all"
+          ],
+          [
+            "Paver block pattern and colour as per drawing",
+            "H",
+            "all"
+          ],
+          [
+            "Anti-skid surface at ramps and pedestrian crossings",
+            "H",
+            "all"
+          ],
+          [
+            "Road markings, signage, speed humps installed",
+            "M",
+            "all"
+          ],
+          [
+            "Accessible ramps and kerb cuts for differently-abled",
+            "H",
+            "all"
+          ],
+          [
+            "Drainage channels with removable gratings at correct level",
+            "H",
+            "all"
+          ],
+          [
+            "EV charging bay markings",
+            "M",
+            "all"
+          ]
+        ]
+      },
+      {
+        "sub": "Drainage & External Utilities",
+        "items": [
+          [
+            "External sewer gradient and manhole spacing as per drawing",
+            "H",
+            "all"
+          ],
+          [
+            "Manhole cover grade as per traffic loading",
+            "H",
+            "all"
+          ],
+          [
+            "Storm water drain sized for design storm event",
+            "H",
+            "all"
+          ],
+          [
+            "Storm and foul water systems completely separated",
+            "H",
+            "all"
+          ],
+          [
+            "Rainwater harvesting pit or recharge well as per local body norms",
+            "H",
+            "all"
+          ],
+          [
+            "STP installed, commissioned, effluent quality tested",
+            "H",
+            "all"
+          ],
+          [
+            "Treated water reuse for irrigation and flushing connected",
+            "H",
+            "all"
+          ]
+        ]
+      },
+      {
+        "sub": "Landscape & Softscape",
+        "items": [
+          [
+            "Topsoil depth: 450mm lawn, 600mm shrubs, 900mm trees",
+            "H",
+            "all"
+          ],
+          [
+            "Planting species as per approved landscape plan",
+            "M",
+            "all"
+          ],
+          [
+            "Irrigation system (drip/sprinkler) installed and tested",
+            "M",
+            "all"
+          ],
+          [
+            "Mulching 75mm deep around plant beds",
+            "L",
+            "all"
+          ],
+          [
+            "Tree guards and stakes for all large-caliper trees",
+            "M",
+            "all"
+          ],
+          [
+            "Lawn turf laid without gaps, rolled and watered",
+            "L",
+            "all"
+          ],
+          [
+            "Feature trees and specimen plants as per landscape drawing",
+            "M",
+            "luxury,hotel"
+          ]
+        ]
+      },
+      {
+        "sub": "Swimming Pool & Water Features",
+        "items": [
+          [
+            "Pool shell \u2014 bond beam and coping level checked",
+            "H",
+            "luxury,hotel"
+          ],
+          [
+            "Pool depth markers and hazard warning signs installed",
+            "H",
+            "luxury,hotel"
+          ],
+          [
+            "Pool filtration, circulation pump and backwash tested",
+            "H",
+            "luxury,hotel"
+          ],
+          [
+            "Anti-entrapment compliant drain covers installed",
+            "H",
+            "luxury,hotel"
+          ],
+          [
+            "Pool water chemistry: pH 7.2\u20137.6, free chlorine 1\u20133ppm",
+            "H",
+            "luxury,hotel"
+          ],
+          [
+            "Pool heating system tested",
+            "M",
+            "luxury,hotel"
+          ],
+          [
+            "Spa/jacuzzi jets, blowers and controls tested",
+            "H",
+            "luxury,hotel"
+          ]
+        ]
+      },
+      {
+        "sub": "Security & Site Boundary",
+        "items": [
+          [
+            "Compound wall height and design as per drawing",
+            "H",
+            "all"
+          ],
+          [
+            "Main gate width minimum 4.5m for emergency vehicle access",
+            "H",
+            "all"
+          ],
+          [
+            "Security cabin with CCTV at entrance",
+            "M",
+            "all"
+          ],
+          [
+            "Perimeter lighting at minimum 5 lux on boundary",
+            "H",
+            "all"
+          ],
+          [
+            "Vehicle boom barriers with intercom",
+            "M",
+            "all"
+          ],
+          [
+            "Building name, address and emergency numbers on board",
+            "M",
+            "all"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "id": "17",
+    "name": "Acoustic, Thermal & Sustainability",
+    "badge": "Acoustics/Green",
+    "bc": "#faeeda",
+    "btc": "#854F0B",
+    "groups": [
+      {
+        "sub": "Acoustic",
+        "items": [
+          [
+            "Party wall STC rating as per specification (STC 50 luxury, STC 45 standard)",
+            "H",
+            "luxury,hotel"
+          ],
+          [
+            "Floating floor system (impact noise) installed as per design",
+            "H",
+            "luxury,hotel"
+          ],
+          [
+            "Acoustic sealant at all penetrations through acoustic walls",
+            "H",
+            "all"
+          ],
+          [
+            "Vibration isolation on all pumps, AHUs, chillers, DG",
+            "H",
+            "all"
+          ],
+          [
+            "Acoustic treatment in home theatre, conference, AV rooms",
+            "H",
+            "luxury,hotel,commercial"
+          ],
+          [
+            "Post-construction acoustic measurement test done",
+            "H",
+            "luxury,hotel"
+          ]
+        ]
+      },
+      {
+        "sub": "Thermal & Energy",
+        "items": [
+          [
+            "Building envelope U-value meets energy code (ECBC/NBC)",
+            "H",
+            "commercial,office,hotel"
+          ],
+          [
+            "Roof insulation R-value as per energy design",
+            "H",
+            "all"
+          ],
+          [
+            "External wall insulation as per energy design",
+            "H",
+            "commercial,office"
+          ],
+          [
+            "Double/triple glazing U-value and SHGC as per energy model",
+            "H",
+            "commercial,office,hotel"
+          ],
+          [
+            "Solar reflective index (SRI) of roof finish \u226578 where required",
+            "H",
+            "all"
+          ],
+          [
+            "Air leakage testing (blower door) where specified",
+            "M",
+            "luxury,hotel"
+          ]
+        ]
+      },
+      {
+        "sub": "Sustainability & Green Building",
+        "items": [
+          [
+            "IGBC/GRIHA/LEED credit items implemented as per scorecard",
+            "M",
+            "all"
+          ],
+          [
+            "Low-flow fixtures installed \u2014 flow rates per WEC credits",
+            "M",
+            "all"
+          ],
+          [
+            "Recycled content materials documented \u2014 list maintained",
+            "L",
+            "all"
+          ],
+          [
+            "Construction waste management plan \u2014 diversion rate >75%",
+            "M",
+            "all"
+          ],
+          [
+            "Low-VOC paints, adhesives and sealants used throughout",
+            "H",
+            "luxury,hotel,office"
+          ],
+          [
+            "CO\u2082 monitoring in occupied spaces",
+            "M",
+            "commercial,hotel,office"
+          ],
+          [
+            "EV charging: minimum 20% of car park spaces",
+            "M",
+            "all"
+          ],
+          [
+            "Solar panels or solar-ready provisions",
+            "M",
+            "all"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "id": "18",
+    "name": "Hotel-Specific Works",
+    "badge": "Hotel Spec.",
+    "bc": "#fbeaf0",
+    "btc": "#993556",
+    "groups": [
+      {
+        "sub": "Guest Room Fit-out",
+        "items": [
+          [
+            "Room type, size and layout as per approved room data sheet",
+            "H",
+            "hotel"
+          ],
+          [
+            "All furniture items per approved FF&E schedule",
+            "H",
+            "hotel"
+          ],
+          [
+            "Bed and headboard level, square and firmly fixed",
+            "H",
+            "hotel"
+          ],
+          [
+            "Wardrobe depth, height and interior fittings as per specification",
+            "H",
+            "hotel"
+          ],
+          [
+            "Mini bar, safe and luggage rack as per room type",
+            "H",
+            "hotel"
+          ],
+          [
+            "All soft furnishings (curtains, drapes, cushions) fireproof rated",
+            "H",
+            "hotel"
+          ],
+          [
+            "Blackout lining on curtains \u2014 tested for full blackout",
+            "H",
+            "hotel"
+          ],
+          [
+            "Bedside control panel functional (light, DND, curtain, AC)",
+            "H",
+            "hotel"
+          ],
+          [
+            "TV mounted at correct height, angle and connected",
+            "H",
+            "hotel"
+          ],
+          [
+            "Room card-key energy cut-off functional",
+            "H",
+            "hotel"
+          ],
+          [
+            "Do Not Disturb / Make Up Room indicator functional",
+            "H",
+            "hotel"
+          ],
+          [
+            "In-room safe functional, reset and tested",
+            "H",
+            "hotel"
+          ]
+        ]
+      },
+      {
+        "sub": "Hotel Bathroom (Guest)",
+        "items": [
+          [
+            "Marble/tile finish as per approved FF&E \u2014 bookmatched if marble",
+            "H",
+            "hotel"
+          ],
+          [
+            "Vanity top \u2014 stone, undermount basin, mirror as per drawing",
+            "H",
+            "hotel"
+          ],
+          [
+            "Rain shower + hand shower + body jets as per specification",
+            "H",
+            "hotel"
+          ],
+          [
+            "Shower enclosure glass toughened (12mm min) or frameless as spec",
+            "H",
+            "hotel"
+          ],
+          [
+            "Bathtub with overflow, waste plug and filler tap",
+            "H",
+            "hotel"
+          ],
+          [
+            "Heated towel rail functional",
+            "H",
+            "hotel"
+          ],
+          [
+            "Exhaust fan: 10 ACH minimum \u2014 ducted externally",
+            "H",
+            "hotel"
+          ],
+          [
+            "Toilet roll, towel ring and robe hook as per FF&E",
+            "H",
+            "hotel"
+          ],
+          [
+            "Hair dryer and shaving socket correctly installed",
+            "H",
+            "hotel"
+          ],
+          [
+            "Waterproof TV in shower area where specified",
+            "M",
+            "hotel"
+          ]
+        ]
+      },
+      {
+        "sub": "Hotel Back-of-House",
+        "items": [
+          [
+            "Commercial kitchen \u2014 extraction, gas, fire suppression commissioned",
+            "H",
+            "hotel"
+          ],
+          [
+            "Laundry \u2014 drain capacity, ventilation, drain channels functional",
+            "H",
+            "hotel"
+          ],
+          [
+            "Housekeeping room on each floor with service lift access",
+            "H",
+            "hotel"
+          ],
+          [
+            "Linen store \u2014 humidity controlled, racking as per design",
+            "H",
+            "hotel"
+          ],
+          [
+            "Loading bay dimensions adequate for delivery vehicles",
+            "H",
+            "hotel"
+          ],
+          [
+            "Refuse handling \u2014 compactor, chute or collection area per HACCP",
+            "H",
+            "hotel"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "id": "19",
+    "name": "Commercial & Office-Specific Works",
+    "badge": "Commercial",
+    "bc": "#e6f1fb",
+    "btc": "#185FA5",
+    "groups": [
+      {
+        "sub": "Office / Commercial Shell & Core",
+        "items": [
+          [
+            "Floor-to-ceiling height as per commercial specification",
+            "H",
+            "commercial,office"
+          ],
+          [
+            "Raised access floor system: height, load capacity and finish as per spec",
+            "H",
+            "office,commercial"
+          ],
+          [
+            "Raised floor: panels level, locks functional, no rattle",
+            "H",
+            "office,commercial"
+          ],
+          [
+            "Under-floor cable management zone clear and accessible",
+            "H",
+            "office,commercial"
+          ],
+          [
+            "Server room: raised floor, precision AC, dual power feeds",
+            "H",
+            "office,commercial"
+          ],
+          [
+            "Floor loading: slabs designed for 5kN/m\u00b2 for office, 10kN/m\u00b2 for storage",
+            "H",
+            "office,commercial"
+          ],
+          [
+            "Structural grid for future partition flexibility as per BMS",
+            "H",
+            "office,commercial"
+          ]
+        ]
+      },
+      {
+        "sub": "Commercial Fit-out",
+        "items": [
+          [
+            "Reception counter level, square and finished as per design",
+            "H",
+            "commercial,office"
+          ],
+          [
+            "Open plan workspace \u2014 partition system type as per approved",
+            "H",
+            "office"
+          ],
+          [
+            "Acoustic screen heights as per approved layout",
+            "H",
+            "office"
+          ],
+          [
+            "Meeting room AV system: display, audio, video conferencing tested",
+            "H",
+            "office,commercial"
+          ],
+          [
+            "Kitchenette \u2014 plumbing, electrical and fixtures installed",
+            "H",
+            "office"
+          ],
+          [
+            "Signage \u2014 directional, room identification as per signage manual",
+            "H",
+            "commercial,office"
+          ]
+        ]
+      },
+      {
+        "sub": "Retail-Specific",
+        "items": [
+          [
+            "Shop front shutters/grilles \u2014 motor, manual override tested",
+            "H",
+            "commercial"
+          ],
+          [
+            "Retail display lighting \u2014 track, spotlights as per design",
+            "H",
+            "commercial"
+          ],
+          [
+            "Consumer electrical load capacity per shop as per design",
+            "H",
+            "commercial"
+          ],
+          [
+            "Separate metering per retail unit",
+            "H",
+            "commercial"
+          ],
+          [
+            "Common area HVAC zoning per retail hours",
+            "H",
+            "commercial"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "id": "20",
+    "name": "Commissioning, Snagging & Handover",
+    "badge": "Handover",
+    "bc": "#f1efe8",
+    "btc": "#5F5E5A",
+    "groups": [
+      {
+        "sub": "Structural & Civil",
+        "items": [
+          [
+            "As-built drawings verified for structure, substructure, civil",
+            "H",
+            "all"
+          ],
+          [
+            "Settlement monitoring records compiled and reviewed",
+            "H",
+            "all"
+          ],
+          [
+            "All structural NCRs closed and signed off by structural consultant",
+            "H",
+            "all"
+          ],
+          [
+            "Waterproofing test records compiled",
+            "H",
+            "all"
+          ],
+          [
+            "28-day cube test summary \u2014 all mixes, all pours passed",
+            "H",
+            "all"
+          ]
+        ]
+      },
+      {
+        "sub": "MEP Commissioning",
+        "items": [
+          [
+            "Water supply pressure and flow rate tested at top floor and all zones",
+            "H",
+            "all"
+          ],
+          [
+            "Drainage flow test \u2014 all stacks flushed and verified",
+            "H",
+            "all"
+          ],
+          [
+            "Electrical IR test report for all circuits",
+            "H",
+            "all"
+          ],
+          [
+            "Earth resistance test certificate: main <1\u03a9, unit <5\u03a9",
+            "H",
+            "all"
+          ],
+          [
+            "DG load test at 100% rated load \u2014 ATS auto transfer tested",
+            "H",
+            "all"
+          ],
+          [
+            "HVAC TAB report verified \u2014 all zones within 10%",
+            "H",
+            "all"
+          ],
+          [
+            "Fire pump performance curve verified against design point",
+            "H",
+            "all"
+          ],
+          [
+            "Sprinkler system flow and pressure test at hydraulically remote point",
+            "H",
+            "all"
+          ],
+          [
+            "BMS system fully operational \u2014 all points live",
+            "H",
+            "all"
+          ],
+          [
+            "Lift inspection and test certificate obtained",
+            "H",
+            "all"
+          ],
+          [
+            "Solar system generation meter and export meter live",
+            "M",
+            "all"
+          ]
+        ]
+      },
+      {
+        "sub": "Snagging",
+        "items": [
+          [
+            "Pre-handover snagging inspection done for every unit",
+            "H",
+            "all"
+          ],
+          [
+            "Snagging items listed, categorised (cat A/B/C) and tracked",
+            "H",
+            "all"
+          ],
+          [
+            "Category A (safety/functional) \"items\": 100% closed before handover",
+            "H",
+            "all"
+          ],
+          [
+            "Category B (workmanship) \"items\": >95% closed before handover",
+            "H",
+            "all"
+          ],
+          [
+            "Final joint snagging walk with client/purchaser done",
+            "H",
+            "all"
+          ],
+          [
+            "Defect liability period (DLP) process and contact communicated",
+            "H",
+            "all"
+          ]
+        ]
+      },
+      {
+        "sub": "Documentation & Certificates",
+        "items": [
+          [
+            "Occupancy certificate (OC/completion certificate) from local authority",
+            "H",
+            "all"
+          ],
+          [
+            "Fire NOC from fire department obtained",
+            "H",
+            "all"
+          ],
+          [
+            "Lift inspection certificate obtained",
+            "H",
+            "all"
+          ],
+          [
+            "Electrical installation test certificate from electrical inspector",
+            "H",
+            "all"
+          ],
+          [
+            "BIS/IS test certificates for major materials compiled",
+            "H",
+            "all"
+          ],
+          [
+            "As-built drawings: full set hard copy + soft copy handed over",
+            "H",
+            "all"
+          ],
+          [
+            "O&M manuals for all equipment handed over",
+            "H",
+            "all"
+          ],
+          [
+            "Warranty certificates from all vendors compiled",
+            "H",
+            "all"
+          ],
+          [
+            "IGBC/GRIHA/LEED certification documentation submitted",
+            "M",
+            "all"
+          ],
+          [
+            "Society/AOA or hotel brand handover meeting conducted",
+            "H",
+            "all"
+          ],
+          [
+            "Defect reporting contact and process communicated to residents",
+            "H",
+            "all"
+          ]
+        ]
+      },
+      {
+        "sub": "Post-Handover",
+        "items": [
+          [
+            "Facility management team trained on all systems",
+            "H",
+            "all"
+          ],
+          [
+            "AMC contracts for lifts, HVAC, STP, DG, BMS in place",
+            "H",
+            "all"
+          ],
+          [
+            "Spare parts list and initial inventory handed over",
+            "H",
+            "all"
+          ],
+          [
+            "Emergency contact list posted in all plant rooms",
+            "H",
+            "all"
+          ],
+          [
+            "Water quality test after handover",
+            "H",
+            "all"
+          ],
+          [
+            "Post-occupancy review at 3 months and 12 months scheduled",
+            "M",
+            "all"
+          ]
+        ]
+      }
+    ]
+  }
+]

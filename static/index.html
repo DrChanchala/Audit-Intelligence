@@ -1,0 +1,1155 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full bg-white">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PyCray_SiteIQ — Dual-Mode AI Construction Progress Platform</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50:  '#eff6ff',
+                            100: '#dbeafe',
+                            200: '#bfdbfe',
+                            300: '#93c5fd',
+                            400: '#60a5fa',
+                            500: '#3b82f6',
+                            600: '#2563eb',
+                            700: '#1d4ed8',
+                            800: '#1e40af',
+                            900: '#1e3a8a',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Aptos', 'Segoe UI', 'system-ui', '-apple-system', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace']
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="/static/css/styles.css">
+</head>
+<body class="h-full flex flex-col bg-white text-black overflow-hidden font-sans">
+
+    <!-- ═══════════════════════════════════════════════════════════ TOP HEADER -->
+    <header class="h-16 bg-white border-b border-blue-200 flex items-center justify-between px-6 shrink-0 z-30 shadow-sm">
+        <div class="flex items-center gap-4">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-xl bg-blue-700 flex items-center justify-center shadow-md">
+                    <i class="fas fa-building-shield text-white text-lg"></i>
+                </div>
+                <div>
+                    <h1 class="font-extrabold text-lg tracking-tight text-black flex items-center gap-2">
+                        PyCray_SiteIQ
+                        <span class="text-[11px] bg-blue-100 text-black border border-blue-300 px-2 py-0.5 rounded font-mono font-bold">
+                            DUAL-MODE AI
+                        </span>
+                    </h1>
+                    <p class="text-[11px] text-gray-700 font-medium">Grand Horizon Residential Towers • L4 Baseline Rev 1.0</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="flex items-center gap-5">
+            <!-- Mode A Status Indicator -->
+            <div class="hidden lg:flex items-center gap-2 bg-blue-50 border border-blue-300 px-3 py-1.5 rounded-lg text-xs">
+                <span class="w-2.5 h-2.5 rounded-full bg-blue-600 animate-pulse"></span>
+                <span class="text-black font-semibold">Mode A (Cameras): Automated Active</span>
+            </div>
+
+            <!-- Mode B Status Indicator -->
+            <div class="hidden lg:flex items-center gap-2 bg-white border border-blue-300 px-3 py-1.5 rounded-lg text-xs">
+                <i class="fas fa-user-check text-blue-700"></i>
+                <span class="text-black font-semibold">Mode B: Human-in-the-Loop</span>
+            </div>
+
+            <!-- Gemini AI Model Indicator & Config -->
+            <button onclick="window.app.openGeminiSettingsModal()" class="flex items-center gap-2 bg-blue-50 hover:bg-blue-100 border border-blue-300 px-3 py-1.5 rounded-lg text-xs font-bold text-black transition">
+                <i class="fas fa-robot text-blue-700"></i>
+                <span id="header-gemini-status">Model: Gemini</span>
+            </button>
+
+            <!-- Role Switcher -->
+            <div class="flex items-center gap-2 bg-blue-50 border border-blue-300 rounded-lg p-1">
+                <label for="role-switcher" class="text-xs text-black pl-2 font-bold flex items-center gap-1">
+                    <i class="fas fa-user-gear text-blue-700"></i> Role:
+                </label>
+                <select id="role-switcher" class="bg-white text-black text-xs font-bold rounded px-2.5 py-1 focus:outline-none border border-blue-300">
+                    <option value="Project Manager" selected>Project Manager</option>
+                    <option value="Field Operator">Field Operator</option>
+                    <option value="Civil/Site Engineer">Civil/Site Engineer</option>
+                    <option value="QA/QC Engineer">QA/QC Engineer</option>
+                    <option value="Safety Officer">Safety Officer</option>
+                    <option value="Admin">Admin</option>
+                </select>
+            </div>
+
+            <div class="flex items-center gap-3 border-l border-blue-200 pl-4">
+                <button onclick="window.app.openProductVideoModal()"
+                        title="Watch SiteIQ Showcase Video (with your images & voiceover)"
+                        class="text-xs bg-blue-700 hover:bg-blue-800 text-white px-3 py-1.5 rounded-lg font-bold transition flex items-center gap-1.5 shadow-sm">
+                    <i class="fas fa-circle-play text-white"></i> Watch SiteIQ Video
+                </button>
+                <button onclick="fetch('/api/seed', {method:'POST'}).then(() => window.location.reload())"
+                        title="Reset &amp; Re-seed Dual-Mode Data"
+                        class="text-xs bg-blue-50 hover:bg-blue-100 text-black border border-blue-300 px-2.5 py-1.5 rounded font-bold transition flex items-center gap-1.5">
+                    <i class="fas fa-sync-alt text-blue-700"></i> Reset Demo Data
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- ═══════════════════════════════════════════════════════════ MAIN CONTAINER -->
+    <div class="flex-1 flex overflow-hidden">
+
+        <!-- ─────────────────────────────────────────────────── SIDEBAR NAV -->
+        <aside class="w-64 bg-white border-r border-blue-200 flex flex-col shrink-0">
+            <nav class="flex-1 p-3 space-y-1 overflow-y-auto">
+
+                <!-- Section: Project Setup -->
+                <div class="text-[10px] font-bold uppercase tracking-wider text-blue-900 px-3 pt-2 pb-1">Project Baseline</div>
+                <a href="#" data-nav="schedule-upload"
+                   class="flex items-center gap-3 px-3 py-2 rounded-lg text-xs font-bold text-black hover:bg-blue-50 border border-transparent hover:border-blue-200 transition">
+                    <i class="fas fa-file-excel w-4 text-center text-blue-700"></i> Upload L4 Schedule
+                </a>
+
+                <!-- Section: Dashboard -->
+                <div class="text-[10px] font-bold uppercase tracking-wider text-blue-900 px-3 pt-3 pb-1">Executive Control</div>
+                <a href="#" data-nav="dashboard"
+                   class="flex items-center gap-3 px-3 py-2 rounded-lg text-xs font-bold bg-blue-600 text-white transition">
+                    <i class="fas fa-chart-pie w-4 text-center"></i> 4-Way Progress Dashboard
+                </a>
+
+                <!-- Section: Mode A -->
+                <div class="text-[10px] font-bold uppercase tracking-wider text-blue-900 px-3 pt-3 pb-1 flex items-center justify-between">
+                    <span>Mode A: Automated AI</span>
+                    <span class="text-[9px] bg-blue-100 text-blue-800 px-1.5 py-0.2 rounded font-mono">CAMERAS</span>
+                </div>
+                <a href="#" data-nav="ai-progress"
+                   class="flex items-center gap-3 px-3 py-2 rounded-lg text-xs font-bold text-black hover:bg-blue-50 border border-transparent hover:border-blue-200 transition">
+                    <i class="fas fa-microchip w-4 text-center text-blue-700"></i> AI Automated Stream
+                </a>
+                <a href="#" data-nav="cameras"
+                   class="flex items-center gap-3 px-3 py-2 rounded-lg text-xs font-bold text-black hover:bg-blue-50 border border-transparent hover:border-blue-200 transition">
+                    <i class="fas fa-video w-4 text-center text-blue-700"></i> Fixed Site Cameras
+                </a>
+                <a href="#" data-nav="timelapse"
+                   class="flex items-center gap-3 px-3 py-2 rounded-lg text-xs font-bold text-black hover:bg-blue-50 border border-transparent hover:border-blue-200 transition">
+                    <i class="fas fa-history w-4 text-center text-blue-700"></i> Time-Lapse Player
+                </a>
+
+                <!-- Section: Mode B -->
+                <div class="text-[10px] font-bold uppercase tracking-wider text-blue-900 px-3 pt-3 pb-1 flex items-center justify-between">
+                    <span>Mode B: Human-Verified</span>
+                    <span class="text-[9px] bg-blue-100 text-blue-800 px-1.5 py-0.2 rounded font-mono">FIELD+PM</span>
+                </div>
+                <a href="#" data-nav="field-capture"
+                   class="flex items-center gap-3 px-3 py-2 rounded-lg text-xs font-bold text-black hover:bg-blue-50 border border-transparent hover:border-blue-200 transition">
+                    <i class="fas fa-camera w-4 text-center text-blue-700"></i> Field Photo Capture
+                </a>
+                <a href="#" data-nav="pm-reviews"
+                   class="flex items-center justify-between px-3 py-2 rounded-lg text-xs font-bold text-black hover:bg-blue-50 border border-transparent hover:border-blue-200 transition">
+                    <div class="flex items-center gap-3">
+                        <i class="fas fa-user-check w-4 text-center text-blue-700"></i> PM Review Queue
+                    </div>
+                    <span id="nav-pending-pm-badge" class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-blue-600 text-white">2</span>
+                </a>
+                <a href="#" data-nav="pm-progress"
+                   class="flex items-center gap-3 px-3 py-2 rounded-lg text-xs font-bold text-black hover:bg-blue-50 border border-transparent hover:border-blue-200 transition">
+                    <i class="fas fa-stamp w-4 text-center text-blue-700"></i> PM-Approved Progress
+                </a>
+
+                <!-- Section: Operations -->
+                <div class="text-[10px] font-bold uppercase tracking-wider text-blue-900 px-3 pt-3 pb-1">Site &amp; Quality</div>
+                <a href="#" data-nav="wbs"
+                   class="flex items-center gap-3 px-3 py-2 rounded-lg text-xs font-bold text-black hover:bg-blue-50 border border-transparent hover:border-blue-200 transition">
+                    <i class="fas fa-sitemap w-4 text-center text-blue-700"></i> WBS &amp; Matrix
+                </a>
+                <a href="#" data-nav="completion"
+                   class="flex items-center gap-3 px-3 py-2 rounded-lg text-xs font-bold text-black hover:bg-blue-50 border border-transparent hover:border-blue-200 transition">
+                    <i class="fas fa-layer-group w-4 text-center text-blue-700"></i> Floor Heatmap
+                </a>
+                <a href="#" data-nav="agent"
+                   class="flex items-center gap-3 px-3 py-2 rounded-lg text-xs font-bold text-black hover:bg-blue-50 border border-transparent hover:border-blue-200 transition">
+                    <i class="fas fa-robot w-4 text-center text-blue-700"></i> AI Project Agent
+                </a>
+                <a href="#" data-nav="qaqc"
+                   class="flex items-center gap-3 px-3 py-2 rounded-lg text-xs font-bold text-black hover:bg-blue-50 border border-transparent hover:border-blue-200 transition">
+                    <i class="fas fa-clipboard-check w-4 text-center text-blue-700"></i> QA/QC &amp; NCRs
+                </a>
+                <a href="#" data-nav="safety"
+                   class="flex items-center gap-3 px-3 py-2 rounded-lg text-xs font-bold text-black hover:bg-blue-50 border border-transparent hover:border-blue-200 transition">
+                    <i class="fas fa-hard-hat w-4 text-center text-blue-700"></i> Safety Hub
+                </a>
+                <a href="#" data-nav="procurement"
+                   class="flex items-center gap-3 px-3 py-2 rounded-lg text-xs font-bold text-black hover:bg-blue-50 border border-transparent hover:border-blue-200 transition">
+                    <i class="fas fa-boxes-stacked w-4 text-center text-blue-700"></i> Materials
+                </a>
+                <a href="#" data-nav="rfis"
+                   class="flex items-center gap-3 px-3 py-2 rounded-lg text-xs font-bold text-black hover:bg-blue-50 border border-transparent hover:border-blue-200 transition">
+                    <i class="fas fa-circle-question w-4 text-center text-blue-700"></i> RFIs
+                </a>
+
+                <!-- Reports -->
+                <div class="text-[10px] font-bold uppercase tracking-wider text-blue-900 px-3 pt-3 pb-1">Reports</div>
+                <a href="/api/reports/download?report_type=progress" target="_blank"
+                   class="flex items-center gap-3 px-3 py-2 rounded-lg text-xs font-bold text-black hover:bg-blue-50 border border-transparent hover:border-blue-200 transition">
+                    <i class="fas fa-file-export w-4 text-center text-blue-700"></i> Export Excel Report
+                </a>
+            </nav>
+
+            <div class="p-3 border-t border-blue-200 bg-blue-50">
+                <div class="text-[11px] text-gray-700 font-bold">Dual-Truth Philosophy:</div>
+                <div class="text-[10px] text-black font-medium mt-0.5">Mode A (Continuous AI) + Mode B (PM Approved)</div>
+            </div>
+        </aside>
+
+        <!-- ─────────────────────────────────────────────────── MAIN CONTENT -->
+        <main class="flex-1 overflow-y-auto p-6 bg-blue-50/40">
+
+            <!-- ════════════════ 1. EXECUTIVE DASHBOARD ════════════════ -->
+            <section id="view-dashboard" class="view-section space-y-6">
+
+                <!-- 4-WAY PROGRESS HERO BANNER (Spec §20, §41, §42) -->
+                <div class="glass-card p-5 rounded-xl border border-blue-300">
+                    <div class="flex items-center justify-between pb-3 border-b border-blue-100">
+                        <div>
+                            <h2 class="text-base font-extrabold text-black flex items-center gap-2">
+                                <i class="fas fa-arrows-split-up-and-left text-blue-700"></i>
+                                Integrated Project Progress — 4-Stream Truth Dashboard
+                            </h2>
+                            <p class="text-xs text-gray-700">Independent traceable progress streams evaluated against the same L4 baseline schedule</p>
+                        </div>
+                        <span class="text-xs font-mono font-bold text-black bg-blue-100 border border-blue-300 px-3 py-1 rounded">
+                            Governance: Dual-Track
+                        </span>
+                    </div>
+
+                    <!-- 4 Progress Cards Row -->
+                    <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mt-4">
+
+                        <!-- Stream 1: Planned Progress -->
+                        <div class="p-4 bg-white border border-blue-200 rounded-xl shadow-sm">
+                            <div class="flex items-center justify-between text-xs text-gray-700 font-bold">
+                                <span>Planned Progress</span>
+                                <i class="fas fa-calendar-alt text-blue-700"></i>
+                            </div>
+                            <div id="kpi-planned-progress" class="text-3xl font-extrabold text-black font-mono mt-2">--%</div>
+                            <div class="mt-2 text-[11px] text-gray-700 flex items-center justify-between border-t border-blue-100 pt-1.5">
+                                <span>Source: L4 Baseline</span>
+                                <span class="font-bold text-blue-800">Target</span>
+                            </div>
+                        </div>
+
+                        <!-- Stream 2: Mode A AI Automated Progress -->
+                        <div class="p-4 bg-white border-2 border-blue-500 rounded-xl shadow-sm relative">
+                            <div class="absolute top-2 right-2 flex items-center gap-1 text-[9px] bg-blue-100 text-blue-900 border border-blue-300 px-1.5 py-0.5 rounded font-bold">
+                                <span class="w-2 h-2 rounded-full bg-blue-600 animate-pulse"></span> LIVE AI
+                            </div>
+                            <div class="text-xs text-gray-700 font-bold">
+                                <span>AI Automated Progress</span>
+                            </div>
+                            <div id="kpi-ai-progress" class="text-3xl font-extrabold text-black font-mono mt-2">--%</div>
+                            <div class="mt-2 text-[11px] text-gray-700 flex items-center justify-between border-t border-blue-100 pt-1.5">
+                                <span>Source: Static Cameras</span>
+                                <span class="font-bold text-blue-800">Automated</span>
+                            </div>
+                        </div>
+
+                        <!-- Stream 3: Mode B Field Observed Progress -->
+                        <div class="p-4 bg-white border border-blue-200 rounded-xl shadow-sm">
+                            <div class="flex items-center justify-between text-xs text-gray-700 font-bold">
+                                <span>Field Observed Progress</span>
+                                <i class="fas fa-camera text-blue-700"></i>
+                            </div>
+                            <div id="kpi-field-progress" class="text-3xl font-extrabold text-black font-mono mt-2">--%</div>
+                            <div class="mt-2 text-[11px] text-gray-700 flex items-center justify-between border-t border-blue-100 pt-1.5">
+                                <span>Source: Field Operator</span>
+                                <span class="font-bold text-blue-800">Pre-Review</span>
+                            </div>
+                        </div>
+
+                        <!-- Stream 4: Mode B PM Approved Progress -->
+                        <div class="p-4 bg-white border-2 border-black rounded-xl shadow-sm">
+                            <div class="flex items-center justify-between text-xs text-gray-700 font-bold">
+                                <span>PM Approved Progress</span>
+                                <i class="fas fa-stamp text-blue-700"></i>
+                            </div>
+                            <div id="kpi-pm-progress" class="text-3xl font-extrabold text-black font-mono mt-2">--%</div>
+                            <div class="mt-2 text-[11px] text-gray-700 flex items-center justify-between border-t border-blue-100 pt-1.5">
+                                <span>Source: PM Verified</span>
+                                <span class="font-bold text-blue-800">Approved</span>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- S-Curve + Discrepancy Alert Row -->
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+
+                    <!-- S-Curve Chart (2 cols) -->
+                    <div class="lg:col-span-2 glass-card p-5 rounded-xl border border-blue-200 flex flex-col">
+                        <div class="flex items-center justify-between mb-4">
+                            <div>
+                                <h3 class="font-bold text-base text-black flex items-center gap-2">
+                                    <i class="fas fa-chart-line text-blue-700"></i>
+                                    Dual-Mode S-Curve: Planned vs AI vs Field vs PM Approved
+                                </h3>
+                                <p class="text-xs text-gray-700">Quantity-weighted timeline comparisons across the 4 progress streams</p>
+                            </div>
+                        </div>
+                        <div class="flex-1 h-72">
+                            <canvas id="s-curve-chart"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- Discrepancy Sentinel & PM Queue (1 col) -->
+                    <div class="glass-card p-5 rounded-xl border border-blue-200 flex flex-col">
+                        <div class="flex items-center justify-between pb-3 border-b border-blue-100 mb-3">
+                            <h3 class="font-bold text-base text-black flex items-center gap-2">
+                                <i class="fas fa-triangle-exclamation text-blue-700"></i> Discrepancy Sentinel
+                            </h3>
+                            <span class="text-xs font-mono font-bold bg-blue-100 text-blue-900 border border-blue-300 px-2 py-0.5 rounded">
+                                Spec §32
+                            </span>
+                        </div>
+                        <div id="discrepancy-container" class="space-y-2.5 overflow-y-auto max-h-72 pr-1 text-xs">
+                            <!-- Populated via JS -->
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Stage Progress Table -->
+                <div class="glass-card p-5 rounded-xl border border-blue-200">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="font-bold text-base text-black flex items-center gap-2">
+                            <i class="fas fa-list-ol text-blue-700"></i> 10 Construction Stages — 4-Stream Breakdown
+                        </h3>
+                        <span class="text-xs text-gray-700 font-mono font-bold">Sum of Weightages = 100.0%</span>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left">
+                            <thead class="bg-blue-900 text-xs font-bold uppercase text-white">
+                                <tr>
+                                    <th class="py-3 px-4">Stage Name</th>
+                                    <th class="py-3 px-4 text-center">Weight %</th>
+                                    <th class="py-3 px-4 text-center">Planned %</th>
+                                    <th class="py-3 px-4 text-center">Mode A (AI) %</th>
+                                    <th class="py-3 px-4 text-center">Field Observed %</th>
+                                    <th class="py-3 px-4 text-center">PM Approved %</th>
+                                    <th class="py-3 px-4 text-center">Variance (AI vs PM)</th>
+                                </tr>
+                            </thead>
+                            <tbody id="stage-progress-tbody" class="divide-y divide-blue-100 text-sm">
+                                <!-- Populated via JS -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </section>
+
+            <!-- ════════════════ 2. L4 SCHEDULE UPLOAD (Spec §3-§5) ════════════════ -->
+            <section id="view-schedule-upload" class="view-section hidden space-y-6">
+                <div class="glass-card p-6 rounded-xl border border-blue-200">
+                    <div class="pb-4 border-b border-blue-100 mb-6">
+                        <h2 class="text-lg font-extrabold text-black flex items-center gap-2">
+                            <i class="fas fa-file-excel text-blue-700"></i> L4 Construction Schedule Upload &amp; Baseline Engine
+                        </h2>
+                        <p class="text-xs text-gray-700">Upload your master construction schedule (.xlsx) with 68 canonical columns. The AI parses and validates the WBS, BOQ items, quantities, durations, and weights before setting the baseline.</p>
+                    </div>
+
+                    <!-- Upload Form & Current Baseline Status -->
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+                        <!-- Dropzone -->
+                        <div class="md:col-span-2 p-6 bg-white border-2 border-dashed border-blue-400 rounded-xl flex flex-col items-center justify-center text-center">
+                            <div class="w-16 h-16 rounded-full bg-blue-50 border border-blue-200 flex items-center justify-center text-blue-700 text-2xl mb-3">
+                                <i class="fas fa-cloud-arrow-up"></i>
+                            </div>
+                            <h3 class="font-bold text-sm text-black">Select or Drag &amp; Drop L4 Schedule Excel</h3>
+                            <p class="text-xs text-gray-700 mt-1 mb-4">Supports .xlsx, .xls and .csv (e.g. BuildTrack_L4_Master_Schedule.xlsx)</p>
+                            <input type="file" id="schedule-file-input" accept=".xlsx,.xls,.csv" class="hidden">
+                            <div class="flex gap-3">
+                                <button onclick="document.getElementById('schedule-file-input').click()"
+                                        class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs rounded-lg transition flex items-center gap-2">
+                                    <i class="fas fa-folder-open"></i> Browse File
+                                </button>
+                                <button id="btn-upload-schedule" onclick="window.app.uploadScheduleFile()"
+                                        class="px-4 py-2 bg-white hover:bg-blue-50 text-black border border-blue-400 font-bold text-xs rounded-lg transition flex items-center gap-2">
+                                    <i class="fas fa-upload"></i> Parse &amp; Validate
+                                </button>
+                            </div>
+                            <div id="schedule-selected-filename" class="text-xs font-mono text-black font-bold mt-3"></div>
+                        </div>
+
+                        <!-- Current Baseline Card -->
+                        <div class="p-5 bg-white border border-blue-200 rounded-xl">
+                            <h4 class="font-bold text-xs uppercase tracking-wider text-black mb-3 flex items-center gap-1.5">
+                                <i class="fas fa-certificate text-blue-700"></i> Active Project Baseline
+                            </h4>
+                            <div id="baseline-status-box" class="space-y-2 text-xs">
+                                <div class="p-3 bg-blue-50 border border-blue-200 rounded">
+                                    <div class="text-gray-700">Revision:</div>
+                                    <div id="base-ver" class="font-bold text-black font-mono">Rev 1.0 (CONFIRMED)</div>
+                                </div>
+                                <div class="p-3 bg-blue-50 border border-blue-200 rounded">
+                                    <div class="text-gray-700">Total Activities:</div>
+                                    <div id="base-count" class="font-bold text-black font-mono">311 Activities</div>
+                                </div>
+                                <div class="p-3 bg-blue-50 border border-blue-200 rounded">
+                                    <div class="text-gray-700">Total WBS Weight:</div>
+                                    <div id="base-weight" class="font-bold text-black font-mono">100.0000%</div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- Validation Report & Confirmation Panel (Hidden initially) -->
+                    <div id="schedule-validation-panel" class="hidden mt-6 space-y-4">
+                        <div class="p-4 bg-white border border-blue-300 rounded-xl">
+                            <div class="flex items-center justify-between pb-3 border-b border-blue-100">
+                                <h3 class="font-bold text-sm text-black flex items-center gap-2">
+                                    <i class="fas fa-check-double text-blue-700"></i> Validation Summary &amp; Health Check
+                                </h3>
+                                <button id="btn-confirm-baseline" onclick="window.app.confirmBaseline()"
+                                        class="px-5 py-2 bg-blue-700 hover:bg-blue-800 text-white text-xs font-bold rounded-lg transition shadow-md flex items-center gap-2">
+                                    <i class="fas fa-stamp"></i> Confirm as Active Baseline
+                                </button>
+                            </div>
+                            <div class="grid grid-cols-4 gap-4 mt-3 text-center text-xs">
+                                <div class="p-2 bg-blue-50 border border-blue-200 rounded">
+                                    <div class="text-gray-700">Total Rows</div>
+                                    <div id="val-total-rows" class="font-extrabold text-black font-mono text-base">--</div>
+                                </div>
+                                <div class="p-2 bg-blue-50 border border-blue-200 rounded">
+                                    <div class="text-gray-700">Valid Rows</div>
+                                    <div id="val-valid-rows" class="font-extrabold text-black font-mono text-base">--</div>
+                                </div>
+                                <div class="p-2 bg-blue-50 border border-blue-200 rounded">
+                                    <div class="text-gray-700">Errors</div>
+                                    <div id="val-errors" class="font-extrabold text-black font-mono text-base">--</div>
+                                </div>
+                                <div class="p-2 bg-blue-50 border border-blue-200 rounded">
+                                    <div class="text-gray-700">Sum of Weights</div>
+                                    <div id="val-weight" class="font-extrabold text-black font-mono text-base">--%</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Preview Table -->
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-left">
+                                <thead class="bg-blue-900 text-xs font-bold uppercase text-white">
+                                    <tr>
+                                        <th class="py-2.5 px-3">Code</th>
+                                        <th class="py-2.5 px-3">Activity Description</th>
+                                        <th class="py-2.5 px-3">Building/Floor</th>
+                                        <th class="py-2.5 px-3 text-right">Planned Qty</th>
+                                        <th class="py-2.5 px-3">UOM</th>
+                                        <th class="py-2.5 px-3 text-right">Weight %</th>
+                                        <th class="py-2.5 px-3">Planned Start</th>
+                                        <th class="py-2.5 px-3">Planned Finish</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="schedule-preview-tbody" class="divide-y divide-blue-100 text-xs">
+                                    <!-- Populated via JS -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ════════════════ 3. MODE A: AI AUTOMATED PROGRESS STREAM (Spec §6-§11) ════════════════ -->
+            <section id="view-ai-progress" class="view-section hidden space-y-6">
+                <div class="glass-card p-6 rounded-xl border border-blue-200">
+                    <div class="flex items-center justify-between pb-4 border-b border-blue-100 mb-6">
+                        <div>
+                            <h2 class="text-lg font-extrabold text-black flex items-center gap-2">
+                                <i class="fas fa-microchip text-blue-700"></i> Mode A — Automated AI Project Progress
+                            </h2>
+                            <p class="text-xs text-gray-700">Live operational view continuously derived from fixed site camera streams evaluated against L4 baseline schedule. No human approval required.</p>
+                        </div>
+                        <span class="text-xs font-bold bg-blue-100 text-blue-900 border border-blue-300 px-3 py-1 rounded">
+                            Spec §6–§11 Autonomous
+                        </span>
+                    </div>
+
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left">
+                            <thead class="bg-blue-900 text-xs font-bold uppercase text-white">
+                                <tr>
+                                    <th class="py-3 px-4">Activity Code</th>
+                                    <th class="py-3 px-4">Activity Name</th>
+                                    <th class="py-3 px-4">Location</th>
+                                    <th class="py-3 px-4 text-center">Planned Target</th>
+                                    <th class="py-3 px-4 text-center">AI Observable Progress</th>
+                                    <th class="py-3 px-4 text-center">AI Confidence</th>
+                                    <th class="py-3 px-4 text-center">Schedule Variance</th>
+                                    <th class="py-3 px-4 text-center">Coverage Source</th>
+                                </tr>
+                            </thead>
+                            <tbody id="ai-progress-tbody" class="divide-y divide-blue-100 text-xs">
+                                <!-- Populated via JS -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ════════════════ 4. MODE B: FIELD PHOTO CAPTURE (Spec §12-§16) ════════════════ -->
+            <section id="view-field-capture" class="view-section hidden space-y-6">
+                <div class="glass-card p-6 rounded-xl border border-blue-200 max-w-4xl mx-auto">
+                    <div class="pb-4 border-b border-blue-100 mb-6">
+                        <h2 class="text-lg font-extrabold text-black flex items-center gap-2">
+                            <i class="fas fa-camera text-blue-700"></i> Mode B — Field Operator Photographic Evidence Capture
+                        </h2>
+                        <p class="text-xs text-gray-700">Capture or upload field evidence. The AI verifies construction validity, checks context relevance against the selected L4 activity, and produces a structured observation for Project Manager review.</p>
+                    </div>
+
+                    <!-- Step-by-Step Form -->
+                    <div class="space-y-5">
+
+                        <!-- Step 1: Context Selection -->
+                        <div class="p-4 bg-white border border-blue-200 rounded-xl space-y-3">
+                            <h3 class="font-bold text-xs uppercase tracking-wider text-black flex items-center gap-1.5">
+                                <span class="w-5 h-5 rounded-full bg-blue-700 text-white flex items-center justify-center text-[10px]">1</span>
+                                Select L4 Activity &amp; Project Location (Spec §12)
+                            </h3>
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+                                <div>
+                                    <label class="block text-[11px] font-bold text-black mb-1">Building / Tower</label>
+                                    <select id="fld-tower" class="w-full bg-blue-50 border border-blue-300 rounded-lg p-2 text-xs font-semibold text-black focus:outline-none">
+                                        <option value="TOW-A">Tower A (20 Floors)</option>
+                                        <option value="TOW-B">Tower B (15 Floors)</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block text-[11px] font-bold text-black mb-1">Floor Level</label>
+                                    <select id="fld-floor" class="w-full bg-blue-50 border border-blue-300 rounded-lg p-2 text-xs font-semibold text-black focus:outline-none">
+                                        <option value="5">Level 5 (Masonry Zone)</option>
+                                        <option value="11">Level 11 (AAC Blockwork)</option>
+                                        <option value="12" selected>Level 12 (Active Slab Deck)</option>
+                                        <option value="1">Level 1 (Ground Entrance)</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block text-[11px] font-bold text-black mb-1">Zone / Unit</label>
+                                    <input type="text" id="fld-zone" value="Core / Unit 12B"
+                                           class="w-full bg-blue-50 border border-blue-300 rounded-lg p-2 text-xs font-semibold text-black focus:outline-none">
+                                </div>
+                            </div>
+                            <div>
+                                <label class="block text-[11px] font-bold text-black mb-1">L4 Target Activity</label>
+                                <select id="fld-activity-select" class="w-full bg-blue-50 border border-blue-300 rounded-lg p-2 text-xs font-semibold text-black focus:outline-none">
+                                    <!-- Populated dynamically -->
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Step 2: Photo Capture -->
+                        <div class="p-4 bg-white border border-blue-200 rounded-xl space-y-3">
+                            <h3 class="font-bold text-xs uppercase tracking-wider text-black flex items-center gap-1.5">
+                                <span class="w-5 h-5 rounded-full bg-blue-700 text-white flex items-center justify-center text-[10px]">2</span>
+                                Capture or Upload Site Photograph (Spec §13)
+                            </h3>
+                            <div class="flex items-center gap-4">
+                                <input type="file" id="fld-photo-file" accept="image/*" class="hidden" onchange="window.app.onFieldPhotoPicked(event)">
+                                <button onclick="document.getElementById('fld-photo-file').click()"
+                                        class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold rounded-lg transition flex items-center gap-2">
+                                    <i class="fas fa-camera"></i> Choose / Take Photo
+                                </button>
+                                <span id="fld-photo-name" class="text-xs font-mono text-black font-bold">No file selected</span>
+                            </div>
+                            <div id="fld-photo-preview-container" class="hidden mt-3 h-48 w-full max-w-sm rounded-lg overflow-hidden border border-blue-300">
+                                <img id="fld-photo-preview" src="" class="w-full h-full object-cover" alt="Preview">
+                            </div>
+                        </div>
+
+                        <!-- Step 3: Measured Quantity (Optional) -->
+                        <div class="p-4 bg-white border border-blue-200 rounded-xl space-y-3">
+                            <h3 class="font-bold text-xs uppercase tracking-wider text-black flex items-center gap-1.5">
+                                <span class="w-5 h-5 rounded-full bg-blue-700 text-white flex items-center justify-center text-[10px]">3</span>
+                                Field Measured Quantity &amp; Remarks (Spec §16)
+                            </h3>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                                <div>
+                                    <label class="block text-[11px] font-bold text-black mb-1">Measured Quantity</label>
+                                    <input type="number" step="0.1" id="fld-operator-qty" value="120.0"
+                                           class="w-full bg-blue-50 border border-blue-300 rounded-lg p-2 text-xs font-mono font-bold text-black focus:outline-none">
+                                </div>
+                                <div>
+                                    <label class="block text-[11px] font-bold text-black mb-1">Operator Notes</label>
+                                    <input type="text" id="fld-operator-remarks" value="Formwork and top rebar mesh tied in accordance with drawing."
+                                           class="w-full bg-blue-50 border border-blue-300 rounded-lg p-2 text-xs text-black focus:outline-none">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Submit Button -->
+                        <div class="flex justify-end gap-3 pt-2">
+                            <button id="btn-submit-field-photo" onclick="window.app.submitFieldPhoto()"
+                                    class="px-6 py-2.5 bg-blue-700 hover:bg-blue-800 text-white font-bold text-xs rounded-lg transition shadow-md flex items-center gap-2">
+                                <i class="fas fa-brain"></i> Validate with AI &amp; Submit for PM Review
+                            </button>
+                        </div>
+
+                        <!-- AI Validation Output Result Box -->
+                        <div id="field-validation-result-box" class="hidden p-4 rounded-xl border space-y-3">
+                            <!-- Populated via JS -->
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+
+            <!-- ════════════════ 5. MODE B: PM REVIEW QUEUE (Spec §17-§18, §37) ════════════════ -->
+            <section id="view-pm-reviews" class="view-section hidden space-y-6">
+                <div class="glass-card p-6 rounded-xl border border-blue-200">
+                    <div class="flex items-center justify-between pb-4 border-b border-blue-100 mb-6">
+                        <div>
+                            <h2 class="text-lg font-extrabold text-black flex items-center gap-2">
+                                <i class="fas fa-user-check text-blue-700"></i> Project Manager Review Queue — Human-in-the-Loop
+                            </h2>
+                            <p class="text-xs text-gray-700">Review field evidence submitted by operators. Compare photograph vs L4 schedule target, verify AI visual estimation, and approve or adjust quantity.</p>
+                        </div>
+                        <div class="flex gap-2 text-xs">
+                            <button onclick="window.app.loadPMReviews('PENDING')" class="px-3 py-1.5 bg-blue-600 text-white font-bold rounded">Pending Review</button>
+                            <button onclick="window.app.loadPMReviews('APPROVED')" class="px-3 py-1.5 bg-white text-black border border-blue-300 hover:bg-blue-50 font-bold rounded">Approved History</button>
+                        </div>
+                    </div>
+
+                    <div id="pm-reviews-container" class="space-y-4">
+                        <!-- Populated via JS -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- ════════════════ 6. MODE B: PM-APPROVED PROGRESS (Spec §18, §24) ════════════════ -->
+            <section id="view-pm-progress" class="view-section hidden space-y-6">
+                <div class="glass-card p-6 rounded-xl border border-blue-200">
+                    <div class="pb-4 border-b border-blue-100 mb-6">
+                        <h2 class="text-lg font-extrabold text-black flex items-center gap-2">
+                            <i class="fas fa-stamp text-blue-700"></i> Human-Verified / PM-Approved Official Progress
+                        </h2>
+                        <p class="text-xs text-gray-700">The organization's audited and verified construction progress record. Stored independently from automated camera AI progress with full chain-of-custody.</p>
+                    </div>
+
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left">
+                            <thead class="bg-blue-900 text-xs font-bold uppercase text-white">
+                                <tr>
+                                    <th class="py-3 px-4">Activity</th>
+                                    <th class="py-3 px-4">Location</th>
+                                    <th class="py-3 px-4 text-center">Planned Qty</th>
+                                    <th class="py-3 px-4 text-center">AI Visual %</th>
+                                    <th class="py-3 px-4 text-center">Operator Qty</th>
+                                    <th class="py-3 px-4 text-center">PM Approved Qty</th>
+                                    <th class="py-3 px-4 text-center">Approved Progress %</th>
+                                    <th class="py-3 px-4">Approved By</th>
+                                    <th class="py-3 px-4">Audit Timestamp</th>
+                                </tr>
+                            </thead>
+                            <tbody id="pm-progress-tbody" class="divide-y divide-blue-100 text-xs">
+                                <!-- Populated via JS -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ════════════════ 7. WBS & MATRIX ════════════════ -->
+            <section id="view-wbs" class="view-section hidden space-y-6">
+                <div class="glass-card p-5 rounded-xl border border-blue-200">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="font-bold text-base text-black flex items-center gap-2">
+                            <i class="fas fa-sitemap text-blue-700"></i> Work Breakdown Structure &amp; Master Activities Matrix
+                        </h3>
+                        <button onclick="window.app.loadActivities()"
+                                class="px-3 py-1.5 bg-white hover:bg-blue-50 text-black text-xs font-bold rounded border border-blue-300 transition">
+                            <i class="fas fa-sync-alt text-blue-700"></i> Refresh
+                        </button>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left">
+                            <thead class="bg-blue-900 text-xs font-bold uppercase text-white">
+                                <tr>
+                                    <th class="py-3 px-4">Code</th>
+                                    <th class="py-3 px-4">Activity Name</th>
+                                    <th class="py-3 px-4">Location</th>
+                                    <th class="py-3 px-4 text-right">Planned Qty</th>
+                                    <th class="py-3 px-4 text-right">Reported Qty</th>
+                                    <th class="py-3 px-4 text-right">Accepted Qty</th>
+                                    <th class="py-3 px-4 text-center">Weight %</th>
+                                    <th class="py-3 px-4 text-center">Status</th>
+                                    <th class="py-3 px-4 text-center">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="activities-tbody" class="divide-y divide-blue-100 text-xs"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ════════════════ 8. FLOOR COMPLETION HEATMAP ════════════════ -->
+            <section id="view-completion" class="view-section hidden space-y-6">
+                <div class="glass-card p-5 rounded-xl border border-blue-200">
+                    <div class="mb-4">
+                        <h3 class="font-bold text-base text-black flex items-center gap-2">
+                            <i class="fas fa-layer-group text-blue-700"></i> Floor-by-Floor Completion Matrix
+                        </h3>
+                        <p class="text-xs text-gray-700">Tower A (20 Levels) &amp; Tower B (15 Levels)</p>
+                    </div>
+                    <div id="floor-heatmap-container"><!-- Populated via JS --></div>
+                </div>
+            </section>
+
+            <!-- ════════════════ 9. FIXED SITE CAMERAS ════════════════ -->
+            <section id="view-cameras" class="view-section hidden space-y-6">
+                <div class="glass-card p-5 rounded-xl border border-blue-200">
+                    <div class="mb-4">
+                        <h3 class="font-bold text-base text-black flex items-center gap-2">
+                            <i class="fas fa-video text-blue-700"></i> Fixed Site Cameras &amp; AI Computer Vision Monitor
+                        </h3>
+                        <p class="text-xs text-gray-700">Autonomous edge scanning, PPE compliance, and temporal change tracking</p>
+                    </div>
+                    <div id="cameras-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"></div>
+                </div>
+            </section>
+
+            <!-- ════════════════ 10. TIME-LAPSE PLAYER ════════════════ -->
+            <section id="view-timelapse" class="view-section hidden space-y-6">
+                <div class="glass-card p-5 rounded-xl border border-blue-200">
+                    <div class="mb-4">
+                        <h3 class="font-bold text-base text-black flex items-center gap-2">
+                            <i class="fas fa-history text-blue-700"></i> Time-Lapse Construction Intelligence
+                        </h3>
+                        <p class="text-xs text-gray-700">Location: <span id="timelapse-location" class="font-bold text-black">Tower A Level 12 Slab</span></p>
+                    </div>
+                    <div class="p-4 bg-white rounded-xl border border-blue-200 mb-6">
+                        <div class="text-xs font-bold text-blue-800 uppercase tracking-wider mb-1">
+                            <i class="fas fa-robot text-blue-700"></i> AI Narrative Intelligence Summary
+                        </div>
+                        <p id="timelapse-ai-summary" class="text-sm text-black leading-relaxed font-medium">Loading AI summary...</p>
+                    </div>
+                    <div id="timelapse-frames-container" class="grid grid-cols-1 md:grid-cols-5 gap-4"></div>
+                </div>
+            </section>
+
+            <!-- ════════════════ 11. AI PROJECT AGENT ════════════════ -->
+            <section id="view-agent" class="view-section hidden space-y-6">
+                <div class="glass-card p-5 rounded-xl border border-blue-200 flex flex-col h-[75vh]">
+                    <div class="flex items-center justify-between pb-4 border-b border-blue-200">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-full bg-blue-700 flex items-center justify-center text-white text-lg">
+                                <i class="fas fa-robot"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-bold text-base text-black">PyCray_SiteIQ — Project AI Assistant</h3>
+                                <p class="text-xs text-gray-700">NLP schedule intelligence, daily briefings, and automated risk triage</p>
+                            </div>
+                        </div>
+                        <button onclick="window.app.generateDailyReport()"
+                                class="px-3 py-1.5 bg-blue-700 hover:bg-blue-800 text-white text-xs font-bold rounded flex items-center gap-1.5 transition">
+                            <i class="fas fa-file-alt"></i> Generate Daily Report
+                        </button>
+                    </div>
+
+                    <div id="ai-chat-messages" class="flex-1 overflow-y-auto p-4 space-y-4 bg-white"></div>
+
+                    <div class="p-2 border-t border-blue-200 bg-white flex flex-wrap gap-2 text-xs">
+                        <span class="text-gray-700 font-bold px-1 self-center">Quick Queries:</span>
+                        <button onclick="window.app.sendAIQuery('What is the current discrepancy between AI automated and PM approved progress?')"
+                                class="bg-blue-50 hover:bg-blue-100 text-black px-2.5 py-1 rounded border border-blue-300 font-semibold transition">
+                            "What is the discrepancy between AI and PM progress?"
+                        </button>
+                        <button onclick="window.app.sendAIQuery('Show open items in PM Review queue')"
+                                class="bg-blue-50 hover:bg-blue-100 text-black px-2.5 py-1 rounded border border-blue-300 font-semibold transition">
+                            "Show open items in PM Review queue"
+                        </button>
+                        <button onclick="window.app.sendAIQuery('Why is Tower A Level 12 delayed?')"
+                                class="bg-blue-50 hover:bg-blue-100 text-black px-2.5 py-1 rounded border border-blue-300 font-semibold transition">
+                            "Why is Tower A Level 12 delayed?"
+                        </button>
+                    </div>
+
+                    <div class="p-3 border-t border-blue-200 flex gap-2 bg-white">
+                        <input id="ai-query-input" type="text"
+                               placeholder="Ask the AI agent about L4 schedule, static cameras, or field observations..."
+                               class="flex-1 bg-blue-50 border border-blue-300 rounded-lg px-4 py-2.5 text-sm text-black placeholder-gray-500 focus:outline-none focus:border-blue-500">
+                        <button onclick="window.app.sendAIQuery()"
+                                class="px-5 py-2.5 bg-blue-700 hover:bg-blue-800 text-white font-bold text-sm rounded-lg transition flex items-center gap-2">
+                            Send <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ════════════════ 12. QA/QC & NCRs ════════════════ -->
+            <section id="view-qaqc" class="view-section hidden space-y-6">
+                <div class="glass-card p-5 rounded-xl border border-blue-200">
+                    <h3 class="font-bold text-base text-black mb-4">
+                        <i class="fas fa-clipboard-check text-blue-700 mr-2"></i>Non-Conformance Reports (NCRs)
+                    </h3>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left">
+                            <thead class="bg-blue-900 text-xs font-bold uppercase text-white">
+                                <tr>
+                                    <th class="py-3 px-4">NCR No.</th>
+                                    <th class="py-3 px-4">Location</th>
+                                    <th class="py-3 px-4">Description</th>
+                                    <th class="py-3 px-4">Severity</th>
+                                    <th class="py-3 px-4">Contractor</th>
+                                    <th class="py-3 px-4">Status</th>
+                                </tr>
+                            </thead>
+                            <tbody id="ncrs-tbody"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ════════════════ 13. SAFETY HUB ════════════════ -->
+            <section id="view-safety" class="view-section hidden space-y-6">
+                <div class="glass-card p-5 rounded-xl border border-blue-200">
+                    <h3 class="font-bold text-base text-black mb-4">
+                        <i class="fas fa-hard-hat text-blue-700 mr-2"></i>Site Safety &amp; AI Hazard Log
+                    </h3>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left">
+                            <thead class="bg-blue-900 text-xs font-bold uppercase text-white">
+                                <tr>
+                                    <th class="py-3 px-4">ID</th>
+                                    <th class="py-3 px-4">Location</th>
+                                    <th class="py-3 px-4">Observation / Hazard</th>
+                                    <th class="py-3 px-4">Source</th>
+                                    <th class="py-3 px-4">Status</th>
+                                </tr>
+                            </thead>
+                            <tbody id="safety-tbody"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ════════════════ 14. PROCUREMENT & MATERIALS ════════════════ -->
+            <section id="view-procurement" class="view-section hidden space-y-6">
+                <div class="glass-card p-5 rounded-xl border border-blue-200">
+                    <h3 class="font-bold text-base text-black mb-4">
+                        <i class="fas fa-boxes-stacked text-blue-700 mr-2"></i>Material Inventory &amp; Stock Levels
+                    </h3>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left">
+                            <thead class="bg-blue-900 text-xs font-bold uppercase text-white">
+                                <tr>
+                                    <th class="py-3 px-4">Material Code</th>
+                                    <th class="py-3 px-4">Material Name</th>
+                                    <th class="py-3 px-4 text-right">Current Stock</th>
+                                    <th class="py-3 px-4 text-right">Reorder Level</th>
+                                    <th class="py-3 px-4">Supplier</th>
+                                    <th class="py-3 px-4 text-center">Alert Status</th>
+                                </tr>
+                            </thead>
+                            <tbody id="materials-tbody"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ════════════════ 15. RFIs ════════════════ -->
+            <section id="view-rfis" class="view-section hidden space-y-6">
+                <div class="glass-card p-5 rounded-xl border border-blue-200">
+                    <h3 class="font-bold text-base text-black mb-4">
+                        <i class="fas fa-circle-question text-blue-700 mr-2"></i>Requests for Information (RFIs)
+                    </h3>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left">
+                            <thead class="bg-blue-900 text-xs font-bold uppercase text-white">
+                                <tr>
+                                    <th class="py-3 px-4">RFI No.</th>
+                                    <th class="py-3 px-4">Subject</th>
+                                    <th class="py-3 px-4">Assignment</th>
+                                    <th class="py-3 px-4">Priority</th>
+                                    <th class="py-3 px-4">Status</th>
+                                </tr>
+                            </thead>
+                            <tbody id="rfis-tbody"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════ MODALS -->
+
+    <!-- PM Review Modify Modal -->
+    <div id="pm-modify-modal" class="fixed inset-0 bg-blue-900/30 backdrop-blur-sm z-50 flex items-center justify-center hidden">
+        <div class="bg-white border-2 border-blue-400 rounded-xl shadow-2xl p-6 w-full max-w-md">
+            <h3 class="font-extrabold text-base text-black mb-1">PM Modify &amp; Approve Observation</h3>
+            <p class="text-xs text-gray-700 mb-4">Modify the measured quantity before establishing approved progress. Original AI visual estimation and operator values are preserved in the audit log.</p>
+            <input type="hidden" id="mod-review-id">
+            <div class="space-y-3 text-xs">
+                <div>
+                    <label class="block font-bold text-black mb-1">Adjusted Approved Quantity</label>
+                    <input type="number" step="0.1" id="mod-qty-input"
+                           class="w-full bg-blue-50 border border-blue-300 rounded-lg p-2.5 text-black font-mono font-bold focus:outline-none">
+                </div>
+                <div>
+                    <label class="block font-bold text-black mb-1">Override Reason (Spec §38)</label>
+                    <textarea id="mod-reason-input" rows="2"
+                              class="w-full bg-blue-50 border border-blue-300 rounded-lg p-2 text-black focus:outline-none">Adjusted following physical verification on site.</textarea>
+                </div>
+            </div>
+            <div class="mt-5 flex justify-end gap-3">
+                <button onclick="document.getElementById('pm-modify-modal').classList.add('hidden')"
+                        class="px-4 py-2 bg-white text-black text-xs font-bold rounded border border-blue-300 hover:bg-blue-50 transition">Cancel</button>
+                <button onclick="window.app.submitPMModify()"
+                        class="px-4 py-2 bg-blue-700 hover:bg-blue-800 text-white text-xs font-bold rounded transition">Save &amp; Approve</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- PM Reject Modal -->
+    <div id="pm-reject-modal" class="fixed inset-0 bg-blue-900/30 backdrop-blur-sm z-50 flex items-center justify-center hidden">
+        <div class="bg-white border-2 border-blue-400 rounded-xl shadow-2xl p-6 w-full max-w-md">
+            <h3 class="font-extrabold text-base text-black mb-1">Reject or Request Retake</h3>
+            <p class="text-xs text-gray-700 mb-4">State the reason for rejecting field photographic evidence or requesting a new site visit.</p>
+            <input type="hidden" id="reject-review-id">
+            <div class="space-y-3 text-xs">
+                <div>
+                    <label class="block font-bold text-black mb-1">Action Required</label>
+                    <select id="reject-action-select" class="w-full bg-blue-50 border border-blue-300 rounded-lg p-2.5 text-black font-bold focus:outline-none">
+                        <option value="RETAKE_PHOTO">Request Operator Retake Photo</option>
+                        <option value="REQUEST_INSPECTION">Request Joint QA/QC Inspection</option>
+                        <option value="REJECT">Flat Rejection</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block font-bold text-black mb-1">Rejection Reason</label>
+                    <textarea id="reject-reason-input" rows="3"
+                              class="w-full bg-blue-50 border border-blue-300 rounded-lg p-2 text-black focus:outline-none">Insufficient photographic evidence of edge boundary.</textarea>
+                </div>
+            </div>
+            <div class="mt-5 flex justify-end gap-3">
+                <button onclick="document.getElementById('pm-reject-modal').classList.add('hidden')"
+                        class="px-4 py-2 bg-white text-black text-xs font-bold rounded border border-blue-300 hover:bg-blue-50 transition">Cancel</button>
+                <button onclick="window.app.submitPMReject()"
+                        class="px-4 py-2 bg-black hover:bg-gray-800 text-white text-xs font-bold rounded transition">Submit Decision</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Report Quantity Modal -->
+    <div id="report-modal" class="fixed inset-0 bg-blue-900/30 backdrop-blur-sm z-50 flex items-center justify-center hidden">
+        <div class="bg-white border border-blue-300 rounded-xl shadow-xl p-6 w-full max-w-md">
+            <h3 id="report-modal-title" class="font-bold text-base text-black mb-4">Report Quantity</h3>
+            <input type="hidden" id="report-modal-act-id">
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-xs font-bold text-black mb-1">Completed Quantity (<span id="report-modal-uom" class="font-mono">m³</span>)</label>
+                    <input id="report-modal-qty" type="number" step="0.1"
+                           class="w-full bg-blue-50 border border-blue-300 rounded-lg px-3 py-2 text-black font-mono font-bold focus:outline-none">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-black mb-1">Remarks</label>
+                    <textarea class="w-full bg-blue-50 border border-blue-300 rounded-lg px-3 py-2 text-xs text-black focus:outline-none" rows="3">Work completed per drawings.</textarea>
+                </div>
+            </div>
+            <div class="mt-6 flex justify-end gap-3">
+                <button onclick="document.getElementById('report-modal').classList.add('hidden')"
+                        class="px-4 py-2 bg-white text-black text-xs font-bold rounded border border-blue-300 hover:bg-blue-50 transition">Cancel</button>
+                <button onclick="window.app.submitReportModal()"
+                        class="px-4 py-2 bg-blue-700 hover:bg-blue-800 text-white text-xs font-bold rounded transition">Submit for Inspection</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- QA/QC Inspect Modal -->
+    <div id="inspect-modal" class="fixed inset-0 bg-blue-900/30 backdrop-blur-sm z-50 flex items-center justify-center hidden">
+        <div class="bg-white border border-blue-300 rounded-xl shadow-xl p-6 w-full max-w-md">
+            <h3 id="inspect-modal-title" class="font-bold text-base text-black mb-4">QA/QC Inspection Clearance</h3>
+            <input type="hidden" id="inspect-modal-act-id">
+            <div class="space-y-2 mb-4 text-xs text-black bg-blue-50 p-3 rounded border border-blue-200">
+                <div>Planned Quantity: <span id="inspect-modal-planned" class="font-bold font-mono">--</span></div>
+                <div>Contractor Reported: <span id="inspect-modal-reported" class="font-bold font-mono text-blue-800">--</span></div>
+            </div>
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-xs font-bold text-black mb-1">Accepted Quantity</label>
+                    <input id="inspect-modal-accepted-qty" type="number" step="0.1"
+                           class="w-full bg-blue-50 border border-blue-300 rounded-lg px-3 py-2 text-black font-mono font-bold focus:outline-none">
+                </div>
+            </div>
+            <div class="mt-6 flex justify-end gap-3">
+                <button onclick="document.getElementById('inspect-modal').classList.add('hidden')"
+                        class="px-4 py-2 bg-white text-black text-xs font-bold rounded border border-blue-300 hover:bg-blue-50 transition">Cancel</button>
+                <button onclick="window.app.submitInspectModal()"
+                        class="px-4 py-2 bg-blue-700 hover:bg-blue-800 text-white text-xs font-bold rounded transition">Accept &amp; Update</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- CV Delta Scanner Modal -->
+    <div id="cv-analysis-modal" class="fixed inset-0 bg-blue-900/30 backdrop-blur-sm z-50 flex items-center justify-center hidden">
+        <div class="bg-white border-2 border-blue-400 rounded-xl shadow-2xl p-6 w-full max-w-lg">
+            <div class="flex items-center justify-between mb-4">
+                <h3 class="font-extrabold text-base text-black flex items-center gap-2">
+                    <i class="fas fa-brain text-blue-700"></i> Mode A Automated Evaluation: <span id="cv-cam-code" class="font-mono">--</span>
+                </h3>
+                <span class="text-xs bg-blue-100 text-black border border-blue-300 px-2.5 py-1 rounded font-bold">
+                    Confidence: <span id="cv-confidence">--</span>
+                </span>
+            </div>
+            <div class="space-y-3 text-xs mb-4">
+                <div class="p-3 bg-blue-50 rounded border border-blue-200">
+                    <span class="text-gray-700 font-bold">Mapped L4 Activity:</span>
+                    <div id="cv-detected-element" class="font-bold text-black text-sm mt-0.5">--</div>
+                </div>
+                <div class="grid grid-cols-3 gap-3 text-center">
+                    <div class="p-2 bg-blue-50 rounded border border-blue-200">
+                        <div class="text-gray-700">Previous AI</div>
+                        <div id="cv-prev-progress" class="font-bold text-black">--</div>
+                    </div>
+                    <div class="p-2 bg-blue-50 rounded border border-blue-200">
+                        <div class="text-gray-700">New AI Observed</div>
+                        <div id="cv-curr-progress" class="font-bold text-blue-800">--</div>
+                    </div>
+                    <div class="p-2 bg-blue-50 rounded border border-blue-200">
+                        <div class="text-gray-700">Observable Delta</div>
+                        <div id="cv-delta" class="font-bold text-blue-900">--</div>
+                    </div>
+                </div>
+                <div class="p-3 bg-white border border-blue-300 rounded">
+                    <div class="font-bold text-black mb-1">AI Safety &amp; Compliance Flags:</div>
+                    <ul id="cv-safety-flags" class="space-y-1 text-black font-medium"></ul>
+                </div>
+            </div>
+            <div class="flex justify-end">
+                <button onclick="document.getElementById('cv-analysis-modal').classList.add('hidden')"
+                        class="px-4 py-2 bg-blue-700 hover:bg-blue-800 text-white text-xs font-bold rounded transition">Close Scanner</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Google Gemini AI Vision Settings Modal -->
+    <div id="gemini-settings-modal" class="fixed inset-0 bg-blue-900/30 backdrop-blur-sm z-50 flex items-center justify-center hidden">
+        <div class="bg-white border-2 border-blue-400 rounded-xl shadow-2xl p-6 w-full max-w-md">
+            <div class="flex items-center justify-between mb-3">
+                <h3 class="font-extrabold text-base text-black flex items-center gap-2">
+                    <i class="fas fa-brain text-blue-700"></i> Google Gemini Vision Configuration
+                </h3>
+                <span id="gemini-modal-badge" class="text-xs bg-blue-100 text-black border border-blue-300 px-2 py-0.5 rounded font-bold">
+                    Gemini 2.5 Flash
+                </span>
+            </div>
+            <p class="text-xs text-gray-700 mb-4">
+                PyCray_SiteIQ uses <strong>Google Gemini Multimodal Vision</strong> to inspect construction site photos, detect building elements (formwork, rebar, concrete), verify context against the L4 schedule, and detect safety hazards.
+            </p>
+            <div class="space-y-3 text-xs">
+                <div>
+                    <label class="block font-bold text-black mb-1">Google Gemini API Key</label>
+                    <input type="password" id="gemini-api-key-input" placeholder="AIzaSy..."
+                           class="w-full bg-blue-50 border border-blue-300 rounded-lg p-2.5 text-black font-mono text-xs focus:outline-none">
+                </div>
+                <div class="p-3 bg-blue-50 rounded border border-blue-200 text-gray-800 text-[11px] leading-relaxed">
+                    Don't have a Gemini API key yet? You can generate a free key from Google AI Studio:
+                    <a href="https://aistudio.google.com/app/apikey" target="_blank" class="text-blue-700 font-bold underline ml-1">Get Gemini API Key <i class="fas fa-arrow-up-right-from-square text-[9px]"></i></a>
+                </div>
+                <div id="gemini-status-message" class="text-xs font-bold text-black pt-1"></div>
+            </div>
+            <div class="mt-5 flex justify-end gap-3">
+                <button onclick="document.getElementById('gemini-settings-modal').classList.add('hidden')"
+                        class="px-4 py-2 bg-white text-black text-xs font-bold rounded border border-blue-300 hover:bg-blue-50 transition">Close</button>
+                <button onclick="window.app.saveGeminiKey()"
+                        class="px-4 py-2 bg-blue-700 hover:bg-blue-800 text-white text-xs font-bold rounded transition flex items-center gap-1.5 shadow-sm">
+                    <i class="fas fa-save"></i> Save &amp; Activate Key
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- PyCray_SiteIQ 30s Product Video Modal -->
+    <div id="product-video-modal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+        <div class="bg-white border-2 border-blue-500 rounded-2xl shadow-2xl w-full max-w-4xl overflow-hidden flex flex-col">
+            <div class="bg-blue-700 px-6 py-4 flex items-center justify-between text-white">
+                <div class="flex items-center gap-3">
+                    <div class="w-9 h-9 rounded-lg bg-white/10 flex items-center justify-center">
+                        <i class="fas fa-play text-white text-sm"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-extrabold text-base tracking-tight">SiteIQ — Construction Progress You Can Trust</h3>
+                        <p class="text-xs text-blue-100 font-medium">Synchronized Video Showcase • Site Cameras, Field Photos, L4 Schedule & AI Assistant</p>
+                    </div>
+                </div>
+                <button onclick="window.app.closeProductVideoModal()" class="text-white/80 hover:text-white p-2 rounded-lg hover:bg-white/10 transition text-lg">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <div class="p-6 bg-slate-50 flex flex-col items-center">
+                <div class="w-full bg-black rounded-xl overflow-hidden shadow-lg border border-blue-200 aspect-video flex items-center justify-center">
+                    <video id="promo-video-player" controls preload="auto" class="w-full h-full object-contain">
+                        <source src="/static/SiteIQ_Custom_Showcase.mp4" type="video/mp4">
+                        <source src="/static/PyCray_SiteIQ_30s_Product_Video.mp4" type="video/mp4">
+                        Your browser does not support HTML5 video playback.
+                    </video>
+                </div>
+                <div class="w-full mt-4 flex items-center justify-between text-xs text-black">
+                    <div class="flex items-center gap-2">
+                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold bg-blue-100 text-blue-800 border border-blue-300">
+                            <i class="fas fa-sparkles mr-1"></i> Studio Neural Voice: Christopher
+                        </span>
+                        <span class="text-gray-600 font-medium">68s Video • 2m20s Cinematic Audio</span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <a href="/static/SiteIQ_Narration_Cinematic.mp3" download="SiteIQ_Cinematic_Voiceover.mp3" class="px-3 py-1.5 bg-blue-50 hover:bg-blue-100 border border-blue-300 text-black font-bold rounded-lg transition flex items-center gap-1.5">
+                            <i class="fas fa-file-audio text-blue-700"></i> Download Audio MP3
+                        </a>
+                        <a href="/static/SiteIQ_Custom_Showcase.mp4" download="SiteIQ_Product_Video.mp4" class="px-3 py-1.5 bg-blue-50 hover:bg-blue-100 border border-blue-300 text-black font-bold rounded-lg transition flex items-center gap-1.5">
+                            <i class="fas fa-download text-blue-700"></i> Download Video MP4
+                        </a>
+                        <button onclick="window.app.closeProductVideoModal()" class="px-4 py-1.5 bg-blue-700 hover:bg-blue-800 text-white font-bold rounded-lg transition">
+                            Close
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Full Cinematic Audio Player Section -->
+                <div class="w-full mt-4 p-3.5 bg-white border border-blue-200 rounded-xl flex flex-col gap-2 shadow-sm">
+                    <div class="flex items-center justify-between text-xs">
+                        <div class="font-extrabold text-black flex items-center gap-2">
+                            <i class="fas fa-headphones-simple text-blue-700"></i> Full Cinematic Voiceover (2m 20s Broadcast Narration)
+                        </div>
+                        <div class="text-[11px] text-gray-500 font-mono">
+                            48kHz Studio Quality • Moderate Cinematic Pace
+                        </div>
+                    </div>
+                    <audio controls class="w-full h-8 outline-none" preload="metadata">
+                        <source src="/static/SiteIQ_Narration_Cinematic.mp3" type="audio/mpeg">
+                        <source src="/static/SiteIQ_Narration_Cinematic.wav" type="audio/wav">
+                        Your browser does not support audio playback.
+                    </audio>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="/static/js/app.js"></script>
+</body>
+</html>

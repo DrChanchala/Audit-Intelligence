@@ -1,0 +1,9 @@
+# Litestream configuration for automated S3 SQLite streaming backup
+# Continuous point-in-time recovery to S3 (Cost: ~$0.05 / month)
+dbs:
+  - path: /app/audit_intelligence.db
+    replicas:
+      - type: s3
+        bucket: ${AWS_S3_BACKUP_BUCKET:-audit-intelligence-backups}
+        path: db
+        region: ${AWS_DEFAULT_REGION:-us-east-1}

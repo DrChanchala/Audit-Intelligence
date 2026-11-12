@@ -1,0 +1,108 @@
+/* PyCray_SiteIQ — White Background, Blue Accents, Black Text (Aptos) */
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+:root {
+    --font-primary: 'Aptos', 'Segoe UI', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-mono: 'JetBrains Mono', monospace;
+    
+    --color-bg: #ffffff;
+    --color-surface: #f8faff;
+    --color-surface-hover: #eff6ff;
+    --color-border: #bfdbfe;
+    --color-border-dark: #3b82f6;
+    
+    --color-primary: #1d4ed8;
+    --color-primary-dark: #1e3a8a;
+    --color-primary-light: #dbeafe;
+    
+    --color-text: #000000;
+    --color-text-muted: #374151;
+}
+
+body {
+    font-family: var(--font-primary);
+    background-color: var(--color-bg);
+    color: var(--color-text);
+}
+
+h1, h2, h3, h4, h5, h6, p, span, div, label, input, select, textarea, button, td, th {
+    font-family: var(--font-primary);
+    color: var(--color-text);
+}
+
+.mono {
+    font-family: var(--font-mono);
+}
+
+/* Custom Blue Scrollbar */
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+::-webkit-scrollbar-track {
+    background: #eff6ff;
+}
+::-webkit-scrollbar-thumb {
+    background: #93c5fd;
+    border-radius: 4px;
+}
+
+/* Heatmap Level Colors — White-to-Blue shades with Black text */
+.heatmap-cell {
+    transition: all 0.2s ease-in-out;
+    background-color: #ffffff;
+    color: #000000;
+}
+.heatmap-cell:hover {
+    transform: scale(1.02);
+    z-index: 10;
+}
+.level-0-20   { background-color: #f8faff; border-color: #dbeafe; }
+.level-21-50  { background-color: #eff6ff; border-color: #bfdbfe; }
+.level-51-75  { background-color: #dbeafe; border-color: #93c5fd; }
+.level-76-99  { background-color: #bfdbfe; border-color: #60a5fa; }
+.level-100    { background-color: #93c5fd; border-color: #2563eb; }
+
+/* Status Badges — Clean White Backgrounds, Blue Borders, Black Text */
+.badge-completed    { background-color: #eff6ff; color: #000000; border: 1px solid #3b82f6; }
+.badge-in-progress  { background-color: #ffffff; color: #000000; border: 1px solid #60a5fa; }
+.badge-pending      { background-color: #ffffff; color: #000000; border: 1px dashed #2563eb; }
+.badge-delayed      { background-color: #ffffff; color: #000000; border: 1px solid #1d4ed8; }
+
+/* Card & Panel Components */
+.glass-panel {
+    background: #f8faff;
+    border: 1px solid #bfdbfe;
+}
+
+.glass-card {
+    background: #ffffff;
+    border: 1px solid #bfdbfe;
+    box-shadow: 0 1px 3px rgba(29, 78, 216, 0.08);
+}
+
+/* AI Pulse Indicator */
+.ai-pulse {
+    position: relative;
+}
+.ai-pulse::after {
+    content: '';
+    position: absolute;
+    top: -2px;
+    right: -2px;
+    width: 8px;
+    height: 8px;
+    background-color: #1d4ed8;
+    border-radius: 50%;
+    animation: pulse-ring 1.5s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+}
+@keyframes pulse-ring {
+    0%   { transform: scale(0.95); opacity: 1; }
+    50%  { transform: scale(1.8);  opacity: 0.4; }
+    100% { transform: scale(2.4);  opacity: 0; }
+}
+
+/* Camera Overlay */
+.camera-frame-overlay {
+    background: linear-gradient(180deg, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.1) 40%, rgba(255,255,255,0.1) 60%, rgba(255,255,255,0.95) 100%);
+}

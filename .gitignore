@@ -1,0 +1,64 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.pytest_cache/
+
+# Environments and Secrets
+.env
+.env.*
+!.env.example
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Databases
+*.db
+*.sqlite
+*.sqlite3
+site_audit.db
+buildtrack.db
+audit_intelligence.db
+
+# Large Media, Video Renders, Audio Clips (generated)
+*.wav
+*.mp3
+*.mp4
+*.xlsx
+clip*.wav
+clean_clip*.wav
+neural_clip*
+narration*.wav
+siteiq_narration.wav
+siteiq_clean_synced_audio.wav
+siteiq_neural_synced_audio.wav
+test_*.mp3
+test_*.wav
+frame_scene*.png
+debug_crop_top_right.png
+test_screen.png
+siteiq_clean_landing.png
+static/uploads/evidence/*
+!static/uploads/evidence/.gitkeep
+
+# IDE and OS
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+ehthumbs.db
+
+# Logs
+*.log
+
+# Scratch and Build Artifacts
+build/
+dist/
+*.egg-info/
+verification_evidence/

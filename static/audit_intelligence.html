@@ -1,0 +1,1912 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Audit Intelligence - QC Lead Dashboard</title>
+<meta name="theme-color" content="#0F2236">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Noto+Sans:wght@400;500;600;700&display=swap">
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+<script src="/static/js/allocation_module.js"></script>
+<style>
+/* AI Report Markdown Styling */
+.report-content { font-size:14px; line-height:1.65; color:var(--ink); }
+.report-content h1 { font-family:var(--font-display); font-size:22px; margin-top:16px; margin-bottom:8px; border-bottom:2px solid var(--line); padding-bottom:6px; color:var(--band-1); }
+.report-content h2 { font-family:var(--font-display); font-size:18px; margin-top:20px; margin-bottom:8px; color:var(--band-2); border-left:4px solid var(--mint); padding-left:8px; }
+.report-content h3 { font-size:15px; font-weight:700; margin-top:14px; margin-bottom:6px; }
+.report-content p { margin-bottom:10px; }
+.report-content ul, .report-content ol { margin:0 0 12px 20px; padding:0; }
+.report-content li { margin-bottom:4px; }
+.report-content table { width:100%; border-collapse:collapse; margin:14px 0; font-size:12.5px; border-radius:8px; overflow:hidden; }
+.report-content th, .report-content td { border:1px solid var(--line); padding:7px 10px; text-align:left; }
+.report-content th { background:var(--surface-2); font-weight:700; color:var(--ink); }
+.report-content hr { border:0; border-top:1px solid var(--line); margin:18px 0; }
+.report-content code { background:var(--surface-2); padding:2px 5px; border-radius:4px; font-size:12px; font-family:monospace; }
+.ai-badge { display:inline-flex; align-items:center; gap:6px; background:linear-gradient(135deg, #0F2236, #163E39); color:#5CCB9F; font-size:11px; font-weight:700; padding:4px 10px; border-radius:999px; letter-spacing:0.04em; }
+/* Layout: mobile-first single column — dark navy-teal top bar, project cards, bottom nav; desktop adds a dark sidebar and a card grid. Detail lives in bottom sheets (mobile) / side panel (desktop). */
+:root{
+  --bg:#EDF3F0; --surface:#FFFFFF; --surface-2:#F3F7F5; --ink:#10201E; --ink-2:#4D5E5A; --ink-3:#6F807B; --line:#DAE5E0;
+  --band-1:#0F2236; --band-2:#163E39; --band-ink:#F2F7F5; --band-ink-2:#B9CCC6; --band-line:rgba(255,255,255,.15);
+  --mint:#4FB892; --mint-ink:#257A5B; --mint-soft:#E0F2EA; --on-mint:#0B2A21;
+  --crit:#C93C24; --crit-soft:#FBE5E0; --major:#A0650B; --major-soft:#FBEFD9; --minor:#2F62CC; --minor-soft:#E3EBFB; --ofi:#4F7468; --ofi-soft:#E4EEEA;
+  --st-live:var(--mint); --st-hold:var(--major); --st-upcoming:var(--minor); --st-completed:var(--ofi);
+  --scrim:rgba(6,16,14,.48); --shadow:0 1px 2px rgba(16,32,30,.05),0 8px 24px rgba(16,32,30,.06);
+  --photo-1:#7C8683; --photo-2:#AAB1AD; --photo-3:#6A7370; --stamp-bg:rgba(0,0,0,.58); --stamp-ink:#FFFFFF;
+  --font-display:"DM Serif Display", Georgia, "Times New Roman", serif;
+  --font-body:"Noto Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --side:248px; --ease:cubic-bezier(.2,.8,.2,1);
+}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
+  --bg:#0A1412; --surface:#11201D; --surface-2:#172925; --ink:#E5EEEB; --ink-2:#A6B8B3; --ink-3:#869994; --line:#25413C;
+  --band-1:#0A1828; --band-2:#12332F; --band-ink:#F2F7F5; --band-ink-2:#B9CCC6; --band-line:rgba(255,255,255,.13);
+  --mint:#5CCB9F; --mint-ink:#72D8AE; --mint-soft:#15382E; --on-mint:#0B2A21;
+  --crit:#F27058; --crit-soft:#3B1C16; --major:#E6A84A; --major-soft:#392A13; --minor:#7A9DF0; --minor-soft:#1A2744; --ofi:#94B7AB; --ofi-soft:#1B302A;
+  --scrim:rgba(0,0,0,.6); --shadow:0 1px 2px rgba(0,0,0,.35); color-scheme:dark; } }
+:root[data-theme="dark"]{
+  --bg:#0A1412; --surface:#11201D; --surface-2:#172925; --ink:#E5EEEB; --ink-2:#A6B8B3; --ink-3:#869994; --line:#25413C;
+  --band-1:#0A1828; --band-2:#12332F; --band-ink:#F2F7F5; --band-ink-2:#B9CCC6; --band-line:rgba(255,255,255,.13);
+  --mint:#5CCB9F; --mint-ink:#72D8AE; --mint-soft:#15382E; --on-mint:#0B2A21;
+  --crit:#F27058; --crit-soft:#3B1C16; --major:#E6A84A; --major-soft:#392A13; --minor:#7A9DF0; --minor-soft:#1A2744; --ofi:#94B7AB; --ofi-soft:#1B302A;
+  --scrim:rgba(0,0,0,.6); --shadow:0 1px 2px rgba(0,0,0,.35); color-scheme:dark; }
+
+*{box-sizing:border-box}
+html.locked{overflow:hidden}
+body{background:var(--bg);color:var(--ink);font-family:var(--font-body);font-size:14px;line-height:1.5;-webkit-font-smoothing:antialiased}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--band-1)}
+button{font:inherit;color:inherit;background:none;border:0;padding:0;margin:0;cursor:pointer;text-align:inherit}
+:focus-visible{outline:2px solid var(--mint);outline-offset:2px;border-radius:8px}
+h1,h2,h3,p{margin:0}
+.num{font-variant-numeric:tabular-nums}
+.serif{font-family:var(--font-display);font-weight:400}
+.eyebrow{font-size:11px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--mint-ink)}
+.muted{color:var(--ink-3);font-size:12.5px}
+svg{flex-shrink:0}
+
+/* Top bar */
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:8;background:linear-gradient(100deg,var(--band-1),var(--band-2));color:var(--band-ink);
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.top-in{display:flex;align-items:center;gap:8px;min-height:56px}
+.brand{display:flex;align-items:center;gap:9px}
+.logo-chip{background:#fff;border-radius:6px;padding:4px 7px;display:flex;align-items:center;gap:5px}
+.logo-chip b{width:11px;height:11px;border:2.5px solid #D9472E;border-radius:2px;display:block}
+.logo-chip span{font-size:8.5px;line-height:1.05;color:#1b1b1b;font-weight:700}
+.wordmark{font-family:var(--font-display);font-size:21px;letter-spacing:.01em}
+.live-badge{font-size:9.5px;background:#4FB892;color:#0B2A21;font-weight:700;padding:2px 6px;border-radius:999px;margin-left:4px;letter-spacing:0.04em}
+.tt{min-width:0;flex:1;line-height:1.25}
+.tt .c{font-size:11.5px;color:var(--band-ink-2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tt .t{font-weight:700;font-size:15.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.spacer{flex:1}
+.crumbs{display:none}
+.icon-btn{width:40px;height:40px;border-radius:12px;display:grid;place-items:center;flex-shrink:0}
+.top .icon-btn:hover{background:rgba(255,255,255,.1)}
+.avatar{width:34px;height:34px;border-radius:50%;background:var(--mint);color:var(--on-mint);display:grid;place-items:center;font-weight:700;font-size:12.5px;flex-shrink:0}
+
+/* Sidebar (desktop only) */
+.side{display:none}
+
+/* Main */
+main{padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:18px calc(96px + env(safe-area-inset-bottom,0px))}
+.view{max-width:1180px;margin:0 auto;display:flex;flex-direction:column;gap:18px}
+.view.enter{animation:rise .24s var(--ease)}
+@keyframes rise{from{opacity:.35;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+/* Bottom nav */
+.bnav{position:fixed;left:0;right:0;bottom:0;z-index:8;background:var(--surface);border-top:1px solid var(--line);display:grid;grid-template-columns:repeat(4,1fr);
+  padding:6px max(16px,env(safe-area-inset-right,0px)) calc(6px + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px))}
+.bn{display:flex;flex-direction:column;align-items:center;gap:3px;padding:4px 0;font-size:11.5px;font-weight:600;color:var(--ink-3);position:relative;min-height:52px;text-align:center}
+.bn-ic{width:52px;height:30px;border-radius:15px;display:grid;place-items:center;transition:background-color .2s}
+.bn[aria-current="page"]{color:var(--ink)}
+.bn[aria-current="page"] .bn-ic{background:var(--mint-soft);color:var(--mint-ink)}
+.bn .cnt{position:absolute;top:0;left:calc(50% + 10px);background:var(--crit);color:#fff;border-radius:999px;font-size:10.5px;font-weight:700;min-width:18px;line-height:17px;padding:0 5px}
+
+/* Home */
+.hello h1{font-family:var(--font-display);font-weight:400;font-size:29px;line-height:1.12;margin-top:4px;text-wrap:balance}
+.hello p{color:var(--ink-2);margin-top:2px}
+.sum{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.sum-btn{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:11px 12px;display:flex;flex-direction:column;gap:3px;min-height:70px;transition:border-color .15s}
+.sum-btn:hover{border-color:var(--mint)}
+.sum-btn .v{font-family:var(--font-display);font-size:28px;line-height:1}
+.sum-btn .l{font-size:12px;color:var(--ink-2);font-weight:600;line-height:1.25}
+.sum-btn.crit .v{color:var(--crit)} .sum-btn.warn .v{color:var(--major)}
+.resume{display:flex;align-items:center;gap:12px;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:12px 14px;width:100%}
+.resume .rt{flex:1;min-width:0}
+.resume .rt b{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.resume .ri{width:34px;height:34px;border-radius:10px;background:var(--mint-soft);color:var(--mint-ink);display:grid;place-items:center}
+.sec-head{display:flex;align-items:baseline;justify-content:space-between;gap:12px}
+.sec-head h2{font-family:var(--font-display);font-weight:400;font-size:23px}
+.projects{display:flex;flex-direction:column;gap:12px}
+.proj-tools{display:flex;flex-direction:column;gap:10px}
+.search{display:flex;align-items:center;gap:8px;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:0 12px;height:46px;color:var(--ink-3)}
+.search:focus-within{border-color:var(--mint)}
+.search input{flex:1;min-width:0;border:0;background:transparent;font:inherit;font-size:15px;color:var(--ink);outline:none;height:100%}
+.search input::placeholder{color:var(--ink-3)}
+.cats{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;margin-inline:-16px;padding:2px 16px;scroll-snap-type:x proximity}
+.cats::-webkit-scrollbar{display:none}
+.cat{flex-shrink:0;scroll-snap-align:start;display:flex;gap:8px;align-items:center;height:40px;padding:0 14px;border-radius:999px;border:1px solid var(--line);background:var(--surface);font-weight:600;color:var(--ink-2);white-space:nowrap;transition:background-color .15s,color .15s}
+.cat i{width:8px;height:8px;border-radius:50%;background:var(--st)}
+.cat .n{font-size:12px;background:var(--surface-2);border-radius:999px;padding:0 8px;line-height:20px}
+.cat[aria-selected="true"]{background:var(--ink);color:var(--surface);border-color:var(--ink)}
+.cat[aria-selected="true"] .n{background:color-mix(in srgb,var(--surface) 22%,transparent)}
+.cards{display:grid;grid-template-columns:minmax(0,1fr);gap:12px}
+
+/* Project card */
+.card{position:relative;background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:16px;display:flex;flex-direction:column;gap:12px;box-shadow:var(--shadow);transition:border-color .15s,transform .15s}
+.card:hover{border-color:color-mix(in srgb,var(--mint) 60%,var(--line))}
+.card:has(.stretch:focus-visible){outline:2px solid var(--mint);outline-offset:2px}
+.card-top{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.code{font-size:12px;color:var(--ink-3);font-weight:700;letter-spacing:.05em}
+.card h3{font-size:17px;line-height:1.3;font-weight:700;margin-top:-4px}
+.stretch:focus-visible{outline:none}
+.stretch::after{content:"";position:absolute;inset:0;border-radius:18px}
+.card-sub{margin-top:-8px;color:var(--ink-2);font-size:13px}
+.pill{display:inline-flex;align-items:center;gap:6px;border-radius:999px;padding:2px 10px;font-size:12px;font-weight:600;white-space:nowrap}
+.pill::before{content:"";width:6px;height:6px;border-radius:50%;background:currentColor}
+.st-live{color:var(--mint-ink);background:var(--mint-soft)} .st-hold{color:var(--major);background:var(--major-soft)}
+.st-upcoming{color:var(--minor);background:var(--minor-soft)} .st-completed{color:var(--ofi);background:var(--ofi-soft)}
+.prog{display:flex;align-items:center;gap:10px}
+.bar{flex:1;height:6px;border-radius:999px;background:var(--surface-2);overflow:hidden}
+.bar i{display:block;height:100%;background:var(--mint);border-radius:999px}
+.prog b{font-size:13px;min-width:36px;text-align:right}
+.dates{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:0}
+dt{font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);font-weight:700}
+dd{margin:0;font-weight:600;font-size:13.5px}
+.note{font-size:13px;border-radius:10px;padding:8px 11px;color:var(--ink);line-height:1.4}
+.note b{font-weight:700}
+.note.hold{background:var(--major-soft)} .note.hold b{color:var(--major)}
+.note.up{background:var(--minor-soft)} .note.up b{color:var(--minor)}
+.note.done{background:var(--ofi-soft)} .note.done b{color:var(--ofi)}
+.metrics{position:relative;z-index:1;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.metric{background:var(--surface-2);border:1px solid var(--line);border-radius:12px;padding:9px 10px;display:flex;flex-direction:column;gap:1px;min-height:66px;transition:border-color .15s,background-color .15s}
+.metric:hover{border-color:var(--mint);background:var(--surface)}
+.metric .v{font-family:var(--font-display);font-size:24px;line-height:1.05}
+.metric .l{font-size:12px;color:var(--ink-2);font-weight:600}
+.metric .s{font-size:11.5px;font-weight:700;color:var(--crit)}
+.metric.zero .v{color:var(--ink-3)}
+.updated{font-size:12px;color:var(--ink-3)}
+.empty{background:var(--surface);border:1px dashed var(--line);border-radius:14px;padding:22px;text-align:center;color:var(--ink-2)}
+
+/* Rows */
+.rows{background:var(--surface);border:1px solid var(--line);border-radius:14px;overflow:hidden}
+.row{display:flex;align-items:center;gap:10px;width:100%;padding:12px 12px 12px 16px;border-bottom:1px solid var(--line);position:relative;color:var(--ink);transition:background-color .15s}
+.row:last-child{border-bottom:0}
+.row:hover{background:var(--surface-2)}
+.row::before{content:"";position:absolute;left:0;top:12px;bottom:12px;width:3px;border-radius:0 3px 3px 0;background:var(--sev,transparent)}
+.row svg{color:var(--ink-3)}
+.rc{display:flex;flex-direction:column;gap:2px;min-width:0;flex:1}
+.r1{font-size:12px;color:var(--ink-3);font-weight:600;display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+.r2{font-weight:600;font-size:14px;line-height:1.35}
+.r3{font-size:12.5px;color:var(--ink-2)}
+.r4{display:flex;gap:6px;flex-wrap:wrap;margin-top:3px}
+.late{color:var(--crit);font-weight:700}
+.sev{font-size:11px;font-weight:700;border-radius:6px;padding:0 7px;line-height:18px}
+.sev-critical{color:var(--crit);background:var(--crit-soft)} .sev-major{color:var(--major);background:var(--major-soft)}
+.sev-minor{color:var(--minor);background:var(--minor-soft)} .sev-ofi{color:var(--ofi);background:var(--ofi-soft)}
+.stt{font-size:11.5px;font-weight:600;padding:0 9px;line-height:20px;border-radius:999px;background:var(--surface-2);color:var(--ink-2);border:1px solid var(--line)}
+.stt.bad{background:var(--crit-soft);color:var(--crit);border-color:transparent}
+.stt.good{background:var(--mint-soft);color:var(--mint-ink);border-color:transparent}
+.stt.info{background:var(--minor-soft);color:var(--minor);border-color:transparent}
+
+/* Project workspace */
+.phero{border-radius:20px;padding:18px;color:var(--band-ink);display:flex;flex-direction:column;gap:12px;
+  background:radial-gradient(380px 220px at 100% 0%,rgba(79,184,146,.3),transparent 70%),linear-gradient(125deg,var(--band-1),var(--band-2))}
+.phero .code{color:var(--band-ink-2)}
+.phero h1{font-family:var(--font-display);font-weight:400;font-size:27px;line-height:1.12;text-wrap:balance}
+.phero .sub{color:var(--band-ink-2);font-size:13px;margin-top:-6px}
+.phero .bar{background:rgba(255,255,255,.14)}
+.phero dt{color:var(--band-ink-2)}
+.phero .updated{color:var(--band-ink-2)}
+.ptabs{display:flex;gap:4px;overflow-x:auto;scrollbar-width:none;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:4px}
+.ptabs::-webkit-scrollbar{display:none}
+.ptab{flex:1 0 auto;padding:9px 12px;border-radius:10px;font-weight:600;color:var(--ink-2);font-size:13.5px;white-space:nowrap;text-align:center;transition:background-color .15s,color .15s}
+.ptab .n{font-size:11.5px;margin-left:4px;opacity:.75}
+.ptab[aria-selected="true"]{background:var(--ink);color:var(--surface)}
+.block{display:flex;flex-direction:column;gap:10px}
+.block-h{display:flex;align-items:baseline;justify-content:space-between;gap:10px}
+.block-h h2{font-size:11.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3)}
+.link{color:var(--mint-ink);font-weight:700;font-size:13px}
+.pipe{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:6px}
+.pipe button{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:10px 8px;display:flex;flex-direction:column;gap:2px;transition:border-color .15s}
+.pipe button:hover{border-color:var(--mint)}
+.pipe .v{font-family:var(--font-display);font-size:22px;line-height:1}
+.pipe .l{font-size:11px;color:var(--ink-2);font-weight:600;line-height:1.2}
+.pipe .hot{border-color:var(--mint);background:var(--mint-soft)}
+.chips{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;padding-bottom:2px}
+.chips::-webkit-scrollbar{display:none}
+.chip{flex-shrink:0;height:34px;padding:0 13px;border-radius:999px;border:1px solid var(--line);background:var(--surface);font-weight:600;font-size:13px;color:var(--ink-2);white-space:nowrap}
+.chip[aria-pressed="true"]{background:var(--mint-soft);border-color:var(--mint);color:var(--mint-ink)}
+.seg{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.seg button{border:1px solid var(--line);border-radius:12px;padding:10px 12px;background:var(--surface);display:flex;flex-direction:column}
+.seg button[aria-pressed="true"]{border-color:var(--mint);background:var(--mint-soft)}
+.seg .v{font-family:var(--font-display);font-size:24px;line-height:1.05}
+.seg .l{font-size:12px;color:var(--ink-2);font-weight:600}
+
+/* Detail pages */
+.dhead{display:flex;flex-direction:column;gap:8px}
+.dhead .tags{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+.dhead h1{font-family:var(--font-display);font-weight:400;font-size:27px;line-height:1.15;text-wrap:balance}
+.ctxlink{display:inline-flex;align-items:center;gap:6px;align-self:flex-start;font-size:13px;font-weight:600;color:var(--mint-ink);background:var(--mint-soft);border-radius:999px;padding:4px 12px}
+.facts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px 16px;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px;margin:0}
+.facts dd{overflow-wrap:anywhere}
+.actions{display:flex;gap:8px;flex-wrap:wrap}
+.btn{height:46px;padding:0 18px;border-radius:12px;font-weight:700;display:inline-flex;align-items:center;justify-content:center;gap:8px;flex:1 1 140px;transition:filter .15s,border-color .15s}
+.btn.primary{background:var(--mint);color:var(--on-mint)}
+.btn.primary:hover{filter:brightness(1.06)}
+.btn.ghost{border:1px solid var(--line);background:var(--surface);color:var(--ink)}
+.btn.ghost:hover{border-color:var(--mint)}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px;display:flex;flex-direction:column;gap:12px}
+.photos{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.photo{margin:0;aspect-ratio:4/3;max-width:100%;border-radius:12px;position:relative;overflow:hidden;
+  background:radial-gradient(circle at 20% 30%,var(--photo-3) 0 2px,transparent 3px) 0 0/13px 13px,radial-gradient(circle at 70% 60%,var(--photo-2) 0 1.5px,transparent 2.5px) 0 0/9px 9px,linear-gradient(140deg,var(--photo-1),var(--photo-2) 55%,var(--photo-3))}
+.photo.after{background:linear-gradient(90deg,transparent 47%,var(--photo-3) 47% 53%,transparent 53%) 0 0/100% 100%,radial-gradient(circle at 50% 40%,var(--photo-2) 0 1px,transparent 2px) 0 0/7px 7px,linear-gradient(140deg,var(--photo-2),var(--photo-1))}
+.ptag{position:absolute;top:8px;left:8px;background:var(--stamp-bg);color:var(--stamp-ink);font-size:11px;font-weight:700;border-radius:6px;padding:2px 8px}
+.stamp{position:absolute;left:0;right:0;bottom:0;padding:6px 8px;background:var(--stamp-bg);color:var(--stamp-ink);font-size:10.5px;line-height:1.35;font-variant-numeric:tabular-nums}
+.tl{list-style:none;margin:0;padding:0;display:flex;flex-direction:column}
+.tl li{position:relative;padding:0 0 16px 24px}
+.tl li::before{content:"";position:absolute;left:0;top:5px;width:11px;height:11px;border-radius:50%;border:2px solid var(--mint);background:var(--surface)}
+.tl li::after{content:"";position:absolute;left:5.5px;top:18px;bottom:2px;width:2px;background:var(--line)}
+.tl li:last-child{padding-bottom:0}
+.tl li:last-child::after{display:none}
+.tl li:last-child::before{background:var(--mint)}
+.tl .w{font-weight:600}
+.tl .m{font-size:12.5px;color:var(--ink-2)}
+.tl .d{font-size:12px;color:var(--ink-3)}
+.stack{display:flex;height:10px;border-radius:999px;overflow:hidden;background:var(--surface-2)}
+.stack i{display:block;height:100%}
+.legend{display:flex;flex-wrap:wrap;gap:4px 14px;font-size:12.5px;color:var(--ink-2)}
+.legend span::before{content:"";display:inline-block;width:8px;height:8px;border-radius:2px;margin-right:6px;background:var(--dot)}
+.lh{display:flex;flex-direction:column;gap:2px}
+.lh h1{font-family:var(--font-display);font-weight:400;font-size:28px;line-height:1.1}
+.ctxchip{display:inline-flex;align-items:center;gap:6px;height:34px;padding:0 12px;border-radius:999px;border:1px solid var(--line);background:var(--surface);font-weight:600;font-size:13px;align-self:flex-start;max-width:100%}
+.ctxchip.on{background:var(--mint-soft);border-color:var(--mint);color:var(--mint-ink)}
+.ctxchip span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
+
+/* Sheet */
+.scrim{position:fixed;inset:0;background:var(--scrim);opacity:0;pointer-events:none;transition:opacity .25s;z-index:20}
+.scrim.open{opacity:1;pointer-events:auto}
+.sheet{position:fixed;left:0;right:0;bottom:0;z-index:21;max-height:86dvh;background:var(--bg);border-radius:22px 22px 0 0;display:flex;flex-direction:column;
+  padding:0 max(16px,env(safe-area-inset-right,0px)) calc(14px + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px));
+  transform:translateY(105%);transition:transform .3s var(--ease);box-shadow:0 -10px 40px rgba(0,0,0,.18);visibility:hidden}
+.sheet.open{transform:none;visibility:visible}
+.grab{padding:10px 0 6px;cursor:grab;touch-action:none;display:flex;justify-content:center}
+.grab span{width:40px;height:5px;border-radius:3px;background:var(--line)}
+.sheet-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;padding:2px 0 12px}
+.sheet-head h2{font-family:var(--font-display);font-weight:400;font-size:23px;line-height:1.15}
+.sheet-head .icon-btn{background:var(--surface);border:1px solid var(--line)}
+.sheet-body{overflow-y:auto;overscroll-behavior:contain;flex:1;min-height:0;display:flex;flex-direction:column;gap:12px;padding-bottom:4px}
+.sheet-foot{padding-top:12px}
+.sheet-foot:empty{display:none}
+.sub-h{font-size:11px;font-weight:700;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-3);margin-top:4px}
+
+.toast{position:fixed;left:50%;bottom:calc(92px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--ink);color:var(--surface);padding:10px 16px;border-radius:12px;font-size:13.5px;font-weight:600;box-shadow:var(--shadow);z-index:30;max-width:calc(100% - 32px)}
+.sample{font-size:12px;color:var(--ink-3);text-align:center;margin-top:8px}
+
+@media (min-width:640px){
+  .cards{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .sum{grid-template-columns:repeat(3,minmax(0,200px))}
+}
+@media (min-width:960px){
+  .side{display:flex;flex-direction:column;gap:22px;position:fixed;top:0;bottom:0;left:0;width:var(--side);z-index:9;color:var(--band-ink);
+    background:linear-gradient(170deg,var(--band-1),var(--band-2));padding:20px 14px calc(18px + env(safe-area-inset-bottom,0px)) max(14px,env(safe-area-inset-left,0px));overflow-y:auto}
+  .side .brand{padding:0 6px}
+  .snav{display:flex;flex-direction:column;gap:3px}
+  .sn{display:flex;align-items:center;gap:11px;padding:10px 12px;border-radius:11px;color:var(--band-ink-2);font-weight:600;transition:background-color .15s,color .15s}
+  .sn:hover{background:rgba(255,255,255,.08);color:var(--band-ink)}
+  .sn[aria-current="page"]{background:rgba(79,184,146,.2);color:var(--band-ink)}
+  .sn .cnt{margin-left:auto;font-size:11.5px;background:rgba(255,255,255,.12);border-radius:999px;padding:0 8px;line-height:20px}
+  .sn .cnt.hot{background:var(--crit);color:#fff}
+  .sctx{border:1px solid var(--band-line);border-radius:12px;padding:12px;display:flex;flex-direction:column;gap:8px}
+  .sctx .lbl{font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--band-ink-2);font-weight:700}
+  .sctx .nm{font-weight:600;text-align:left;line-height:1.35}
+  .sctx .nm:hover{color:var(--mint)}
+  .sctx .clr{font-size:12px;color:var(--band-ink-2);text-align:left}
+  .sctx .clr:hover{color:var(--band-ink)}
+  .suser{margin-top:auto;display:flex;gap:10px;align-items:center;padding:0 6px}
+  .suser small{display:block;color:var(--band-ink-2);font-size:12px}
+  .shell{margin-left:var(--side)}
+  .top{background:color-mix(in srgb,var(--bg) 90%,transparent);backdrop-filter:blur(8px);color:var(--ink);border-bottom:1px solid var(--line);padding-left:32px;padding-right:max(32px,env(safe-area-inset-right,0px))}
+  .top .brand,.top .tt,.top .avatar{display:none}
+  .top .icon-btn:hover{background:var(--surface-2)}
+  .crumbs{display:flex;align-items:center;gap:6px;min-width:0;font-size:13.5px;color:var(--ink-3);white-space:nowrap;overflow:hidden}
+  .crumbs button:hover{color:var(--mint-ink)}
+  .crumbs [aria-current]{color:var(--ink);font-weight:600;overflow:hidden;text-overflow:ellipsis}
+  main{padding-left:32px;padding-right:max(32px,env(safe-area-inset-right,0px));padding-block:26px 48px}
+  .bnav{display:none}
+  .toast{bottom:28px}
+  .cards{grid-template-columns:repeat(auto-fill,minmax(310px,1fr));gap:16px}
+  .proj-tools{flex-direction:row;align-items:center;justify-content:space-between}
+  .search{width:340px;order:2}
+  .cats{margin-inline:0;padding-inline:0}
+  .facts{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .actions .btn{flex:0 0 auto}
+  .detail{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);gap:18px;align-items:start}
+  .detail > div{display:flex;flex-direction:column;gap:18px;min-width:0}
+  .sheet{top:0;left:auto;right:0;bottom:0;width:440px;max-height:none;border-radius:20px 0 0 20px;transform:translateX(105%);
+    padding:calc(18px + env(safe-area-inset-top,0px)) max(22px,env(safe-area-inset-right,0px)) calc(18px + env(safe-area-inset-bottom,0px)) 22px}
+  .grab{display:none}
+}
+@media (min-width:1280px){ .view.wide{max-width:1240px} }
+@media (prefers-reduced-motion:reduce){ .view.enter{animation:none} .sheet,.scrim{transition:none} }
+
+/* QA Fix: Spinner Animation for Async Actions */
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+.spinner {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  border: 2px solid rgba(255,255,255,0.3);
+  border-top-color: currentColor;
+  border-radius: 50%;
+  animation: spin 0.75s linear infinite;
+  vertical-align: middle;
+  margin-right: 6px;
+}
+
+/* QA Fix: Mobile Safe-Area Inset */
+.bnav {
+  padding-bottom: max(10px, env(safe-area-inset-bottom, 10px)) !important;
+}
+
+/* QA Fix: Form Inputs & Dark Theme Contrast */
+input, select, textarea {
+  color: var(--ink) !important;
+  background-color: var(--surface) !important;
+  border: 1px solid var(--line) !important;
+  font-family: var(--font-body);
+}
+input:focus, select:focus, textarea:focus {
+  outline: none;
+  border-color: var(--mint) !important;
+  box-shadow: 0 0 0 2px var(--mint-soft);
+}
+
+/* QA Fix: Responsive Card Actions */
+.card-actions {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+@media (max-width: 440px) {
+  .card-actions .btn {
+    flex: 1 1 calc(50% - 4px);
+    text-align: center;
+    justify-content: center;
+  }
+}
+
+/* QA Fix: Login Portal Gateway */
+.login-gateway-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: radial-gradient(circle at 50% 25%, #18423D 0%, #0F2236 55%, #08131F 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  overflow-y: auto;
+}
+.login-modal {
+  width: 100%;
+  max-width: 780px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  padding: 36px 30px;
+  box-shadow: 0 24px 70px rgba(0,0,0,0.5);
+}
+.role-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+  margin-top: 24px;
+}
+.role-choice-card {
+  border: 2px solid var(--line);
+  border-radius: 14px;
+  padding: 22px;
+  background: var(--surface-2);
+  transition: all 0.2s cubic-bezier(.2,.8,.2,1);
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  text-align: left;
+}
+.role-choice-card:hover {
+  border-color: var(--mint);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow);
+}
+
+</style>
+
+<aside class="side" id="side" aria-label="Main navigation"></aside>
+<div class="shell">
+  <header class="top">
+    <div class="top-in">
+      <button class="icon-btn" id="backBtn" type="button" data-back aria-label="Back" hidden></button>
+      <div class="brand" id="brand">
+        <span class="logo-chip" aria-label="Quality Austria Central Asia"><b></b><span>quality austria<br>central asia</span></span>
+        <span class="wordmark">Audit Intelligence</span>
+        <span class="live-badge" title="Connected to FastAPI backend">LIVE</span>
+      </div>
+      <div class="tt" id="tt" hidden><div class="c" id="ttC"></div><div class="t" id="ttT"></div></div>
+      <nav class="crumbs" id="crumbs" aria-label="Breadcrumb"></nav>
+      <span class="spacer"></span>
+      <div id="roleSwitcherSlot" style="display:flex; align-items:center; margin-right:8px"></div>
+      <button class="avatar" id="userAvatarBtn" type="button" data-soon="Profile and settings" aria-label="Priya Deshmukh, QC Lead">PD</button>
+    </div>
+  </header>
+  <main><div class="view" id="view"></div></main>
+<div id="loginGatewayContainer" hidden></div>
+
+</div>
+<nav class="bnav" id="bnav" aria-label="Primary"></nav>
+
+<div class="scrim" id="scrim"></div>
+<section class="sheet" id="sheet" role="dialog" aria-modal="true" aria-labelledby="sheetT" inert>
+  <div class="grab" id="grab"><span></span></div>
+  <header class="sheet-head"><div><div class="eyebrow" id="sheetE"></div><h2 id="sheetT"></h2></div><button class="icon-btn" id="sheetX" type="button" aria-label="Close"></button></header>
+  <div class="sheet-body" id="sheetB"></div>
+  <footer class="sheet-foot" id="sheetF"></footer>
+</section>
+<div class="toast" id="toast" hidden role="status" aria-live="polite"></div>
+
+<script>
+/* ---------- time helpers (anchored to 1 Nov 2026, 15:00) ---------- */
+const TODAY = new Date(2026,10,1,15,0), TD = Date.UTC(2026,10,1), TODAY_ISO = '2026-11-01';
+const MON = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+const parts = s => s.slice(0,10).split('-').map(Number);
+const d0 = s => { const [y,m,d] = parts(s); return Date.UTC(y,m-1,d); };
+const ago = s => Math.round((TD - d0(s)) / 864e5);
+const fmt = (s, yr = true) => { if (!s) return '—'; const [y,m,d] = parts(s); return `${d} ${MON[m-1]}${yr ? ' ' + y : ''}`; };
+const local = s => { const [a,b='00:00'] = s.split('T'); const [y,m,d] = a.split('-').map(Number); const [h,mi] = b.split(':').map(Number); return new Date(y,m-1,d,h,mi); };
+const rel = s => { if (!s) return ''; const mins = Math.round((TODAY - local(s)) / 6e4); if (mins < 60) return `${Math.max(1,mins)} min ago`; if (ago(s) === 0) return `${Math.round(mins/60)} h ago`; if (ago(s) === 1) return 'yesterday'; return `${ago(s)} d ago`; };
+const addDays = (s,k) => new Date(d0(s) + k*864e5).toISOString().slice(0,10);
+const esc = s => String(s || '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+
+/* ---------- icons ---------- */
+const IC = {
+  home:'M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z',
+  ins:'M9 4h6v3H9zM8 5.5H6a1 1 0 0 0-1 1V20a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V6.5a1 1 0 0 0-1-1h-2M9 13.5l2 2 4-4',
+  nc:'M12 3.5 2.5 20h19zM12 10v4.5M12 17.5h.01',
+  ap:'M12 3l7 3v5.5c0 4.4-3 7.8-7 9.5-4-1.7-7-5.1-7-9.5V6zM9 12l2.2 2.2L15.5 10',
+  search:'M11 4.5a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13zM20 20l-4.2-4.2',
+  back:'M15 5l-7 7 7 7', close:'M6 6l12 12M18 6 6 18', chev:'M9.5 6l6 6-6 6',
+  down:'M6 9.5l6 6 6-6', clock:'M12 7v5l3 2M12 3.5a8.5 8.5 0 1 0 0 17 8.5 8.5 0 0 0 0-17z'
+};
+const ico = (k, s = 20) => `<svg viewBox="0 0 24 24" width="${s}" height="${s}" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="${IC[k]}"/></svg>`;
+
+/* ---------- state & data store ---------- */
+const ENG = ['Rohit Kale','Anjali Rao','Vikram Singh','Meera Iyer','Arjun Mehta'];
+const REPORTS_CACHE = {};
+let P = []; // Loaded from API
+let API_AVAILABLE = false;
+
+const N = (code,title,sev,zone,trade,assigned,raised,due,status,by,closed) => ({code,title,sev,zone,trade,assigned,raised,due,status,by,closed:closed||null,log:[]});
+const A = (code,kind,title,by,at,ref={}) => ({code,kind,title,by,at,...ref});
+const T = (title,detail,due,target) => ({title,detail,due,target});
+const I = (code,title,zone,tpl,eng,due,status,res) => ({code,title,zone,tpl,eng,due,status,res:res||null});
+
+// Initial sample data fallback
+const DEFAULT_PROJECTS = [
+ { id:'psv', code:'PRJ-0012', name:'Purvanchal Skyline Vista', type:'Luxury Residential', loc:'Noida Sector 94', geo:'28.5383° N, 77.3720° E', status:'live', progress:18, start:'2026-10-20', end:'2029-03-31', upd:['2026-11-01T13:10','Rohit Kale'],
+   ncs:[
+    N('NC-0012-0078','Honeycombing at column C7 to beam junction','critical','T3 · Floor 7','RCC','Shree Ram Constructions','2026-10-21','2026-10-24','Assigned','Vikram Singh'),
+    N('NC-0012-0081','Cover blocks missing under slab bottom rebar','major','T3 · Floor 8','RCC','Shree Ram Constructions','2026-10-27','2026-11-03','Rectification submitted','Rohit Kale'),
+    N('NC-0012-0084','Waterproofing lap under 100 mm at sunken slab','major','T2 · Floor 4','Waterproofing','AquaSeal Systems','2026-10-19','2026-10-26','Reopened','Anjali Rao'),
+    N('NC-0012-0074','Shear wall plumb deviation 9 mm over 3 m','major','T1 · Floor 10','RCC','Shree Ram Constructions','2026-10-08','2026-10-15','Under verification','Vikram Singh'),
+    N('NC-0012-0071','Rebar lap length short at beam B12','major','T3 · Floor 6','RCC','Shree Ram Constructions','2026-10-12','2026-10-19','Under verification','Rohit Kale'),
+    N('NC-0012-0086','Blockwork joints thicker than 12 mm','minor','T2 · Floor 5','Masonry','Shree Ram Constructions','2026-10-24','2026-11-08','Assigned','Anjali Rao'),
+    N('NC-0012-0089','Conduit not clamped before plastering','minor','T1 · Floor 11','Electrical','Volt Infra Services','2026-10-30','2026-11-14','Open','Vikram Singh'),
+    N('NC-0012-0090','Curing log not maintained on site','ofi','T3 · Floor 7','RCC','Shree Ram Constructions','2026-10-28','2026-11-27','Assigned','Rohit Kale'),
+    N('NC-0012-0069','Debris left in column formwork before pour','major','T1 · Floor 9','RCC','Shree Ram Constructions','2026-10-09','2026-10-16','Closed','Vikram Singh','2026-10-14'),
+    N('NC-0012-0066','Shuttering joints not sealed','minor','T3 · Floor 5','RCC','Shree Ram Constructions','2026-10-05','2026-10-20','Closed','Rohit Kale','2026-10-17')
+   ], closedExtra:9,
+   approvals:[
+    A('AP-0012-031','Inspection report','Slab pre-pour · T3 Floor 9','Rohit Kale','2026-10-31T17:40',{ins:'INS-0012-0345'}),
+    A('AP-0012-030','NC closure','Rebar lap length short at beam B12','Rohit Kale','2026-10-31T11:15',{nc:'NC-0012-0071'}),
+    A('AP-0012-029','Inspection report','Blockwork · T2 Floor 6','Anjali Rao','2026-10-30T16:05',{ins:'INS-0012-0342'})
+   ],
+   actions:[
+    T('Escalate critical NC','NC-0012-0078 is with Shree Ram Constructions, past due','2026-10-24',{nc:'NC-0012-0078'}),
+    T('Chase overdue inspection','Electrical conduit · T1 Floor 11, Vikram Singh','2026-10-29',{ins:'INS-0012-0338'}),
+    T('Allocate inspection','Masonry check · T2 Floor 7 has no engineer','2026-11-04',{ins:'INS-0012-0349'}),
+    T('Allocate inspection','MEP rough-in · T1 Floor 12 has no engineer','2026-11-06',{ins:'INS-0012-0350'})
+   ],
+   ins:[
+    I('INS-0012-0345','Slab pre-pour','T3 · Floor 9','RCC slab pre-pour v3','Rohit Kale','2026-10-31','Pending review',{items:48,pass:45,nc:3,na:0}),
+    I('INS-0012-0342','Blockwork','T2 · Floor 6','Masonry & shell v2','Anjali Rao','2026-10-30','Pending review',{items:36,pass:34,nc:1,na:1}),
+    I('INS-0012-0347','Shuttering check','T3 · Floor 10','Formwork v2','Rohit Kale','2026-11-02','In progress'),
+    I('INS-0012-0338','Electrical conduit','T1 · Floor 11','Electrical rough-in v1','Vikram Singh','2026-10-29','Allocated'),
+    I('INS-0012-0349','Masonry check','T2 · Floor 7','Masonry & shell v2',null,'2026-11-04','Required'),
+    I('INS-0012-0350','MEP rough-in','T1 · Floor 12','MEP rough-in v1',null,'2026-11-06','Required'),
+    I('INS-0012-0336','Column pre-pour','T3 · Floor 7','RCC column v2','Vikram Singh','2026-10-21','Report issued',{items:32,pass:30,nc:2,na:0})
+   ]},
+ { id:'lct', code:'PRJ-0015', name:'Lumos Commercial Tower', type:'Commercial', loc:'Gurugram Sector 65', geo:'28.4023° N, 77.0679° E', status:'live', progress:27, start:'2026-06-15', end:'2028-06-30', upd:['2026-11-01T10:05','Meera Iyer'],
+   ncs:[
+    N('NC-0015-0031','Glazing silicone discontinuous at mullion','major','Block A · Floor 6','Façade','ClearView Facades','2026-10-22','2026-10-29','Assigned','Meera Iyer'),
+    N('NC-0015-0034','HVAC duct hanger spacing over 2.4 m','minor','Block A · Floor 3','HVAC','CoolAir Projects','2026-10-25','2026-11-09','Rectification submitted','Arjun Mehta'),
+    N('NC-0015-0036','Fire stop sealant missing at service shaft','major','Core · Floor 4','Fire','SafeGuard Fire Systems','2026-10-31','2026-11-07','Open','Meera Iyer'),
+    N('NC-0015-0028','Anchor bolt edge distance below spec','major','Block A · Floor 5','Façade','ClearView Facades','2026-10-10','2026-10-17','Closed','Meera Iyer','2026-10-16')
+   ], closedExtra:6,
+   approvals:[ A('AP-0015-012','Inspection report','Façade bracket anchorage · Floor 7','Meera Iyer','2026-11-01T09:30',{ins:'INS-0015-0118'}) ],
+   actions:[
+    T('Chase contractor','NC-0015-0031 is with ClearView Facades, past due','2026-10-29',{nc:'NC-0015-0031'}),
+    T('Allocate inspection','Fire stopping · Core Floor 5 has no engineer','2026-11-05',{ins:'INS-0015-0121'})
+   ],
+   ins:[
+    I('INS-0015-0118','Façade bracket anchorage','Block A · Floor 7','Façade & glazing v2','Meera Iyer','2026-10-31','Pending review',{items:40,pass:39,nc:1,na:0}),
+    I('INS-0015-0119','HVAC rough-in','Block A · Floor 4','HVAC v1','Arjun Mehta','2026-11-03','Allocated'),
+    I('INS-0015-0121','Fire stopping','Core · Floor 5','Fire protection v2',null,'2026-11-05','Required'),
+    I('INS-0015-0110','Curtain wall mock-up','Block A · Floor 2','Façade & glazing v2','Meera Iyer','2026-10-12','Report issued',{items:40,pass:38,nc:2,na:0})
+   ]},
+ { id:'nlp', code:'PRJ-0017', name:'Ecotech Logistics Park', type:'Industrial', loc:'Greater Noida, Ecotech III', geo:'28.4744° N, 77.5040° E', status:'live', progress:74, start:'2025-11-03', end:'2026-12-31', upd:['2026-10-31T18:20','Arjun Mehta'],
+   ncs:[
+    N('NC-0017-0052','Floor joint filler incomplete in Bay 4','minor','Warehouse 2 · Bay 4','Flooring','Apex Floorings','2026-10-21','2026-11-05','Assigned','Arjun Mehta'),
+    N('NC-0017-0055','Dock leveller safety signage missing','ofi','Warehouse 2 · Docks','Finishes','Apex Floorings','2026-10-27','2026-11-26','Assigned','Arjun Mehta'),
+    N('NC-0017-0049','Roof sheet overlap short at ridge','major','Warehouse 2 · Roof','Steel','Skyline Sheeting','2026-10-06','2026-10-13','Closed','Arjun Mehta','2026-10-12')
+   ], closedExtra:21,
+   approvals:[ A('AP-0017-019','Inspection report','Roof sheeting final · Warehouse 2','Arjun Mehta','2026-10-31T15:00',{ins:'INS-0017-0204'}) ],
+   actions:[ T('Allocate inspection','Fire hydrant pressure test · Yard has no engineer','2026-11-05',{ins:'INS-0017-0207'}) ],
+   ins:[
+    I('INS-0017-0204','Roof sheeting final','Warehouse 2 · Roof','Pre-engineered building v1','Arjun Mehta','2026-10-31','Pending review',{items:30,pass:30,nc:0,na:0}),
+    I('INS-0017-0207','Fire hydrant pressure test','Yard · Ring main','Fire protection v2',null,'2026-11-05','Required'),
+    I('INS-0017-0201','Floor flatness survey','Warehouse 2 · Bays 1–6','Industrial flooring v1','Arjun Mehta','2026-10-20','Report issued',{items:24,pass:22,nc:2,na:0})
+   ]},
+ { id:'t117', code:'PRJ-0019', name:'NCR Telecom Cluster 117', type:'Telecom Tower', loc:'Noida Sector 150 · 8 sites', geo:'28.4290° N, 77.4870° E', status:'live', progress:41, start:'2026-08-03', end:'2027-01-29', upd:['2026-11-01T08:45','Vikram Singh'],
+   ncs:[
+    N('NC-0019-0012','Earth pit resistance 7.2 Ω, limit 5 Ω','critical','Site 117-04 · Earthing','Electrical','Volt Infra Services','2026-10-29','2026-11-01','Assigned','Vikram Singh'),
+    N('NC-0019-0014','Tower bolt torque marks missing','major','Site 117-06 · Erection','Steel','Volt Infra Services','2026-10-15','2026-10-22','Reopened','Vikram Singh'),
+    N('NC-0019-0015','Shelter door seal damaged','minor','Site 117-02 · Shelter','Civil','Volt Infra Services','2026-10-30','2026-11-14','Open','Vikram Singh')
+   ], closedExtra:4,
+   approvals:[ A('AP-0019-007','Inspection report','Foundation pre-pour · Site 117-07','Vikram Singh','2026-10-30T12:20',{ins:'INS-0019-0061'}) ],
+   actions:[
+    T('Escalate reopened NC','NC-0019-0014 failed verification','2026-10-22',{nc:'NC-0019-0014'}),
+    T('Allocate inspection','Earthing re-test · Site 117-04 has no engineer','2026-11-03',{ins:'INS-0019-0064'})
+   ],
+   ins:[
+    I('INS-0019-0061','Foundation pre-pour','Site 117-07 · Foundation','Telecom foundation v4','Vikram Singh','2026-10-30','Pending review',{items:28,pass:27,nc:1,na:0}),
+    I('INS-0019-0062','Tower erection','Site 117-05 · Erection','Telecom erection v4','Vikram Singh','2026-11-02','Allocated'),
+    I('INS-0019-0064','Earthing re-test','Site 117-04 · Earthing','Telecom earthing v4',null,'2026-11-03','Required'),
+    I('INS-0019-0058','Shelter installation','Site 117-02 · Shelter','Telecom shelter v4','Vikram Singh','2026-10-24','Report issued',{items:22,pass:20,nc:2,na:0})
+   ]},
+ { id:'rvv', code:'PRJ-0011', name:'Riverside Villas', type:'Luxury Residential', loc:'Greater Noida West', geo:'28.6034° N, 77.4310° E', status:'hold', progress:33, start:'2025-09-01', end:'2027-08-31', upd:['2026-10-12T11:00','Priya Deshmukh'],
+   hold:'Client stop-work notice. Revised structural drawings awaited.',
+   ncs:[
+    N('NC-0011-0140','Hairline cracks in plinth beam PB-14','major','Villa cluster B · Plinth','RCC','BuildRight Infra','2026-10-05','2026-10-12','Assigned','Rohit Kale'),
+    N('NC-0011-0142','Exposed rebar not protected during halt','minor','Villa cluster C · Columns','RCC','BuildRight Infra','2026-10-09','2026-10-24','Open','Rohit Kale')
+   ], closedExtra:31, approvals:[],
+   actions:[ T('Confirm restart date','Client to confirm restart after drawing revision','2026-11-10',{project:'rvv'}) ],
+   ins:[ I('INS-0011-0402','Plinth beam check','Villa cluster B · Plinth','RCC beam v2','Rohit Kale','2026-10-05','Report issued',{items:30,pass:28,nc:2,na:0}) ]},
+ { id:'s62', code:'PRJ-0014', name:'Sector 62 Data Centre', type:'Industrial', loc:'Noida Sector 62', geo:'28.6270° N, 77.3720° E', status:'hold', progress:12, start:'2026-05-04', end:'2027-12-31', upd:['2026-10-20T16:30','Priya Deshmukh'],
+   hold:'Funding approval pending with the client board.',
+   ncs:[ N('NC-0014-0021','Raft waterproofing membrane torn at edge','minor','Main block · Raft','Waterproofing','AquaSeal Systems','2026-09-28','2026-10-13','Assigned','Anjali Rao') ],
+   closedExtra:3, approvals:[], actions:[], ins:[] },
+ { id:'yem', code:'PRJ-0021', name:'Yamuna Expressway Mall', type:'Commercial', loc:'Greater Noida, Sector 22D', geo:'28.4100° N, 77.5800° E', status:'upcoming', progress:0, start:'2026-11-16', end:'2029-06-30', upd:['2026-10-29T14:00','Priya Deshmukh'],
+   ncs:[], closedExtra:0,
+   approvals:[ A('AP-0021-001','Inspection & Test Plan','ITP Rev 0 · 9 stages, 34 hold points','Meera Iyer','2026-10-29T14:00') ],
+   actions:[
+    T('Assign inspection team','No engineers are tagged to this project yet','2026-11-10',{project:'yem'}),
+    T('Allocate first inspection','Site survey and setting-out','2026-11-16',{ins:'INS-0021-0001'})
+   ],
+   ins:[ I('INS-0021-0001','Site survey & setting-out','Site · Grids A–F','Site preparation v1',null,'2026-11-16','Required') ]},
+ { id:'t124', code:'PRJ-0022', name:'NCR Telecom Cluster 124', type:'Telecom Tower', loc:'Ghaziabad · 6 sites', geo:'28.6692° N, 77.4538° E', status:'upcoming', progress:0, start:'2026-12-01', end:'2027-05-31', upd:['2026-10-27T12:10','Priya Deshmukh'],
+   ncs:[], closedExtra:0, approvals:[],
+   actions:[ T('Approve checklist set','Telecom tower checklists v4 for 6 sites','2026-11-20',{project:'t124'}) ], ins:[] },
+ { id:'s108', code:'PRJ-0008', name:'Sector 108 Residences', type:'Luxury Residential', loc:'Noida Sector 108', geo:'28.5440° N, 77.3740° E', status:'completed', progress:100, start:'2024-04-01', end:'2026-09-30', cleared:'2026-09-30', upd:['2026-09-30T18:00','Priya Deshmukh'],
+   ncs:[
+    N('NC-0008-0412','Paint shade variation in lobby','minor','Tower A · Lobby','Finishes','Colorcraft Painters','2026-09-12','2026-09-27','Closed','Anjali Rao','2026-09-24'),
+    N('NC-0008-0409','Lift pit waterproofing seepage','major','Tower B · Lift pit','Waterproofing','AquaSeal Systems','2026-09-02','2026-09-09','Closed','Anjali Rao','2026-09-08')
+   ], closedExtra:40, approvals:[], actions:[], ins:[] },
+ { id:'t109', code:'PRJ-0010', name:'NCR Telecom Cluster 109', type:'Telecom Tower', loc:'Noida Sector 135 · 5 sites', geo:'28.4980° N, 77.4120° E', status:'completed', progress:100, start:'2026-02-02', end:'2026-07-31', cleared:'2026-08-05', upd:['2026-08-05T11:20','Priya Deshmukh'],
+   ncs:[ N('NC-0010-0033','Cable tray earthing jumper missing','minor','Site 109-03 · Shelter','Electrical','Volt Infra Services','2026-07-20','2026-08-04','Closed','Vikram Singh','2026-07-29') ],
+   closedExtra:17, approvals:[], actions:[], ins:[] }
+];
+
+P = DEFAULT_PROJECTS;
+
+/* ---------- derived & helpers ---------- */
+const SEVO = {critical:0,major:1,minor:2,ofi:3};
+const SEVL = {critical:'Critical',major:'Major',minor:'Minor',ofi:'OFI'};
+const SEVV = {critical:'--crit',major:'--major',minor:'--minor',ofi:'--ofi'};
+const STL = {live:'Live',hold:'On hold',upcoming:'Upcoming',completed:'Completed'};
+const INS_ST = ['Required','Allocated','In progress','Pending review','Report issued'];
+const MODS = {home:'Home',inspections:'Inspections',ncs:'NCs',approvals:'Approvals'};
+const isOpen = n => n.status !== 'Closed';
+const openN = p => (p.ncs || []).filter(isOpen);
+const closedN = p => (p.ncs || []).filter(n => !isOpen(n));
+const closedTotal = p => closedN(p).length + (p.closedExtra || 0);
+const ncLate = n => isOpen(n) && ago(n.due) > 0;
+const insLate = i => ['Required','Allocated','In progress'].includes(i.status) && ago(i.due) > 0;
+const actLate = t => ago(t.due) > 0;
+const byId = id => P.find(p => p.id === id);
+const find = (key, code) => { for (const p of P) { const x = (p[key] || []).find(o => o.code === code); if (x) return {x, p}; } return null; };
+const sortNC = (a,b) => (isOpen(b.n) - isOpen(a.n)) || SEVO[a.n.sev] - SEVO[b.n.sev] || d0(a.n.due) - d0(b.n.due);
+const allNC = () => P.flatMap(p => (p.ncs || []).map(n => ({n,p})));
+const critOpen = () => allNC().filter(o => isOpen(o.n) && o.n.sev === 'critical');
+const allApprovals = () => P.flatMap(p => (p.approvals || []).map(a => ({a,p})));
+const overdueNC = () => allNC().filter(o => ncLate(o.n));
+const overdueIns = () => P.flatMap(p => (p.ins || []).filter(insLate).map(i => ({i,p})));
+const engLoad = name => P.reduce((a,p) => a + (p.ins || []).filter(i => i.eng === name && ['Allocated','In progress'].includes(i.status)).length, 0);
+const projOf = e => e.v === 'project' ? e.id : e.v === 'nc' ? find('ncs', e.id)?.p.id : e.v === 'approval' ? find('approvals', e.id)?.p.id : e.v === 'inspection' ? find('ins', e.id)?.p.id : null;
+
+function trail(n){
+  const t = [], cap = s => d0(s) > TD ? TODAY_ISO : s;
+  t.push({d:n.raised, w:`Raised by ${n.by}`, m:`${SEVL[n.sev]} · ${n.zone} · ${n.trade}`});
+  if (n.status !== 'Open') t.push({d:n.raised, w:`Assigned to ${n.assigned}`, m:`Due ${fmt(n.due)}`});
+  if (['Rectification submitted','Under verification','Reopened','Closed'].includes(n.status)) t.push({d:cap(addDays(n.raised,3)), w:'Rectification submitted', m:`${n.assigned} uploaded root cause and after-photos`});
+  if (['Under verification','Reopened','Closed'].includes(n.status)) t.push({d:cap(addDays(n.raised,4)), w:`Re-inspection by ${n.by}`, m: n.status === 'Reopened' ? 'Defect persists. Verification failed.' : 'Verified on site with closing photo'});
+  if (n.status === 'Reopened') t.push({d:cap(addDays(n.raised,4)), w:'Reopened', m:`Back with ${n.assigned}`});
+  (n.log || []).forEach(l => t.push(l));
+  if (n.status === 'Closed') t.push({d:n.closed || TODAY_ISO, w:'Closed by Priya Deshmukh', m:'Closure = Y'});
+  return t;
+}
+
+/* ---------- UI State ---------- */
+// Platform Separation at Login (QC Lead vs Field Inspection Engineer)
+const _urlParams = new URLSearchParams(window.location.search);
+const _path = window.location.pathname.toLowerCase();
+const _isForceLogin = _urlParams.get('login') === '1' || _path === '/login';
+
+let _initialRole = null;
+if (!_isForceLogin) {
+  if (_urlParams.get('role') === 'engineer' || _path.includes('/engineer') || _urlParams.get('view') === 'engineer') {
+    _initialRole = 'engineer';
+  } else if (_urlParams.get('role') === 'lead' || _path === '/qc' || _path === '/qc-lead') {
+    _initialRole = 'qc_lead';
+  } else {
+    _initialRole = localStorage.getItem('siteiq_logged_in_role');
+  }
+}
+
+let _storedEngId = _urlParams.get('engineer_id') || localStorage.getItem('siteiq_active_engineer_id') || 'EMP-1004';
+
+const S = {
+  role: _initialRole, // 'qc_lead', 'engineer', or null (shows login gateway)
+  stack: [{ v: _initialRole === 'engineer' ? 'engineer_dashboard' : 'home' }],
+  ctx: null,
+  cat: 'live',
+  q: '',
+  listNc: { closed: false, sev: 'all' },
+  listIns: 'all',
+  pNcClosed: false,
+  pIns: 'all',
+  sheet: null,
+  sheetTab: 'open',
+  lastFocus: null
+};
+
+function renderLoginGateway() {
+  const container = $('loginGatewayContainer');
+  if (!container) return;
+  
+  const currentEngId = _storedEngId || 'EMP-1004';
+  const roster = typeof ENGINEER_ROSTER !== 'undefined' ? ENGINEER_ROSTER : [
+    { id: 'EMP-1004', name: 'Anjali Rao', role: 'QC Inspection Engineer', spec: 'Finishes & Waterproofing' },
+    { id: 'EMP-1002', name: 'Rohit Kale', role: 'Senior QC Engineer', spec: 'RCC & Structural' },
+    { id: 'EMP-1003', name: 'Vikram Singh', role: 'QC Inspection Engineer', spec: 'Steel & Telecom' },
+    { id: 'EMP-1005', name: 'Meera Iyer', role: 'Senior Façade & MEP Engineer', spec: 'Façade & MEP' },
+    { id: 'EMP-1006', name: 'Arjun Mehta', role: 'QC Inspection Engineer', spec: 'Industrial & PEB' }
+  ];
+
+  const rosterOptions = roster.map(eng => `<option value="${eng.id}" ${eng.id === currentEngId ? 'selected' : ''}>${eng.name} (${eng.id}) — ${eng.spec}</option>`).join('');
+
+  container.hidden = false;
+  container.innerHTML = `
+    <div class="login-gateway-backdrop">
+      <div class="login-modal" role="dialog" aria-modal="true" aria-labelledby="loginTitle">
+        <div style="text-align:center; margin-bottom:24px">
+          <div style="display:inline-flex; align-items:center; gap:8px; background:var(--mint-soft); color:var(--mint-ink); padding:4px 14px; border-radius:20px; font-size:11.5px; font-weight:800; text-transform:uppercase; letter-spacing:0.06em">
+            <span>🛡️ Quality Austria Central Asia</span>
+          </div>
+          <h1 id="loginTitle" style="font-size:28px; font-weight:700; margin:12px 0 6px; letter-spacing:-0.02em; color:var(--ink)">
+            SiteIQ CQMS — Role Login Gateway
+          </h1>
+          <p class="muted" style="font-size:14px; max-width:540px; margin:0 auto; line-height:1.5">
+            Platform access is partitioned at authentication. Please select your operational role to launch the appropriate workspace.
+          </p>
+        </div>
+
+        <div class="role-grid">
+          <!-- QC LEAD CONSOLE CARD -->
+          <div class="role-choice-card">
+            <div style="display:flex; justify-content:space-between; align-items:flex-start">
+              <span style="font-size:36px">📋</span>
+              <span class="pill" style="background:var(--mint-soft); color:var(--mint-ink); font-weight:800">MANAGEMENT</span>
+            </div>
+            <div>
+              <h2 style="font-size:19px; font-weight:700; margin:0 0 4px; color:var(--ink)">QC Lead Portal</h2>
+              <div style="font-size:13px; font-weight:700; color:var(--mint)">Priya Deshmukh (QC Lead · EMP-1001)</div>
+              <p class="muted" style="font-size:12.5px; margin-top:8px; line-height:1.45">
+                Audit planning, project quality register, 4-step checkpoint allocation wizard, engineer reassignment, approval gates, and AI executive dossiers.
+              </p>
+            </div>
+            <button class="btn primary" type="button" onclick="loginAs('qc_lead')" style="width:100%; height:44px; font-weight:800; font-size:13.5px; background:linear-gradient(135deg, var(--band-1), var(--band-2)); color:#5CCB9F; border:1px solid var(--mint); margin-top:auto; border-radius:10px">
+              Enter QC Lead Console →
+            </button>
+          </div>
+
+          <!-- FIELD INSPECTION ENGINEER CARD -->
+          <div class="role-choice-card" style="border-color:var(--mint); background:var(--surface)">
+            <div style="display:flex; justify-content:space-between; align-items:flex-start">
+              <span style="font-size:36px">👷</span>
+              <span class="pill" style="background:#5CCB9F; color:#0B2A21; font-weight:800">FIELD EXECUTION</span>
+            </div>
+            <div>
+              <h2 style="font-size:19px; font-weight:700; margin:0 0 4px; color:var(--ink)">Field Inspector Workspace</h2>
+              <p class="muted" style="font-size:12.5px; margin:4px 0 10px; line-height:1.45">
+                Mobile-first field inspection app: assigned checklist queue, rapid 1-tap checkpoint verification ([OK] [NC] [NA]), defect logging, and photo evidence.
+              </p>
+              <label style="display:block; font-size:12px; font-weight:700; margin-bottom:4px; color:var(--ink)">
+                Select Logged-in Inspection Engineer:
+              </label>
+              <select id="login_engineer_select" style="width:100%; padding:9px 10px; border-radius:8px; border:1px solid var(--line); font-size:12.5px; font-weight:600">
+                ${rosterOptions}
+              </select>
+            </div>
+            <button class="btn primary" type="button" onclick="loginAs('engineer', document.getElementById('login_engineer_select').value)" style="width:100%; height:44px; font-weight:800; font-size:13.5px; background:var(--mint); color:var(--on-mint); margin-top:auto; border-radius:10px">
+              Launch Field Inspection App →
+            </button>
+          </div>
+        </div>
+
+        <div style="margin-top:28px; padding-top:16px; border-top:1px solid var(--line); display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; font-size:12px; color:var(--ink-3)">
+          <span>Purvanchal Skyline Vista & Integrated Project Sites</span>
+          <span>ISO 9001:2015 & NBC 2016 Compliant CQMS</span>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+function closeLoginGateway() {
+  const container = $('loginGatewayContainer');
+  if (container) {
+    container.hidden = true;
+    container.innerHTML = '';
+  }
+}
+
+function loginAs(role, engineerId = 'EMP-1004') {
+  S.role = role;
+  _storedEngId = engineerId;
+  try {
+    localStorage.setItem('siteiq_logged_in_role', role);
+    localStorage.setItem('siteiq_active_engineer_id', engineerId);
+  } catch (e) {}
+
+  closeLoginGateway();
+
+  if (role === 'engineer') {
+    if (typeof ENGINEER_WORKSPACE !== 'undefined') {
+      ENGINEER_WORKSPACE.activeEngineerId = engineerId;
+      const match = (typeof ENGINEER_ROSTER !== 'undefined' ? ENGINEER_ROSTER : []).find(e => e.id === engineerId);
+      if (match) ENGINEER_WORKSPACE.activeEngineerName = match.name;
+    }
+    S.stack = [{ v: 'engineer_dashboard' }];
+    if (window.history && window.history.pushState) window.history.pushState(null, '', '/engineer');
+    if (typeof fetchEngineerDashboardData === 'function') {
+      fetchEngineerDashboardData(engineerId).then(() => render());
+    } else {
+      render();
+    }
+  } else {
+    S.stack = [{ v: 'home' }];
+    if (window.history && window.history.pushState) window.history.pushState(null, '', '/');
+    render();
+  }
+}
+
+function logoutToGateway() {
+  S.role = null;
+  try {
+    localStorage.removeItem('siteiq_logged_in_role');
+  } catch (e) {}
+  if (window.history && window.history.pushState) window.history.pushState(null, '', '/login');
+  renderLoginGateway();
+}
+
+window.loginAs = loginAs;
+window.logoutToGateway = logoutToGateway;
+window.renderLoginGateway = renderLoginGateway;
+window.closeLoginGateway = closeLoginGateway;
+const $ = id => document.getElementById(id);
+const cur = () => S.stack[S.stack.length - 1];
+
+/* ---------- shared fragments ---------- */
+const pill = st => `<span class="pill st-${st}">${STL[st] || st}</span>`;
+const stTag = s => { const c = s === 'Reopened' ? 'bad' : s === 'Closed' || s === 'Report issued' ? 'good' : ['Rectification submitted','Under verification','Pending review'].includes(s) ? 'info' : ''; return `<span class="stt ${c}">${s}</span>`; };
+const dueText = (due, late, closedOn) => closedOn ? `Closed ${fmt(closedOn,false)}` : late ? `<span class="late">${ago(due)} d overdue</span>` : ago(due) === 0 ? '<span class="late">Due today</span>' : `Due ${fmt(due,false)}`;
+const metric = (sheet, v, l, s) => `<button class="metric ${v ? '' : 'zero'}" type="button" data-sheet="${sheet}" aria-label="${v} ${l}${s ? ', ' + s : ''}"><span class="v num">${v}</span><span class="l">${l}</span>${s ? `<span class="s">${s}</span>` : ''}</button>`;
+function metricsFor(p){
+  const o = openN(p), crit = o.filter(n => n.sev === 'critical').length, late = o.filter(ncLate).length, aLate = (p.actions || []).filter(actLate).length;
+  return `<div class="metrics">${metric(`ncs:${p.id}`, o.length, 'Open NCs', crit ? `${crit} critical` : late ? `${late} overdue` : '')}${metric(`approvals:${p.id}`, (p.approvals || []).length, 'Approvals', '')}${metric(`actions:${p.id}`, (p.actions || []).length, 'Actions', aLate ? `${aLate} overdue` : '')}</div>`;
+}
+function ncRow(n, p, showP){
+  return `<button class="row" type="button" data-go="nc:${n.code}" style="--sev:var(${SEVV[n.sev]})">
+    <span class="rc"><span class="r1">${n.code}${showP ? ` · ${esc(p.name)}` : ''}<span class="sev sev-${n.sev}">${SEVL[n.sev]}</span></span>
+    <span class="r2">${esc(n.title)}</span>
+    <span class="r3">${esc(n.assigned)} · ${dueText(n.due, ncLate(n), isOpen(n) ? null : n.closed)}</span>
+    <span class="r4">${stTag(n.status)}</span></span>${ico('chev',18)}</button>`;
+}
+function apRow(a, p, showP){
+  return `<button class="row" type="button" data-go="approval:${a.code}">
+    <span class="rc"><span class="r1">${a.kind}${showP ? ` · ${esc(p.name)}` : ''}</span>
+    <span class="r2">${esc(a.title)}</span><span class="r3">${esc(a.by)} · submitted ${rel(a.at)}</span></span>${ico('chev',18)}</button>`;
+}
+function goOf(t){ const g = t.target; return g.nc ? `nc:${g.nc}` : g.ins ? `inspection:${g.ins}` : `project:${g.project}:inspections`; }
+function acRow(t, p, showP){
+  return `<button class="row" type="button" data-go="${goOf(t)}" style="--sev:${actLate(t) ? 'var(--crit)' : 'transparent'}">
+    <span class="rc"><span class="r1">Action${showP ? ` · ${esc(p.name)}` : ''}</span>
+    <span class="r2">${esc(t.title)}</span><span class="r3">${esc(t.detail)} · ${dueText(t.due, actLate(t))}</span></span>${ico('chev',18)}</button>`;
+}
+function getInspectionTab(status) {
+  const s = String(status || '').toLowerCase().trim();
+  if (['draft', 'created', 'allocated', 'required'].includes(s)) return 'Create';
+  if (['in progress', 'in_progress', 'pending review', 'pending_review'].includes(s)) return 'In Progress';
+  if (['on hold', 'on_hold', 'returned for reinspection', 'returned'].includes(s)) return 'On Hold';
+  if (['completed', 'done', 'report issued', 'closed'].includes(s)) return 'Completed';
+  return 'Create';
+}
+
+function insRow(i, p, showP){
+  const isAlloc = i.code && (i.code.startsWith('ALC-') || i.code.startsWith('INS-'));
+  const chkCount = i.items_count || (i.res ? i.res.items : (isAlloc ? 1 : null));
+  const pri = i.priority || (isAlloc ? 'High' : 'High');
+  const priColor = pri === 'High' ? 'var(--crit)' : pri === 'Medium' ? 'var(--major)' : 'var(--mint-ink)';
+  const priBg = pri === 'High' ? 'var(--crit-soft)' : pri === 'Medium' ? 'var(--major-soft)' : 'var(--mint-soft)';
+  const priBadge = `<span style="font-size:10px; font-weight:800; padding:1px 6px; border-radius:4px; background:${priBg}; color:${priColor}; text-transform:uppercase">${pri}</span>`;
+
+  let progressPct = 0;
+  if (i.res && i.res.items) {
+    const done = (i.res.pass || 0) + (i.res.nc || 0) + (i.res.na || 0);
+    progressPct = Math.round((done / i.res.items) * 100);
+  } else if (i.status === 'Report issued' || i.status === 'Done') {
+    progressPct = 100;
+  } else if (i.status === 'Pending review') {
+    progressPct = 100;
+  } else if (i.status === 'In progress') {
+    progressPct = 50;
+  }
+
+  const stClass = ['Report issued', 'Done'].includes(i.status) ? 'good' : ['Pending review', 'In progress'].includes(i.status) ? 'info' : ['On hold', 'Returned for Reinspection', 'Returned'].includes(i.status) ? 'bad' : '';
+
+  return `
+    <article class="card" style="position:relative; background:var(--surface); border:1px solid var(--line); border-radius:12px; padding:14px; margin-bottom:10px; display:flex; flex-direction:column; gap:10px">
+      <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:8px">
+        <div>
+          <div style="display:flex; gap:6px; align-items:center; flex-wrap:wrap; margin-bottom:4px">
+            <span class="code" style="font-weight:800; color:var(--mint); font-size:12.5px">${i.code}</span>
+            ${showP ? `<span style="font-size:12px; font-weight:700">· ${esc(p.name)}</span>` : ''}
+            ${priBadge}
+            <span class="stt ${stClass}">${i.status}</span>
+          </div>
+          <h3 style="font-size:15px; font-weight:700; margin:0; line-height:1.3">
+            <a href="javascript:void(0)" onclick="push('inspection:${i.code}')" style="color:inherit; text-decoration:none">${esc(i.title)}</a>
+            ${i.tpl ? `<span class="muted" style="font-weight:400; font-size:12.5px">· ${esc(i.tpl)}</span>` : ''}
+          </h3>
+        </div>
+        ${chkCount ? `<span class="pill" style="font-size:11px; font-weight:700; background:var(--mint-soft); color:var(--mint-ink); flex-shrink:0">${chkCount} Checkpoints</span>` : ''}
+      </div>
+
+      <div style="background:var(--surface-2); border-radius:8px; padding:8px 10px; font-size:12px; display:grid; grid-template-columns:1fr 1fr; gap:6px">
+        <div><strong>Location:</strong> ${esc(i.zone || 'General Site')}</div>
+        <div><strong>Engineer:</strong> <strong style="color:var(--mint)">${esc(i.eng || 'Unassigned')}</strong></div>
+        <div><strong>Schedule:</strong> ${dueText(i.due, insLate(i), ['Report issued', 'Done'].includes(i.status) ? i.due : null)}</div>
+        <div><strong>Progress:</strong> <span class="num">${progressPct}%</span></div>
+      </div>
+
+      <div class="prog" style="margin:0; height:6px"><div class="bar"><i style="width:${progressPct}%"></i></div></div>
+
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-top:2px; flex-wrap:wrap; gap:6px">
+        <div style="display:flex; gap:6px">
+          <button class="btn primary" type="button" onclick="push('inspection:${i.code}')" style="height:30px; padding:0 12px; font-size:11.5px; font-weight:700">
+            View Inspection →
+          </button>
+          <button class="btn ghost" type="button" onclick="openChangeEngineerModal('${i.code}')" style="height:30px; padding:0 10px; font-size:11.5px; font-weight:700; border:1px solid var(--line)">
+            👤 Change Inspection Engineer
+          </button>
+        </div>
+        ${i.status === 'Pending review' ? `
+          <button class="btn ghost" type="button" onclick="push('inspection:${i.code}')" style="height:30px; padding:0 10px; font-size:11px; color:var(--mint); font-weight:800; border:1px solid var(--mint)">
+            ⚡ Review Report
+          </button>
+        ` : i.status === 'Draft' ? `
+          <button class="btn ghost" type="button" onclick="openCreateInspectionWizard('${p.id}', '${i.code}')" style="height:30px; padding:0 10px; font-size:11px; color:var(--major); font-weight:800; border:1px solid var(--major)">
+            ✏️ Continue Setup
+          </button>
+        ` : ''}
+      </div>
+    </article>
+  `;
+}
+const rows = (list, emptyMsg) => list.length ? `<div class="rows">${list.join('')}</div>` : `<div class="empty">${emptyMsg}</div>`;
+const gone = what => `<div class="empty">This ${what} is no longer pending.<br><br><button class="btn ghost" type="button" data-back>Go back</button></div>`;
+
+/* ---------- views ---------- */
+const VIEWS = {};
+VIEWS.home = () => {
+  const h = new Date().getHours(), greet = h < 12 ? 'Good morning' : h < 17 ? 'Good afternoon' : 'Good evening';
+  const resume = S.ctx ? (() => { const p = byId(S.ctx); return p ? `<button class="resume" type="button" data-go="project:${p.id}"><span class="ri">${ico('clock',18)}</span><span class="rt"><span class="muted">Continue where you left off</span><b>${esc(p.name)}</b></span>${ico('chev',18)}</button>` : ''; })() : '';
+  return `<section class="hello"><div class="eyebrow">QC Lead · Quality Austria Central Asia</div><h1>${greet}, Priya</h1><p>Sunday, 1 November 2026</p></section>
+  <section class="sum" aria-label="Needs your attention">
+    <button class="sum-btn crit" type="button" data-sheet="critical"><span class="v num">${critOpen().length}</span><span class="l">Critical NCs open</span></button>
+    <button class="sum-btn" type="button" data-sheet="approvals"><span class="v num">${allApprovals().length}</span><span class="l">Awaiting your approval</span></button>
+    <button class="sum-btn warn" type="button" data-sheet="overdue"><span class="v num">${overdueNC().length + overdueIns().length}</span><span class="l">Overdue items</span></button>
+  </section>
+  ${resume}
+  <section class="projects" aria-labelledby="mp">
+    <div class="sec-head"><h2 id="mp">My projects</h2><span class="muted num">${P.length} projects</span></div>
+    <div class="proj-tools">
+      <label class="search">${ico('search',18)}<input id="q" type="search" placeholder="Search by name, ID or location" value="${esc(S.q)}" autocomplete="off" aria-label="Search projects"></label>
+      <div class="cats" id="cats" role="tablist" aria-label="Project category"></div>
+    </div>
+    <div class="cards" id="cards"></div>
+  </section>
+  <p class="sample">Audit Intelligence • Real-time API Connected Platform</p>`;
+};
+
+function renderCards(){
+  const q = S.q.trim().toLowerCase(), cnt = {live:0,hold:0,upcoming:0,completed:0};
+  P.forEach(p => { if (cnt[p.status] !== undefined) cnt[p.status]++; });
+  const catsEl = $('cats');
+  if (catsEl) {
+    catsEl.innerHTML = Object.keys(STL).map(k => `<button class="cat" type="button" role="tab" aria-selected="${!q && S.cat === k}" data-cat="${k}" style="--st:var(--st-${k})"><i></i>${STL[k]}<span class="n num">${cnt[k] || 0}</span></button>`).join('');
+  }
+  const list = q ? P.filter(p => `${p.name} ${p.code} ${p.loc} ${p.type}`.toLowerCase().includes(q)) : P.filter(p => p.status === S.cat);
+  const cardsEl = $('cards');
+  if (cardsEl) {
+    cardsEl.innerHTML = list.length ? list.map(card).join('') : `<div class="empty">${q ? `No projects match “${esc(S.q)}”.` : `No ${STL[S.cat].toLowerCase()} projects.`}</div>`;
+  }
+}
+
+function card(p){
+  let mid = '';
+  if (p.status === 'upcoming') mid = `<p class="note up"><b>Starts ${fmt(p.start)}.</b> In ${-ago(p.start)} days.</p>`;
+  else if (p.status === 'completed') mid = `<p class="note done"><b>Cleared ${fmt(p.cleared)}.</b> ${closedTotal(p)} NCs closed.</p>`;
+  else mid = `<div class="prog"><div class="bar" role="progressbar" aria-label="Progress" aria-valuenow="${p.progress}" aria-valuemin="0" aria-valuemax="100"><i style="width:${p.progress}%"></i></div><b class="num">${p.progress}%</b></div>`;
+  return `<article class="card">
+    <div class="card-top"><span class="code">${p.code}</span>${pill(p.status)}</div>
+    <h3><button class="stretch" type="button" data-go="project:${p.id}">${esc(p.name)}</button></h3>
+    <p class="card-sub">${p.type} · ${esc(p.loc)}</p>
+    ${p.status === 'hold' ? `<p class="note hold"><b>On hold.</b> ${esc(p.hold)}</p>` : ''}${mid}
+    <dl class="dates"><div><dt>Planned start</dt><dd>${fmt(p.start)}</dd></div><div><dt>Completion</dt><dd>${fmt(p.end)}</dd></div></dl>
+    ${metricsFor(p)}
+    <p class="updated">Updated ${rel(p.upd[0])} · ${esc(p.upd[1])}</p>
+  </article>`;
+}
+
+VIEWS.project = e => {
+  const p = byId(e.id); if (!p) return gone('project');
+  const tab = e.tab || 'overview', o = openN(p);
+  const tabs = [['overview','Overview',''],['ncs','NCs',o.length],['approvals','Approvals',(p.approvals || []).length],['inspections','Inspections',(p.ins || []).length]];
+  let body = '';
+  if (tab === 'overview'){
+    const banner = p.status === 'hold' ? `<p class="note hold"><b>On hold.</b> ${esc(p.hold)}</p>` : p.status === 'upcoming' ? `<p class="note up"><b>Starts ${fmt(p.start)}.</b> In ${-ago(p.start)} days. Set up the team and checklists before mobilisation.</p>` : p.status === 'completed' ? `<p class="note done"><b>Cleared ${fmt(p.cleared)}.</b> All ${closedTotal(p)} NCs closed. Read-only.</p>` : '';
+    const cnt = s => (p.ins || []).filter(i => i.status === s).length;
+    body = `${banner}${metricsFor(p)}
+      ${(p.ins || []).length ? `<div class="block"><div class="block-h"><h2>Inspection pipeline</h2></div><div class="pipe">${INS_ST.map(s => `<button type="button" class="${s === 'Pending review' && cnt(s) ? 'hot' : ''}" data-pins="${s}"><span class="v num">${cnt(s)}</span><span class="l">${s}</span></button>`).join('')}</div></div>` : ''}
+      <div class="block"><div class="block-h"><h2>Outstanding actions</h2></div>${rows((p.actions || []).map(t => acRow(t,p)), 'No outstanding actions on this project.')}</div>
+      ${(p.approvals || []).length ? `<div class="block"><div class="block-h"><h2>Awaiting your approval</h2><button class="link" type="button" data-ptab="approvals">See all</button></div>${rows((p.approvals || []).slice(0,2).map(a => apRow(a,p)))}</div>` : ''}`;
+  } else if (tab === 'ncs'){
+    const list = (S.pNcClosed ? closedN(p) : o).map(n => ({n,p})).sort(sortNC).map(x => ncRow(x.n,p));
+    body = `<div class="seg"><button type="button" data-pnc="open" aria-pressed="${!S.pNcClosed}"><span class="v num">${o.length}</span><span class="l">Open</span></button><button type="button" data-pnc="closed" aria-pressed="${S.pNcClosed}"><span class="v num">${closedTotal(p)}</span><span class="l">Closed</span></button></div>
+      ${rows(list, S.pNcClosed ? 'No closed NCs yet.' : 'No open NCs on this project.')}
+      ${S.pNcClosed && p.closedExtra ? `<p class="muted">Showing the latest ${closedN(p).length}. ${p.closedExtra} earlier closed NCs are in the project register.</p>` : ''}`;
+  } else if (tab === 'approvals'){
+    body = rows((p.approvals || []).map(a => apRow(a,p)), 'Nothing waiting for your approval.');
+  } else {
+    S.pInsTab = S.pInsTab || 'Create';
+    const activeTab = S.pInsTab;
+    const allIns = p.ins || [];
+    const counts = {
+      'Create': allIns.filter(i => getInspectionTab(i.status) === 'Create').length,
+      'In Progress': allIns.filter(i => getInspectionTab(i.status) === 'In Progress').length,
+      'On Hold': allIns.filter(i => getInspectionTab(i.status) === 'On Hold').length,
+      'Completed': allIns.filter(i => getInspectionTab(i.status) === 'Completed').length,
+    };
+    const list = allIns.filter(i => getInspectionTab(i.status) === activeTab);
+    const mainTabs = ['Create', 'In Progress', 'On Hold', 'Completed'];
+    body = `<div style="display:flex; justify-content:space-between; align-items:center; gap:8px; margin-bottom:12px; flex-wrap:wrap">
+      <div class="chips" role="tablist" aria-label="Inspection tabs" style="margin-bottom:0">
+        ${mainTabs.map(t => `<button class="chip ${activeTab === t ? 'active' : ''}" type="button" role="tab" onclick="S.pInsTab='${t}'; render(false);" aria-pressed="${activeTab === t}" style="font-weight:700; ${activeTab === t ? 'background:var(--mint); color:var(--on-mint);' : ''}">${t} <span style="font-size:11px; opacity:0.85; margin-left:4px">(${counts[t]})</span></button>`).join('')}
+      </div>
+      <button class="btn primary" type="button" onclick="openCreateInspectionWizard('${p.id}')" style="height:36px; padding:0 14px; font-size:12.5px; flex:0 0 auto; background:linear-gradient(135deg, var(--band-1), var(--band-2)); color:#5CCB9F; border:1px solid var(--mint); font-weight:700">
+        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" style="margin-right:4px"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+        + Create Inspection
+      </button>
+    </div>
+    ${rows(list.map(i => insRow(i,p)), `No inspections in ${activeTab}.`)}`
+  }
+  return `<section class="phero">
+      <div class="card-top"><span class="code">${p.code}</span>${pill(p.status)}</div>
+      <h1>${esc(p.name)}</h1><p class="sub">${p.type} · ${esc(p.loc)}</p>
+      ${p.status === 'live' || p.status === 'hold' ? `<div class="prog"><div class="bar"><i style="width:${p.progress}%"></i></div><b class="num">${p.progress}%</b></div>` : ''}
+      <dl class="dates"><div><dt>Planned start</dt><dd>${fmt(p.start)}</dd></div><div><dt>Completion</dt><dd>${fmt(p.end)}</dd></div></dl>
+      <p class="updated">Updated ${rel(p.upd[0])} · ${esc(p.upd[1])}</p>
+    </section>
+    <div class="ptabs" role="tablist" aria-label="Project sections">${tabs.map(([k,l,n]) => `<button class="ptab" type="button" role="tab" data-ptab="${k}" aria-selected="${tab === k}">${l}${n !== '' ? `<span class="n num">${n}</span>` : ''}</button>`).join('')}</div>
+    ${body}`;
+};
+
+VIEWS.nc = e => {
+  const f = find('ncs', e.id); if (!f) return gone('NC');
+  const n = f.x, p = f.p, late = ncLate(n), open = isOpen(n);
+  const ap = (p.approvals || []).find(a => a.nc === n.code);
+  let btns = '';
+  if (n.status === 'Rectification submitted') btns = `<button class="btn primary" type="button" data-act="verify:${n.code}">Send for verification</button><button class="btn ghost" type="button" data-act="remind:${n.code}">Remind contractor</button>`;
+  else if (n.status === 'Under verification') btns = `<button class="btn primary" type="button" data-act="close:${n.code}">Close NC</button><button class="btn ghost" type="button" data-act="reopen:${n.code}">Reopen</button>`;
+  else if (open) btns = `<button class="btn primary" type="button" data-act="remind:${n.code}">${late ? 'Escalate to contractor' : 'Send reminder'}</button>`;
+  const after = ['Rectification submitted','Under verification','Reopened','Closed'].includes(n.status);
+  return `<section class="dhead">
+      <button class="ctxlink" type="button" data-go="project:${p.id}:ncs">${esc(p.name)} ${ico('chev',14)}</button>
+      <div class="tags"><span class="code">${n.code}</span><span class="sev sev-${n.sev}">${SEVL[n.sev]}</span>${stTag(n.status)}</div>
+      <h1>${esc(n.title)}</h1>
+    </section>
+    ${ap ? `<p class="note up"><b>Closure requested.</b> ${esc(ap.by)} verified this on site and asked you to close it.</p>` : ''}
+    ${btns ? `<div class="actions">${btns}</div>` : ''}
+    <div class="detail"><div>
+      <dl class="facts">
+        <div><dt>Assigned to</dt><dd>${esc(n.assigned)}</dd></div>
+        <div><dt>Due</dt><dd>${open ? (late ? `<span class="late">${fmt(n.due)} · ${ago(n.due)} d late</span>` : fmt(n.due)) : `Closed ${fmt(n.closed)}`}</dd></div>
+        <div><dt>Days open</dt><dd class="num">${open ? ago(n.raised) : ago(n.raised) - ago(n.closed)}</dd></div>
+        <div><dt>Zone</dt><dd>${esc(n.zone)}</dd></div>
+        <div><dt>Trade</dt><dd>${esc(n.trade)}</dd></div>
+        <div><dt>Raised by</dt><dd>${esc(n.by)}, ${fmt(n.raised,false)}</dd></div>
+      </dl>
+      <section class="panel"><div class="block-h"><h2 class="sub-h">Evidence</h2><span class="muted">GPS and time stamped</span></div>
+        <div class="photos">
+          <figure class="photo"><span class="ptag">Before</span><figcaption class="stamp">${p.geo}<br>${fmt(n.raised)} · 10:42 · ${esc(n.by)}</figcaption></figure>
+          ${after ? `<figure class="photo after"><span class="ptag">After</span><figcaption class="stamp">${p.geo}<br>${fmt(d0(addDays(n.raised,3)) > TD ? TODAY_ISO : addDays(n.raised,3))} · 16:08 · Contractor</figcaption></figure>` : `<div class="empty" style="display:grid;place-items:center;padding:12px;font-size:12.5px">After-photo pending from contractor</div>`}
+        </div></section>
+    </div><div>
+      <section class="panel"><h2 class="sub-h">History</h2>
+        <ol class="tl">${trail(n).map(t => `<li><div class="w">${esc(t.w)}</div><div class="m">${esc(t.m)}</div><div class="d">${fmt(t.d)}</div></li>`).join('')}</ol>
+      </section>
+    </div></div>`;
+};
+
+VIEWS.approval = e => {
+  const f = find('approvals', e.id); if (!f) return gone('approval');
+  const a = f.x, p = f.p;
+  let extra = '';
+  if (a.ins){ const i = (p.ins || []).find(x => x.code === a.ins); if (i){ extra = `<section class="panel"><div class="block-h"><h2 class="sub-h">Checklist result</h2><span class="muted num">${i.res ? i.res.items : 0} items</span></div>${i.res ? resBar(i.res) : ''}</section>${rows([insRow(i,p)])}`; } }
+  if (a.nc){ const n = (p.ncs || []).find(x => x.code === a.nc); if (n) extra = `<div class="block"><div class="block-h"><h2>NC to close</h2></div>${rows([ncRow(n,p)])}</div>`; }
+  if (!a.ins && !a.nc) extra = `<section class="panel"><h2 class="sub-h">Summary</h2><p>Inspection and test plan for all civil, façade and MEP stages, with hold and witness points mapped to checklist templates. Approving it publishes the plan and lets you schedule inspections against it.</p></section>`;
+  return `<section class="dhead">
+      <button class="ctxlink" type="button" data-go="project:${p.id}:approvals">${esc(p.name)} ${ico('chev',14)}</button>
+      <div class="tags"><span class="code">${a.code}</span><span class="stt info">${a.kind}</span></div>
+      <h1>${esc(a.title)}</h1>
+    </section>
+    <div class="actions"><button class="btn primary" type="button" data-act="approve:${a.code}">Approve</button><button class="btn ghost" type="button" data-act="return:${a.code}">Return with comments</button></div>
+    <dl class="facts"><div><dt>Submitted by</dt><dd>${esc(a.by)}</dd></div><div><dt>Submitted</dt><dd>${fmt(a.at)} · ${rel(a.at)}</dd></div><div><dt>Reference</dt><dd>${a.ins || a.nc || 'ITP Rev 0'}</dd></div></dl>
+    ${extra}`;
+};
+
+function resBar(r){
+  if (!r || !r.items) return '';
+  const w = x => (x / r.items * 100).toFixed(1) + '%';
+  return `<div class="stack" role="img" aria-label="${r.pass} pass, ${r.nc} NC, ${r.na} not applicable"><i style="width:${w(r.pass)};background:var(--mint)"></i><i style="width:${w(r.nc)};background:var(--crit)"></i><i style="width:${w(r.na)};background:var(--ink-3)"></i></div>
+    <div class="legend"><span style="--dot:var(--mint)">${r.pass} pass</span><span style="--dot:var(--crit)">${r.nc} NC</span><span style="--dot:var(--ink-3)">${r.na} N/A</span><span>Compliance ${Math.round(r.pass / (r.pass + r.nc || 1) * 100)}%</span></div>`;
+}
+
+VIEWS.inspection = e => {
+  const f = find('ins', e.id); if (!f) return gone('inspection');
+  const i = f.x, p = f.p, ap = (p.approvals || []).find(a => a.ins === i.code);
+  const isAlloc = i.code && i.code.startsWith('ALC-');
+  const alloc = typeof ALLOCATIONS_CACHE !== 'undefined' ? ALLOCATIONS_CACHE[i.code] : null;
+
+  // If allocation details are not yet in client cache, fetch asynchronously
+  if (isAlloc && !alloc) {
+    fetch(`/api/allocations/${i.code}`).then(r => r.json()).then(d => {
+      if (d.status === 'success' && d.allocation) {
+        ALLOCATIONS_CACHE[i.code] = d.allocation;
+        if (cur().v === 'inspection' && cur().id === i.code) render(false);
+      }
+    }).catch(()=>{});
+  }
+
+  let btns = '';
+  const changeEngBtn = `<button class="btn ghost" type="button" onclick="openChangeEngineerModal('${i.code}')">👤 Change Inspection Engineer</button>`;
+  if (['Draft','Required'].includes(i.status)) btns = `<button class="btn primary" type="button" onclick="openCreateInspectionWizard('${p.id}', '${i.code}')">Edit Inspection</button>${changeEngBtn}`;
+  else if (i.status === 'Pending review' && ap) btns = `<button class="btn primary" type="button" data-go="approval:${ap.code}">Review report</button>${changeEngBtn}`;
+  else if (['Allocated','In progress'].includes(i.status)) btns = `<button class="btn primary" type="button" onclick="openAllocationDetail('${i.code}')" style="background:var(--mint); color:var(--on-mint)">📋 Inspect Checkpoints</button><button class="btn ghost" type="button" data-act="nudge:${i.code}">${insLate(i) ? 'Chase engineer' : 'Send reminder'}</button>${changeEngBtn}`;
+  else btns = changeEngBtn;
+
+  const aiReportBtn = `<button class="btn" type="button" data-act="genReport:${i.code}" style="background:linear-gradient(135deg, var(--band-1), var(--band-2)); color:#5CCB9F; border:1px solid #4FB892; font-weight:700">✨ Generate Detailed AI Audit Report</button>
+  <button class="btn ghost" type="button" data-sheet="report:${i.code}">📄 View Report</button>`;
+
+  // Render allocated checkpoints breakdown if available
+  let allocatedCheckpointsSection = '';
+  if (alloc && alloc.checkpoints && alloc.checkpoints.length) {
+    const chkListHtml = alloc.checkpoints.map(chk => {
+      const priColor = chk.priority === 'H' ? 'var(--crit)' : chk.priority === 'M' ? 'var(--major)' : 'var(--mint-ink)';
+      const priBg = chk.priority === 'H' ? 'var(--crit-soft)' : chk.priority === 'M' ? 'var(--major-soft)' : 'var(--mint-soft)';
+
+      let photosHtml = '';
+      if (chk.evidence_photo_url) {
+        let photos = [];
+        try {
+          if (chk.evidence_photo_url.startsWith('[')) photos = JSON.parse(chk.evidence_photo_url);
+          else photos = chk.evidence_photo_url.split(',').map(s => s.trim()).filter(Boolean);
+        } catch(e) { photos = [chk.evidence_photo_url]; }
+        if (photos.length) {
+          photosHtml = `
+            <div style="display:flex; gap:6px; margin-top:8px; flex-wrap:wrap">
+              ${photos.map(u => `
+                <img src="${u}" alt="Evidence" style="width:54px; height:54px; object-fit:cover; border-radius:6px; border:1px solid var(--line); cursor:pointer" onclick="window.open('${u}','_blank')">
+              `).join('')}
+            </div>
+          `;
+        }
+      }
+
+      const obsHtml = chk.observations ? `
+        <div style="font-size:12px; margin-top:6px; padding:6px 10px; border-radius:6px; background:${chk.result_status === 'NC' ? 'var(--crit-soft)' : 'var(--surface-2)'}; color:${chk.result_status === 'NC' ? 'var(--crit)' : 'var(--ink)'}; line-height:1.4">
+          <strong>${chk.result_status === 'NC' ? 'Defect Observation' : chk.result_status === 'NA' ? 'NA Justification' : 'Engineer Notes'}:</strong> ${esc(chk.observations)}
+        </div>
+      ` : '';
+
+      return `
+        <div style="padding:12px 14px; border-bottom:1px solid var(--line)">
+          <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:10px">
+            <div style="flex:1; min-width:0">
+              <div style="display:flex; gap:6px; align-items:center; margin-bottom:3px">
+                <span style="font-size:10px; font-weight:800; padding:1px 5px; border-radius:4px; background:${priBg}; color:${priColor}">[${chk.priority}]</span>
+                <span class="code" style="font-size:11px">${chk.checkpoint_id}</span>
+                <span style="font-size:11px; color:var(--ink-3)">${chk.subgroup_name || ''}</span>
+              </div>
+              <div style="font-size:13px; font-weight:600; line-height:1.4">${chk.checkpoint_text_snapshot || chk.checkpoint_description}</div>
+            </div>
+            <span class="pill" style="font-size:11px; font-weight:700; ${chk.result_status === 'OK' ? 'background:var(--mint); color:#0B2A21' : chk.result_status === 'NC' ? 'background:var(--crit); color:#fff' : chk.result_status === 'NA' ? 'background:var(--ink-3); color:#fff' : 'background:var(--mint-soft); color:var(--mint-ink)'}; flex-shrink:0">
+              ${chk.result_status || 'Pending'}
+            </span>
+          </div>
+          ${obsHtml}
+          ${photosHtml}
+        </div>
+      `;
+    }).join('');
+
+    allocatedCheckpointsSection = `
+      <section class="panel" style="background:var(--surface); border:1px solid var(--line); border-radius:14px; overflow:hidden; margin-top:14px">
+        <div class="block-h" style="padding:12px 14px; background:var(--surface-2); border-bottom:1px solid var(--line); display:flex; justify-content:space-between; align-items:center">
+          <h2 class="sub-h" style="margin:0; font-size:14px">Allocated Scope (${alloc.checkpoints.length} Checkpoint${alloc.checkpoints.length === 1 ? '' : 's'})</h2>
+          <span style="font-size:11.5px; font-weight:700; color:var(--mint-ink)">Stage: ${alloc.stages ? alloc.stages.join(', ') : alloc.stage_name || ''}</span>
+        </div>
+        <div>
+          ${chkListHtml}
+        </div>
+      </section>
+    `;
+  }
+
+  const engineerExecBtn = isAlloc ? `
+    <button class="btn ghost" type="button" onclick="openInspectionExecution('${i.code}')" style="border:1px solid var(--mint); color:var(--mint-ink); font-weight:700">
+      ⚡ Field Execution View
+    </button>
+  ` : '';
+
+  return `<section class="dhead">
+      <button class="ctxlink" type="button" data-go="project:${p.id}:inspections">${esc(p.name)} ${ico('chev',14)}</button>
+      <div class="tags"><span class="code">${i.code}</span>${stTag(i.status)}${insLate(i) ? '<span class="stt bad">Overdue</span>' : ''}</div>
+      <h1>${esc(i.title)} · ${esc(i.tpl || i.zone)}</h1>
+      <div class="muted" style="font-size:13px; margin-top:2px">Location: <strong>${esc(i.zone)}</strong></div>
+    </section>
+    <div class="actions">${btns} ${engineerExecBtn} ${aiReportBtn}</div>
+    <dl class="facts">
+      <div><dt>Engineer</dt><dd>${i.eng ? esc(i.eng) : 'Unassigned'}</dd></div>
+      <div><dt>${i.res ? 'Inspected' : 'Due'}</dt><dd>${insLate(i) ? `<span class="late">${fmt(i.due)} · ${ago(i.due)} d late</span>` : fmt(i.due)}</dd></div>
+      <div><dt>Checklist / Stage</dt><dd>${esc(i.tpl || i.title)}</dd></div>
+      ${alloc ? `<div><dt>Allocated By</dt><dd>${esc(alloc.allocated_by || 'QC Lead')}</dd></div>` : ''}
+    </dl>
+    ${allocatedCheckpointsSection}
+    ${i.res ? `<section class="panel"><div class="block-h"><h2 class="sub-h">Checklist result</h2><span class="muted num">${i.res.items} items</span></div>${resBar(i.res)}</section>` : ''}
+    <section class="panel" style="background:linear-gradient(180deg, var(--surface), var(--surface-2)); border:1px solid color-mix(in srgb, var(--mint) 40%, var(--line))">
+      <div class="block-h">
+        <h2 class="sub-h" style="color:var(--mint-ink); display:flex; align-items:center; gap:6px">
+          <span>✨ AI Surveillance & Quality Compliance Analysis</span>
+        </h2>
+        <span class="ai-badge">Google Gemini LLM</span>
+      </div>
+      <p style="font-size:13px; color:var(--ink-2); line-height:1.5">
+        Generates an exhaustive 6-section compliance dossier: <strong>Executive Summary</strong>, <strong>Objective & ISO/IS Codes</strong>, <strong>Project Site Profile</strong>, <strong>Scope of Current Inspection</strong> (Site Prep, Foundation, RCC Structural, Waterproofing, MEP), <strong>Defects & Non-Conformity Table</strong>, and an advanced <strong>AI "Know More" Technical Advisory</strong>.
+      </p>
+      <div style="display:flex; gap:8px; margin-top:4px">
+        <button class="btn primary" type="button" data-act="genReport:${i.code}">⚡ Run AI Inspection Analysis</button>
+        <button class="btn ghost" type="button" data-sheet="report:${i.code}">Read Full Report</button>
+      </div>
+    </section>`;
+};
+
+VIEWS.list = e => {
+  const mod = e.mod, scope = S.ctx ? [byId(S.ctx)].filter(Boolean) : P, showP = !S.ctx;
+  const chip = S.ctx ? `<button class="ctxchip on" type="button" data-ctx-clear aria-label="Clear project filter"><span>${esc(byId(S.ctx)?.name)}</span>${ico('close',14)}</button>` : `<button class="ctxchip" type="button" data-sheet="ctx"><span>All projects</span>${ico('down',14)}</button>`;
+  let head = '', body = '';
+  if (mod === 'ncs'){
+    const L = S.listNc, src = scope.flatMap(p => (p.ncs || []).map(n => ({n,p}))).filter(o => isOpen(o.n) !== L.closed);
+    const list = src.filter(o => L.sev === 'all' || o.n.sev === L.sev).sort(sortNC);
+    head = `${src.length} ${L.closed ? 'closed' : 'open'}`;
+    body = `<div class="chips" role="group" aria-label="Filters"><button class="chip" type="button" data-lnc="open" aria-pressed="${!L.closed}">Open</button><button class="chip" type="button" data-lnc="closed" aria-pressed="${L.closed}">Closed</button>
+      ${['all','critical','major','minor','ofi'].map(s => `<button class="chip" type="button" data-lsev="${s}" aria-pressed="${L.sev === s}">${s === 'all' ? 'All severities' : SEVL[s]}</button>`).join('')}</div>
+      ${rows(list.map(o => ncRow(o.n,o.p,showP)), 'No NCs match these filters.')}`;
+  } else if (mod === 'approvals'){
+    const list = scope.flatMap(p => (p.approvals || []).map(a => ({a,p})));
+    head = `${list.length} waiting`;
+    body = rows(list.map(o => apRow(o.a,o.p,showP)), 'Nothing waiting for your approval.');
+  } else {
+    S.listInsTab = S.listInsTab || 'Create';
+    const activeTab = S.listInsTab;
+    const src = scope.flatMap(p => (p.ins || []).map(i => ({i,p})));
+    const counts = {
+      'Create': src.filter(o => getInspectionTab(o.i.status) === 'Create').length,
+      'In Progress': src.filter(o => getInspectionTab(o.i.status) === 'In Progress').length,
+      'On Hold': src.filter(o => getInspectionTab(o.i.status) === 'On Hold').length,
+      'Completed': src.filter(o => getInspectionTab(o.i.status) === 'Completed').length,
+    };
+    const list = src.filter(o => getInspectionTab(o.i.status) === activeTab).sort((a,b) => d0(a.i.due) - d0(b.i.due));
+    
+    // Needs Attention section for Pending review, Overdue, On hold, Returned
+    const attentionItems = src.filter(o => ['Pending review', 'On hold', 'Returned for Reinspection', 'Returned'].includes(o.i.status) || insLate(o.i)).slice(0, 3);
+    let attentionBanner = '';
+    if (attentionItems.length > 0) {
+      attentionBanner = `
+        <div style="background:var(--warn-soft, rgba(234,179,8,0.08)); border:1px solid var(--warn, #eab308); border-radius:10px; padding:12px 14px; margin-bottom:14px">
+          <div style="display:flex; align-items:center; gap:8px; margin-bottom:8px">
+            <span style="font-size:14px">⚠️</span>
+            <span style="font-weight:700; font-size:13px; color:var(--warn-ink, #ca8a04)">Needs Your Attention (${attentionItems.length})</span>
+          </div>
+          <div style="display:flex; flex-direction:column; gap:6px">
+            ${attentionItems.map(o => `
+              <div style="display:flex; justify-content:space-between; align-items:center; background:var(--surface); padding:8px 12px; border-radius:6px; font-size:12px; border:1px solid var(--line)">
+                <div><strong>${esc(o.p.name)}</strong> · <span class="code">${esc(o.i.code)}</span>: ${esc(o.i.title)}</div>
+                <div style="display:flex; gap:6px; align-items:center">
+                  <span class="stt ${o.i.status === 'Pending review' ? 'info' : 'bad'}" style="font-size:11px">${o.i.status}</span>
+                  <button class="btn ghost" style="padding:2px 8px; font-size:11px" onclick="go('inspection:${o.i.code}')">View</button>
+                </div>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      `;
+    }
+
+    const mainTabs = ['Create', 'In Progress', 'On Hold', 'Completed'];
+    head = `${src.length} inspections`;
+    body = `
+      ${attentionBanner}
+      <div style="display:flex; justify-content:space-between; align-items:center; gap:8px; margin-bottom:12px; flex-wrap:wrap">
+        <div class="chips" role="tablist" aria-label="Inspection tabs" style="margin-bottom:0">
+          ${mainTabs.map(t => `<button class="chip ${activeTab === t ? 'active' : ''}" type="button" role="tab" onclick="S.listInsTab='${t}'; render(false);" aria-pressed="${activeTab === t}" style="font-weight:700; ${activeTab === t ? 'background:var(--mint); color:var(--on-mint);' : ''}">${t} <span style="font-size:11px; opacity:0.85; margin-left:4px">(${counts[t]})</span></button>`).join('')}
+        </div>
+        <button class="btn primary" type="button" onclick="openCreateInspectionWizard(S.ctx)" style="height:36px; padding:0 14px; font-size:12.5px; flex:0 0 auto; background:linear-gradient(135deg, var(--band-1), var(--band-2)); color:#5CCB9F; border:1px solid var(--mint); font-weight:700">
+          <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" style="margin-right:4px"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+          + Create Inspection
+        </button>
+      </div>
+      ${rows(list.map(o => insRow(o.i,o.p,showP)), `No inspections in ${activeTab}.`)}
+    `;
+  }
+  return `<section class="lh"><div class="eyebrow">${head}</div><h1>${MODS[mod]}</h1></section>${chip}${body}`;
+};
+
+/* ---------- chrome ---------- */
+function label(e){
+  if (e.v === 'home') return 'My projects';
+  if (e.v === 'list') return MODS[e.mod];
+  if (e.v === 'project') return byId(e.id)?.name || 'Project';
+  if (e.v === 'approval') return find('approvals', e.id)?.x.kind || 'Approval';
+  if (e.v === 'engineer_dashboard') return 'My Inspections (Field Workspace)';
+  if (e.v === 'inspection_execution') return `Inspection Execution · ${e.id}`;
+  return e.id;
+}
+function navItems(){
+  return [['home','home',0,false],['inspections','ins',P.reduce((a,p) => a + (p.ins || []).filter(i => i.status === 'Required').length,0),false],['ncs','nc',critOpen().length,true],['approvals','ap',allApprovals().length,false]];
+}
+function renderChrome(){
+  const e = cur(), root = S.stack[0], mod = root.v === 'home' ? 'home' : root.mod, deep = S.stack.length > 1;
+  const isEng = e.v === 'engineer_dashboard' || e.v === 'inspection_execution' || S.role === 'engineer';
+
+  $('backBtn').hidden = !deep;
+  $('brand').hidden = deep;
+  $('tt').hidden = !deep;
+  if (deep){ const pid = projOf(e); $('ttC').textContent = e.v === 'project' ? byId(e.id)?.code : pid ? byId(pid)?.name : ''; $('ttT').textContent = label(e); }
+  $('crumbs').innerHTML = S.stack.map((s,i) => i < S.stack.length - 1 ? `<button type="button" data-crumb="${i}">${esc(label(s))}</button><span aria-hidden="true">›</span>` : `<span aria-current="page">${esc(label(s))}</span>`).join('');
+
+  const activeEngName = typeof ENGINEER_WORKSPACE !== 'undefined' ? ENGINEER_WORKSPACE.activeEngineerName : 'Anjali Rao';
+  const activeEngId = typeof ENGINEER_WORKSPACE !== 'undefined' ? ENGINEER_WORKSPACE.activeEngineerId : 'EMP-1004';
+  const engInitials = activeEngName.split(' ').map(n=>n[0]).join('').slice(0,2);
+
+  // Update top bar branding
+  const brandEl = $('brand');
+  if (brandEl) {
+    if (isEng) {
+      brandEl.innerHTML = `<span class="logo-chip" aria-label="SiteIQ Field Workspace" style="background:var(--mint); color:var(--on-mint)"><b></b><span>SiteIQ<br>Field Portal</span></span><span class="wordmark">Inspection Workspace</span><span class="live-badge" style="background:var(--mint); color:var(--on-mint); font-weight:800">ENGINEER</span>`;
+    } else {
+      brandEl.innerHTML = `<span class="logo-chip" aria-label="Quality Austria Central Asia"><b></b><span>quality austria<br>central asia</span></span><span class="wordmark">Audit Intelligence</span><span class="live-badge" title="Connected to FastAPI backend">QC LEAD</span>`;
+    }
+  }
+
+  // Update top bar avatar
+  const avatarBtn = $('userAvatarBtn');
+  if (avatarBtn) {
+    if (isEng) {
+      avatarBtn.textContent = engInitials;
+      avatarBtn.style.background = 'var(--mint)';
+      avatarBtn.style.color = 'var(--on-mint)';
+      avatarBtn.setAttribute('aria-label', `${activeEngName}, Inspection Engineer (${activeEngId})`);
+    } else {
+      avatarBtn.textContent = 'PD';
+      avatarBtn.style.background = '';
+      avatarBtn.style.color = '';
+      avatarBtn.setAttribute('aria-label', 'Priya Deshmukh, QC Lead');
+    }
+  }
+
+  // Top bar role session badge & Switch Role button
+  const roleSlot = $('roleSwitcherSlot');
+  if (roleSlot) {
+    if (isEng) {
+      roleSlot.innerHTML = `
+        <div style="display:flex; align-items:center; gap:8px">
+          <div style="display:flex; align-items:center; gap:6px; background:rgba(0,0,0,0.25); border:1px solid rgba(255,255,255,0.18); border-radius:20px; padding:2px 10px 2px 4px">
+            <span style="font-size:10px; font-weight:800; background:var(--mint); color:var(--on-mint); padding:2px 7px; border-radius:12px; text-transform:uppercase">FIELD</span>
+            <span style="font-size:12px; font-weight:700; color:var(--band-ink)">${esc(activeEngName)}</span>
+          </div>
+          <button type="button" onclick="logoutToGateway()" class="btn ghost" style="height:28px; padding:0 10px; font-size:11.5px; font-weight:700; border-radius:14px; border:1px solid rgba(255,255,255,0.25); color:var(--band-ink-2); display:flex; align-items:center; gap:4px">
+            <span>🚪</span> Switch Role
+          </button>
+        </div>
+      `;
+    } else {
+      roleSlot.innerHTML = `
+        <div style="display:flex; align-items:center; gap:8px">
+          <div style="display:flex; align-items:center; gap:6px; background:rgba(0,0,0,0.25); border:1px solid rgba(255,255,255,0.18); border-radius:20px; padding:2px 10px 2px 4px">
+            <span style="font-size:10px; font-weight:800; background:var(--mint); color:var(--on-mint); padding:2px 7px; border-radius:12px; text-transform:uppercase">LEAD</span>
+            <span style="font-size:12px; font-weight:700; color:var(--band-ink)">Priya Deshmukh</span>
+          </div>
+          <button type="button" onclick="logoutToGateway()" class="btn ghost" style="height:28px; padding:0 10px; font-size:11.5px; font-weight:700; border-radius:14px; border:1px solid rgba(255,255,255,0.25); color:var(--band-ink-2); display:flex; align-items:center; gap:4px">
+            <span>🚪</span> Switch Role
+          </button>
+        </div>
+      `;
+    }
+  }
+
+  // Distinct Bottom Navigation for Engineer vs QC Lead
+  const bnavEl = $('bnav');
+  if (bnavEl) {
+    if (isEng) {
+      const ef = typeof ENGINEER_WORKSPACE !== 'undefined' ? (ENGINEER_WORKSPACE.filterStatus || 'all') : 'all';
+      bnavEl.innerHTML = `
+        <button class="bn" type="button" onclick="setEngineerStatusFilter('all'); if (cur().v !== 'engineer_dashboard') push('engineer_dashboard');" ${cur().v === 'engineer_dashboard' && ef === 'all' ? 'aria-current="page"' : ''}>
+          <span class="bn-ic">${ico('ins',21)}</span>My Inspections
+        </button>
+        <button class="bn" type="button" onclick="setEngineerStatusFilter('in_progress'); if (cur().v !== 'engineer_dashboard') push('engineer_dashboard');" ${cur().v === 'engineer_dashboard' && ef === 'in_progress' ? 'aria-current="page"' : ''}>
+          <span class="bn-ic">${ico('clock',21)}</span>In Progress
+        </button>
+        <button class="bn" type="button" onclick="setEngineerStatusFilter('overdue'); if (cur().v !== 'engineer_dashboard') push('engineer_dashboard');" ${cur().v === 'engineer_dashboard' && ef === 'overdue' ? 'aria-current="page"' : ''}>
+          <span class="bn-ic">${ico('nc',21)}</span>Overdue
+        </button>
+        <button class="bn" type="button" onclick="setEngineerStatusFilter('submitted'); if (cur().v !== 'engineer_dashboard') push('engineer_dashboard');" ${cur().v === 'engineer_dashboard' && ef === 'submitted' ? 'aria-current="page"' : ''}>
+          <span class="bn-ic">${ico('ap',21)}</span>Submitted
+        </button>
+      `;
+    } else {
+      bnavEl.innerHTML = navItems().map(([k,ic,c,hot]) => `<button class="bn" type="button" data-nav="${k}" ${mod === k ? 'aria-current="page"' : ''}><span class="bn-ic">${ico(ic,21)}</span>${MODS[k]}${c && k !== 'inspections' ? `<span class="cnt num">${c}</span>` : ''}</button>`).join('');
+    }
+  }
+
+  // Distinct Sidebar Navigation for Engineer vs QC Lead
+  const sideEl = $('side');
+  if (sideEl) {
+    if (isEng) {
+      const ef = typeof ENGINEER_WORKSPACE !== 'undefined' ? (ENGINEER_WORKSPACE.filterStatus || 'all') : 'all';
+      sideEl.innerHTML = `
+        <div class="brand">
+          <span class="logo-chip" aria-label="SiteIQ Field Portal" style="background:var(--mint); color:var(--on-mint)"><b></b><span>SiteIQ<br>Field Portal</span></span>
+          <span class="wordmark">Field Inspections</span>
+        </div>
+        
+        <div style="padding:0 4px; margin-bottom:8px">
+          <div style="font-size:10px; font-weight:800; color:var(--mint); text-transform:uppercase; letter-spacing:0.08em; padding:0 8px 6px">Inspection Engineer Workspace</div>
+          <nav class="snav">
+            <button class="sn" type="button" onclick="setEngineerStatusFilter('all'); if (cur().v !== 'engineer_dashboard') push('engineer_dashboard');" ${cur().v === 'engineer_dashboard' && ef === 'all' ? 'aria-current="page"' : ''}>
+              ${ico('ins',19)}All Assigned Inspections
+            </button>
+            <button class="sn" type="button" onclick="setEngineerStatusFilter('allocated'); if (cur().v !== 'engineer_dashboard') push('engineer_dashboard');" ${cur().v === 'engineer_dashboard' && ef === 'allocated' ? 'aria-current="page"' : ''}>
+              ${ico('search',19)}Allocated (To Do)
+            </button>
+            <button class="sn" type="button" onclick="setEngineerStatusFilter('in_progress'); if (cur().v !== 'engineer_dashboard') push('engineer_dashboard');" ${cur().v === 'engineer_dashboard' && ef === 'in_progress' ? 'aria-current="page"' : ''}>
+              ${ico('clock',19)}In Progress Checks
+            </button>
+            <button class="sn" type="button" onclick="setEngineerStatusFilter('overdue'); if (cur().v !== 'engineer_dashboard') push('engineer_dashboard');" ${cur().v === 'engineer_dashboard' && ef === 'overdue' ? 'aria-current="page"' : ''}>
+              ${ico('nc',19)}Overdue Inspections
+            </button>
+            <button class="sn" type="button" onclick="setEngineerStatusFilter('submitted'); if (cur().v !== 'engineer_dashboard') push('engineer_dashboard');" ${cur().v === 'engineer_dashboard' && ef === 'submitted' ? 'aria-current="page"' : ''}>
+              ${ico('ap',19)}Submitted for QC Sign-off
+            </button>
+          </nav>
+        </div>
+
+        <div style="padding:8px 4px 0; border-top:1px solid var(--line); margin-top:4px">
+          <div style="font-size:10px; font-weight:800; color:var(--ink-3); text-transform:uppercase; letter-spacing:0.08em; padding:0 8px 4px">Switch Console</div>
+          <button class="sn" type="button" onclick="switchToRole('qc_lead')" style="width:100%; text-align:left; color:var(--ink-2)">
+            ${ico('home',19)}Switch to QC Lead Console
+          </button>
+        </div>
+
+        <div class="suser" style="margin-top:auto">
+          <span class="avatar" style="background:var(--mint); color:var(--on-mint)">${engInitials}</span>
+          <span><b>${esc(activeEngName)}</b><small>Inspection Engineer · ${esc(activeEngId)}</small></span>
+        </div>
+      `;
+    } else {
+      const ctx = S.ctx ? byId(S.ctx) : null;
+      sideEl.innerHTML = `
+        <div class="brand"><span class="logo-chip" aria-label="Quality Austria Central Asia"><b></b><span>quality austria<br>central asia</span></span><span class="wordmark">Audit Intelligence</span></div>
+        
+        <div style="padding:0 4px; margin-bottom:8px">
+          <div style="font-size:10px; font-weight:800; color:var(--mint-ink); text-transform:uppercase; letter-spacing:0.08em; padding:0 8px 4px">QC Lead Console</div>
+          <nav class="snav">${navItems().map(([k,ic,c,hot]) => `<button class="sn" type="button" data-nav="${k}" ${mod === k ? 'aria-current="page"' : ''}>${ico(ic,19)}${MODS[k]}${c ? `<span class="cnt num ${hot ? 'hot' : ''}">${c}</span>` : ''}</button>`).join('')}</nav>
+        </div>
+
+        <div style="padding:8px 4px 0; border-top:1px solid var(--line); margin-top:4px">
+          <div style="font-size:10px; font-weight:800; color:var(--mint-ink); text-transform:uppercase; letter-spacing:0.08em; padding:0 8px 4px">Field Workspace</div>
+          <button class="sn" type="button" onclick="switchToRole('engineer')" style="width:100%; text-align:left">
+            ${ico('ins',19)}Inspection Engineer Workspace
+          </button>
+        </div>
+
+        ${ctx ? `<div class="sctx"><span class="lbl">Current project</span><button class="nm" type="button" data-go="project:${ctx.id}">${esc(ctx.name)}</button><button class="clr" type="button" data-ctx-clear>Clear project filter</button></div>` : ''}
+        
+        <div class="suser" style="margin-top:auto">
+          <span class="avatar">PD</span>
+          <span><b>Priya Deshmukh</b><small>QC Lead · EMP-1001</small></span>
+        </div>
+      `;
+    }
+  }
+}
+
+// Views Registration
+VIEWS.engineer_dashboard = e => typeof renderEngineerWorkspaceView === 'function' ? renderEngineerWorkspaceView() : '<div style="padding:40px; text-align:center">Loading Engineer Workspace...</div>';
+VIEWS.inspection_execution = e => typeof renderInspectionExecutionView === 'function' ? renderInspectionExecutionView(e.id) : '<div style="padding:40px; text-align:center">Loading Execution View...</div>';
+
+function render(anim = true){
+  const e = cur(), v = $('view');
+  v.innerHTML = VIEWS[e.v](e);
+  if (e.v === 'home') renderCards();
+  if (anim){ v.classList.remove('enter'); void v.offsetWidth; v.classList.add('enter'); }
+  renderChrome();
+}
+
+/* ---------- navigation ---------- */
+function push(spec){
+  const [v, id, tab] = spec.split(':');
+  cur().y = window.scrollY;
+  const e = v === 'project' ? {v, id, tab: tab || 'overview'} : {v, id};
+  if (v === 'project'){ S.pNcClosed = false; S.pIns = 'all'; }
+  S.stack.push(e);
+  const pid = projOf(e); if (pid) S.ctx = pid;
+  render(); window.scrollTo(0,0);
+}
+function back(){
+  if (S.stack.length < 2) return;
+  S.stack.pop(); render(); window.scrollTo(0, cur().y || 0);
+}
+function nav(mod){
+  S.stack = [mod === 'home' ? {v:'home'} : {v:'list', mod}];
+  render(); window.scrollTo(0,0);
+}
+
+/* ---------- sheet modal ---------- */
+const sheet = $('sheet'), scrim = $('scrim');
+$('sheetX').innerHTML = ico('close',18);
+$('backBtn').innerHTML = ico('back',22);
+
+function openSheet(spec){
+  S.sheet = spec; S.sheetTab = 'open';
+  if (!sheet.classList.contains('open')) S.lastFocus = document.activeElement;
+  drawSheet();
+  sheet.inert = false; sheet.classList.add('open'); scrim.classList.add('open'); document.documentElement.classList.add('locked');
+  $('sheetB').scrollTop = 0;
+  setTimeout(() => $('sheetX').focus({preventScroll:true}), 30);
+}
+function closeSheet(restore = true){
+  if (!S.sheet) return;
+  S.sheet = null; sheet.classList.remove('open'); scrim.classList.remove('open'); sheet.inert = true; sheet.style.transform = '';
+  document.documentElement.classList.remove('locked');
+  if (restore && S.lastFocus && document.contains(S.lastFocus)) S.lastFocus.focus({preventScroll:true});
+}
+function setSheet(e, t, b, f){ $('sheetE').textContent = e; $('sheetT').textContent = t; $('sheetB').innerHTML = b; $('sheetF').innerHTML = f || ''; }
+function drawSheet(){
+  const s = S.sheet, i = s.indexOf(':'), k = i < 0 ? s : s.slice(0,i), arg = i < 0 ? null : s.slice(i+1);
+  if (k === 'ncs'){
+    const p = byId(arg), o = openN(p), closed = S.sheetTab === 'closed';
+    const list = (closed ? closedN(p) : o).map(n => ({n,p})).sort(sortNC).map(x => ncRow(x.n,p));
+    setSheet(p.name, 'Non-conformities',
+      `<div class="seg"><button type="button" data-stab="open" aria-pressed="${!closed}"><span class="v num">${o.length}</span><span class="l">Open</span></button><button type="button" data-stab="closed" aria-pressed="${closed}"><span class="v num">${closedTotal(p)}</span><span class="l">Closed</span></button></div>
+       ${rows(list, closed ? 'No closed NCs yet.' : 'No open NCs.')}${closed && p.closedExtra ? `<p class="muted">Latest ${closedN(p).length} shown. ${p.closedExtra} earlier closed NCs are in the project register.</p>` : ''}`,
+      `<button class="btn ghost" type="button" data-go="project:${p.id}:ncs" style="width:100%">Open project NCs</button>`);
+  } else if (k === 'approvals' && arg){
+    const p = byId(arg);
+    setSheet(p.name, 'Pending approvals', rows((p.approvals || []).map(a => apRow(a,p)), 'Nothing waiting for your approval.'), (p.approvals || []).length ? `<button class="btn ghost" type="button" data-go="project:${p.id}:approvals" style="width:100%">Open in project</button>` : '');
+  } else if (k === 'actions'){
+    const p = byId(arg);
+    setSheet(p.name, 'Outstanding actions', rows((p.actions || []).map(t => acRow(t,p)), 'No outstanding actions.'), `<button class="btn ghost" type="button" data-go="project:${p.id}" style="width:100%">Open project</button>`);
+  } else if (k === 'critical'){
+    const list = critOpen().sort(sortNC);
+    setSheet('All projects', 'Critical NCs open', `<p class="muted">Critical NCs block site clearance and can only be closed by you.</p>${rows(list.map(o => ncRow(o.n,o.p,true)), 'No critical NCs open.')}`,
+      `<button class="btn ghost" type="button" data-nav="ncs" data-lsevset="critical" style="width:100%">Open NC list</button>`);
+  } else if (k === 'approvals'){
+    const list = allApprovals();
+    setSheet('All projects', 'Awaiting your approval', rows(list.map(o => apRow(o.a,o.p,true)), 'Nothing waiting for your approval.'), `<button class="btn ghost" type="button" data-nav="approvals" style="width:100%">Open approvals</button>`);
+  } else if (k === 'overdue'){
+    const n = overdueNC().sort(sortNC), ins = overdueIns();
+    setSheet('All projects', 'Overdue items',
+      `<h3 class="sub-h">NCs past due · ${n.length}</h3>${rows(n.map(o => ncRow(o.n,o.p,true)), 'None.')}
+       <h3 class="sub-h">Inspections past due · ${ins.length}</h3>${rows(ins.map(o => insRow(o.i,o.p,true)), 'None.')}`);
+  } else if (k === 'createInspection' || k === 'allocateWizard'){
+    if (typeof renderCreateInspectionSheet === 'function') renderCreateInspectionSheet();
+  } else if (k === 'changeEngineer' || k === 'allocate'){
+    if (typeof renderChangeEngineerSheet === 'function') renderChangeEngineerSheet(arg);
+  } else if (k === 'ctx'){
+    setSheet('Filter', 'Choose a project', `<div class="rows">${P.filter(p => p.status !== 'completed').map(p => `<button class="row" type="button" data-ctx="${p.id}"><span class="rc"><span class="r1">${p.code} · ${STL[p.status]}</span><span class="r2">${esc(p.name)}</span><span class="r3">${p.type} · ${esc(p.loc)}</span></span>${ico('chev',18)}</button>`).join('')}</div>`);
+  } else if (k === 'report'){
+    const f = find('ins', arg);
+    const it = f ? f.x : {code: arg, title: 'Inspection', zone: ''};
+    const p = f ? f.p : {name: 'Project'};
+    
+    let reportData = REPORTS_CACHE[arg];
+    if (!reportData) {
+      setSheet(`${it.code} · ${p.name}`, 'Detailed QA/QC Audit Report',
+        `<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;padding:36px 16px;text-align:center;gap:14px">
+           <div class="ai-badge">🤖 Powered by Google Gemini LLM</div>
+           <h3 style="font-size:16px;font-weight:700">No Audit Dossier Generated Yet</h3>
+           <p class="muted" style="max-width:340px">Analyze this inspection against engineering standards (IS 456, NBC 2016), project checklists, and active defect logs.</p>
+           <button class="btn primary" type="button" data-act="genReport:${it.code}" style="margin-top:6px;width:100%">
+             ⚡ Generate AI Inspection Report
+           </button>
+         </div>`);
+      
+      // Attempt to load cached report from API
+      fetch(`/api/inspections/${arg}/report`).then(r => r.json()).then(d => {
+        if (d.status === 'success' && d.report) {
+          REPORTS_CACHE[arg] = d.report;
+          if (S.sheet === `report:${arg}`) drawSheet();
+        }
+      }).catch(() => {});
+      return;
+    }
+
+    const htmlContent = window.marked ? marked.parse(reportData.content_markdown) : `<pre style="white-space:pre-wrap;font-family:inherit">${esc(reportData.content_markdown)}</pre>`;
+    
+    setSheet(`${it.code} · ${p.name}`, 'Detailed QA/QC Audit Report',
+      `<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;flex-wrap:wrap;gap:8px;padding-bottom:10px;border-bottom:1px solid var(--line)">
+         <span class="ai-badge">🤖 ${esc(reportData.model_used)}</span>
+         <span class="muted" style="font-size:11.5px">Generated ${fmt(reportData.created_at)} by ${esc(reportData.created_by)}</span>
+       </div>
+       <div class="report-content" id="report-print-area">
+         ${htmlContent}
+       </div>`,
+      `<div style="display:flex;gap:8px;width:100%">
+         <button class="btn primary" type="button" data-act="genReport:${it.code}" style="flex:1">⚡ Regenerate Analysis</button>
+         <button class="btn ghost" type="button" onclick="window.print()" style="flex:0 0 110px">🖨️ Print</button>
+       </div>`
+    );
+  } else if (k === 'allocateWizard'){
+    if (typeof renderAllocateWizardSheet === 'function') {
+      renderAllocateWizardSheet();
+    }
+  } else if (k === 'allocationDetail'){
+    if (typeof renderAllocationDetailSheet === 'function') {
+      renderAllocationDetailSheet(arg);
+    }
+  }
+}
+
+/* ---------- API Operations ---------- */
+let tt;
+function toast(msg){ const t = $('toast'); t.textContent = msg; t.hidden = false; clearTimeout(tt); tt = setTimeout(() => t.hidden = true, 2600); }
+function log(n, w, m){ if (!n.log) n.log = []; n.log.push({d:TODAY_ISO, w, m}); }
+
+async function doAct(spec){
+  const [k, code] = spec.split(':');
+
+  if (k === 'genReport') {
+    toast(`⚡ Synthesizing AI Audit Report for ${code}...`);
+    try {
+      const res = await fetch(`/api/inspections/${code}/generate-report`, {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'}
+      });
+      const data = await res.json();
+      if (data.status === 'success' && data.report) {
+        REPORTS_CACHE[code] = data.report;
+        toast(`✨ Report generated via ${data.report.model_used}!`);
+        openSheet(`report:${code}`);
+        return;
+      } else {
+        toast(`Error: ${data.detail || 'Could not generate report'}`);
+      }
+    } catch (e) {
+      console.warn("Backend report gen error:", e);
+      toast(`Network error generating report`);
+    }
+    openSheet(`report:${code}`);
+    return;
+  }
+  
+  // Call REST backend if connected
+  if (API_AVAILABLE) {
+    try {
+      if (['verify','close','remind','reopen'].includes(k)) {
+        await fetch(`/api/ncs/${code}/action`, {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({action: k, user: 'Priya Deshmukh'})
+        });
+      } else if (['approve','return'].includes(k)) {
+        await fetch(`/api/approvals/${code}/action`, {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({action: k, user: 'Priya Deshmukh'})
+        });
+      } else if (k === 'nudge') {
+        await fetch(`/api/inspections/${code}/nudge`, { method: 'POST' });
+      }
+    } catch (e) {
+      console.warn("Backend update error, applying locally:", e);
+    }
+  }
+
+  // Local optimistic update
+  if (['verify','close','remind','reopen'].includes(k)){
+    const {x:n, p} = find('ncs', code);
+    if (k === 'verify'){ n.status = 'Under verification'; log(n,'Sent for verification',`Re-inspection by ${n.by}`); toast(`Sent to ${n.by} for verification`); }
+    if (k === 'close'){ n.status = 'Closed'; n.closed = TODAY_ISO; p.approvals = (p.approvals || []).filter(a => a.nc !== code); p.actions = (p.actions || []).filter(t => t.target.nc !== code); p.upd = ['2026-11-01T15:00','Priya Deshmukh']; toast(`${code} closed`); }
+    if (k === 'reopen'){ n.status = 'Reopened'; p.approvals = (p.approvals || []).filter(a => a.nc !== code); log(n,'Reopened by Priya Deshmukh',`Back with ${n.assigned}`); toast(`${code} reopened and sent back to ${n.assigned}`); }
+    if (k === 'remind'){ const late = ncLate(n); log(n, late ? 'Escalated' : 'Reminder sent', `To ${n.assigned}`); toast(late ? `Escalated to ${n.assigned}` : `Reminder sent to ${n.assigned}`); }
+    render(false); return;
+  }
+  if (k === 'approve' || k === 'return'){
+    const {x:a, p} = find('approvals', code);
+    p.approvals = (p.approvals || []).filter(x => x !== a);
+    const i = a.ins && (p.ins || []).find(x => x.code === a.ins), n = a.nc && (p.ncs || []).find(x => x.code === a.nc);
+    if (k === 'approve'){
+      if (i) i.status = 'Report issued';
+      if (n){ n.status = 'Closed'; n.closed = TODAY_ISO; }
+      if (!i && !n) p.actions = (p.actions || []).filter(t => !t.title.startsWith('Approve'));
+      p.upd = ['2026-11-01T15:00','Priya Deshmukh'];
+      toast(i ? `Report issued for ${i.code}` : n ? `${n.code} closed` : 'ITP approved and published');
+    } else {
+      if (i) i.status = 'In progress';
+      if (n){ n.status = 'Reopened'; log(n,'Closure returned by Priya Deshmukh','Verification evidence not sufficient'); }
+      toast(`Returned to ${a.by}`);
+    }
+    back(); return;
+  }
+  if (k === 'nudge'){ const {x:i} = find('ins', code); toast(insLate(i) ? `Chased ${i.eng}` : `Reminder sent to ${i.eng}`); }
+}
+
+async function allocate(spec){
+  const [code, nm] = spec.split('|'), {x:i, p} = find('ins', code);
+  
+  if (API_AVAILABLE) {
+    try {
+      await fetch(`/api/inspections/${code}/allocate`, {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({engineer_name: nm, user: 'Priya Deshmukh'})
+      });
+    } catch (e) {
+      console.warn("Backend allocate error:", e);
+    }
+  }
+
+  const was = i.eng; i.eng = nm; if (i.status === 'Required') i.status = 'Allocated';
+  p.actions = (p.actions || []).filter(t => t.target.ins !== code);
+  closeSheet(); render(false); toast(was && was !== nm ? `Reassigned to ${nm}` : `Allocated to ${nm}`);
+}
+
+/* ---------- sync with backend ---------- */
+async function syncFromBackend(){
+  try {
+    const [pRes, insRes, allocRes] = await Promise.all([
+      fetch('/api/projects').catch(() => null),
+      fetch('/api/inspections').catch(() => null),
+      fetch('/api/allocations').catch(() => null)
+    ]);
+
+    if (pRes && pRes.ok) {
+      API_AVAILABLE = true;
+      console.log("Connected to Audit Intelligence live backend API");
+    }
+
+    // Hydrate allocations cache
+    if (allocRes && allocRes.ok) {
+      const allocData = await allocRes.json();
+      if (allocData.status === 'success' && Array.isArray(allocData.allocations)) {
+        allocData.allocations.forEach(a => {
+          if (typeof ALLOCATIONS_CACHE !== 'undefined') {
+            ALLOCATIONS_CACHE[a.allocation_id] = a;
+          }
+        });
+      }
+    }
+
+    // Hydrate project inspections from live database
+    if (insRes && insRes.ok) {
+      const insList = await insRes.json();
+      if (Array.isArray(insList)) {
+        insList.forEach(item => {
+          const p = byId(item.project_id);
+          if (p) {
+            if (!p.ins) p.ins = [];
+            const existing = p.ins.find(x => x.code === item.code);
+            if (existing) {
+              existing.status = item.status;
+              existing.eng = item.eng;
+              existing.due = item.due_date;
+              existing.items_count = item.items_count;
+              if (item.zone) existing.zone = item.zone;
+              if (item.title) existing.title = item.title;
+              if (item.tpl) existing.tpl = item.tpl;
+              if (item.items_count > 0 && !existing.res) {
+                existing.res = {
+                  items: item.items_count,
+                  pass: item.items_pass,
+                  nc: item.items_nc,
+                  na: item.items_na
+                };
+              }
+            } else {
+              p.ins.unshift({
+                code: item.code,
+                title: item.title,
+                zone: item.zone,
+                tpl: item.tpl,
+                eng: item.eng,
+                due: item.due_date,
+                status: item.status,
+                items_count: item.items_count,
+                priority: 'High',
+                res: item.items_count > 0 ? {
+                  items: item.items_count,
+                  pass: item.items_pass,
+                  nc: item.items_nc,
+                  na: item.items_na
+                } : null
+              });
+            }
+          }
+        });
+      }
+    }
+
+    // Secondary merge from localStorage for local persistence
+    try {
+      const localAllocs = JSON.parse(localStorage.getItem('siteiq_allocations') || '[]');
+      localAllocs.forEach(alloc => {
+        const p = byId(alloc.project_id);
+        if (p) {
+          if (!p.ins) p.ins = [];
+          if (!p.ins.some(x => x.code === alloc.allocation_id)) {
+            p.ins.unshift({
+              code: alloc.allocation_id,
+              title: alloc.title || (alloc.stages && alloc.stages[0]) || 'Quality Inspection',
+              zone: alloc.location_scope,
+              tpl: alloc.tpl || (alloc.subgroups && alloc.subgroups[0]) || 'Stage Checkpoints',
+              eng: alloc.engineer_name,
+              due: alloc.due_date,
+              status: alloc.status || 'Allocated',
+              priority: alloc.priority || 'High',
+              items_count: alloc.checkpoint_count || (alloc.checkpoints ? alloc.checkpoints.length : 1),
+              res: null
+            });
+          }
+        }
+      });
+    } catch(e) {}
+
+    render(false);
+  } catch(e) {
+    console.info("Using local fast client state mode:", e.message);
+  }
+}
+
+/* ---------- events ---------- */
+document.addEventListener('click', ev => {
+  const el = ev.target.closest('button, [data-go]'); if (!el) return;
+  const d = el.dataset;
+  if (d.go){ if (S.sheet) closeSheet(false); push(d.go); return; }
+  if (d.sheet){ openSheet(d.sheet); return; }
+  if (d.nav){ if (S.sheet) closeSheet(false); if (d.lsevset){ S.listNc = {closed:false, sev:d.lsevset}; S.ctx = null; } nav(d.nav); return; }
+  if ('back' in d){ back(); return; }
+  if (d.crumb){ S.stack = S.stack.slice(0, +d.crumb + 1); render(); window.scrollTo(0, cur().y || 0); return; }
+  if (d.cat){ S.cat = d.cat; S.q = ''; const q = $('q'); if (q) q.value = ''; renderCards(); return; }
+  if (d.ptab){ cur().tab = d.ptab; render(false); return; }
+  if (d.pins){ S.pIns = d.pins; cur().tab = 'inspections'; render(false); return; }
+  if (d.pnc){ S.pNcClosed = d.pnc === 'closed'; render(false); return; }
+  if (d.stab){ S.sheetTab = d.stab; drawSheet(); return; }
+  if (d.lnc){ S.listNc.closed = d.lnc === 'closed'; render(false); return; }
+  if (d.lsev){ S.listNc.sev = d.lsev; render(false); return; }
+  if (d.lins){ S.listIns = d.lins; render(false); return; }
+  if (d.act){ doAct(d.act); return; }
+  if (d.allocate){ allocate(d.allocate); return; }
+  if (d.ctx){ S.ctx = d.ctx; closeSheet(false); render(false); return; }
+  if ('ctxClear' in d){ S.ctx = null; render(false); return; }
+  if (d.soon){ toast(`${d.soon} opens in a later screen`); return; }
+});
+
+document.addEventListener('input', ev => { if (ev.target.id === 'q'){ S.q = ev.target.value; renderCards(); } });
+$('sheetX').addEventListener('click', () => closeSheet());
+scrim.addEventListener('click', () => closeSheet());
+document.addEventListener('keydown', ev => {
+  if (!S.sheet) return;
+  if (ev.key === 'Escape'){ closeSheet(); return; }
+  if (ev.key === 'Tab'){
+    const f = [...sheet.querySelectorAll('button:not([disabled])')]; if (!f.length) return;
+    if (ev.shiftKey && document.activeElement === f[0]){ ev.preventDefault(); f[f.length-1].focus(); }
+    else if (!ev.shiftKey && document.activeElement === f[f.length-1]){ ev.preventDefault(); f[0].focus(); }
+  }
+});
+
+/* drag dismiss for mobile */
+let drag = null; const grab = $('grab');
+grab.addEventListener('pointerdown', ev => { drag = {y:ev.clientY, dy:0}; sheet.style.transition = 'none'; grab.setPointerCapture(ev.pointerId); });
+grab.addEventListener('pointermove', ev => { if (!drag) return; drag.dy = Math.max(0, ev.clientY - drag.y); sheet.style.transform = `translateY(${drag.dy}px)`; });
+const endDrag = () => { if (!drag) return; sheet.style.transition = ''; sheet.style.transform = ''; if (drag.dy > 90) closeSheet(); drag = null; };
+grab.addEventListener('pointerup', endDrag); grab.addEventListener('pointercancel', endDrag);
+
+syncFromBackend().then(() => {
+  if (!S.role) {
+    renderLoginGateway();
+  } else if (S.role === 'engineer') {
+    if (typeof fetchEngineerDashboardData === 'function') {
+      fetchEngineerDashboardData(_storedEngId).then(() => render(false));
+    }
+  }
+  const urlParams = new URLSearchParams(window.location.search);
+  const testState = urlParams.get('test_state');
+  if (testState === 'step5') {
+    if (typeof ALLOC_WIZARD !== 'undefined') {
+      ALLOC_WIZARD.projectId = 'psv';
+      ALLOC_WIZARD.engineerId = 'EMP-1004';
+      ALLOC_WIZARD.engineer = 'Anjali Rao';
+      ALLOC_WIZARD.selectedCheckpoints = new Set(['CHK-01-01-001']);
+      ALLOC_WIZARD.step = 5;
+      if (typeof openSheet === 'function') openSheet('allocateWizard');
+    }
+  } else if (testState === 'allocated') {
+    S.ctx = 'psv';
+    S.pIns = 'Allocated';
+    S.stack = [{ v: 'project', id: 'psv', tab: 'inspections' }];
+    render(false);
+  } else if (testState === 'detail') {
+    S.ctx = 'psv';
+    S.stack = [{ v: 'inspection', id: 'ALC-0012-0002' }];
+    render(false);
+  } else if (testState === 'drawer') {
+    S.ctx = 'psv';
+    S.stack = [{ v: 'project', id: 'psv', tab: 'inspections' }];
+    render(false);
+    if (typeof openAllocationDetail === 'function') openAllocationDetail('ALC-0012-0002');
+  }
+});
+if (!S.role) {
+  renderLoginGateway();
+} else {
+  render();
+}
+</script>
+
+</body>
+</html>
