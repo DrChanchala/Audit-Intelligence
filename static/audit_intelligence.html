@@ -1058,7 +1058,7 @@ const _path = window.location.pathname.toLowerCase();
 const _isForceLogin = _urlParams.get('login') === '1' || _path === '/login';
 
 let _initialRole = null;
-if (!_isForceLogin) {
+if (!_isForceLogin && getStoredToken()) {
   if (_urlParams.get('role') === 'engineer' || _path.includes('/engineer') || _urlParams.get('view') === 'engineer') {
     _initialRole = 'engineer';
   } else if (_urlParams.get('role') === 'lead' || _path === '/qc' || _path === '/qc-lead') {
@@ -1367,109 +1367,6 @@ async function handleRealLoginSubmit(ev) {
       submitBtn.textContent = 'Authenticate & Launch Workspace →';
     }
   }
-}
-  const orgName = LOGIN_GATEWAY_STATE.selectedOrgName || 'Selected Organization';
-  const currentEngId = _storedEngId || 'EMP-1004';
-
-  const roster = typeof ENGINEER_ROSTER !== 'undefined' ? ENGINEER_ROSTER : [
-    { id: 'EMP-1004', name: 'Anjali Rao', role: 'QC Inspection Engineer', spec: 'Finishes & Waterproofing' },
-    { id: 'EMP-1002', name: 'Rohit Kale', role: 'Senior QC Engineer', spec: 'RCC & Structural' },
-    { id: 'EMP-1003', name: 'Vikram Singh', role: 'QC Inspection Engineer', spec: 'Steel & Telecom' },
-    { id: 'EMP-1005', name: 'Meera Iyer', role: 'Senior Façade & MEP Engineer', spec: 'Façade & MEP' },
-    { id: 'EMP-1006', name: 'Arjun Mehta', role: 'QC Inspection Engineer', spec: 'Industrial & PEB' }
-  ];
-
-  const rosterOptions = roster.map(eng => `
-    <option value="${eng.id}" ${eng.id === currentEngId ? 'selected' : ''}>
-      ${eng.name} (${eng.id}) — ${eng.spec}
-    </option>
-  `).join('');
-
-  container.innerHTML = `
-    <div class="login-gateway-backdrop">
-      <div class="login-isometric-bg" aria-hidden="true"></div>
-
-      <div class="login-card" role="dialog" aria-modal="true" aria-labelledby="signInTitle" style="max-width:620px">
-        <!-- Back Button -->
-        <button type="button" class="login-back-btn" onclick="renderLoginGateway('org')" aria-label="Change organization">
-          ← Change Organization
-        </button>
-
-        <!-- Eyebrow with Active Org Tag -->
-        <div class="login-eyebrow" style="display:flex; align-items:center; gap:8px; flex-wrap:wrap">
-          <span>QC FLOW</span>
-          <span style="background:var(--mint-soft); color:var(--mint-ink); padding:2px 10px; border-radius:999px; font-size:11px; font-weight:700; text-transform:none">
-            🏢 ${esc(orgName)}
-          </span>
-        </div>
-
-        <!-- Title -->
-        <h1 id="signInTitle" class="login-title" style="margin-bottom:8px">Sign In</h1>
-        <p class="login-desc" style="margin-bottom:20px">
-          Select your operational role under <strong>${esc(orgName)}</strong> to launch your workspace:
-        </p>
-
-        <!-- Role Choices List -->
-        <div class="role-grid-step2">
-          <!-- 1. QC LEAD -->
-          <div class="role-card-item" onclick="loginAs('qc_lead')">
-            <span style="font-size:32px">📋</span>
-            <div style="flex:1; min-width:0">
-              <div style="display:flex; align-items:center; gap:8px; margin-bottom:2px">
-                <strong style="font-size:15.5px; color:var(--ink)">QC Lead Portal</strong>
-                <span class="pill" style="background:var(--mint-soft); color:var(--mint-ink); font-size:10px; font-weight:800">LEAD</span>
-              </div>
-              <div style="font-size:12.5px; color:var(--mint-ink); font-weight:700">Priya Deshmukh · EMP-1001</div>
-              <div style="font-size:11.5px; color:var(--ink-3); margin-top:2px">Audit planning, quality approvals, checkpoints & AI dossiers</div>
-            </div>
-            <button class="btn primary" type="button" style="height:36px; padding:0 14px; font-size:12px; font-weight:700; background:var(--mint); color:var(--on-mint)">
-              Enter →
-            </button>
-          </div>
-
-          <!-- 2. FIELD INSPECTION ENGINEER -->
-          <div class="role-card-item" style="border-color:var(--mint); background:var(--surface)">
-            <span style="font-size:32px">👷</span>
-            <div style="flex:1; min-width:0">
-              <div style="display:flex; align-items:center; gap:8px; margin-bottom:2px">
-                <strong style="font-size:15.5px; color:var(--ink)">Field Inspection Engineer</strong>
-                <span class="pill" style="background:var(--mint); color:var(--on-mint); font-size:10px; font-weight:800">FIELD</span>
-              </div>
-              <label style="display:block; font-size:11.5px; font-weight:700; color:var(--ink-2); margin:4px 0 3px">
-                Engineer Profile:
-              </label>
-              <select id="login_engineer_select" style="width:100%; padding:6px 10px; border-radius:8px; border:1px solid var(--line); font-size:12px; font-weight:600" onclick="event.stopPropagation()">
-                ${rosterOptions}
-              </select>
-            </div>
-            <button class="btn primary" type="button" onclick="event.stopPropagation(); loginAs('engineer', document.getElementById('login_engineer_select').value)" style="height:36px; padding:0 14px; font-size:12px; font-weight:700; background:linear-gradient(135deg, var(--band-1), var(--band-2)); color:#5CCB9F; border:1px solid var(--mint)">
-              Launch →
-            </button>
-          </div>
-
-          <!-- 3. ADMIN / ORGANIZATION MODULE -->
-          <div class="role-card-item" onclick="loginAs('admin')">
-            <span style="font-size:32px">⚙️</span>
-            <div style="flex:1; min-width:0">
-              <div style="display:flex; align-items:center; gap:8px; margin-bottom:2px">
-                <strong style="font-size:15.5px; color:var(--ink)">System Administrator</strong>
-                <span class="pill" style="background:var(--surface); border:1px solid var(--line); color:var(--ink-2); font-size:10px; font-weight:800">ADMIN</span>
-              </div>
-              <div style="font-size:12px; color:var(--ink-2)">Create & manage organizations, checklist templates & user roles</div>
-            </div>
-            <button class="btn ghost" type="button" style="height:36px; padding:0 14px; font-size:12px; font-weight:700">
-              Access →
-            </button>
-          </div>
-        </div>
-
-        <div style="padding-top:14px; border-top:1px solid var(--line); display:flex; justify-content:space-between; align-items:center; font-size:11.5px; color:var(--ink-3)">
-          <span>Single Sign-On Partitioned by Organization</span>
-          <span>ISO 9001:2015 & NBC 2016</span>
-        </div>
-      </div>
-    </div>
-  `;
 }
 
 // Handlers for Login Flow
