@@ -447,7 +447,7 @@ function renderCreateInspectionSheet() {
   if (step === 1) {
     bodyHtml = renderCreateStep1(p);
     footerHtml = `
-      <div style="display:flex; justify-content:space-between; gap:10px; width:100%">
+      <div class="wizard-foot-actions">
         <button class="btn ghost" type="button" onclick="saveInspectionAsDraft()" style="flex:1; font-weight:700">
           💾 Save as Draft
         </button>
@@ -459,7 +459,7 @@ function renderCreateInspectionSheet() {
   } else if (step === 2) {
     bodyHtml = renderCreateStep2(p);
     footerHtml = `
-      <div style="display:flex; justify-content:space-between; gap:8px; width:100%">
+      <div class="wizard-foot-actions">
         <button class="btn ghost" type="button" onclick="setCreateStep(1)" style="flex:0 0 auto">
           ← Back
         </button>
@@ -474,7 +474,7 @@ function renderCreateInspectionSheet() {
   } else if (step === 3) {
     bodyHtml = renderCreateStep3(p);
     footerHtml = `
-      <div style="display:flex; justify-content:space-between; gap:8px; width:100%">
+      <div class="wizard-foot-actions">
         <button class="btn ghost" type="button" onclick="setCreateStep(2)" style="flex:0 0 auto">
           ← Back
         </button>
@@ -489,7 +489,7 @@ function renderCreateInspectionSheet() {
   } else {
     bodyHtml = renderCreateStep4(p);
     footerHtml = `
-      <div style="display:flex; justify-content:space-between; gap:8px; width:100%">
+      <div class="wizard-foot-actions">
         <button class="btn ghost" type="button" onclick="setCreateStep(3)" style="flex:0 0 auto">
           ← Back
         </button>
@@ -883,7 +883,7 @@ function renderChangeEngineerSheet(inspectionId) {
   `;
 
   const footerHtml = `
-    <div style="display:flex; justify-content:space-between; gap:10px; width:100%">
+    <div class="wizard-foot-actions">
       <button class="btn ghost" type="button" onclick="closeSheet()" style="flex:1">
         Cancel
       </button>
@@ -1290,7 +1290,7 @@ function renderEngineerWorkspaceView() {
 
   // Summary Metrics Cards (Allocated, In Progress, Due Today, Overdue, Submitted)
   const metricCardsHtml = `
-    <section class="sum" aria-label="Inspection Metrics" style="grid-template-columns:repeat(5,minmax(0,1fr)); gap:10px">
+    <section class="sum sum-engineer" aria-label="Inspection Metrics">
       <button class="sum-btn ${currFilter === 'allocated' ? 'hot' : ''}" type="button" onclick="setEngineerStatusFilter('allocated')" style="border-color:${currFilter === 'allocated' ? 'var(--mint)' : 'var(--line)'}; background:var(--surface)">
         <span class="v num" style="color:var(--ink)">${m.allocated}</span>
         <span class="l">Allocated</span>
@@ -1459,7 +1459,7 @@ function renderEngineerWorkspaceView() {
         <h2 style="font-size:18px; font-weight:700; margin:0">Allocated Inspection Tasks (${inspections.length})</h2>
         <span class="muted" style="font-size:12px">Synchronized with SiteIQ Quality Lead Engine</span>
       </div>
-      <div class="cards" style="display:grid; grid-template-columns:repeat(auto-fill, minmax(340px, 1fr)); gap:16px">
+      <div class="cards cards-responsive">
         ${inspectionCardsHtml}
       </div>
     </section>
@@ -1577,13 +1577,13 @@ function renderInspectionExecutionView(allocId) {
             <!-- Result Buttons [OK] [NC] [NA] -->
             <div style="display:flex; gap:8px; margin-bottom:10px; align-items:center; flex-wrap:wrap">
               <span style="font-size:12px; font-weight:700; color:var(--ink-2); margin-right:4px">Result:</span>
-              <button type="button" class="btn" onclick="setCheckpointExecutionResult('${cp.checkpoint_id}', 'OK')" ${isLocked ? 'disabled' : ''} style="height:32px; padding:0 14px; font-size:12px; font-weight:800; border-radius:6px; ${currRes === 'OK' ? 'background:var(--mint); color:#0B2A21; border:1px solid var(--mint)' : 'background:var(--surface-2); color:var(--ink); border:1px solid var(--line)'}">
+              <button type="button" class="btn chk-eval-btn" onclick="setCheckpointExecutionResult('${cp.checkpoint_id}', 'OK')" ${isLocked ? 'disabled' : ''} style="${currRes === 'OK' ? 'background:var(--mint); color:#0B2A21; border:1px solid var(--mint)' : 'background:var(--surface-2); color:var(--ink); border:1px solid var(--line)'}">
                 ✓ OK
               </button>
-              <button type="button" class="btn" onclick="setCheckpointExecutionResult('${cp.checkpoint_id}', 'NC')" ${isLocked ? 'disabled' : ''} style="height:32px; padding:0 14px; font-size:12px; font-weight:800; border-radius:6px; ${currRes === 'NC' ? 'background:var(--crit); color:#fff; border:1px solid var(--crit)' : 'background:var(--surface-2); color:var(--ink); border:1px solid var(--line)'}">
+              <button type="button" class="btn chk-eval-btn" onclick="setCheckpointExecutionResult('${cp.checkpoint_id}', 'NC')" ${isLocked ? 'disabled' : ''} style="${currRes === 'NC' ? 'background:var(--crit); color:#fff; border:1px solid var(--crit)' : 'background:var(--surface-2); color:var(--ink); border:1px solid var(--line)'}">
                 ⚠ NC
               </button>
-              <button type="button" class="btn" onclick="setCheckpointExecutionResult('${cp.checkpoint_id}', 'NA')" ${isLocked ? 'disabled' : ''} style="height:32px; padding:0 14px; font-size:12px; font-weight:800; border-radius:6px; ${currRes === 'NA' ? 'background:var(--ink-3); color:#fff; border:1px solid var(--ink-3)' : 'background:var(--surface-2); color:var(--ink); border:1px solid var(--line)'}">
+              <button type="button" class="btn chk-eval-btn" onclick="setCheckpointExecutionResult('${cp.checkpoint_id}', 'NA')" ${isLocked ? 'disabled' : ''} style="${currRes === 'NA' ? 'background:var(--ink-3); color:#fff; border:1px solid var(--ink-3)' : 'background:var(--surface-2); color:var(--ink); border:1px solid var(--line)'}">
                 — NA
               </button>
             </div>
@@ -1753,7 +1753,7 @@ function renderInspectionExecutionView(allocId) {
       ${stagesHtml}
 
       <!-- Sticky Bottom Action Footer -->
-      <div style="position:sticky; bottom:12px; z-index:9; background:color-mix(in srgb, var(--surface) 95%, transparent); backdrop-filter:blur(8px); border:1px solid var(--line); border-radius:14px; padding:12px 16px; box-shadow:0 8px 24px rgba(0,0,0,0.15); display:flex; justify-content:space-between; align-items:center; gap:10px; flex-wrap:wrap">
+      <div class="execution-sticky-bar">
         <div style="font-size:12.5px; color:var(--ink-2)">
           ${pendingCount > 0 ? `<span style="color:var(--major); font-weight:700">⚠ ${pendingCount} checkpoint(s) pending evaluation</span>` : `<span style="color:var(--mint); font-weight:700">✓ All checkpoints evaluated</span>`}
         </div>
