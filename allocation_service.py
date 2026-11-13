@@ -1093,7 +1093,7 @@ class AllocationService:
                 SELECT DISTINCT allocation_id, stage_id, stage_name, subgroup_id, subgroup_name
                 FROM allocation_checkpoints
                 WHERE allocation_id IN ({placeholders})
-                ORDER BY id ASC
+                ORDER BY allocation_id, stage_name, subgroup_name
             """, alloc_ids)
             for r in cur.fetchall():
                 aid = r['allocation_id']
@@ -1116,6 +1116,14 @@ class AllocationService:
         }
 
         for a in raw_allocs:
+            # Normalize date / datetime objects to strings for JSON & comparisons
+            for dk in ('planned_date', 'due_date', 'created_at', 'updated_at'):
+                if dk in a and a[dk] is not None:
+                    if hasattr(a[dk], 'strftime'):
+                        a[dk] = a[dk].strftime("%Y-%m-%d" if 'date' in dk and 'time' not in dk else "%Y-%m-%d %H:%M:%S")
+                    else:
+                        a[dk] = str(a[dk])
+
             aid = a['allocation_id']
             st_info = stages_map.get(aid, {'stages': [], 'subgroups': []})
             a['stages'] = st_info['stages']
@@ -1129,11 +1137,11 @@ class AllocationService:
             a['progress_pct'] = round((comp / tot * 100), 1) if tot > 0 else 0
 
             # Date flags
-            due_d = a['due_date']
+            due_d = a.get('due_date') or ''
             status = a['status']
             is_active = status not in ('Pending review', 'Report issued')
-            is_overdue = bool(due_d < today_str and is_active)
-            is_due_today = bool(due_d == today_str and is_active)
+            is_overdue = bool(due_d and due_d < today_str and is_active)
+            is_due_today = bool(due_d and due_d == today_str and is_active)
             a['is_overdue'] = is_overdue
             a['is_due_today'] = is_due_today
 
