@@ -53,6 +53,9 @@ class PostgresCursorWrapper:
         self._cur = cur
 
     def execute(self, sql, params=None):
+        if sql:
+            sql = sql.replace('is_resolved = 0', 'is_resolved = false')
+            sql = sql.replace('is_resolved = 1', 'is_resolved = true')
         if params is not None:
             # Normalize ? placeholders to %s for PostgreSQL
             sql = sql.replace('?', '%s')
@@ -60,6 +63,9 @@ class PostgresCursorWrapper:
         return self._cur.execute(sql)
 
     def executemany(self, sql, seq_of_params):
+        if sql:
+            sql = sql.replace('is_resolved = 0', 'is_resolved = false')
+            sql = sql.replace('is_resolved = 1', 'is_resolved = true')
         sql = sql.replace('?', '%s')
         return self._cur.executemany(sql, seq_of_params)
 

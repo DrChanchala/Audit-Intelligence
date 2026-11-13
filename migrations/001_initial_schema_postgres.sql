@@ -73,9 +73,9 @@ CREATE INDEX IF NOT EXISTS idx_nc_logs_code ON nc_audit_logs(nc_code);
 CREATE TABLE IF NOT EXISTS inspections (
     code VARCHAR(32) PRIMARY KEY,
     project_id VARCHAR(32) NOT NULL REFERENCES projects(id) ON DELETE CASCADE,
-    title VARCHAR(128) NOT NULL,
-    zone VARCHAR(64) NOT NULL,
-    tpl VARCHAR(128) NOT NULL,
+    title VARCHAR(255) NOT NULL,
+    zone VARCHAR(255) NOT NULL,
+    tpl VARCHAR(255) NOT NULL,
     eng VARCHAR(100),
     due_date DATE NOT NULL,
     status VARCHAR(32) NOT NULL, -- Required, Allocated, In progress, Pending review, Report issued
@@ -314,36 +314,19 @@ ALTER TABLE allocation_checkpoints ENABLE ROW LEVEL SECURITY;
 ALTER TABLE inspection_reviews ENABLE ROW LEVEL SECURITY;
 ALTER TABLE inspection_audit_events ENABLE ROW LEVEL SECURITY;
 
--- Allow read access to all authenticated users & service role
-CREATE POLICY "Allow read access to authenticated and service_role" ON projects FOR SELECT USING (true);
-CREATE POLICY "Allow read access to authenticated and service_role" ON non_conformities FOR SELECT USING (true);
-CREATE POLICY "Allow read access to authenticated and service_role" ON nc_audit_logs FOR SELECT USING (true);
-CREATE POLICY "Allow read access to authenticated and service_role" ON inspections FOR SELECT USING (true);
-CREATE POLICY "Allow read access to authenticated and service_role" ON approvals FOR SELECT USING (true);
-CREATE POLICY "Allow read access to authenticated and service_role" ON action_items FOR SELECT USING (true);
-CREATE POLICY "Allow read access to authenticated and service_role" ON evidence_photos FOR SELECT USING (true);
-CREATE POLICY "Allow read access to authenticated and service_role" ON inspection_reports FOR SELECT USING (true);
-CREATE POLICY "Allow read access to authenticated and service_role" ON master_stages FOR SELECT USING (true);
-CREATE POLICY "Allow read access to authenticated and service_role" ON master_subgroups FOR SELECT USING (true);
-CREATE POLICY "Allow read access to authenticated and service_role" ON master_checkpoints FOR SELECT USING (true);
-CREATE POLICY "Allow read access to authenticated and service_role" ON inspection_allocations FOR SELECT USING (true);
-CREATE POLICY "Allow read access to authenticated and service_role" ON allocation_checkpoints FOR SELECT USING (true);
-CREATE POLICY "Allow read access to authenticated and service_role" ON inspection_reviews FOR SELECT USING (true);
-CREATE POLICY "Allow read access to authenticated and service_role" ON inspection_audit_events FOR SELECT USING (true);
-
--- Allow full modifications to service_role and backend application
-CREATE POLICY "Service role full access projects" ON projects FOR ALL TO service_role USING (true);
-CREATE POLICY "Service role full access non_conformities" ON non_conformities FOR ALL TO service_role USING (true);
-CREATE POLICY "Service role full access nc_audit_logs" ON nc_audit_logs FOR ALL TO service_role USING (true);
-CREATE POLICY "Service role full access inspections" ON inspections FOR ALL TO service_role USING (true);
-CREATE POLICY "Service role full access approvals" ON approvals FOR ALL TO service_role USING (true);
-CREATE POLICY "Service role full access action_items" ON action_items FOR ALL TO service_role USING (true);
-CREATE POLICY "Service role full access evidence_photos" ON evidence_photos FOR ALL TO service_role USING (true);
-CREATE POLICY "Service role full access inspection_reports" ON inspection_reports FOR ALL TO service_role USING (true);
-CREATE POLICY "Service role full access master_stages" ON master_stages FOR ALL TO service_role USING (true);
-CREATE POLICY "Service role full access master_subgroups" ON master_subgroups FOR ALL TO service_role USING (true);
-CREATE POLICY "Service role full access master_checkpoints" ON master_checkpoints FOR ALL TO service_role USING (true);
-CREATE POLICY "Service role full access inspection_allocations" ON inspection_allocations FOR ALL TO service_role USING (true);
-CREATE POLICY "Service role full access allocation_checkpoints" ON allocation_checkpoints FOR ALL TO service_role USING (true);
-CREATE POLICY "Service role full access inspection_reviews" ON inspection_reviews FOR ALL TO service_role USING (true);
-CREATE POLICY "Service role full access inspection_audit_events" ON inspection_audit_events FOR ALL TO service_role USING (true);
+-- Allow universal read and write access policies (compatible with Supabase, Railway, and standard Postgres)
+DO $$
+DECLARE
+    tbl text;
+    tables text[] := ARRAY[
+        'projects', 'non_conformities', 'nc_audit_logs', 'inspections', 'approvals',
+        'action_items', 'evidence_photos', 'inspection_reports', 'master_stages',
+        'master_subgroups', 'master_checkpoints', 'inspection_allocations',
+        'allocation_checkpoints', 'inspection_reviews', 'inspection_audit_events'
+    ];
+BEGIN
+    FOREACH tbl IN ARRAY tables LOOP
+        EXECUTE format('DROP POLICY IF EXISTS "Allow all access" ON %I;', tbl);
+        EXECUTE format('CREATE POLICY "Allow all access" ON %I FOR ALL USING (true) WITH CHECK (true);', tbl);
+    END LOOP;
+END $$;

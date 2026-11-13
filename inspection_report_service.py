@@ -65,7 +65,7 @@ class InspectionReportService:
         ncs = [dict(r) for r in cur.fetchall()]
 
         # 3. Fetch Action Items
-        cur.execute("SELECT * FROM action_items WHERE project_id = ? AND is_resolved = 0", (pid,))
+        cur.execute("SELECT * FROM action_items WHERE project_id = ? AND is_resolved = false", (pid,))
         actions = [dict(r) for r in cur.fetchall()]
 
         conn.close()

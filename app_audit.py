@@ -230,10 +230,10 @@ def list_projects(status: Optional[str] = None, q: Optional[str] = None):
         cur.execute("SELECT COUNT(*) FROM approvals WHERE project_id = ? AND status = 'Pending'", (pid,))
         approvals_count = cur.fetchone()[0]
 
-        cur.execute("SELECT COUNT(*) FROM action_items WHERE project_id = ? AND is_resolved = 0", (pid,))
+        cur.execute("SELECT COUNT(*) FROM action_items WHERE project_id = ? AND is_resolved = false", (pid,))
         actions_count = cur.fetchone()[0]
 
-        cur.execute("SELECT COUNT(*) FROM action_items WHERE project_id = ? AND is_resolved = 0 AND due_date < ?", (pid, today_str))
+        cur.execute("SELECT COUNT(*) FROM action_items WHERE project_id = ? AND is_resolved = false AND due_date < ?", (pid, today_str))
         actions_overdue = cur.fetchone()[0]
 
         p['metrics'] = {
@@ -275,7 +275,7 @@ def get_project_detail(project_id: str):
     p['approvals'] = [dict(r) for r in cur.fetchall()]
 
     # Fetch Actions
-    cur.execute("SELECT * FROM action_items WHERE project_id = ? AND is_resolved = 0 ORDER BY due_date ASC", (project_id,))
+    cur.execute("SELECT * FROM action_items WHERE project_id = ? AND is_resolved = false ORDER BY due_date ASC", (project_id,))
     p['actions'] = [dict(r) for r in cur.fetchall()]
 
     conn.close()
@@ -389,7 +389,7 @@ def execute_nc_action(code: str, req: NCActionRequest):
                     (code, today_str, f"Closed by {req.user}", "Closure verified and signed off."))
         # Clear related approvals and actions
         cur.execute("UPDATE approvals SET status = 'Approved' WHERE ref_nc = ?", (code,))
-        cur.execute("UPDATE action_items SET is_resolved = 1 WHERE target_code = ?", (code,))
+        cur.execute("UPDATE action_items SET is_resolved = true WHERE target_code = ?", (code,))
         # Update project timestamp
         cur.execute("UPDATE projects SET upd_at = ?, upd_by = ? WHERE id = ?", (now_str, req.user, nc['project_id']))
         msg = f"NC {code} officially closed"
@@ -493,7 +493,7 @@ def allocate_engineer(code: str, req: AllocateEngineerRequest):
     new_status = "Allocated" if ins['status'] == "Required" else ins['status']
 
     cur.execute("UPDATE inspections SET eng = ?, status = ? WHERE code = ?", (req.engineer_name, new_status, code))
-    cur.execute("UPDATE action_items SET is_resolved = 1 WHERE target_code = ?", (code,))
+    cur.execute("UPDATE action_items SET is_resolved = true WHERE target_code = ?", (code,))
 
     conn.commit()
     conn.close()

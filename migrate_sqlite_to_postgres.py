@@ -55,6 +55,23 @@ PRIMARY_KEYS: Dict[str, str] = {
     "inspection_audit_events": "event_id"
 }
 
+SERIAL_PKS: Dict[str, str] = {
+    "nc_audit_logs": "id",
+    "action_items": "id",
+    "evidence_photos": "id",
+    "inspection_reports": "id",
+    "allocation_checkpoints": "id",
+    "inspection_reviews": "review_id",
+    "inspection_audit_events": "event_id"
+}
+
+def sanitize_val(table: str, col: str, val: Any) -> Any:
+    if col == "is_resolved":
+        return bool(val) if val is not None else False
+    if val == "" and (col.endswith(("_date", "_at", "_stamp")) or col in ("cleared_date", "closed_date", "submitted_at", "approved_at", "returned_at")):
+        return None
+    return val
+
 def inspect_sqlite_data(sqlite_path: str) -> Dict[str, List[Dict[str, Any]]]:
     if not os.path.exists(sqlite_path):
         raise FileNotFoundError(f"SQLite database not found at {sqlite_path}")
@@ -145,16 +162,14 @@ def migrate_to_postgres(sqlite_path: str, pg_url: str):
                     VALUES ({placeholders})
                 """
 
-            values = [[row[c] for c in columns] for row in rows]
+            values = [[sanitize_val(table, c, row[c]) for c in columns] for row in rows]
             execute_batch(cur, insert_query, values, page_size=100)
             print(f"  - {table:<28}: {len(rows)} records migrated")
 
             # Update serial sequences if primary key is auto-increment
-            if pk == "id" or pk == "review_id" or pk == "event_id":
-                try:
-                    cur.execute(f"SELECT setval(pg_get_serial_sequence('{table}', '{pk}'), COALESCE(MAX({pk}), 1)) FROM {table};")
-                except Exception:
-                    pass
+            if table in SERIAL_PKS:
+                seq_col = SERIAL_PKS[table]
+                cur.execute(f"SELECT setval(pg_get_serial_sequence('{table}', '{seq_col}'), COALESCE(MAX({seq_col}), 1)) FROM {table};")
 
         pg_conn.commit()
         print("\n[SUCCESS] All records committed to PostgreSQL / Supabase!")
