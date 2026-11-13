@@ -23,6 +23,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copy application files
 COPY app_audit.py /app/
 COPY database_audit.py /app/
+COPY auth_service.py /app/
 COPY allocation_service.py /app/
 COPY inspection_report_service.py /app/
 COPY ai_agent.py /app/
@@ -30,6 +31,8 @@ COPY progress_engine.py /app/
 COPY database.py /app/
 COPY master_checklist_parsed.json /app/
 COPY migrate_sqlite_to_postgres.py /app/
+COPY seed_master_checklist.py /app/
+COPY seed_auth_data.py /app/
 COPY migrations /app/migrations
 COPY static /app/static
 
