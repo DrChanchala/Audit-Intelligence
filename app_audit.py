@@ -308,6 +308,78 @@ def create_organization_endpoint(req: CreateOrgRequest, user: Dict[str, Any] = D
     conn.close()
     return {"status": "success", "message": f"Organization '{req.name}' created successfully."}
 
+@app.post("/api/auth/register")
+def register_user_endpoint(req: CreateUserRequest):
+    """
+    Public registration endpoint allowing team members to create new logins
+    under an existing enterprise organization.
+    """
+    email = req.email.strip().lower()
+    if not email or "@" not in email:
+        raise HTTPException(status_code=400, detail="Valid email address is required.")
+    if len(req.password) < 6:
+        raise HTTPException(status_code=400, detail="Password must be at least 6 characters.")
+
+    conn = get_connection()
+    cur = conn.cursor()
+    cur.execute("SELECT id FROM users WHERE email = ?", (email,))
+    if cur.fetchone():
+        conn.close()
+        raise HTTPException(status_code=400, detail=f"User with email '{email}' already exists.")
+
+    cur.execute("SELECT id, name FROM organizations WHERE id = ?", (req.org_id,))
+    org_row = cur.fetchone()
+    if not org_row:
+        conn.close()
+        raise HTTPException(status_code=400, detail=f"Organization '{req.org_id}' not found.")
+
+    org_dict = dict(org_row)
+    user_id = f"usr-{int(time.time())}"
+    hashed_pw = hash_password(req.password)
+    parts = req.full_name.strip().split()
+    initials = (parts[0][0] + (parts[1][0] if len(parts) > 1 else "")).upper() if parts else "QC"
+    emp_id = req.employee_id or f"EMP-{int(time.time()) % 10000}"
+
+    cur.execute("""
+        INSERT INTO users (id, org_id, email, password_hash, full_name, role, employee_id, specialization, avatar_initials, phone, status)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'active')
+    """, (user_id, req.org_id, email, hashed_pw, req.full_name, req.role, emp_id, req.specialization, initials, req.phone))
+    conn.commit()
+    conn.close()
+
+    token = create_access_token(
+        user_id=user_id,
+        org_id=req.org_id,
+        role=req.role,
+        email=email,
+        full_name=req.full_name,
+        employee_id=emp_id
+    )
+
+    return {
+        "status": "success",
+        "message": f"Account created successfully for {req.full_name}.",
+        "access_token": token,
+        "token_type": "bearer",
+        "user": {
+            "id": user_id,
+            "email": email,
+            "full_name": req.full_name,
+            "role": req.role,
+            "employee_id": emp_id,
+            "org_id": req.org_id,
+            "avatar_initials": initials
+        },
+        "organization": org_dict
+    }
+
+@app.post("/api/auth/users")
+def create_user_by_admin(req: CreateUserRequest, user: Dict[str, Any] = Depends(get_current_user)):
+    """Admin / Lead user creation endpoint."""
+    if user.get("role") not in ("admin", "qc_lead"):
+        raise HTTPException(status_code=403, detail="Only Admins and QC Leads can create users via this endpoint.")
+    return register_user_endpoint(req)
+
 @app.get("/api/summary")
 def get_dashboard_summary():
     conn = get_connection()

@@ -1123,7 +1123,7 @@ const ORGANIZATIONS = [
 ];
 
 let LOGIN_GATEWAY_STATE = {
-  step: 'org', // 'org' | 'roles'
+  step: 'org', // 'org' | 'roles' | 'register'
   selectedOrgId: '',
   selectedOrgName: ''
 };
@@ -1137,6 +1137,8 @@ function renderLoginGateway(step = 'org') {
 
   if (LOGIN_GATEWAY_STATE.step === 'org') {
     renderLoginStepOrg(container);
+  } else if (LOGIN_GATEWAY_STATE.step === 'register') {
+    renderLoginStepRegister(container);
   } else {
     renderLoginStepRoles(container);
   }
@@ -1270,10 +1272,93 @@ function renderLoginStepRoles(container) {
           <button type="submit" id="loginSubmitBtn" class="login-continue-btn" style="background:var(--mint); color:var(--on-mint); cursor:pointer; margin-top:8px">
             Authenticate & Launch Workspace →
           </button>
+
+          <div style="text-align:center; margin-top:10px; font-size:12.5px; color:var(--ink-2)">
+            Need a new team login? <button type="button" class="login-link" onclick="renderLoginGateway('register')">Create New User Account</button>
+          </div>
         </form>
 
         <div style="padding-top:14px; border-top:1px solid var(--line); margin-top:20px; display:flex; justify-content:space-between; align-items:center; font-size:11.5px; color:var(--ink-3)">
           <span>Bcrypt & HS256 Encrypted Session</span>
+          <span>ISO 9001:2015 CQMS</span>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+// STEP 3: CREATE NEW USER ACCOUNT / REGISTER
+function renderLoginStepRegister(container) {
+  const orgName = LOGIN_GATEWAY_STATE.selectedOrgName || 'Selected Organization';
+  const orgId = LOGIN_GATEWAY_STATE.selectedOrgId;
+
+  container.innerHTML = `
+    <div class="login-gateway-backdrop">
+      <div class="login-isometric-bg" aria-hidden="true"></div>
+
+      <div class="login-card" role="dialog" aria-modal="true" aria-labelledby="registerTitle" style="max-width:540px">
+        <!-- Back Button -->
+        <button type="button" class="login-back-btn" onclick="renderLoginGateway('roles')" aria-label="Back to sign in">
+          ← Back to Sign In
+        </button>
+
+        <div class="login-eyebrow" style="display:flex; align-items:center; gap:8px; flex-wrap:wrap">
+          <span>QC FLOW</span>
+          <span style="background:var(--mint-soft); color:var(--mint-ink); padding:2px 10px; border-radius:999px; font-size:11px; font-weight:700; text-transform:none">
+            🏢 ${esc(orgName)}
+          </span>
+        </div>
+
+        <h1 id="registerTitle" class="login-title" style="margin-bottom:8px">Create Account</h1>
+        <p class="login-desc" style="margin-bottom:18px">
+          Register a new team member login under <strong>${esc(orgName)}</strong>:
+        </p>
+
+        <form id="registerForm" onsubmit="handleRealRegisterSubmit(event)" style="display:flex; flex-direction:column; gap:12px">
+          <div id="registerErrorMessage" style="display:none; padding:10px 12px; border-radius:8px; background:var(--crit-soft); color:var(--crit); font-size:12.5px; font-weight:700"></div>
+
+          <div>
+            <label style="display:block; font-size:12px; font-weight:700; color:var(--ink); margin-bottom:4px">Full Name *</label>
+            <input type="text" id="regFullNameInput" required placeholder="e.g. Ramesh Kumar" style="width:100%; height:42px; padding:0 12px; border-radius:10px; border:1px solid var(--line); font-size:13.5px; background:var(--surface)">
+          </div>
+
+          <div>
+            <label style="display:block; font-size:12px; font-weight:700; color:var(--ink); margin-bottom:4px">Corporate Email Address *</label>
+            <input type="email" id="regEmailInput" required placeholder="name@company.com" style="width:100%; height:42px; padding:0 12px; border-radius:10px; border:1px solid var(--line); font-size:13.5px; background:var(--surface)">
+          </div>
+
+          <div>
+            <label style="display:block; font-size:12px; font-weight:700; color:var(--ink); margin-bottom:4px">Password (min 6 characters) *</label>
+            <input type="password" id="regPasswordInput" required minlength="6" placeholder="Set a secure password" style="width:100%; height:42px; padding:0 12px; border-radius:10px; border:1px solid var(--line); font-size:13.5px; background:var(--surface)">
+          </div>
+
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px">
+            <div>
+              <label style="display:block; font-size:12px; font-weight:700; color:var(--ink); margin-bottom:4px">Operational Role *</label>
+              <select id="regRoleSelect" style="width:100%; height:42px; padding:0 10px; border-radius:10px; border:1px solid var(--line); font-size:13px; background:var(--surface)">
+                <option value="engineer" selected>QC Inspection Engineer</option>
+                <option value="qc_lead">QC Lead / Quality Manager</option>
+                <option value="admin">System Administrator</option>
+              </select>
+            </div>
+            <div>
+              <label style="display:block; font-size:12px; font-weight:700; color:var(--ink); margin-bottom:4px">Employee ID</label>
+              <input type="text" id="regEmpIdInput" placeholder="e.g. EMP-1010" style="width:100%; height:42px; padding:0 12px; border-radius:10px; border:1px solid var(--line); font-size:13px; background:var(--surface)">
+            </div>
+          </div>
+
+          <div>
+            <label style="display:block; font-size:12px; font-weight:700; color:var(--ink); margin-bottom:4px">Specialization / Trade</label>
+            <input type="text" id="regSpecInput" placeholder="e.g. RCC & Structural, Finishes, Façade" style="width:100%; height:42px; padding:0 12px; border-radius:10px; border:1px solid var(--line); font-size:13px; background:var(--surface)">
+          </div>
+
+          <button type="submit" id="regSubmitBtn" class="login-continue-btn" style="background:var(--mint); color:var(--on-mint); cursor:pointer; margin-top:8px">
+            Create Account & Launch Workspace →
+          </button>
+        </form>
+
+        <div style="padding-top:14px; border-top:1px solid var(--line); margin-top:16px; display:flex; justify-content:space-between; align-items:center; font-size:11.5px; color:var(--ink-3)">
+          <span>Bcrypt Salted Hash & HS256 Session</span>
           <span>ISO 9001:2015 CQMS</span>
         </div>
       </div>
@@ -1365,6 +1450,92 @@ async function handleRealLoginSubmit(ev) {
     if (submitBtn) {
       submitBtn.disabled = false;
       submitBtn.textContent = 'Authenticate & Launch Workspace →';
+    }
+  }
+}
+
+async function handleRealRegisterSubmit(ev) {
+  ev.preventDefault();
+  const fullName = $('regFullNameInput')?.value.trim();
+  const email = $('regEmailInput')?.value.trim();
+  const password = $('regPasswordInput')?.value;
+  const role = $('regRoleSelect')?.value || 'engineer';
+  const empId = $('regEmpIdInput')?.value.trim() || undefined;
+  const spec = $('regSpecInput')?.value.trim() || undefined;
+  const orgId = LOGIN_GATEWAY_STATE.selectedOrgId;
+  const errBox = $('registerErrorMessage');
+  const submitBtn = $('regSubmitBtn');
+
+  if (errBox) errBox.style.display = 'none';
+  if (submitBtn) {
+    submitBtn.disabled = true;
+    submitBtn.innerHTML = '<span class="spinner"></span> Creating account...';
+  }
+
+  try {
+    const res = await fetch('/api/auth/register', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        org_id: orgId,
+        email: email,
+        password: password,
+        full_name: fullName,
+        role: role,
+        employee_id: empId,
+        specialization: spec
+      })
+    });
+
+    const data = await res.json();
+    if (!res.ok || data.status !== 'success') {
+      throw new Error(data.detail || 'Registration failed.');
+    }
+
+    // Persist JWT token & user session
+    localStorage.setItem('siteiq_jwt_token', data.access_token);
+    localStorage.setItem('siteiq_user_profile', JSON.stringify(data.user));
+    localStorage.setItem('siteiq_user_org', JSON.stringify(data.organization));
+    localStorage.setItem('siteiq_logged_in_role', data.user.role);
+    if (data.user.employee_id) {
+      localStorage.setItem('siteiq_active_engineer_id', data.user.employee_id);
+    }
+
+    S.role = data.user.role;
+    _storedEngId = data.user.employee_id || 'EMP-1004';
+
+    closeLoginGateway();
+    if (typeof toast === 'function') {
+      toast(`Welcome, ${data.user.full_name}! Account created successfully.`);
+    }
+
+    await syncFromBackend();
+
+    if (data.user.role === 'engineer') {
+      if (typeof ENGINEER_WORKSPACE !== 'undefined') {
+        ENGINEER_WORKSPACE.activeEngineerId = data.user.employee_id || 'EMP-1004';
+        ENGINEER_WORKSPACE.activeEngineerName = data.user.full_name;
+      }
+      S.stack = [{ v: 'engineer_dashboard' }];
+      if (window.history && window.history.pushState) window.history.pushState(null, '', '/engineer');
+      if (typeof fetchEngineerDashboardData === 'function') {
+        fetchEngineerDashboardData(data.user.employee_id).then(() => render());
+      } else {
+        render();
+      }
+    } else {
+      S.stack = [{ v: 'home' }];
+      if (window.history && window.history.pushState) window.history.pushState(null, '', '/');
+      render();
+    }
+  } catch(err) {
+    if (errBox) {
+      errBox.textContent = err.message;
+      errBox.style.display = 'block';
+    }
+    if (submitBtn) {
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Create Account & Launch Workspace →';
     }
   }
 }
