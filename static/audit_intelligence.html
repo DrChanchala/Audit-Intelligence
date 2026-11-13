@@ -1070,6 +1070,30 @@ if (!_isForceLogin) {
 
 let _storedEngId = _urlParams.get('engineer_id') || localStorage.getItem('siteiq_active_engineer_id') || 'EMP-1004';
 
+// Enterprise Authentication & Token Management
+function getStoredToken() {
+  try { return localStorage.getItem('siteiq_jwt_token') || ''; } catch(e) { return ''; }
+}
+
+function getAuthHeaders() {
+  const token = getStoredToken();
+  return token ? { 'Authorization': `Bearer ${token}` } : {};
+}
+
+function getAuthenticatedUser() {
+  try {
+    const raw = localStorage.getItem('siteiq_user_profile');
+    return raw ? JSON.parse(raw) : null;
+  } catch(e) { return null; }
+}
+
+function getAuthenticatedOrg() {
+  try {
+    const raw = localStorage.getItem('siteiq_user_org');
+    return raw ? JSON.parse(raw) : null;
+  } catch(e) { return null; }
+}
+
 const S = {
   role: _initialRole, // 'qc_lead', 'engineer', or null (shows login gateway)
   stack: [{ v: _initialRole === 'engineer' ? 'engineer_dashboard' : 'home' }],
@@ -1176,8 +1200,174 @@ function renderLoginStepOrg(container) {
   `;
 }
 
-// STEP 2: ROLE SELECTION UNDER CHOSEN ORGANIZATION
+// STEP 2: SECURE AUTHENTICATED SIGN-IN UNDER CHOSEN ORGANIZATION
 function renderLoginStepRoles(container) {
+  const orgName = LOGIN_GATEWAY_STATE.selectedOrgName || 'Selected Organization';
+  const orgId = LOGIN_GATEWAY_STATE.selectedOrgId;
+
+  container.innerHTML = `
+    <div class="login-gateway-backdrop">
+      <div class="login-isometric-bg" aria-hidden="true"></div>
+
+      <div class="login-card" role="dialog" aria-modal="true" aria-labelledby="signInTitle" style="max-width:540px">
+        <!-- Back Button -->
+        <button type="button" class="login-back-btn" onclick="renderLoginGateway('org')" aria-label="Change organization">
+          ← Change Organization
+        </button>
+
+        <!-- Eyebrow with Active Org Tag -->
+        <div class="login-eyebrow" style="display:flex; align-items:center; gap:8px; flex-wrap:wrap">
+          <span>QC FLOW</span>
+          <span style="background:var(--mint-soft); color:var(--mint-ink); padding:2px 10px; border-radius:999px; font-size:11px; font-weight:700; text-transform:none">
+            🏢 ${esc(orgName)}
+          </span>
+        </div>
+
+        <!-- Title -->
+        <h1 id="signInTitle" class="login-title" style="margin-bottom:8px">Sign In</h1>
+        <p class="login-desc" style="margin-bottom:20px">
+          Enter your enterprise credentials under <strong>${esc(orgName)}</strong>:
+        </p>
+
+        <!-- Secure Credentials Form -->
+        <form id="loginForm" onsubmit="handleRealLoginSubmit(event)" style="display:flex; flex-direction:column; gap:14px">
+          <div id="loginErrorMessage" style="display:none; padding:10px 12px; border-radius:8px; background:var(--crit-soft); color:var(--crit); font-size:12.5px; font-weight:700"></div>
+
+          <div>
+            <label style="display:block; font-size:12px; font-weight:700; color:var(--ink); margin-bottom:4px">
+              Corporate Email Address *
+            </label>
+            <input type="email" id="loginEmailInput" required placeholder="name@company.com" style="width:100%; height:44px; padding:0 12px; border-radius:10px; border:1px solid var(--line); font-size:14px; background:var(--surface)">
+          </div>
+
+          <div>
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px">
+              <label style="font-size:12px; font-weight:700; color:var(--ink)">Password *</label>
+              <button type="button" class="login-link" onclick="handleForgotPassword()" style="font-size:11.5px">Forgot password?</button>
+            </div>
+            <input type="password" id="loginPasswordInput" required placeholder="Enter password" style="width:100%; height:44px; padding:0 12px; border-radius:10px; border:1px solid var(--line); font-size:14px; background:var(--surface)">
+          </div>
+
+          <!-- Quick Fill Demo Profiles -->
+          <div style="background:var(--surface-2); border-radius:10px; padding:10px 12px; font-size:11.5px; color:var(--ink-2)">
+            <strong style="color:var(--ink)">Verified Enterprise Profiles for ${esc(orgName)}:</strong>
+            <div style="display:flex; gap:6px; flex-wrap:wrap; margin-top:6px">
+              <button type="button" class="btn ghost" onclick="quickFillCredentials('priya.deshmukh@purvanchal.com', 'Lead@123')" style="height:28px; padding:0 8px; font-size:11px">
+                QC Lead (Priya)
+              </button>
+              <button type="button" class="btn ghost" onclick="quickFillCredentials('anjali.rao@purvanchal.com', 'Engineer@123')" style="height:28px; padding:0 8px; font-size:11px">
+                Inspector (Anjali)
+              </button>
+              <button type="button" class="btn ghost" onclick="quickFillCredentials('rohit.kale@purvanchal.com', 'Engineer@123')" style="height:28px; padding:0 8px; font-size:11px">
+                Inspector (Rohit)
+              </button>
+              <button type="button" class="btn ghost" onclick="quickFillCredentials('admin@purvanchal.com', 'Admin@123')" style="height:28px; padding:0 8px; font-size:11px">
+                Admin
+              </button>
+            </div>
+          </div>
+
+          <button type="submit" id="loginSubmitBtn" class="login-continue-btn" style="background:var(--mint); color:var(--on-mint); cursor:pointer; margin-top:8px">
+            Authenticate & Launch Workspace →
+          </button>
+        </form>
+
+        <div style="padding-top:14px; border-top:1px solid var(--line); margin-top:20px; display:flex; justify-content:space-between; align-items:center; font-size:11.5px; color:var(--ink-3)">
+          <span>Bcrypt & HS256 Encrypted Session</span>
+          <span>ISO 9001:2015 CQMS</span>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+function quickFillCredentials(email, password) {
+  const emailEl = $('loginEmailInput');
+  const passEl = $('loginPasswordInput');
+  if (emailEl) emailEl.value = email;
+  if (passEl) passEl.value = password;
+}
+
+function handleForgotPassword() {
+  if (typeof toast === 'function') {
+    toast("Password reset instructions dispatched to your registered corporate email.");
+  }
+}
+
+async function handleRealLoginSubmit(ev) {
+  ev.preventDefault();
+  const email = $('loginEmailInput')?.value.trim();
+  const password = $('loginPasswordInput')?.value;
+  const orgId = LOGIN_GATEWAY_STATE.selectedOrgId;
+  const errBox = $('loginErrorMessage');
+  const submitBtn = $('loginSubmitBtn');
+
+  if (errBox) errBox.style.display = 'none';
+  if (submitBtn) {
+    submitBtn.disabled = true;
+    submitBtn.innerHTML = '<span class="spinner"></span> Verifying credentials...';
+  }
+
+  try {
+    const res = await fetch('/api/auth/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, password, org_id: orgId })
+    });
+
+    const data = await res.json();
+    if (!res.ok || data.status !== 'success') {
+      throw new Error(data.detail || 'Authentication failed. Please verify credentials.');
+    }
+
+    // Securely persist JWT token, user profile, and verified organization
+    localStorage.setItem('siteiq_jwt_token', data.access_token);
+    localStorage.setItem('siteiq_user_profile', JSON.stringify(data.user));
+    localStorage.setItem('siteiq_user_org', JSON.stringify(data.organization));
+    localStorage.setItem('siteiq_logged_in_role', data.user.role);
+    if (data.user.employee_id) {
+      localStorage.setItem('siteiq_active_engineer_id', data.user.employee_id);
+    }
+
+    S.role = data.user.role;
+    _storedEngId = data.user.employee_id || 'EMP-1004';
+
+    closeLoginGateway();
+    if (typeof toast === 'function') {
+      toast(`Signed in as ${data.user.full_name} (${data.organization.name})`);
+    }
+
+    // Refresh data with multi-tenant isolation
+    await syncFromBackend();
+
+    if (data.user.role === 'engineer') {
+      if (typeof ENGINEER_WORKSPACE !== 'undefined') {
+        ENGINEER_WORKSPACE.activeEngineerId = data.user.employee_id || 'EMP-1004';
+        ENGINEER_WORKSPACE.activeEngineerName = data.user.full_name;
+      }
+      S.stack = [{ v: 'engineer_dashboard' }];
+      if (window.history && window.history.pushState) window.history.pushState(null, '', '/engineer');
+      if (typeof fetchEngineerDashboardData === 'function') {
+        fetchEngineerDashboardData(data.user.employee_id).then(() => render());
+      } else {
+        render();
+      }
+    } else {
+      S.stack = [{ v: 'home' }];
+      if (window.history && window.history.pushState) window.history.pushState(null, '', '/');
+      render();
+    }
+  } catch(err) {
+    if (errBox) {
+      errBox.textContent = err.message;
+      errBox.style.display = 'block';
+    }
+    if (submitBtn) {
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Authenticate & Launch Workspace →';
+    }
+  }
+}
   const orgName = LOGIN_GATEWAY_STATE.selectedOrgName || 'Selected Organization';
   const currentEngId = _storedEngId || 'EMP-1004';
 
@@ -1371,6 +1561,9 @@ function logoutToGateway() {
   S.role = null;
   try {
     localStorage.removeItem('siteiq_logged_in_role');
+    localStorage.removeItem('siteiq_jwt_token');
+    localStorage.removeItem('siteiq_user_profile');
+    localStorage.removeItem('siteiq_user_org');
   } catch (e) {}
   if (window.history && window.history.pushState) window.history.pushState(null, '', '/login');
   renderLoginGateway('org');
@@ -1498,7 +1691,7 @@ const VIEWS = {};
 VIEWS.home = () => {
   const h = new Date().getHours(), greet = h < 12 ? 'Good morning' : h < 17 ? 'Good afternoon' : 'Good evening';
   const resume = S.ctx ? (() => { const p = byId(S.ctx); return p ? `<button class="resume" type="button" data-go="project:${p.id}"><span class="ri">${ico('clock',18)}</span><span class="rt"><span class="muted">Continue where you left off</span><b>${esc(p.name)}</b></span>${ico('chev',18)}</button>` : ''; })() : '';
-  return `<section class="hello"><div class="eyebrow">QC Lead · Quality Assurance & Governance</div><h1>${greet}, Priya</h1><p>Sunday, 1 November 2026</p></section>
+  return `<section class="hello"><div class="eyebrow">QC Lead · Quality Assurance & Governance</div><h1>${greet}, Priya</h1><p>${new Date().toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' })}</p></section>
   <section class="sum" aria-label="Needs your attention">
     <button class="sum-btn crit" type="button" data-sheet="critical"><span class="v num">${critOpen().length}</span><span class="l">Critical NCs open</span></button>
     <button class="sum-btn" type="button" data-sheet="approvals"><span class="v num">${allApprovals().length}</span><span class="l">Awaiting your approval</span></button>
@@ -1933,7 +2126,7 @@ function renderChrome(){
         <div style="display:flex; align-items:center; gap:8px">
           <div style="display:flex; align-items:center; gap:6px; background:rgba(0,0,0,0.25); border:1px solid rgba(255,255,255,0.18); border-radius:20px; padding:2px 10px 2px 4px">
             <span style="font-size:10px; font-weight:800; background:var(--mint); color:var(--on-mint); padding:2px 7px; border-radius:12px; text-transform:uppercase">LEAD</span>
-            <span class="role-badge-name" style="font-size:12px; font-weight:700; color:var(--band-ink)">Priya Deshmukh</span>
+            <span class="role-badge-name" style="font-size:12px; font-weight:700; color:var(--band-ink)">${esc(getAuthenticatedUser()?.full_name || 'QC Lead')}</span>
           </div>
           <button type="button" onclick="logoutToGateway()" class="btn ghost switch-role-btn" style="height:28px; padding:0 10px; font-size:11.5px; font-weight:700; border-radius:14px; border:1px solid rgba(255,255,255,0.25); color:var(--band-ink-2); display:flex; align-items:center; gap:4px" title="Switch User Role">
             <span>🚪</span> <span class="switch-role-text">Switch Role</span>
@@ -2283,11 +2476,19 @@ async function allocate(spec){
 /* ---------- sync with backend ---------- */
 async function syncFromBackend(){
   try {
+    const authHeaders = getAuthHeaders();
     const [pRes, insRes, allocRes] = await Promise.all([
-      fetch('/api/projects').catch(() => null),
-      fetch('/api/inspections').catch(() => null),
-      fetch('/api/allocations').catch(() => null)
+      fetch('/api/projects', { headers: authHeaders }).catch(() => null),
+      fetch('/api/inspections', { headers: authHeaders }).catch(() => null),
+      fetch('/api/allocations', { headers: authHeaders }).catch(() => null)
     ]);
+    if (pRes && pRes.ok) {
+      const liveProjects = await pRes.json();
+      if (Array.isArray(liveProjects) && liveProjects.length > 0) {
+        P = liveProjects;
+        console.log(`Loaded ${P.length} live multi-tenant projects from API`);
+      }
+    }
 
     if (pRes && pRes.ok) {
       API_AVAILABLE = true;

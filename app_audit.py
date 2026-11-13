@@ -17,6 +17,14 @@ import sqlite3
 from database_audit import get_connection, seed_database
 from inspection_report_service import InspectionReportService
 from allocation_service import AllocationService
+import time
+from auth_service import (
+    create_access_token,
+    verify_password,
+    hash_password,
+    get_current_user,
+    get_current_user_optional
+)
 
 app = FastAPI(
     title="Audit Intelligence API",
@@ -33,6 +41,29 @@ app.add_middleware(
 )
 
 # ----------------- PYDANTIC SCHEMAS -----------------
+
+class LoginRequest(BaseModel):
+    email: str
+    password: str
+    org_id: Optional[str] = None
+
+class CreateOrgRequest(BaseModel):
+    id: str
+    name: str
+    code: str
+    domain: Optional[str] = None
+    industry: Optional[str] = "Construction & Real Estate"
+    address: Optional[str] = None
+
+class CreateUserRequest(BaseModel):
+    org_id: str
+    email: str
+    password: str
+    full_name: str
+    role: str
+    employee_id: Optional[str] = None
+    specialization: Optional[str] = None
+    phone: Optional[str] = None
 
 class ProjectCreate(BaseModel):
     id: str
@@ -150,6 +181,133 @@ def api_seed_database():
     seed_database()
     return {"status": "success", "message": "Audit Intelligence database seeded successfully"}
 
+# ----------------- AUTHENTICATION & MULTI-TENANT ENDPOINTS -----------------
+
+@app.get("/api/auth/organizations")
+def list_organizations():
+    conn = get_connection()
+    cur = conn.cursor()
+    cur.execute("SELECT id, name, code, domain, industry, address, status FROM organizations WHERE status = 'active' ORDER BY name ASC")
+    orgs = [dict(r) for r in cur.fetchall()]
+    conn.close()
+    return {"status": "success", "organizations": orgs}
+
+@app.post("/api/auth/login")
+def login_endpoint(req: LoginRequest):
+    email = req.email.strip().lower()
+    conn = get_connection()
+    cur = conn.cursor()
+
+    cur.execute("SELECT * FROM users WHERE LOWER(email) = ? AND status = 'active'", (email,))
+    user_row = cur.fetchone()
+
+    if not user_row:
+        conn.close()
+        raise HTTPException(status_code=401, detail="Invalid email or password.")
+
+    user = dict(user_row)
+
+    if req.org_id and req.org_id != "org-admin" and user["role"] != "admin" and user["org_id"] != req.org_id:
+        conn.close()
+        raise HTTPException(status_code=403, detail="User does not belong to the selected organization.")
+
+    if not verify_password(req.password, user["password_hash"]):
+        conn.close()
+        raise HTTPException(status_code=401, detail="Invalid email or password.")
+
+    cur.execute("SELECT * FROM organizations WHERE id = ?", (user["org_id"],))
+    org_row = cur.fetchone()
+    org = dict(org_row) if org_row else {"id": user["org_id"], "name": "Enterprise Organization", "code": "ORG"}
+
+    now_str = datetime.now().isoformat()
+    cur.execute("UPDATE users SET last_login_at = ? WHERE id = ?", (now_str, user["id"]))
+    conn.commit()
+    conn.close()
+
+    token = create_access_token(
+        user_id=user["id"],
+        org_id=user["org_id"],
+        role=user["role"],
+        email=user["email"],
+        full_name=user["full_name"],
+        employee_id=user.get("employee_id")
+    )
+
+    return {
+        "status": "success",
+        "message": "Authentication successful",
+        "access_token": token,
+        "token_type": "bearer",
+        "user": {
+            "id": user["id"],
+            "email": user["email"],
+            "full_name": user["full_name"],
+            "role": user["role"],
+            "employee_id": user.get("employee_id"),
+            "specialization": user.get("specialization"),
+            "avatar_initials": user.get("avatar_initials") or user["full_name"][:2].upper()
+        },
+        "organization": {
+            "id": org["id"],
+            "name": org["name"],
+            "code": org["code"]
+        }
+    }
+
+@app.get("/api/auth/me")
+def get_current_user_profile(user: Dict[str, Any] = Depends(get_current_user)):
+    conn = get_connection()
+    cur = conn.cursor()
+    cur.execute("SELECT id, org_id, email, full_name, role, employee_id, specialization, avatar_initials, phone, status, last_login_at FROM users WHERE id = ?", (user["sub"],))
+    row = cur.fetchone()
+    if not row:
+        conn.close()
+        raise HTTPException(status_code=404, detail="User account not found")
+    user_data = dict(row)
+
+    cur.execute("SELECT id, name, code, domain, industry, address FROM organizations WHERE id = ?", (user_data["org_id"],))
+    org_row = cur.fetchone()
+    org_data = dict(org_row) if org_row else None
+    conn.close()
+
+    return {
+        "status": "success",
+        "user": user_data,
+        "organization": org_data
+    }
+
+@app.get("/api/auth/users")
+def list_org_users(role: Optional[str] = None, user: Dict[str, Any] = Depends(get_current_user)):
+    conn = get_connection()
+    cur = conn.cursor()
+    query = "SELECT id, org_id, email, full_name, role, employee_id, specialization, avatar_initials, phone, status FROM users WHERE status = 'active'"
+    params = []
+
+    if user.get("role") != "admin":
+        query += " AND org_id = ?"
+        params.append(user["org_id"])
+
+    if role:
+        query += " AND role = ?"
+        params.append(role)
+
+    query += " ORDER BY full_name ASC"
+    cur.execute(query, params)
+    users = [dict(r) for r in cur.fetchall()]
+    conn.close()
+    return {"status": "success", "users": users}
+
+@app.post("/api/auth/organizations")
+def create_organization_endpoint(req: CreateOrgRequest, user: Dict[str, Any] = Depends(get_current_user)):
+    if user.get("role") != "admin":
+        raise HTTPException(status_code=403, detail="Only System Administrators can create new organizations.")
+    conn = get_connection()
+    cur = conn.cursor()
+    cur.execute("INSERT INTO organizations (id, name, code, domain, industry, address) VALUES (?, ?, ?, ?, ?, ?)", (req.id, req.name, req.code, req.domain, req.industry, req.address))
+    conn.commit()
+    conn.close()
+    return {"status": "success", "message": f"Organization '{req.name}' created successfully."}
+
 @app.get("/api/summary")
 def get_dashboard_summary():
     conn = get_connection()
@@ -190,12 +348,17 @@ def get_dashboard_summary():
 # ----------------- PROJECTS -----------------
 
 @app.get("/api/projects")
-def list_projects(status: Optional[str] = None, q: Optional[str] = None):
+def list_projects(status: Optional[str] = None, q: Optional[str] = None, user: Optional[Dict[str, Any]] = Depends(get_current_user_optional)):
     conn = get_connection()
     cur = conn.cursor()
 
     query = "SELECT * FROM projects WHERE 1=1"
     params = []
+
+    # Enforce Multi-Tenant Organization Isolation
+    if user and user.get("role") != "admin" and user.get("org_id"):
+        query += " AND (org_id = ? OR org_id IS NULL)"
+        params.append(user["org_id"])
 
     if status and status != "all":
         query += " AND status = ?"
