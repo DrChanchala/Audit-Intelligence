@@ -5,6 +5,7 @@ and minimal AWS operational footprint (< $5/month).
 """
 
 import os
+import uuid
 from datetime import datetime, date
 from typing import Optional, List, Dict, Any
 from fastapi import FastAPI, HTTPException, Query, UploadFile, File, Form, Depends
@@ -347,7 +348,7 @@ def register_org_admin_endpoint(req: RegisterOrgAdminRequest):
         VALUES (?, ?, ?, ?, ?, ?, 'active')
     """, (org_id, org_name, org_code, domain, req.industry, req.address))
 
-    admin_id = f"usr-adm-{int(time.time()) % 100000}"
+    admin_id = f"usr-adm-{uuid.uuid4().hex[:8]}"
     hashed_pw = hash_password(req.admin_password)
     parts = req.admin_name.strip().split()
     initials = (parts[0][0] + (parts[1][0] if len(parts) > 1 else "")).upper() if parts else "AD"
@@ -431,7 +432,7 @@ def register_user_endpoint(req: CreateUserRequest):
         raise HTTPException(status_code=400, detail=f"Organization '{req.org_id}' not found.")
 
     org_dict = dict(org_row)
-    user_id = f"usr-{int(time.time())}"
+    user_id = f"usr-{uuid.uuid4().hex[:8]}"
     hashed_pw = hash_password(req.password)
     parts = req.full_name.strip().split()
     initials = (parts[0][0] + (parts[1][0] if len(parts) > 1 else "")).upper() if parts else "QC"
@@ -1313,7 +1314,7 @@ def read_root():
     # Serves the audit intelligence UI
     audit_html_path = os.path.join(os.path.dirname(__file__), "static", "audit_intelligence.html")
     if os.path.exists(audit_html_path):
-        return FileResponse(audit_html_path)
+        return FileResponse(audit_html_path, headers={"Cache-Control": "no-cache, no-store, must-revalidate"})
     return {"message": "Audit Intelligence API is running. Go to /docs for Swagger specifications."}
 
 if __name__ == "__main__":

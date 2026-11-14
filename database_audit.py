@@ -135,8 +135,9 @@ def get_connection():
         except Exception as e:
             print(f"[WARN] Failed to connect to PostgreSQL via DATABASE_URL ({e}). Falling back to SQLite.")
 
-    conn = sqlite3.connect(DB_FILE)
+    conn = sqlite3.connect(DB_FILE, timeout=30.0)
     conn.row_factory = sqlite3.Row
+    conn.execute("PRAGMA journal_mode = WAL;")
     conn.execute("PRAGMA foreign_keys = ON;")
     return conn
 

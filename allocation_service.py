@@ -27,71 +27,89 @@ class AllocationService:
                              priority: Optional[str] = None,
                              search_q: Optional[str] = None) -> List[Dict[str, Any]]:
         """
-        Retrieves the complete hierarchical master checklist:
+        Retrieves the complete hierarchical master checklist in 3 batch queries:
         Stage -> Subgroup -> Checkpoints
         """
         conn = get_connection()
         cur = conn.cursor()
 
+        # 1. Fetch stages
         stage_query = "SELECT * FROM master_stages WHERE 1=1"
         stage_params = []
         if stage_id:
             stage_query += " AND (stage_id = ? OR stage_num = ?)"
             stage_params.extend([stage_id, stage_id])
         stage_query += " ORDER BY display_order ASC"
-
         cur.execute(stage_query, stage_params)
         stages = [dict(r) for r in cur.fetchall()]
+        if not stages:
+            conn.close()
+            return []
 
+        # 2. Fetch all subgroups for these stages in 1 query
+        stage_ids = [s['stage_id'] for s in stages]
+        subgroup_placeholders = ",".join("?" for _ in stage_ids)
+        cur.execute(f"""
+            SELECT * FROM master_subgroups 
+            WHERE stage_id IN ({subgroup_placeholders}) 
+            ORDER BY display_order ASC
+        """, stage_ids)
+        subgroups = [dict(r) for r in cur.fetchall()]
+
+        # 3. Fetch all checkpoints in 1 query
+        chk_query = "SELECT * FROM master_checkpoints WHERE 1=1"
+        chk_params = []
+
+        if priority and priority != 'all':
+            chk_query += " AND priority = ?"
+            chk_params.append(priority.upper())
+
+        if building_type and building_type != 'all':
+            chk_query += " AND (applicable_building_types = 'all' OR applicable_building_types LIKE ?)"
+            chk_params.append(f"%{building_type}%")
+
+        if search_q:
+            chk_query += " AND checkpoint_description LIKE ?"
+            chk_params.append(f"%{search_q}%")
+
+        chk_query += " ORDER BY display_order ASC"
+        cur.execute(chk_query, chk_params)
+        all_checkpoints = [dict(r) for r in cur.fetchall()]
+        conn.close()
+
+        # Group checkpoints by subgroup_id
+        checkpoints_by_subgroup: Dict[str, List[Dict[str, Any]]] = {}
+        for chk in all_checkpoints:
+            sub_id = chk['subgroup_id']
+            if sub_id not in checkpoints_by_subgroup:
+                checkpoints_by_subgroup[sub_id] = []
+            checkpoints_by_subgroup[sub_id].append(chk)
+
+        # Group subgroups by stage_id
+        subgroups_by_stage: Dict[str, List[Dict[str, Any]]] = {}
+        for sub in subgroups:
+            sub_id = sub['subgroup_id']
+            chks = checkpoints_by_subgroup.get(sub_id, [])
+            if chks or not search_q:
+                sub['checkpoints'] = chks
+                sub['checkpoint_count'] = len(chks)
+                sid = sub['stage_id']
+                if sid not in subgroups_by_stage:
+                    subgroups_by_stage[sid] = []
+                subgroups_by_stage[sid].append(sub)
+
+        # Assemble final stage hierarchy
         result = []
         for stg in stages:
             sid = stg['stage_id']
-            cur.execute("""
-                SELECT * FROM master_subgroups
-                WHERE stage_id = ?
-                ORDER BY display_order ASC
-            """, (sid,))
-            subgroups = [dict(r) for r in cur.fetchall()]
-
-            stg_subgroups = []
-            stg_checkpoint_count = 0
-
-            for sub in subgroups:
-                sub_id = sub['subgroup_id']
-                chk_query = "SELECT * FROM master_checkpoints WHERE subgroup_id = ?"
-                chk_params = [sub_id]
-
-                if priority and priority != 'all':
-                    chk_query += " AND priority = ?"
-                    chk_params.append(priority.upper())
-
-                if building_type and building_type != 'all':
-                    chk_query += " AND (applicable_building_types = 'all' OR applicable_building_types LIKE ?)"
-                    chk_params.append(f"%{building_type}%")
-
-                if search_q:
-                    chk_query += " AND checkpoint_description LIKE ?"
-                    chk_params.append(f"%{search_q}%")
-
-                chk_query += " ORDER BY display_order ASC"
-                cur.execute(chk_query, chk_params)
-                checkpoints = [dict(r) for r in cur.fetchall()]
-
-                if checkpoints or not search_q:
-                    sub['checkpoints'] = checkpoints
-                    sub['checkpoint_count'] = len(checkpoints)
-                    stg_checkpoint_count += len(checkpoints)
-                    stg_subgroups.append(sub)
-
-            if stg_subgroups or not search_q:
-                stg['subgroups'] = stg_subgroups
-                stg['total_checkpoints'] = stg_checkpoint_count
+            stg_subs = subgroups_by_stage.get(sid, [])
+            if stg_subs or not search_q:
+                stg['subgroups'] = stg_subs
+                stg['total_checkpoints'] = sum(s.get('checkpoint_count', 0) for s in stg_subs)
                 result.append(stg)
 
-        conn.close()
         return result
 
-    @staticmethod
     @staticmethod
     def get_next_inspection_id(project_id: str) -> str:
         """
