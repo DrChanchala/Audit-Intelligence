@@ -19,37 +19,48 @@ from app.core.config import get_settings
 
 
 class Row(dict):
-    """Dict row that also supports positional access (row[0])."""
+    """Dict row that also supports positional access (row[0], row[:2])."""
 
     def __init__(self, keys: Sequence[str], values: Sequence[Any]):
         super().__init__(zip(keys, values))
         self._values = tuple(values)
 
     def __getitem__(self, key):  # type: ignore[override]
-        if isinstance(key, int):
+        if isinstance(key, (int, slice)):
             return self._values[key]
         return super().__getitem__(key)
 
 
 def to_pg_sql(sql: str) -> str:
-    """Translate ``?`` -> ``%s`` and escape literal ``%`` outside quoted strings."""
+    """Translate ``?`` -> ``%s``, keep '?' and '%' inside string literals, and escape '%' outside literals."""
     out: list[str] = []
     quote: str | None = None
-    for ch in sql:
+    i = 0
+    n = len(sql)
+    while i < n:
+        ch = sql[i]
         if quote:
-            out.append("%%" if ch == "%" else ch)
-            if ch == quote:
-                quote = None
-            continue
-        if ch in ("'", '"'):
-            quote = ch
             out.append(ch)
-        elif ch == "?":
-            out.append("%s")
-        elif ch == "%":
-            out.append("%%")
+            if ch == "\\" and i + 1 < n:
+                i += 1
+                out.append(sql[i])
+            elif ch == quote:
+                if i + 1 < n and sql[i + 1] == quote:
+                    i += 1
+                    out.append(sql[i])
+                else:
+                    quote = None
         else:
-            out.append(ch)
+            if ch in ("'", '"'):
+                quote = ch
+                out.append(ch)
+            elif ch == "?":
+                out.append("%s")
+            elif ch == "%":
+                out.append("%%")
+            else:
+                out.append(ch)
+        i += 1
     return "".join(out)
 
 
