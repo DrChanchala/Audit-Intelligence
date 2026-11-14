@@ -826,6 +826,237 @@ html, body {
   }
 }
 
+/* ==========================================================================
+   LANDING PAGE, ADMIN GOVERNANCE & HIERARCHY STYLES
+   ========================================================================== */
+.landing-wrap {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 24px 80px;
+}
+.landing-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--mint-soft);
+  color: var(--mint-ink);
+  font-size: 11.5px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 6px 16px;
+  border-radius: 999px;
+  margin-bottom: 20px;
+  border: 1px solid rgba(32, 122, 97, 0.2);
+}
+.landing-hero {
+  text-align: center;
+  padding: 40px 16px 60px;
+  max-width: 900px;
+  margin: 0 auto;
+}
+.landing-hero h1 {
+  font-family: var(--font-display);
+  font-size: clamp(34px, 5vw, 54px);
+  font-weight: 400;
+  line-height: 1.15;
+  color: var(--ink);
+  letter-spacing: -0.02em;
+  margin-bottom: 20px;
+}
+.landing-hero p {
+  font-size: clamp(16px, 2vw, 19px);
+  line-height: 1.6;
+  color: var(--ink-2);
+  margin: 0 auto 32px;
+  max-width: 760px;
+}
+.landing-actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+.landing-btn-primary {
+  height: 50px;
+  padding: 0 28px;
+  background: var(--mint);
+  color: var(--on-mint);
+  font-size: 15px;
+  font-weight: 700;
+  border-radius: 12px;
+  border: none;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 8px 24px rgba(79, 184, 146, 0.35);
+  transition: all 0.2s cubic-bezier(.2, .8, .2, 1);
+}
+.landing-btn-primary:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.06);
+}
+.landing-btn-ghost {
+  height: 50px;
+  padding: 0 24px;
+  background: var(--surface);
+  color: var(--ink);
+  font-size: 15px;
+  font-weight: 700;
+  border-radius: 12px;
+  border: 1.5px solid var(--line);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.2s cubic-bezier(.2, .8, .2, 1);
+}
+.landing-btn-ghost:hover {
+  border-color: var(--mint);
+  background: var(--surface-2);
+}
+
+.landing-section {
+  margin-top: 60px;
+}
+.landing-section-head {
+  text-align: center;
+  margin-bottom: 36px;
+}
+.landing-section-head h2 {
+  font-family: var(--font-display);
+  font-size: 32px;
+  font-weight: 400;
+  color: var(--ink);
+  margin-bottom: 10px;
+}
+.landing-section-head p {
+  font-size: 15px;
+  color: var(--ink-2);
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.hierarchy-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+}
+.hierarchy-card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  padding: 28px;
+  position: relative;
+  transition: all 0.2s cubic-bezier(.2, .8, .2, 1);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.03);
+}
+.hierarchy-card:hover {
+  border-color: var(--mint);
+  transform: translateY(-3px);
+  box-shadow: 0 12px 30px rgba(0,0,0,0.07);
+}
+.hierarchy-step-num {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background: var(--mint-soft);
+  color: var(--mint-ink);
+  font-weight: 800;
+  font-size: 14px;
+  display: grid;
+  place-items: center;
+  margin-bottom: 16px;
+}
+
+/* User profile popover */
+.profile-popover {
+  position: absolute;
+  top: 56px;
+  right: 16px;
+  width: 290px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 16px;
+  box-shadow: 0 16px 40px rgba(0,0,0,0.12);
+  z-index: 1000;
+  animation: loginCardEnter 0.18s cubic-bezier(.2, .8, .2, 1);
+}
+
+/* Admin Console Styles */
+.admin-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+  margin-bottom: 24px;
+}
+.admin-stat-card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 18px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.admin-stat-val {
+  font-family: var(--font-num);
+  font-size: 32px;
+  font-weight: 800;
+  color: var(--ink);
+}
+.admin-stat-lbl {
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--ink-2);
+}
+
+.admin-members-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  overflow: hidden;
+}
+.admin-members-table th {
+  background: var(--surface-2);
+  padding: 12px 16px;
+  font-size: 11.5px;
+  font-weight: 800;
+  color: var(--ink-2);
+  text-align: left;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  border-bottom: 1px solid var(--line);
+}
+.admin-members-table td {
+  padding: 14px 16px;
+  font-size: 13.5px;
+  color: var(--ink);
+  border-bottom: 1px solid var(--line);
+  vertical-align: middle;
+}
+.admin-members-table tr:last-child td {
+  border-bottom: none;
+}
+.admin-members-table tr:hover td {
+  background: rgba(79, 184, 146, 0.03);
+}
+
+/* Landing Page Fullscreen Mode */
+body.landing-mode .side { display: none !important; }
+body.landing-mode .shell { margin-left: 0 !important; }
+body.landing-mode .bnav { display: none !important; }
+body.landing-mode .top .brand { display: flex !important; }
+body.landing-mode .top .crumbs { display: none !important; }
+body.landing-mode #backBtn { display: none !important; }
+body.landing-mode main { max-width: 1200px; margin: 0 auto; padding-top: 10px; }
 </style>
 
 <aside class="side" id="side" aria-label="Main navigation"></aside>
@@ -842,7 +1073,26 @@ html, body {
       <nav class="crumbs" id="crumbs" aria-label="Breadcrumb"></nav>
       <span class="spacer"></span>
       <div id="roleSwitcherSlot" style="display:flex; align-items:center; margin-right:8px"></div>
-      <button class="avatar" id="userAvatarBtn" type="button" data-soon="Profile and settings" aria-label="Priya Deshmukh, QC Lead">PD</button>
+      <div style="position:relative">
+        <button class="avatar" id="userAvatarBtn" type="button" onclick="toggleUserProfilePopover()" aria-label="User Profile and Settings">PD</button>
+        <div id="userProfilePopover" class="profile-popover" style="display:none">
+          <div style="display:flex; align-items:center; gap:10px; padding-bottom:12px; border-bottom:1px solid var(--line); margin-bottom:12px">
+            <div class="avatar" id="popoverAvatar" style="width:38px; height:38px; font-size:13px; background:var(--mint); color:var(--on-mint)">AR</div>
+            <div style="flex:1; min-width:0">
+              <strong id="popoverName" style="display:block; font-size:13.5px; color:var(--ink); white-space:nowrap; overflow:hidden; text-overflow:ellipsis">User</strong>
+              <span id="popoverRole" class="pill" style="font-size:9.5px; font-weight:800; background:var(--mint-soft); color:var(--mint-ink)">FIELD</span>
+            </div>
+          </div>
+          <div style="font-size:12px; color:var(--ink-2); display:flex; flex-direction:column; gap:5px; margin-bottom:14px">
+            <div>🏢 <span id="popoverOrg" style="font-weight:600; color:var(--ink)">Organization</span></div>
+            <div>✉️ <span id="popoverEmail" style="color:var(--ink)">email@company.com</span></div>
+            <div>🆔 <span id="popoverEmpId">EMP-1004</span></div>
+          </div>
+          <button type="button" class="btn ghost" onclick="logoutToGateway()" style="width:100%; height:34px; font-size:12px; font-weight:700; color:var(--crit); border-color:var(--crit-soft); display:flex; align-items:center; justify-content:center; gap:6px">
+            🚪 Sign Out
+          </button>
+        </div>
+      </div>
     </div>
   </header>
   <main><div class="view" id="view"></div></main>
@@ -1059,12 +1309,15 @@ const _isForceLogin = _urlParams.get('login') === '1' || _path === '/login';
 
 let _initialRole = null;
 if (!_isForceLogin && getStoredToken()) {
-  if (_urlParams.get('role') === 'engineer' || _path.includes('/engineer') || _urlParams.get('view') === 'engineer') {
+  const storedRole = localStorage.getItem('siteiq_logged_in_role');
+  if (_urlParams.get('role') === 'admin' || _path === '/admin') {
+    _initialRole = 'admin';
+  } else if (_urlParams.get('role') === 'engineer' || _path.includes('/engineer') || _urlParams.get('view') === 'engineer') {
     _initialRole = 'engineer';
   } else if (_urlParams.get('role') === 'lead' || _path === '/qc' || _path === '/qc-lead') {
     _initialRole = 'qc_lead';
   } else {
-    _initialRole = localStorage.getItem('siteiq_logged_in_role');
+    _initialRole = storedRole;
   }
 }
 
@@ -1095,8 +1348,8 @@ function getAuthenticatedOrg() {
 }
 
 const S = {
-  role: _initialRole, // 'qc_lead', 'engineer', or null (shows login gateway)
-  stack: [{ v: _initialRole === 'engineer' ? 'engineer_dashboard' : 'home' }],
+  role: _initialRole, // 'admin', 'qc_lead', 'engineer', or null (shows landing page)
+  stack: [{ v: _initialRole === 'admin' ? 'admin_dashboard' : _initialRole === 'engineer' ? 'engineer_dashboard' : _initialRole === 'qc_lead' ? 'home' : 'landing' }],
   ctx: null,
   cat: 'live',
   q: '',
@@ -1123,7 +1376,7 @@ const ORGANIZATIONS = [
 ];
 
 let LOGIN_GATEWAY_STATE = {
-  step: 'org', // 'org' | 'roles' | 'register'
+  step: 'org', // 'org' | 'roles' | 'register' | 'admin_register'
   selectedOrgId: '',
   selectedOrgName: ''
 };
@@ -1139,6 +1392,8 @@ function renderLoginGateway(step = 'org') {
     renderLoginStepOrg(container);
   } else if (LOGIN_GATEWAY_STATE.step === 'register') {
     renderLoginStepRegister(container);
+  } else if (LOGIN_GATEWAY_STATE.step === 'admin_register') {
+    renderLoginStepAdminRegister(container);
   } else {
     renderLoginStepRoles(container);
   }
@@ -1161,8 +1416,8 @@ function renderLoginStepOrg(container) {
       
       <div class="login-card" role="dialog" aria-modal="true" aria-labelledby="orgTitle">
         <!-- Back Button -->
-        <button type="button" class="login-back-btn" onclick="handleLoginBack()" aria-label="Go back">
-          ← Back
+        <button type="button" class="login-back-btn" onclick="handleLoginBack()" aria-label="Back to overview">
+          ← Back to Overview
         </button>
 
         <!-- Eyebrow -->
@@ -1189,7 +1444,7 @@ function renderLoginStepOrg(container) {
 
           <!-- Help Text -->
           <div class="login-help-text">
-            Need a new organization? <button type="button" class="login-link" onclick="goToAdminOrgSignIn()">Sign in as Admin</button>, then create it from the Organizations module.
+            Need a new organization? <button type="button" class="login-link" onclick="openAdminOrgSignUp()">Sign up as Admin</button> to create your enterprise workspace.
           </div>
         </div>
 
@@ -1366,6 +1621,89 @@ function renderLoginStepRegister(container) {
   `;
 }
 
+// STEP 4: REGISTER ENTERPRISE ORGANIZATION & MASTER ADMIN
+function renderLoginStepAdminRegister(container) {
+  container.innerHTML = `
+    <div class="login-gateway-backdrop">
+      <div class="login-isometric-bg" aria-hidden="true"></div>
+
+      <div class="login-card" role="dialog" aria-modal="true" aria-labelledby="adminRegTitle" style="max-width:580px">
+        <!-- Back Button -->
+        <button type="button" class="login-back-btn" onclick="handleLoginBack()" aria-label="Back to overview">
+          ← Back to Overview
+        </button>
+
+        <div class="login-eyebrow">ENTERPRISE ONBOARDING</div>
+        <h1 id="adminRegTitle" class="login-title" style="margin-bottom:8px">Register Organization</h1>
+        <p class="login-desc" style="margin-bottom:20px">
+          Register your developer entity and create your Master Administrator account:
+        </p>
+
+        <form id="adminOrgForm" onsubmit="handleAdminOrgSubmit(event)" style="display:flex; flex-direction:column; gap:13px">
+          <div id="adminRegErrorBox" style="display:none; padding:10px 12px; border-radius:8px; background:var(--crit-soft); color:var(--crit); font-size:12.5px; font-weight:700"></div>
+
+          <div style="display:grid; grid-template-columns:1.5fr 1fr; gap:10px">
+            <div>
+              <label style="display:block; font-size:12px; font-weight:700; color:var(--ink); margin-bottom:4px">Organization Name *</label>
+              <input type="text" id="adminOrgName" required placeholder="e.g. Apex Infra Projects Ltd" style="width:100%; height:42px; padding:0 12px; border-radius:10px; border:1px solid var(--line); font-size:13.5px; background:var(--surface)">
+            </div>
+            <div>
+              <label style="display:block; font-size:12px; font-weight:700; color:var(--ink); margin-bottom:4px">Org Code (Optional)</label>
+              <input type="text" id="adminOrgCode" placeholder="e.g. APEX" style="width:100%; height:42px; padding:0 12px; border-radius:10px; border:1px solid var(--line); font-size:13.5px; background:var(--surface)">
+            </div>
+          </div>
+
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px">
+            <div>
+              <label style="display:block; font-size:12px; font-weight:700; color:var(--ink); margin-bottom:4px">Industry</label>
+              <select id="adminOrgIndustry" style="width:100%; height:42px; padding:0 10px; border-radius:10px; border:1px solid var(--line); font-size:13px; background:var(--surface)">
+                <option value="Commercial & Luxury Residential" selected>Commercial & Residential</option>
+                <option value="Industrial Logistics & PEB">Industrial & Logistics</option>
+                <option value="Highways & Telecom Infrastructure">Infrastructure & Telecom</option>
+                <option value="General Civil Contracting">General Civil Contracting</option>
+              </select>
+            </div>
+            <div>
+              <label style="display:block; font-size:12px; font-weight:700; color:var(--ink); margin-bottom:4px">City / Head Office</label>
+              <input type="text" id="adminOrgCity" placeholder="e.g. Mumbai, Maharashtra" style="width:100%; height:42px; padding:0 12px; border-radius:10px; border:1px solid var(--line); font-size:13.5px; background:var(--surface)">
+            </div>
+          </div>
+
+          <div style="border-top:1px solid var(--line); padding-top:12px; margin-top:2px">
+            <strong style="display:block; font-size:13px; color:var(--ink); margin-bottom:10px">Master Administrator Credentials:</strong>
+            
+            <div style="display:flex; flex-direction:column; gap:10px">
+              <div>
+                <label style="display:block; font-size:12px; font-weight:700; color:var(--ink); margin-bottom:4px">Administrator Full Name *</label>
+                <input type="text" id="adminFullName" required placeholder="e.g. Sunil Mehra" style="width:100%; height:42px; padding:0 12px; border-radius:10px; border:1px solid var(--line); font-size:13.5px; background:var(--surface)">
+              </div>
+
+              <div>
+                <label style="display:block; font-size:12px; font-weight:700; color:var(--ink); margin-bottom:4px">Corporate Email Address *</label>
+                <input type="email" id="adminEmail" required placeholder="admin@company.com" style="width:100%; height:42px; padding:0 12px; border-radius:10px; border:1px solid var(--line); font-size:13.5px; background:var(--surface)">
+              </div>
+
+              <div>
+                <label style="display:block; font-size:12px; font-weight:700; color:var(--ink); margin-bottom:4px">Password (min 6 characters) *</label>
+                <input type="password" id="adminPassword" required minlength="6" placeholder="Set a secure master password" style="width:100%; height:42px; padding:0 12px; border-radius:10px; border:1px solid var(--line); font-size:13.5px; background:var(--surface)">
+              </div>
+            </div>
+          </div>
+
+          <button type="submit" id="adminRegSubmitBtn" class="login-continue-btn" style="background:var(--mint); color:var(--on-mint); cursor:pointer; margin-top:10px">
+            Register Organization & Launch Console →
+          </button>
+        </form>
+
+        <div style="padding-top:14px; border-top:1px solid var(--line); margin-top:16px; display:flex; justify-content:space-between; align-items:center; font-size:11.5px; color:var(--ink-3)">
+          <span>Enterprise Multi-Tenant Isolation</span>
+          <span>ISO 9001:2015 & NBC 2016</span>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
 function quickFillCredentials(email, password) {
   const emailEl = $('loginEmailInput');
   const passEl = $('loginPasswordInput');
@@ -1437,9 +1775,13 @@ async function handleRealLoginSubmit(ev) {
       } else {
         render();
       }
+    } else if (data.user.role === 'admin') {
+      S.stack = [{ v: 'admin_dashboard' }];
+      if (window.history && window.history.pushState) window.history.pushState(null, '', '/admin');
+      render();
     } else {
       S.stack = [{ v: 'home' }];
-      if (window.history && window.history.pushState) window.history.pushState(null, '', '/');
+      if (window.history && window.history.pushState) window.history.pushState(null, '', '/qc');
       render();
     }
   } catch(err) {
@@ -1523,9 +1865,13 @@ async function handleRealRegisterSubmit(ev) {
       } else {
         render();
       }
+    } else if (data.user.role === 'admin') {
+      S.stack = [{ v: 'admin_dashboard' }];
+      if (window.history && window.history.pushState) window.history.pushState(null, '', '/admin');
+      render();
     } else {
       S.stack = [{ v: 'home' }];
-      if (window.history && window.history.pushState) window.history.pushState(null, '', '/');
+      if (window.history && window.history.pushState) window.history.pushState(null, '', '/qc');
       render();
     }
   } catch(err) {
@@ -1571,18 +1917,85 @@ function handleLoginOrgContinue() {
   renderLoginGateway('roles');
 }
 
-function goToAdminOrgSignIn() {
-  LOGIN_GATEWAY_STATE.selectedOrgId = 'org-admin';
-  LOGIN_GATEWAY_STATE.selectedOrgName = 'SiteIQ Platform Master Admin';
-  loginAs('admin');
+function openAdminOrgSignUp() {
+  renderLoginGateway('admin_register');
+}
+
+async function handleAdminOrgSubmit(ev) {
+  ev.preventDefault();
+  const orgName = $('adminOrgName')?.value.trim();
+  const orgCode = $('adminOrgCode')?.value.trim() || undefined;
+  const industry = $('adminOrgIndustry')?.value;
+  const city = $('adminOrgCity')?.value.trim() || undefined;
+  const adminName = $('adminFullName')?.value.trim();
+  const email = $('adminEmail')?.value.trim();
+  const password = $('adminPassword')?.value;
+
+  const errBox = $('adminRegErrorBox');
+  const submitBtn = $('adminRegSubmitBtn');
+  if (errBox) errBox.style.display = 'none';
+  if (submitBtn) {
+    submitBtn.disabled = true;
+    submitBtn.innerHTML = '<span class="spinner"></span> Creating enterprise tenant...';
+  }
+
+  try {
+    const res = await fetch('/api/auth/register-org-admin', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        org_name: orgName,
+        org_code: orgCode,
+        industry: industry,
+        address: city,
+        admin_name: adminName,
+        admin_email: email,
+        admin_password: password
+      })
+    });
+
+    const data = await res.json();
+    if (!res.ok || data.status !== 'success') {
+      throw new Error(data.detail || 'Failed to register organization.');
+    }
+
+    localStorage.setItem('siteiq_jwt_token', data.access_token);
+    localStorage.setItem('siteiq_user_profile', JSON.stringify(data.user));
+    localStorage.setItem('siteiq_user_org', JSON.stringify(data.organization));
+    localStorage.setItem('siteiq_logged_in_role', 'admin');
+
+    ORGANIZATIONS.unshift({
+      id: data.organization.id,
+      name: data.organization.name,
+      desc: data.organization.industry || 'Enterprise Developer'
+    });
+
+    S.role = 'admin';
+    closeLoginGateway();
+    if (typeof toast === 'function') {
+      toast(`Welcome, ${adminName}! ${orgName} registered successfully.`);
+    }
+
+    S.stack = [{ v: 'admin_dashboard' }];
+    if (window.history && window.history.pushState) window.history.pushState(null, '', '/admin');
+    render();
+  } catch(err) {
+    if (errBox) {
+      errBox.textContent = err.message;
+      errBox.style.display = 'block';
+    }
+    if (submitBtn) {
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Register Organization & Launch Console →';
+    }
+  }
 }
 
 function handleLoginBack() {
-  if (S.role) {
-    closeLoginGateway();
-  } else {
-    // If not logged in, inform user
-    if (typeof toast === 'function') toast("Please select an organization to sign in.");
+  closeLoginGateway();
+  if (!S.role) {
+    S.stack = [{ v: 'landing' }];
+    render();
   }
 }
 
@@ -1617,10 +2030,13 @@ function loginAs(role, engineerId = 'EMP-1004') {
     } else {
       render();
     }
+  } else if (role === 'admin') {
+    S.stack = [{ v: 'admin_dashboard' }];
+    if (window.history && window.history.pushState) window.history.pushState(null, '', '/admin');
+    render();
   } else {
-    // Both qc_lead and admin launch primary project console
     S.stack = [{ v: 'home' }];
-    if (window.history && window.history.pushState) window.history.pushState(null, '', '/');
+    if (window.history && window.history.pushState) window.history.pushState(null, '', '/qc');
     render();
   }
 }
@@ -1633,8 +2049,12 @@ function logoutToGateway() {
     localStorage.removeItem('siteiq_user_profile');
     localStorage.removeItem('siteiq_user_org');
   } catch (e) {}
-  if (window.history && window.history.pushState) window.history.pushState(null, '', '/login');
-  renderLoginGateway('org');
+  const popover = $('userProfilePopover');
+  if (popover) popover.style.display = 'none';
+  closeLoginGateway();
+  S.stack = [{ v: 'landing' }];
+  if (window.history && window.history.pushState) window.history.pushState(null, '', '/');
+  render();
 }
 
 window.loginAs = loginAs;
@@ -2121,93 +2541,180 @@ VIEWS.list = e => {
   return `<section class="lh"><div class="eyebrow">${head}</div><h1>${MODS[mod]}</h1></section>${chip}${body}`;
 };
 
-/* ---------- chrome ---------- */
+/* ---------- chrome & layout ---------- */
 function label(e){
+  if (!e) return '';
+  if (e.v === 'landing') return 'SiteIQ Quality Platform';
+  if (e.v === 'admin_dashboard') return 'Administration Console';
   if (e.v === 'home') return 'My projects';
-  if (e.v === 'list') return MODS[e.mod];
+  if (e.v === 'list') return MODS[e.mod] || 'List';
   if (e.v === 'project') return byId(e.id)?.name || 'Project';
   if (e.v === 'approval') return find('approvals', e.id)?.x.kind || 'Approval';
   if (e.v === 'engineer_dashboard') return 'My Inspections (Field Workspace)';
   if (e.v === 'inspection_execution') return `Inspection Execution · ${e.id}`;
-  return e.id;
+  return e.id || '';
 }
+
 function navItems(){
   return [['home','home',0,false],['inspections','ins',P.reduce((a,p) => a + (p.ins || []).filter(i => i.status === 'Required').length,0),false],['ncs','nc',critOpen().length,true],['approvals','ap',allApprovals().length,false]];
 }
+
+function toggleUserProfilePopover() {
+  const popover = $('userProfilePopover');
+  if (!popover) return;
+  const isShown = popover.style.display === 'block';
+  if (isShown) {
+    popover.style.display = 'none';
+  } else {
+    const user = getAuthenticatedUser();
+    const org = getAuthenticatedOrg();
+    const isEng = S.role === 'engineer';
+    const isAdmin = S.role === 'admin';
+    const name = user?.full_name || (isEng ? (typeof ENGINEER_WORKSPACE !== 'undefined' ? ENGINEER_WORKSPACE.activeEngineerName : 'Anjali Rao') : isAdmin ? 'Administrator' : 'Priya Deshmukh');
+    const role = isAdmin ? 'SYSTEM ADMIN' : isEng ? 'FIELD ENGINEER' : 'QC LEAD';
+    const orgName = org?.name || 'Purvanchal Group';
+    const email = user?.email || (isEng ? 'anjali.rao@purvanchal.com' : isAdmin ? 'admin@purvanchal.com' : 'priya.deshmukh@purvanchal.com');
+    const empId = user?.employee_id || (isEng ? (typeof ENGINEER_WORKSPACE !== 'undefined' ? ENGINEER_WORKSPACE.activeEngineerId : 'EMP-1004') : isAdmin ? 'ADM-001' : 'EMP-1001');
+    const initials = name.split(' ').map(n=>n[0]).join('').slice(0,2).toUpperCase();
+
+    if ($('popoverAvatar')) $('popoverAvatar').textContent = initials;
+    if ($('popoverName')) $('popoverName').textContent = name;
+    if ($('popoverRole')) $('popoverRole').textContent = role;
+    if ($('popoverOrg')) $('popoverOrg').textContent = orgName;
+    if ($('popoverEmail')) $('popoverEmail').textContent = email;
+    if ($('popoverEmpId')) $('popoverEmpId').textContent = empId;
+
+    popover.style.display = 'block';
+  }
+}
+
+// Close popover when clicking outside
+document.addEventListener('click', ev => {
+  const popover = $('userProfilePopover');
+  if (popover && popover.style.display === 'block') {
+    if (!ev.target.closest('#userAvatarBtn') && !ev.target.closest('#userProfilePopover')) {
+      popover.style.display = 'none';
+    }
+  }
+});
+
 function renderChrome(){
-  const e = cur(), root = S.stack[0], mod = root.v === 'home' ? 'home' : root.mod, deep = S.stack.length > 1;
+  const e = cur() || { v: 'landing' };
+  const root = S.stack[0] || { v: 'landing' };
+  const mod = root.v === 'home' ? 'home' : root.mod;
+  const deep = S.stack.length > 1;
+  const isLanding = e.v === 'landing';
+  const isAdmin = S.role === 'admin' || e.v === 'admin_dashboard';
   const isEng = e.v === 'engineer_dashboard' || e.v === 'inspection_execution' || S.role === 'engineer';
 
-  $('backBtn').hidden = !deep;
-  $('brand').hidden = deep;
-  $('tt').hidden = !deep;
-  if (deep){ const pid = projOf(e); $('ttC').textContent = e.v === 'project' ? byId(e.id)?.code : pid ? byId(pid)?.name : ''; $('ttT').textContent = label(e); }
-  $('crumbs').innerHTML = S.stack.map((s,i) => i < S.stack.length - 1 ? `<button type="button" data-crumb="${i}">${esc(label(s))}</button><span aria-hidden="true">›</span>` : `<span aria-current="page">${esc(label(s))}</span>`).join('');
+  if (isLanding) {
+    document.body.classList.add('landing-mode');
+  } else {
+    document.body.classList.remove('landing-mode');
+  }
 
-  const activeEngName = typeof ENGINEER_WORKSPACE !== 'undefined' ? ENGINEER_WORKSPACE.activeEngineerName : 'Anjali Rao';
-  const activeEngId = typeof ENGINEER_WORKSPACE !== 'undefined' ? ENGINEER_WORKSPACE.activeEngineerId : 'EMP-1004';
-  const engInitials = activeEngName.split(' ').map(n=>n[0]).join('').slice(0,2);
+  $('backBtn').hidden = !deep || isLanding;
+  $('brand').hidden = deep && !isLanding;
+  $('tt').hidden = !deep || isLanding;
+  if (deep && !isLanding){
+    const pid = projOf(e);
+    $('ttC').textContent = e.v === 'project' ? byId(e.id)?.code : pid ? byId(pid)?.name : '';
+    $('ttT').textContent = label(e);
+  }
+  $('crumbs').innerHTML = isLanding ? '' : S.stack.map((s,i) => i < S.stack.length - 1 ? `<button type="button" data-crumb="${i}">${esc(label(s))}</button><span aria-hidden="true">›</span>` : `<span aria-current="page">${esc(label(s))}</span>`).join('');
 
-  // Update top bar branding
+  const authUser = getAuthenticatedUser();
+  const authOrg = getAuthenticatedOrg();
+  const activeEngName = typeof ENGINEER_WORKSPACE !== 'undefined' ? ENGINEER_WORKSPACE.activeEngineerName : (authUser?.full_name || 'Anjali Rao');
+  const activeEngId = typeof ENGINEER_WORKSPACE !== 'undefined' ? ENGINEER_WORKSPACE.activeEngineerId : (authUser?.employee_id || 'EMP-1004');
+  const engInitials = activeEngName.split(' ').map(n=>n[0]).join('').slice(0,2).toUpperCase();
+  const adminName = authUser?.full_name || 'Administrator';
+  const leadName = authUser?.full_name || 'Priya Deshmukh';
+
+  // Branding
   const brandEl = $('brand');
   if (brandEl) {
-    if (isEng) {
+    if (isLanding) {
+      brandEl.innerHTML = `<span class="logo-chip" aria-label="SiteIQ Platform"><b></b><span>SiteIQ<br>Platform</span></span><span class="wordmark">Audit Intelligence</span><span class="live-badge" style="background:var(--mint); color:var(--on-mint)">ENTERPRISE</span>`;
+    } else if (isAdmin) {
+      brandEl.innerHTML = `<span class="logo-chip" aria-label="SiteIQ Platform"><b></b><span>SiteIQ<br>Admin</span></span><span class="wordmark">${esc(authOrg?.name || 'Audit Intelligence')}</span><span class="live-badge" style="background:var(--mint); color:var(--on-mint)">ADMIN</span>`;
+    } else if (isEng) {
       brandEl.innerHTML = `<span class="logo-chip" aria-label="SiteIQ Field Workspace" style="background:var(--mint); color:var(--on-mint)"><b></b><span>SiteIQ<br>Field Portal</span></span><span class="wordmark">Inspection Workspace</span><span class="live-badge" style="background:var(--mint); color:var(--on-mint); font-weight:800">ENGINEER</span>`;
     } else {
-      brandEl.innerHTML = `<span class="logo-chip" aria-label="SiteIQ Platform"><b></b><span>SiteIQ<br>Audit Intelligence</span></span><span class="wordmark">Audit Intelligence</span><span class="live-badge" title="Connected to FastAPI backend">QC LEAD</span>`;
+      brandEl.innerHTML = `<span class="logo-chip" aria-label="SiteIQ Platform"><b></b><span>SiteIQ<br>Audit Intelligence</span></span><span class="wordmark">${esc(authOrg?.name || 'Audit Intelligence')}</span><span class="live-badge" title="Connected to FastAPI backend">QC LEAD</span>`;
     }
   }
 
-  // Update top bar avatar
+  // Avatar button
   const avatarBtn = $('userAvatarBtn');
   if (avatarBtn) {
-    if (isEng) {
-      avatarBtn.textContent = engInitials;
-      avatarBtn.style.background = 'var(--mint)';
-      avatarBtn.style.color = 'var(--on-mint)';
-      avatarBtn.setAttribute('aria-label', `${activeEngName}, Inspection Engineer (${activeEngId})`);
+    if (isLanding || !S.role) {
+      avatarBtn.style.display = 'none';
     } else {
-      avatarBtn.textContent = 'PD';
-      avatarBtn.style.background = '';
-      avatarBtn.style.color = '';
-      avatarBtn.setAttribute('aria-label', 'Priya Deshmukh, QC Lead');
+      avatarBtn.style.display = 'inline-flex';
+      if (isAdmin) {
+        avatarBtn.textContent = (adminName.slice(0,2)).toUpperCase();
+        avatarBtn.style.background = '';
+        avatarBtn.style.color = '';
+        avatarBtn.setAttribute('aria-label', `${adminName}, System Administrator`);
+      } else if (isEng) {
+        avatarBtn.textContent = engInitials;
+        avatarBtn.style.background = 'var(--mint)';
+        avatarBtn.style.color = 'var(--on-mint)';
+        avatarBtn.setAttribute('aria-label', `${activeEngName}, Inspection Engineer (${activeEngId})`);
+      } else {
+        avatarBtn.textContent = (leadName.slice(0,2)).toUpperCase();
+        avatarBtn.style.background = '';
+        avatarBtn.style.color = '';
+        avatarBtn.setAttribute('aria-label', `${leadName}, QC Lead`);
+      }
     }
   }
 
-  // Top bar role session badge & Switch Role button
+  // Top Bar Identity Slot (Strictly NO switch role buttons)
   const roleSlot = $('roleSwitcherSlot');
   if (roleSlot) {
-    if (isEng) {
+    if (isLanding || !S.role) {
       roleSlot.innerHTML = `
         <div style="display:flex; align-items:center; gap:8px">
-          <div style="display:flex; align-items:center; gap:6px; background:rgba(0,0,0,0.25); border:1px solid rgba(255,255,255,0.18); border-radius:20px; padding:2px 10px 2px 4px">
-            <span style="font-size:10px; font-weight:800; background:var(--mint); color:var(--on-mint); padding:2px 7px; border-radius:12px; text-transform:uppercase">FIELD</span>
-            <span class="role-badge-name" style="font-size:12px; font-weight:700; color:var(--band-ink)">${esc(activeEngName)}</span>
-          </div>
-          <button type="button" onclick="logoutToGateway()" class="btn ghost switch-role-btn" style="height:28px; padding:0 10px; font-size:11.5px; font-weight:700; border-radius:14px; border:1px solid rgba(255,255,255,0.25); color:var(--band-ink-2); display:flex; align-items:center; gap:4px" title="Switch User Role">
-            <span>🚪</span> <span class="switch-role-text">Switch Role</span>
+          <button type="button" class="btn ghost" onclick="renderLoginGateway('org')" style="height:32px; padding:0 12px; font-size:12px; font-weight:700; border-radius:16px; border:1px solid var(--line); color:var(--ink)">
+            Sign In
           </button>
+          <button type="button" class="btn primary" onclick="renderLoginGateway('admin_register')" style="height:32px; padding:0 14px; font-size:12px; font-weight:700; border-radius:16px; background:var(--mint); color:var(--on-mint)">
+            Admin Setup →
+          </button>
+        </div>
+      `;
+    } else if (isAdmin) {
+      roleSlot.innerHTML = `
+        <div style="display:flex; align-items:center; gap:6px; background:rgba(0,0,0,0.25); border:1px solid rgba(255,255,255,0.18); border-radius:20px; padding:2px 10px 2px 4px">
+          <span style="font-size:10px; font-weight:800; background:var(--mint); color:var(--on-mint); padding:2px 7px; border-radius:12px; text-transform:uppercase">ADMIN</span>
+          <span class="role-badge-name" style="font-size:12px; font-weight:700; color:var(--band-ink)">${esc(adminName)}</span>
+        </div>
+      `;
+    } else if (isEng) {
+      roleSlot.innerHTML = `
+        <div style="display:flex; align-items:center; gap:6px; background:rgba(0,0,0,0.25); border:1px solid rgba(255,255,255,0.18); border-radius:20px; padding:2px 10px 2px 4px">
+          <span style="font-size:10px; font-weight:800; background:var(--mint); color:var(--on-mint); padding:2px 7px; border-radius:12px; text-transform:uppercase">FIELD</span>
+          <span class="role-badge-name" style="font-size:12px; font-weight:700; color:var(--band-ink)">${esc(activeEngName)}</span>
         </div>
       `;
     } else {
       roleSlot.innerHTML = `
-        <div style="display:flex; align-items:center; gap:8px">
-          <div style="display:flex; align-items:center; gap:6px; background:rgba(0,0,0,0.25); border:1px solid rgba(255,255,255,0.18); border-radius:20px; padding:2px 10px 2px 4px">
-            <span style="font-size:10px; font-weight:800; background:var(--mint); color:var(--on-mint); padding:2px 7px; border-radius:12px; text-transform:uppercase">LEAD</span>
-            <span class="role-badge-name" style="font-size:12px; font-weight:700; color:var(--band-ink)">${esc(getAuthenticatedUser()?.full_name || 'QC Lead')}</span>
-          </div>
-          <button type="button" onclick="logoutToGateway()" class="btn ghost switch-role-btn" style="height:28px; padding:0 10px; font-size:11.5px; font-weight:700; border-radius:14px; border:1px solid rgba(255,255,255,0.25); color:var(--band-ink-2); display:flex; align-items:center; gap:4px" title="Switch User Role">
-            <span>🚪</span> <span class="switch-role-text">Switch Role</span>
-          </button>
+        <div style="display:flex; align-items:center; gap:6px; background:rgba(0,0,0,0.25); border:1px solid rgba(255,255,255,0.18); border-radius:20px; padding:2px 10px 2px 4px">
+          <span style="font-size:10px; font-weight:800; background:var(--mint); color:var(--on-mint); padding:2px 7px; border-radius:12px; text-transform:uppercase">LEAD</span>
+          <span class="role-badge-name" style="font-size:12px; font-weight:700; color:var(--band-ink)">${esc(leadName)}</span>
         </div>
       `;
     }
   }
 
-  // Distinct Bottom Navigation for Engineer vs QC Lead
+  // Bottom Navigation
   const bnavEl = $('bnav');
   if (bnavEl) {
-    if (isEng) {
+    if (isLanding) {
+      bnavEl.innerHTML = '';
+    } else if (isEng) {
       const ef = typeof ENGINEER_WORKSPACE !== 'undefined' ? (ENGINEER_WORKSPACE.filterStatus || 'all') : 'all';
       bnavEl.innerHTML = `
         <button class="bn" type="button" onclick="setEngineerStatusFilter('all'); if (cur().v !== 'engineer_dashboard') push('engineer_dashboard');" ${cur().v === 'engineer_dashboard' && ef === 'all' ? 'aria-current="page"' : ''}>
@@ -2223,15 +2730,74 @@ function renderChrome(){
           <span class="bn-ic">${ico('ap',21)}</span>Submitted
         </button>
       `;
+    } else if (isAdmin) {
+      bnavEl.innerHTML = `
+        <button class="bn" type="button" onclick="if (cur().v !== 'admin_dashboard') push('admin_dashboard');" ${cur().v === 'admin_dashboard' ? 'aria-current="page"' : ''}>
+          <span class="bn-ic">${ico('home',21)}</span>Admin
+        </button>
+        <button class="bn" type="button" data-nav="home" ${mod === 'home' && cur().v !== 'admin_dashboard' ? 'aria-current="page"' : ''}>
+          <span class="bn-ic">${ico('search',21)}</span>Projects
+        </button>
+        <button class="bn" type="button" data-nav="inspections" ${mod === 'inspections' ? 'aria-current="page"' : ''}>
+          <span class="bn-ic">${ico('ins',21)}</span>Inspections
+        </button>
+        <button class="bn" type="button" data-nav="ncs" ${mod === 'ncs' ? 'aria-current="page"' : ''}>
+          <span class="bn-ic">${ico('nc',21)}</span>NCs
+        </button>
+      `;
     } else {
       bnavEl.innerHTML = navItems().map(([k,ic,c,hot]) => `<button class="bn" type="button" data-nav="${k}" ${mod === k ? 'aria-current="page"' : ''}><span class="bn-ic">${ico(ic,21)}</span>${MODS[k]}${c && k !== 'inspections' ? `<span class="cnt num">${c}</span>` : ''}</button>`).join('');
     }
   }
 
-  // Distinct Sidebar Navigation for Engineer vs QC Lead
+  // Sidebar Navigation (Strictly NO switch console or switch role buttons)
   const sideEl = $('side');
   if (sideEl) {
-    if (isEng) {
+    if (isLanding) {
+      sideEl.innerHTML = '';
+    } else if (isAdmin) {
+      sideEl.innerHTML = `
+        <div class="brand">
+          <span class="logo-chip" aria-label="SiteIQ Platform"><b></b><span>SiteIQ<br>Admin</span></span>
+          <span class="wordmark">Management</span>
+        </div>
+        
+        <div style="padding:0 4px; margin-bottom:8px">
+          <div style="font-size:10px; font-weight:800; color:var(--mint); text-transform:uppercase; letter-spacing:0.08em; padding:0 8px 6px">Admin Console</div>
+          <nav class="snav">
+            <button class="sn" type="button" onclick="if (cur().v !== 'admin_dashboard') push('admin_dashboard');" ${cur().v === 'admin_dashboard' ? 'aria-current="page"' : ''}>
+              ${ico('home',19)}Organization Overview
+            </button>
+            <button class="sn" type="button" onclick="openProvisionMemberModal()" style="color:var(--mint)">
+              ${ico('ins',19)}+ Provision Team Member
+            </button>
+          </nav>
+        </div>
+
+        <div style="padding:0 4px; margin-bottom:8px">
+          <div style="font-size:10px; font-weight:800; color:var(--mint-ink); text-transform:uppercase; letter-spacing:0.08em; padding:0 8px 4px">Project Operations</div>
+          <nav class="snav">
+            <button class="sn" type="button" data-nav="home" ${mod === 'home' && cur().v !== 'admin_dashboard' ? 'aria-current="page"' : ''}>
+              ${ico('search',19)}Projects & Audits
+            </button>
+            <button class="sn" type="button" data-nav="inspections" ${mod === 'inspections' ? 'aria-current="page"' : ''}>
+              ${ico('ins',19)}All Inspections
+            </button>
+            <button class="sn" type="button" data-nav="ncs" ${mod === 'ncs' ? 'aria-current="page"' : ''}>
+              ${ico('nc',19)}Non-Conformities
+            </button>
+            <button class="sn" type="button" data-nav="approvals" ${mod === 'approvals' ? 'aria-current="page"' : ''}>
+              ${ico('ap',19)}Approvals
+            </button>
+          </nav>
+        </div>
+
+        <div class="suser" style="margin-top:auto">
+          <span class="avatar">${(adminName.slice(0,2)).toUpperCase()}</span>
+          <span><b>${esc(adminName)}</b><small>Administrator · ${esc(authOrg?.code || 'ORG')}</small></span>
+        </div>
+      `;
+    } else if (isEng) {
       const ef = typeof ENGINEER_WORKSPACE !== 'undefined' ? (ENGINEER_WORKSPACE.filterStatus || 'all') : 'all';
       sideEl.innerHTML = `
         <div class="brand">
@@ -2260,13 +2826,6 @@ function renderChrome(){
           </nav>
         </div>
 
-        <div style="padding:8px 4px 0; border-top:1px solid var(--line); margin-top:4px">
-          <div style="font-size:10px; font-weight:800; color:var(--ink-3); text-transform:uppercase; letter-spacing:0.08em; padding:0 8px 4px">Switch Console</div>
-          <button class="sn" type="button" onclick="switchToRole('qc_lead')" style="width:100%; text-align:left; color:var(--ink-2)">
-            ${ico('home',19)}Switch to QC Lead Console
-          </button>
-        </div>
-
         <div class="suser" style="margin-top:auto">
           <span class="avatar" style="background:var(--mint); color:var(--on-mint)">${engInitials}</span>
           <span><b>${esc(activeEngName)}</b><small>Inspection Engineer · ${esc(activeEngId)}</small></span>
@@ -2282,18 +2841,11 @@ function renderChrome(){
           <nav class="snav">${navItems().map(([k,ic,c,hot]) => `<button class="sn" type="button" data-nav="${k}" ${mod === k ? 'aria-current="page"' : ''}>${ico(ic,19)}${MODS[k]}${c ? `<span class="cnt num ${hot ? 'hot' : ''}">${c}</span>` : ''}</button>`).join('')}</nav>
         </div>
 
-        <div style="padding:8px 4px 0; border-top:1px solid var(--line); margin-top:4px">
-          <div style="font-size:10px; font-weight:800; color:var(--mint-ink); text-transform:uppercase; letter-spacing:0.08em; padding:0 8px 4px">Field Workspace</div>
-          <button class="sn" type="button" onclick="switchToRole('engineer')" style="width:100%; text-align:left">
-            ${ico('ins',19)}Inspection Engineer Workspace
-          </button>
-        </div>
-
         ${ctx ? `<div class="sctx"><span class="lbl">Current project</span><button class="nm" type="button" data-go="project:${ctx.id}">${esc(ctx.name)}</button><button class="clr" type="button" data-ctx-clear>Clear project filter</button></div>` : ''}
         
         <div class="suser" style="margin-top:auto">
-          <span class="avatar">PD</span>
-          <span><b>Priya Deshmukh</b><small>QC Lead · EMP-1001</small></span>
+          <span class="avatar">${(leadName.slice(0,2)).toUpperCase()}</span>
+          <span><b>${esc(leadName)}</b><small>QC Lead · EMP-1001</small></span>
         </div>
       `;
     }
@@ -2301,31 +2853,551 @@ function renderChrome(){
 }
 
 // Views Registration
+VIEWS.landing = () => {
+  return `
+    <div class="landing-wrap">
+      <!-- Hero Section -->
+      <section class="landing-hero">
+        <div class="landing-badge">
+          <span>🏛️ Enterprise Quality Governance</span>
+          <span>•</span>
+          <span>ISO 9001:2015 & NBC 2016 Compliant</span>
+        </div>
+        <h1>Autonomous Quality Governance<br>from Organization to Field</h1>
+        <p>
+          SiteIQ bridges executive leadership, QC managers, and site inspection engineers with real-time multi-tenant data isolation, 4,000+ trade checkpoints, and automated Gemini AI compliance surveillance.
+        </p>
+        <div class="landing-actions">
+          <button type="button" class="landing-btn-primary" onclick="renderLoginGateway('admin_register')">
+            <span>🛡️</span> Get Started as Administrator
+          </button>
+          <button type="button" class="landing-btn-ghost" onclick="renderLoginGateway('org')">
+            <span>🏢</span> Sign In to Organization →
+          </button>
+        </div>
+      </section>
+
+      <!-- 3-Tier Organizational Hierarchy Section -->
+      <section class="landing-section">
+        <div class="landing-section-head">
+          <div style="font-size:12px; font-weight:800; color:var(--mint); letter-spacing:0.1em; text-transform:uppercase; margin-bottom:8px">Organizational Architecture</div>
+          <h2>General Enterprise Hierarchy</h2>
+          <p>
+            SiteIQ is structured around an authoritative chain of quality governance. Every level possesses dedicated operational boundaries and zero-trust permissions:
+          </p>
+        </div>
+
+        <div class="hierarchy-grid">
+          <!-- Step 1: Organization & Admins -->
+          <div class="hierarchy-card">
+            <div style="display:flex; justify-content:space-between; align-items:flex-start">
+              <div class="hierarchy-step-num">1</div>
+              <span class="pill" style="background:var(--mint-soft); color:var(--mint-ink); font-weight:800; font-size:11px">ADMINISTRATION</span>
+            </div>
+            <h3 style="font-size:20px; font-weight:700; margin:12px 0 8px; color:var(--ink)">Organization & Master Admin</h3>
+            <p style="font-size:13.5px; color:var(--ink-2); line-height:1.6; margin-bottom:16px">
+              Enterprise leadership creates the organizational entity, defines multi-project portfolios, and provisions credentials for QC Leads and Field Engineers under strict database isolation.
+            </p>
+            <ul style="font-size:13px; color:var(--ink); padding-left:18px; line-height:1.8; margin-bottom:20px">
+              <li>Enterprise registration & tenant provisioning</li>
+              <li>Role assignment: Admins, QC Leads, Engineers</li>
+              <li>Enterprise-wide compliance & audit standards</li>
+            </ul>
+            <button type="button" class="btn ghost" onclick="renderLoginGateway('admin_register')" style="width:100%; height:38px; font-weight:700; font-size:12.5px; border-color:var(--line)">
+              Register New Organization →
+            </button>
+          </div>
+
+          <!-- Step 2: QC Leads -->
+          <div class="hierarchy-card">
+            <div style="display:flex; justify-content:space-between; align-items:flex-start">
+              <div class="hierarchy-step-num">2</div>
+              <span class="pill" style="background:var(--major-soft); color:var(--major); font-weight:800; font-size:11px">QUALITY LEADERSHIP</span>
+            </div>
+            <h3 style="font-size:20px; font-weight:700; margin:12px 0 8px; color:var(--ink)">QC Leads & Quality Managers</h3>
+            <p style="font-size:13.5px; color:var(--ink-2); line-height:1.6; margin-bottom:16px">
+              Quality Managers allocate staged inspection packages across trades (Excavation, RCC, Waterproofing, Finishes), set SLAs, review submissions, and manage non-conformity lifecycle.
+            </p>
+            <ul style="font-size:13px; color:var(--ink); padding-left:18px; line-height:1.8; margin-bottom:20px">
+              <li>Stage inspection wizard & checkpoint scoping</li>
+              <li>Engineer workload balancing & SLA scheduling</li>
+              <li>Digital verification, sign-off & AI compliance dossiers</li>
+            </ul>
+            <button type="button" class="btn ghost" onclick="renderLoginGateway('org')" style="width:100%; height:38px; font-weight:700; font-size:12.5px; border-color:var(--line)">
+              QC Lead Workspace Access →
+            </button>
+          </div>
+
+          <!-- Step 3: Inspection Engineers -->
+          <div class="hierarchy-card">
+            <div style="display:flex; justify-content:space-between; align-items:flex-start">
+              <div class="hierarchy-step-num">3</div>
+              <span class="pill" style="background:var(--mint-soft); color:var(--mint-ink); font-weight:800; font-size:11px">FIELD EXECUTION</span>
+            </div>
+            <h3 style="font-size:20px; font-weight:700; margin:12px 0 8px; color:var(--ink)">Field Inspection Engineers</h3>
+            <p style="font-size:13.5px; color:var(--ink-2); line-height:1.6; margin-bottom:16px">
+              Engineers execute digital checklists on site via mobile or tablet, capture timestamped photo evidence, record observations (OK / NC / NA), and submit for sign-off.
+            </p>
+            <ul style="font-size:13px; color:var(--ink); padding-left:18px; line-height:1.8; margin-bottom:20px">
+              <li>Assigned inspection queue with real-time status</li>
+              <li>4,000+ trade checkpoints with pass/fail tolerances</li>
+              <li>Instant defect logging & photographic evidence capture</li>
+            </ul>
+            <button type="button" class="btn ghost" onclick="renderLoginGateway('org')" style="width:100%; height:38px; font-weight:700; font-size:12.5px; border-color:var(--line)">
+              Field Inspector Sign In →
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Platform Capabilities Highlights -->
+      <section class="landing-section" style="background:var(--surface); border:1px solid var(--line); border-radius:24px; padding:36px; margin-top:50px">
+        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(240px, 1fr)); gap:24px">
+          <div>
+            <div style="font-size:24px; margin-bottom:8px">🔐</div>
+            <h4 style="font-size:16px; font-weight:700; color:var(--ink); margin-bottom:6px">Strict Multi-Tenant Isolation</h4>
+            <p style="font-size:13px; color:var(--ink-2); line-height:1.5">
+              Every organization has isolated data partitioning. Organizations cannot view each other's projects, inspections, or non-conformities.
+            </p>
+          </div>
+          <div>
+            <div style="font-size:24px; margin-bottom:8px">📋</div>
+            <h4 style="font-size:16px; font-weight:700; color:var(--ink); margin-bottom:6px">4,000+ Master Checkpoints</h4>
+            <p style="font-size:13px; color:var(--ink-2); line-height:1.5">
+              Curated checklists across Site Prep, Foundation, RCC Structural, Finishing, MEP, and Waterproofing according to IS and NBC codes.
+            </p>
+          </div>
+          <div>
+            <div style="font-size:24px; margin-bottom:8px">🤖</div>
+            <h4 style="font-size:16px; font-weight:700; color:var(--ink); margin-bottom:6px">AI Compliance Dossiers</h4>
+            <p style="font-size:13px; color:var(--ink-2); line-height:1.5">
+              Automated 6-section quality dossiers generated by Google Gemini with root-cause analysis, risk matrices, and preventive actions.
+            </p>
+          </div>
+          <div>
+            <div style="font-size:24px; margin-bottom:8px">⚡</div>
+            <h4 style="font-size:16px; font-weight:700; color:var(--ink); margin-bottom:6px">Real-Time Field Collaboration</h4>
+            <p style="font-size:13px; color:var(--ink-2); line-height:1.5">
+              Instant synchronization between field execution and QC Lead approval queues with offline-resilient local saving.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Bottom Call to Action -->
+      <section style="text-align:center; padding:60px 16px 20px; margin-top:20px">
+        <h3 style="font-size:24px; font-weight:700; color:var(--ink); margin-bottom:12px">Ready to standardize quality on your projects?</h3>
+        <p style="font-size:14px; color:var(--ink-2); margin-bottom:24px">Provision your enterprise organization or authenticate with your corporate credentials.</p>
+        <div style="display:flex; justify-content:center; gap:12px; flex-wrap:wrap">
+          <button type="button" class="btn primary" onclick="renderLoginGateway('admin_register')" style="height:44px; padding:0 24px; font-size:14px; font-weight:700; background:var(--mint); color:var(--on-mint)">
+            Create New Enterprise Tenant
+          </button>
+          <button type="button" class="btn ghost" onclick="renderLoginGateway('org')" style="height:44px; padding:0 20px; font-size:14px; font-weight:700">
+            Sign In with Existing Account
+          </button>
+        </div>
+      </section>
+    </div>
+  `;
+};
+
+VIEWS.admin_dashboard = () => {
+  const user = getAuthenticatedUser();
+  const org = getAuthenticatedOrg() || { name: 'Enterprise Developer', code: 'ORG', industry: 'Construction & Real Estate' };
+  const adminName = user?.full_name || 'Administrator';
+  const orgName = org.name || 'Enterprise Developer';
+
+  if (!window.ADMIN_CONSOLE_DATA) {
+    window.ADMIN_CONSOLE_DATA = { members: [], loading: true, activeTab: 'all' };
+    fetchAdminMembers();
+  }
+
+  const members = window.ADMIN_CONSOLE_DATA.members || [];
+  const leadsCount = members.filter(m => m.role === 'qc_lead').length;
+  const engCount = members.filter(m => m.role === 'engineer').length;
+  const adminCount = members.filter(m => m.role === 'admin').length;
+  const totalCount = members.length;
+  const projectsCount = P.length;
+
+  const currentTab = window.ADMIN_CONSOLE_DATA.activeTab || 'all';
+  const filteredMembers = currentTab === 'all' 
+    ? members 
+    : members.filter(m => m.role === currentTab);
+
+  return `
+    <div style="display:flex; flex-direction:column; gap:20px">
+      <!-- Admin Header -->
+      <section class="hello" style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:14px; border-bottom:1px solid var(--line); padding-bottom:18px">
+        <div>
+          <div class="eyebrow" style="display:flex; align-items:center; gap:6px">
+            <span>Enterprise Organization Administration</span>
+            <span style="background:var(--mint-soft); color:var(--mint-ink); font-size:10.5px; font-weight:800; padding:1px 6px; border-radius:4px">MASTER ADMIN</span>
+          </div>
+          <h1 style="font-size:28px; font-weight:400; margin-top:4px">
+            🏢 <strong style="font-weight:700; color:var(--ink)">${esc(orgName)}</strong>
+          </h1>
+          <p class="muted" style="font-size:13px; margin-top:2px">
+            Master Administrator: <strong>${esc(adminName)}</strong> · Code: <span class="code">${esc(org.code || 'ORG')}</span> · ${esc(org.industry || 'Real Estate & Infrastructure')}
+          </p>
+        </div>
+
+        <div style="display:flex; gap:10px; align-items:center; flex-wrap:wrap">
+          <button type="button" class="btn ghost" onclick="push('home')" style="height:38px; padding:0 14px; font-size:12.5px; font-weight:700; border-color:var(--line)">
+            🏗️ View Quality Projects Console →
+          </button>
+          <button type="button" class="btn primary" onclick="openProvisionMemberModal()" style="height:38px; padding:0 16px; font-size:12.5px; font-weight:700; background:var(--mint); color:var(--on-mint)">
+            + Provision Team Member
+          </button>
+        </div>
+      </section>
+
+      <!-- Hierarchy Notice -->
+      <div style="background:var(--surface-2); border:1px solid var(--line); border-radius:12px; padding:12px 16px; display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap">
+        <div style="display:flex; align-items:center; gap:8px">
+          <span style="font-size:16px">🏛️</span>
+          <span style="font-size:13px; color:var(--ink)">
+            <strong>Organizational Hierarchy Active:</strong> <span style="color:var(--mint-ink); font-weight:700">${esc(orgName)}</span> → Admins (You) → QC Leads → Field Inspection Engineers
+          </span>
+        </div>
+        <div style="font-size:11.5px; color:var(--ink-2)">
+          Strict Tenant Scoping: All users added here will only have access to ${esc(orgName)}.
+        </div>
+      </div>
+
+      <!-- Stats Grid -->
+      <div class="admin-stats-grid">
+        <div class="admin-stat-card">
+          <div class="admin-stat-val">${totalCount}</div>
+          <div class="admin-stat-lbl">Total Provisioned Members</div>
+        </div>
+        <div class="admin-stat-card">
+          <div class="admin-stat-val" style="color:var(--major)">${leadsCount}</div>
+          <div class="admin-stat-lbl">QC Leads / Managers</div>
+        </div>
+        <div class="admin-stat-card">
+          <div class="admin-stat-val" style="color:var(--mint)">${engCount}</div>
+          <div class="admin-stat-lbl">Field Inspection Engineers</div>
+        </div>
+        <div class="admin-stat-card">
+          <div class="admin-stat-val">${projectsCount}</div>
+          <div class="admin-stat-lbl">Active Construction Projects</div>
+        </div>
+      </div>
+
+      <!-- Members Directory -->
+      <section style="display:flex; flex-direction:column; gap:12px">
+        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px">
+          <div class="chips" role="tablist" style="margin-bottom:0">
+            <button class="chip ${currentTab === 'all' ? 'active' : ''}" type="button" onclick="setAdminTab('all')" style="${currentTab === 'all' ? 'background:var(--mint); color:var(--on-mint);' : ''}">
+              All Members (${totalCount})
+            </button>
+            <button class="chip ${currentTab === 'qc_lead' ? 'active' : ''}" type="button" onclick="setAdminTab('qc_lead')" style="${currentTab === 'qc_lead' ? 'background:var(--mint); color:var(--on-mint);' : ''}">
+              QC Leads (${leadsCount})
+            </button>
+            <button class="chip ${currentTab === 'engineer' ? 'active' : ''}" type="button" onclick="setAdminTab('engineer')" style="${currentTab === 'engineer' ? 'background:var(--mint); color:var(--on-mint);' : ''}">
+              Field Engineers (${engCount})
+            </button>
+            <button class="chip ${currentTab === 'admin' ? 'active' : ''}" type="button" onclick="setAdminTab('admin')" style="${currentTab === 'admin' ? 'background:var(--mint); color:var(--on-mint);' : ''}">
+              Administrators (${adminCount})
+            </button>
+          </div>
+
+          <button type="button" class="btn ghost" onclick="fetchAdminMembers()" style="height:32px; padding:0 10px; font-size:11.5px; border-color:var(--line)">
+            🔄 Refresh Directory
+          </button>
+        </div>
+
+        <!-- Table -->
+        <div style="overflow-x:auto">
+          <table class="admin-members-table">
+            <thead>
+              <tr>
+                <th>Member</th>
+                <th>Role in Hierarchy</th>
+                <th>Corporate Email</th>
+                <th>Employee ID</th>
+                <th>Specialization / Trade</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${filteredMembers.length > 0 ? filteredMembers.map(m => {
+                const isL = m.role === 'qc_lead';
+                const isE = m.role === 'engineer';
+                const isA = m.role === 'admin';
+                const roleBadge = isA 
+                  ? `<span class="pill" style="background:rgba(0,0,0,0.1); color:var(--ink); font-weight:800; font-size:10.5px">ADMIN</span>`
+                  : isL 
+                  ? `<span class="pill" style="background:var(--major-soft); color:var(--major); font-weight:800; font-size:10.5px">QC LEAD</span>`
+                  : `<span class="pill" style="background:var(--mint-soft); color:var(--mint-ink); font-weight:800; font-size:10.5px">INSPECTION ENGINEER</span>`;
+                const initials = (m.avatar_initials || m.full_name.slice(0,2)).toUpperCase();
+                return `
+                  <tr>
+                    <td>
+                      <div style="display:flex; align-items:center; gap:10px">
+                        <div class="avatar" style="width:32px; height:32px; font-size:12px; ${isE ? 'background:var(--mint); color:var(--on-mint)' : ''}">${initials}</div>
+                        <div>
+                          <strong style="color:var(--ink)">${esc(m.full_name)}</strong>
+                        </div>
+                      </div>
+                    </td>
+                    <td>${roleBadge}</td>
+                    <td><span style="font-family:monospace; font-size:12.5px; color:var(--ink-2)">${esc(m.email)}</span></td>
+                    <td><span class="code" style="font-size:11.5px">${esc(m.employee_id || '—')}</span></td>
+                    <td><span style="font-size:12.5px; color:var(--ink-2)">${esc(m.specialization || 'General Civil')}</span></td>
+                    <td><span class="stt good" style="font-size:10.5px">Active</span></td>
+                  </tr>
+                `;
+              }).join('') : `
+                <tr>
+                  <td colspan="6" style="text-align:center; padding:36px; color:var(--ink-3)">
+                    No members found in this category. Click <strong>+ Provision Team Member</strong> to add team members.
+                  </td>
+                </tr>
+              `}
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </div>
+  `;
+};
+
+async function fetchAdminMembers() {
+  try {
+    const user = getAuthenticatedUser();
+    const org = getAuthenticatedOrg();
+    const orgId = org?.id || user?.org_id;
+    const token = getStoredToken();
+    const headers = token ? { 'Authorization': `Bearer ${token}` } : {};
+    const url = orgId ? `/api/auth/users?org_id=${encodeURIComponent(orgId)}` : '/api/auth/users';
+    const res = await fetch(url, { headers });
+    if (res.ok) {
+      const data = await res.json();
+      if (!window.ADMIN_CONSOLE_DATA) window.ADMIN_CONSOLE_DATA = {};
+      window.ADMIN_CONSOLE_DATA.members = data.users || [];
+      window.ADMIN_CONSOLE_DATA.loading = false;
+      if (cur()?.v === 'admin_dashboard') render(false);
+    }
+  } catch(e) {
+    console.warn('Error loading admin members:', e);
+  }
+}
+
+function setAdminTab(tab) {
+  if (!window.ADMIN_CONSOLE_DATA) window.ADMIN_CONSOLE_DATA = {};
+  window.ADMIN_CONSOLE_DATA.activeTab = tab;
+  render(false);
+}
+
+function openProvisionMemberModal() {
+  const org = getAuthenticatedOrg();
+  const orgName = org?.name || 'Current Organization';
+
+  const modalHtml = `
+    <div id="provisionModalBackdrop" style="position:fixed; inset:0; background:rgba(0,0,0,0.6); backdrop-filter:blur(6px); z-index:9999; display:grid; place-items:center; padding:16px; animation:loginCardEnter 0.2s ease">
+      <div style="background:var(--surface); border:1px solid var(--line); border-radius:20px; width:100%; max-width:520px; padding:28px; box-shadow:0 24px 60px rgba(0,0,0,0.25)">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px">
+          <div>
+            <div style="font-size:11px; font-weight:800; color:var(--mint); text-transform:uppercase; letter-spacing:0.08em">Provision Team Member</div>
+            <h2 style="font-size:20px; font-weight:700; color:var(--ink); margin:2px 0 0">Add Member to ${esc(orgName)}</h2>
+          </div>
+          <button type="button" class="icon-btn" onclick="closeProvisionMemberModal()" aria-label="Close modal">✕</button>
+        </div>
+
+        <p style="font-size:12.5px; color:var(--ink-2); margin-bottom:18px">
+          Add a QC Lead or Field Inspection Engineer. The provisioned user will be restricted to ${esc(orgName)}.
+        </p>
+
+        <form id="provisionMemberForm" onsubmit="handleProvisionMemberSubmit(event)" style="display:flex; flex-direction:column; gap:12px">
+          <div id="provisionErrorBox" style="display:none; padding:10px 12px; border-radius:8px; background:var(--crit-soft); color:var(--crit); font-size:12px; font-weight:700"></div>
+
+          <div>
+            <label style="display:block; font-size:12px; font-weight:700; color:var(--ink); margin-bottom:4px">Full Name *</label>
+            <input type="text" id="provFullName" required placeholder="e.g. Rahul Sharma" style="width:100%; height:40px; padding:0 12px; border-radius:8px; border:1px solid var(--line); font-size:13px; background:var(--surface)">
+          </div>
+
+          <div>
+            <label style="display:block; font-size:12px; font-weight:700; color:var(--ink); margin-bottom:4px">Corporate Email *</label>
+            <input type="email" id="provEmail" required placeholder="rahul@company.com" style="width:100%; height:40px; padding:0 12px; border-radius:8px; border:1px solid var(--line); font-size:13px; background:var(--surface)">
+          </div>
+
+          <div>
+            <label style="display:block; font-size:12px; font-weight:700; color:var(--ink); margin-bottom:4px">Temporary Password *</label>
+            <input type="password" id="provPassword" required minlength="6" placeholder="Min 6 characters" style="width:100%; height:40px; padding:0 12px; border-radius:8px; border:1px solid var(--line); font-size:13px; background:var(--surface)">
+          </div>
+
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px">
+            <div>
+              <label style="display:block; font-size:12px; font-weight:700; color:var(--ink); margin-bottom:4px">Role in Hierarchy *</label>
+              <select id="provRole" style="width:100%; height:40px; padding:0 10px; border-radius:8px; border:1px solid var(--line); font-size:12.5px; background:var(--surface)">
+                <option value="engineer" selected>QC Inspection Engineer</option>
+                <option value="qc_lead">QC Lead / Quality Manager</option>
+              </select>
+            </div>
+            <div>
+              <label style="display:block; font-size:12px; font-weight:700; color:var(--ink); margin-bottom:4px">Employee ID</label>
+              <input type="text" id="provEmpId" placeholder="e.g. EMP-1015" style="width:100%; height:40px; padding:0 12px; border-radius:8px; border:1px solid var(--line); font-size:12.5px; background:var(--surface)">
+            </div>
+          </div>
+
+          <div>
+            <label style="display:block; font-size:12px; font-weight:700; color:var(--ink); margin-bottom:4px">Specialization / Trade</label>
+            <input type="text" id="provSpec" placeholder="e.g. RCC & Structural, Finishes, Façade" style="width:100%; height:40px; padding:0 12px; border-radius:8px; border:1px solid var(--line); font-size:12.5px; background:var(--surface)">
+          </div>
+
+          <div style="display:flex; justify-content:flex-end; gap:8px; margin-top:8px">
+            <button type="button" class="btn ghost" onclick="closeProvisionMemberModal()" style="height:38px; padding:0 14px; font-size:12.5px">Cancel</button>
+            <button type="submit" id="provSubmitBtn" class="btn primary" style="height:38px; padding:0 18px; font-size:12.5px; font-weight:700; background:var(--mint); color:var(--on-mint)">
+              Provision Member →
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  `;
+
+  let existing = $('provisionModalContainer');
+  if (!existing) {
+    existing = document.createElement('div');
+    existing.id = 'provisionModalContainer';
+    document.body.appendChild(existing);
+  }
+  existing.innerHTML = modalHtml;
+}
+
+function closeProvisionMemberModal() {
+  const container = $('provisionModalContainer');
+  if (container) container.innerHTML = '';
+}
+
+async function handleProvisionMemberSubmit(ev) {
+  ev.preventDefault();
+  const fullName = $('provFullName')?.value.trim();
+  const email = $('provEmail')?.value.trim();
+  const password = $('provPassword')?.value;
+  const role = $('provRole')?.value || 'engineer';
+  const empId = $('provEmpId')?.value.trim() || undefined;
+  const spec = $('provSpec')?.value.trim() || undefined;
+  const errBox = $('provisionErrorBox');
+  const submitBtn = $('provSubmitBtn');
+
+  const org = getAuthenticatedOrg();
+  const user = getAuthenticatedUser();
+  const orgId = org?.id || user?.org_id;
+
+  if (errBox) errBox.style.display = 'none';
+  if (submitBtn) {
+    submitBtn.disabled = true;
+    submitBtn.innerHTML = '<span class="spinner"></span> Provisioning...';
+  }
+
+  try {
+    const token = getStoredToken();
+    const res = await fetch('/api/auth/users', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        ...(token ? { 'Authorization': `Bearer ${token}` } : {})
+      },
+      body: JSON.stringify({
+        org_id: orgId,
+        email: email,
+        password: password,
+        full_name: fullName,
+        role: role,
+        employee_id: empId,
+        specialization: spec
+      })
+    });
+
+    const data = await res.json();
+    if (!res.ok || data.status !== 'success') {
+      throw new Error(data.detail || 'Failed to provision member.');
+    }
+
+    closeProvisionMemberModal();
+    if (typeof toast === 'function') {
+      toast(`Successfully provisioned ${fullName} (${role === 'qc_lead' ? 'QC Lead' : 'Field Engineer'})`);
+    }
+
+    await fetchAdminMembers();
+    if (typeof loadOrganizationEngineers === 'function') {
+      await loadOrganizationEngineers();
+    }
+  } catch(err) {
+    if (errBox) {
+      errBox.textContent = err.message;
+      errBox.style.display = 'block';
+    }
+    if (submitBtn) {
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Provision Member →';
+    }
+  }
+}
+
 VIEWS.engineer_dashboard = e => typeof renderEngineerWorkspaceView === 'function' ? renderEngineerWorkspaceView() : '<div style="padding:40px; text-align:center">Loading Engineer Workspace...</div>';
 VIEWS.inspection_execution = e => typeof renderInspectionExecutionView === 'function' ? renderInspectionExecutionView(e.id) : '<div style="padding:40px; text-align:center">Loading Execution View...</div>';
 
 function render(anim = true){
-  const e = cur(), v = $('view');
-  v.innerHTML = VIEWS[e.v](e);
+  const e = cur() || { v: 'landing' };
+  const v = $('view');
+  if (VIEWS[e.v]) {
+    v.innerHTML = VIEWS[e.v](e);
+  } else {
+    v.innerHTML = VIEWS.landing();
+  }
   if (e.v === 'home') renderCards();
   if (anim){ v.classList.remove('enter'); void v.offsetWidth; v.classList.add('enter'); }
   renderChrome();
 }
 
-/* ---------- navigation ---------- */
-function push(spec){
+/* ---------- unified navigation & back buttons ---------- */
+function push(spec, pushHistory = true){
   const [v, id, tab] = spec.split(':');
-  cur().y = window.scrollY;
+  if (cur()) cur().y = window.scrollY;
   const e = v === 'project' ? {v, id, tab: tab || 'overview'} : {v, id};
   if (v === 'project'){ S.pNcClosed = false; S.pIns = 'all'; }
   S.stack.push(e);
   const pid = projOf(e); if (pid) S.ctx = pid;
+  if (pushHistory && window.history && window.history.pushState) {
+    window.history.pushState({ stackLen: S.stack.length, spec }, '', '#' + spec);
+  }
   render(); window.scrollTo(0,0);
 }
+
 function back(){
-  if (S.stack.length < 2) return;
-  S.stack.pop(); render(); window.scrollTo(0, cur().y || 0);
+  if (S.sheet) { closeSheet(); return; }
+  const provModal = $('provisionModalContainer');
+  if (provModal && provModal.innerHTML.trim()) { closeProvisionMemberModal(); return; }
+  const loginGate = $('loginGatewayContainer');
+  if (loginGate && !loginGate.hidden) { handleLoginBack(); return; }
+
+  if (S.stack.length > 1) {
+    S.stack.pop();
+    render();
+    window.scrollTo(0, cur().y || 0);
+  } else {
+    if (!S.role && S.stack[0]?.v !== 'landing') {
+      S.stack = [{ v: 'landing' }];
+      render();
+    }
+  }
 }
+
+window.addEventListener('popstate', ev => {
+  if (S.sheet) { closeSheet(false); return; }
+  const provModal = $('provisionModalContainer');
+  if (provModal && provModal.innerHTML.trim()) { closeProvisionMemberModal(); return; }
+  const loginGate = $('loginGatewayContainer');
+  if (loginGate && !loginGate.hidden) { handleLoginBack(); return; }
+  if (S.stack.length > 1) {
+    S.stack.pop();
+    render(false);
+  }
+});
+
 function nav(mod){
   S.stack = [mod === 'home' ? {v:'home'} : {v:'list', mod}];
   render(); window.scrollTo(0,0);
@@ -2701,11 +3773,13 @@ grab.addEventListener('pointerup', endDrag); grab.addEventListener('pointercance
 
 syncFromBackend().then(() => {
   if (!S.role) {
-    renderLoginGateway();
+    if (_isForceLogin) renderLoginGateway('org');
   } else if (S.role === 'engineer') {
     if (typeof fetchEngineerDashboardData === 'function') {
       fetchEngineerDashboardData(_storedEngId).then(() => render(false));
     }
+  } else if (S.role === 'admin') {
+    fetchAdminMembers();
   }
   const urlParams = new URLSearchParams(window.location.search);
   const testState = urlParams.get('test_state');
@@ -2734,10 +3808,10 @@ syncFromBackend().then(() => {
     if (typeof openAllocationDetail === 'function') openAllocationDetail('ALC-0012-0002');
   }
 });
-if (!S.role) {
-  renderLoginGateway();
-} else {
-  render();
+
+render();
+if (_isForceLogin && !S.role) {
+  renderLoginGateway('org');
 }
 </script>
 

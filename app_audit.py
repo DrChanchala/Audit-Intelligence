@@ -55,6 +55,16 @@ class CreateOrgRequest(BaseModel):
     industry: Optional[str] = "Construction & Real Estate"
     address: Optional[str] = None
 
+class RegisterOrgAdminRequest(BaseModel):
+    org_name: str
+    org_code: Optional[str] = None
+    industry: Optional[str] = "Construction & Real Estate"
+    address: Optional[str] = None
+    admin_name: str
+    admin_email: str
+    admin_password: str
+    admin_phone: Optional[str] = None
+
 class CreateUserRequest(BaseModel):
     org_id: str
     email: str
@@ -277,15 +287,16 @@ def get_current_user_profile(user: Dict[str, Any] = Depends(get_current_user)):
     }
 
 @app.get("/api/auth/users")
-def list_org_users(role: Optional[str] = None, user: Dict[str, Any] = Depends(get_current_user)):
+def list_org_users(role: Optional[str] = None, org_id: Optional[str] = None, user: Dict[str, Any] = Depends(get_current_user)):
     conn = get_connection()
     cur = conn.cursor()
-    query = "SELECT id, org_id, email, full_name, role, employee_id, specialization, avatar_initials, phone, status FROM users WHERE status = 'active'"
+    query = "SELECT id, org_id, email, full_name, role, employee_id, specialization, avatar_initials, phone, status, created_at FROM users WHERE status = 'active'"
     params = []
 
-    if user.get("role") != "admin":
+    target_org = org_id or user.get("org_id")
+    if target_org:
         query += " AND org_id = ?"
-        params.append(user["org_id"])
+        params.append(target_org)
 
     if role:
         query += " AND role = ?"
@@ -293,9 +304,94 @@ def list_org_users(role: Optional[str] = None, user: Dict[str, Any] = Depends(ge
 
     query += " ORDER BY full_name ASC"
     cur.execute(query, params)
-    users = [dict(r) for r in cur.fetchall()]
+    raw_users = [dict(r) for r in cur.fetchall()]
     conn.close()
-    return {"status": "success", "users": users}
+    for u in raw_users:
+        if 'created_at' in u and u['created_at'] is not None:
+            u['created_at'] = str(u['created_at'])
+    return {"status": "success", "users": raw_users}
+
+@app.post("/api/auth/register-org-admin")
+def register_org_admin_endpoint(req: RegisterOrgAdminRequest):
+    """
+    Public endpoint to create a new Enterprise Organization and register
+    its Master Administrator following the hierarchy:
+    Organization -> Admins -> QC Leads -> Inspection Engineers.
+    """
+    org_name = req.org_name.strip()
+    admin_email = req.admin_email.strip().lower()
+    if not org_name:
+        raise HTTPException(status_code=400, detail="Organization name is required.")
+    if not admin_email or "@" not in admin_email:
+        raise HTTPException(status_code=400, detail="Valid administrator email is required.")
+    if len(req.admin_password) < 6:
+        raise HTTPException(status_code=400, detail="Password must be at least 6 characters.")
+
+    conn = get_connection()
+    cur = conn.cursor()
+
+    cur.execute("SELECT id FROM users WHERE email = ?", (admin_email,))
+    if cur.fetchone():
+        conn.close()
+        raise HTTPException(status_code=400, detail=f"User with email '{admin_email}' already exists.")
+
+    # Unique organization slug
+    clean_slug = "".join(c.lower() if c.isalnum() else "-" for c in org_name).strip("-")[:12]
+    org_id = f"org-{clean_slug}-{int(time.time()) % 1000}"
+    org_code = (req.org_code or clean_slug[:8]).upper()
+    domain = admin_email.split("@")[1] if "@" in admin_email else None
+
+    cur.execute("""
+        INSERT INTO organizations (id, name, code, domain, industry, address, status)
+        VALUES (?, ?, ?, ?, ?, ?, 'active')
+    """, (org_id, org_name, org_code, domain, req.industry, req.address))
+
+    admin_id = f"usr-adm-{int(time.time()) % 100000}"
+    hashed_pw = hash_password(req.admin_password)
+    parts = req.admin_name.strip().split()
+    initials = (parts[0][0] + (parts[1][0] if len(parts) > 1 else "")).upper() if parts else "AD"
+    emp_id = "ADM-001"
+
+    cur.execute("""
+        INSERT INTO users (id, org_id, email, password_hash, full_name, role, employee_id, specialization, avatar_initials, phone, status)
+        VALUES (?, ?, ?, ?, ?, 'admin', ?, 'Platform & Organization Administrator', ?, ?, 'active')
+    """, (admin_id, org_id, admin_email, hashed_pw, req.admin_name, emp_id, initials, req.admin_phone))
+
+    conn.commit()
+    conn.close()
+
+    token = create_access_token(
+        user_id=admin_id,
+        org_id=org_id,
+        role="admin",
+        email=admin_email,
+        full_name=req.admin_name,
+        employee_id=emp_id
+    )
+
+    return {
+        "status": "success",
+        "message": f"Organization '{org_name}' registered successfully with Master Administrator {req.admin_name}.",
+        "access_token": token,
+        "token_type": "bearer",
+        "user": {
+            "id": admin_id,
+            "email": admin_email,
+            "full_name": req.admin_name,
+            "role": "admin",
+            "employee_id": emp_id,
+            "org_id": org_id,
+            "avatar_initials": initials
+        },
+        "organization": {
+            "id": org_id,
+            "name": org_name,
+            "code": org_code,
+            "domain": domain,
+            "industry": req.industry,
+            "address": req.address
+        }
+    }
 
 @app.post("/api/auth/organizations")
 def create_organization_endpoint(req: CreateOrgRequest, user: Dict[str, Any] = Depends(get_current_user)):
@@ -1134,6 +1230,8 @@ if os.path.exists(static_dir):
 
 @app.get("/")
 @app.get("/login")
+@app.get("/admin")
+@app.get("/admin-dashboard")
 @app.get("/qc")
 @app.get("/qc-lead")
 @app.get("/engineer")

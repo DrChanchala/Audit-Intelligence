@@ -9,13 +9,35 @@ let MASTER_STAGES = [];
 let ALLOCATIONS_CACHE = {};
 
 // Authoritative Inspection Engineer Directory with Stable Identifiers
-const ENGINEER_ROSTER = [
+let ENGINEER_ROSTER = [
   { id: 'EMP-1004', name: 'Anjali Rao', role: 'QC Inspection Engineer', spec: 'Finishes & Waterproofing' },
   { id: 'EMP-1002', name: 'Rohit Kale', role: 'Senior QC Engineer', spec: 'RCC & Structural' },
   { id: 'EMP-1003', name: 'Vikram Singh', role: 'QC Inspection Engineer', spec: 'Steel & Telecom' },
   { id: 'EMP-1005', name: 'Meera Iyer', role: 'Senior Façade & MEP Engineer', spec: 'Façade & MEP' },
   { id: 'EMP-1006', name: 'Arjun Mehta', role: 'QC Inspection Engineer', spec: 'Industrial & PEB' }
 ];
+
+async function loadOrganizationEngineers() {
+  try {
+    const token = typeof localStorage !== 'undefined' ? localStorage.getItem('siteiq_jwt_token') : null;
+    const headers = token ? { 'Authorization': `Bearer ${token}` } : {};
+    const res = await fetch('/api/auth/users?role=engineer', { headers });
+    if (res.ok) {
+      const data = await res.json();
+      if (data && data.users && data.users.length > 0) {
+        ENGINEER_ROSTER = data.users.map(u => ({
+          id: u.employee_id || u.id,
+          name: u.full_name,
+          role: 'QC Inspection Engineer',
+          spec: u.specialization || 'General Civil'
+        }));
+      }
+    }
+  } catch(e) {
+    console.warn('Using default engineer roster:', e);
+  }
+}
+window.loadOrganizationEngineers = loadOrganizationEngineers;
 
 // ============================================================================
 // UNIFIED CREATE INSPECTION WORKFLOW (4 STEPS)
@@ -83,6 +105,9 @@ async function openCreateInspectionWizard(projectId, existingCode = null) {
   CREATE_INSP_WIZARD.step = 1;
   CREATE_INSP_WIZARD.isSubmitting = false;
   CREATE_INSP_WIZARD.isDraft = false;
+
+  // Refresh dynamic engineer roster for the active organization
+  loadOrganizationEngineers().catch(() => {});
 
   const p = typeof byId === 'function' ? byId(pid) : null;
   if (p) {
@@ -1238,6 +1263,17 @@ function handleEngineerSearchInput(query) {
   });
 }
 
+function returnToEngineerDashboard() {
+  if (typeof back === 'function' && typeof S !== 'undefined' && S.stack && S.stack.length > 1) {
+    back();
+  } else {
+    if (typeof S !== 'undefined') S.stack = [{ v: 'engineer_dashboard' }];
+    if (typeof render === 'function') render();
+    window.scrollTo(0, 0);
+  }
+}
+window.returnToEngineerDashboard = returnToEngineerDashboard;
+
 function openInspectionExecution(allocId) {
   ENGINEER_WORKSPACE.activeInspectionId = allocId;
   if (typeof push === 'function') {
@@ -1407,16 +1443,10 @@ function renderEngineerWorkspaceView() {
         </p>
       </div>
 
-      <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap">
-        <label style="font-size:12px; font-weight:600; color:var(--ink-2)">
-          Active Engineer:
-          <select onchange="switchActiveEngineer(this.value)" style="margin-left:4px; padding:6px 10px; border-radius:8px; border:1px solid var(--line); background:var(--surface); font-size:12.5px; font-weight:600">
-            ${engineerOptionsHtml}
-          </select>
-        </label>
-        <button class="btn ghost" type="button" onclick="push('home')" style="font-size:12px; padding:6px 12px">
-          Switch to QC Lead View
-        </button>
+      <div style="display:flex; align-items:center; gap:8px">
+        <span class="pill" style="background:var(--mint-soft); color:var(--mint-ink); font-size:11px; font-weight:700">
+          🔒 Authenticated Engineer Session
+        </span>
       </div>
     </section>
 
@@ -1704,7 +1734,7 @@ function renderInspectionExecutionView(allocId) {
     <div class="view-execution" style="display:flex; flex-direction:column; gap:16px">
       <!-- Top Navigation & Return -->
       <div style="display:flex; justify-content:space-between; align-items:center">
-        <button class="btn ghost" type="button" onclick="push('engineer_dashboard')" style="font-size:12.5px; font-weight:600">
+        <button class="btn ghost" type="button" onclick="returnToEngineerDashboard()" style="font-size:12.5px; font-weight:600">
           ← Back to My Inspections
         </button>
         <span class="code" style="font-size:12px; font-weight:700">${alloc.allocation_id}</span>
@@ -1767,7 +1797,7 @@ function renderInspectionExecutionView(allocId) {
               🚀 Submit Inspection
             </button>
           ` : `
-            <button class="btn primary" type="button" onclick="push('engineer_dashboard')" style="height:38px; font-weight:700; padding:0 18px">
+            <button class="btn primary" type="button" onclick="returnToEngineerDashboard()" style="height:38px; font-weight:700; padding:0 18px">
               Back to My Inspections
             </button>
           `}
