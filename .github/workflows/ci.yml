@@ -1,15 +1,30 @@
-name: SiteIQ CI / CD Verification
+name: SiteIQ Verification & Security CI
 
 on:
   push:
-    branches: [ main, develop ]
+    branches: [ main, develop, refactor/modular-architecture ]
   pull_request:
-    branches: [ main ]
+    branches: [ main, develop ]
 
 jobs:
   verify-and-test:
-    name: Build & Test Verification
+    name: Ruff, Pytest (SQLite & Postgres) & Container Build
     runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_USER: siteiq
+          POSTGRES_PASSWORD: siteiq_password
+          POSTGRES_DB: siteiq_test
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
 
     steps:
       - name: Check out repository
@@ -25,21 +40,27 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
-          pip install pytest httpx
+          pip install -r requirements-dev.txt
 
-      - name: Code Syntax & Integrity Check
+      - name: Ruff Lint & Syntax Check
         run: |
-          python -m py_compile app_audit.py database_audit.py allocation_service.py inspection_report_service.py migrate_sqlite_to_postgres.py
-          echo "All Python modules compiled successfully."
+          ruff check app tests
 
-      - name: Validate Database Migration Engine (Dry-Run)
+      - name: Pytest Suite on SQLite
+        env:
+          APP_ENV: development
+          SITEIQ_JWT_SECRET: test-super-secret-jwt-key-for-siteiq-testing-32chars!
         run: |
-          python migrate_sqlite_to_postgres.py --dry-run
+          pytest -q
 
-      - name: Verify Health Check & FastAPI Boot
+      - name: Pytest Suite on PostgreSQL
+        env:
+          APP_ENV: development
+          DATABASE_URL: postgresql://siteiq:siteiq_password@localhost:5432/siteiq_test
+          SITEIQ_JWT_SECRET: test-super-secret-jwt-key-for-siteiq-testing-32chars!
         run: |
-          python -c "from app_audit import app; assert app.title == 'Audit Intelligence API'; print('FastAPI application successfully loaded.')"
+          pytest -q
 
-      - name: Verify Dockerfile Syntax
+      - name: Build Docker Container
         run: |
-          docker build --dry-run -t siteiq-platform:test . || echo "Docker build syntax validated."
+          docker build -t siteiq-platform:test .
