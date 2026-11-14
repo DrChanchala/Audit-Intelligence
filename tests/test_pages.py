@@ -91,6 +91,16 @@ def test_admin_console_page_renders_html(admin_a_client: TestClient):
     assert "Team &amp; Provisioning" in content or "Team & Provisioning" in content
 
 
+def test_qc_console_page_renders_html(qc_a_client: TestClient):
+    """Assert QC lead console serves HTML with QC workspace template elements."""
+    resp = qc_a_client.get("/qc")
+    assert resp.status_code == 200
+    assert "text/html" in resp.headers.get("content-type", "")
+    content = resp.text
+    assert "QC Lead Workspace" in content
+    assert "Allocate Wizard" in content
+
+
 def test_static_asset_caching_policy(anon_client: TestClient):
     """Assert static files have no-cache without query param and immutable max-age with ?v=."""
     # Without version: no-cache

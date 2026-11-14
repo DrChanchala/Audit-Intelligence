@@ -75,12 +75,13 @@ def admin_page(request: Request, db: Session = Depends(get_db)):
 
 @router.get("/qc")
 @router.get("/qc-lead")
-def qc_page(request: Request):
-    # In Phase 5, /qc keeps the legacy SPA until Phase 6
+def qc_page(request: Request, db: Session = Depends(get_db)):
     guard = _guard(request, Role.QC_LEAD)
     if guard:
         return guard
-    return _serve_legacy_spa()
+    p = optional_principal(request)
+    user_ctx = _get_user_context(p, db)
+    return templates.TemplateResponse(request=request, name="qc.html", context={"user": user_ctx})
 
 
 @router.get("/engineer")

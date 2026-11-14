@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+
+{% block title %}SiteIQ — QC Lead Quality Governance Console{% endblock %}
+
+{% block content %}
+<div class="page-header">
+  <div>
+    <span class="eyebrow">Quality Operations</span>
+    <h1 class="page-title">QC Lead Workspace</h1>
+    <div class="page-subtitle">Quality inspection allocation, field oversight, defect verification & dossier approval</div>
+  </div>
+</div>
+
+<!-- Navigation Tabs -->
+<div class="tabs-nav" role="tablist">
+  <button type="button" class="tab-btn qc-tab-btn active" data-tab="overview" role="tab" aria-selected="true" aria-controls="panel-overview">
+    Overview & KPIs
+  </button>
+  <button type="button" class="tab-btn qc-tab-btn" data-tab="inspections" role="tab" aria-selected="false" aria-controls="panel-inspections">
+    Inspections Directory
+  </button>
+  <button type="button" class="tab-btn qc-tab-btn" data-tab="allocate" role="tab" aria-selected="false" aria-controls="panel-allocate">
+    + Allocate Wizard
+  </button>
+  <button type="button" class="tab-btn qc-tab-btn" data-tab="checklist" role="tab" aria-selected="false" aria-controls="panel-checklist">
+    Master Checklist
+  </button>
+  <button type="button" class="tab-btn qc-tab-btn" data-tab="ncs" role="tab" aria-selected="false" aria-controls="panel-ncs">
+    Defects (NCs)
+  </button>
+  <button type="button" class="tab-btn qc-tab-btn" data-tab="approvals" role="tab" aria-selected="false" aria-controls="panel-approvals">
+    Pending Approvals
+  </button>
+</div>
+
+<!-- Tab Panels Container -->
+<div id="qcPanelsContainer">
+  <div id="panel-overview" class="qc-tab-panel" role="tabpanel" aria-labelledby="tab-overview"></div>
+  <div id="panel-inspections" class="qc-tab-panel d-none" role="tabpanel" aria-labelledby="tab-inspections"></div>
+  <div id="panel-allocate" class="qc-tab-panel d-none" role="tabpanel" aria-labelledby="tab-allocate"></div>
+  <div id="panel-checklist" class="qc-tab-panel d-none" role="tabpanel" aria-labelledby="tab-checklist"></div>
+  <div id="panel-ncs" class="qc-tab-panel d-none" role="tabpanel" aria-labelledby="tab-ncs"></div>
+  <div id="panel-approvals" class="qc-tab-panel d-none" role="tabpanel" aria-labelledby="tab-approvals"></div>
+</div>
+
+<!-- Inspection Detail Side Sheet Drawer -->
+<div class="sheet-backdrop" id="inspectionDrawerBackdrop" aria-hidden="true">
+  <div class="sheet-drawer" role="dialog" aria-modal="true" aria-labelledby="drawerTitle">
+    <div class="sheet-header">
+      <h3 class="sheet-title" id="drawerTitle">Inspection Details</h3>
+      <button type="button" class="btn btn-ghost btn-sm" id="closeDrawerIconBtn" aria-label="Close drawer">✕</button>
+    </div>
+    <div class="sheet-body" id="drawerBody"></div>
+    <div class="sheet-footer" id="drawerFooter"></div>
+  </div>
+</div>
+
+<!-- Reassign Allocation Modal -->
+<div class="modal-backdrop" id="reassignModal" aria-hidden="true">
+  <div class="modal-box">
+    <div class="modal-header">
+      <h3 class="modal-title">Reassign Inspection <span id="reassignAllocId" class="num font-xs muted"></span></h3>
+      <button type="button" class="btn btn-ghost btn-sm" data-modal-close="reassignModal" aria-label="Close modal">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-group">
+        <label class="form-label" for="reassignEngineerSelect">New Inspection Engineer *</label>
+        <select id="reassignEngineerSelect" class="form-select"></select>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" data-modal-close="reassignModal">Cancel</button>
+      <button type="button" class="btn btn-primary" id="confirmReassignBtn">Confirm Reassignment</button>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="/static/vendor/purify.min.js?v={{ asset_version }}"></script>
+<script src="/static/vendor/marked.min.js?v={{ asset_version }}"></script>
+<script type="module" src="/static/js/qc/main.js?v={{ asset_version }}"></script>
+{% endblock %}
