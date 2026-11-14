@@ -4,6 +4,11 @@
  * and Inspection Engineer Workspace synchronization.
  */
 
+// Universal safe esc helper
+const esc = typeof window !== 'undefined' && typeof window.esc === 'function' 
+  ? window.esc 
+  : s => String(s || '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+
 // Master Checklist cache
 let MASTER_STAGES = [];
 let ALLOCATIONS_CACHE = {};
@@ -1145,7 +1150,9 @@ async function fetchEngineerDashboardData(engineerId) {
   }
 
   try {
-    const res = await fetch(`/api/engineer/${engId}/dashboard?${params.toString()}`);
+    const token = typeof localStorage !== 'undefined' ? localStorage.getItem('siteiq_jwt_token') : null;
+    const headers = token ? { 'Authorization': `Bearer ${token}` } : {};
+    const res = await fetch(`/api/engineer/${engId}/dashboard?${params.toString()}`, { headers });
     if (res.ok) {
       const data = await res.json();
       if (data.status === 'success') {
@@ -1293,9 +1300,30 @@ function renderEngineerWorkspaceView() {
   };
 
   if (!d) {
-    fetchEngineerDashboardData().then(() => {
-      if (typeof render === 'function') render(false);
-    });
+    if (!ENGINEER_WORKSPACE.isFetching) {
+      ENGINEER_WORKSPACE.isFetching = true;
+      fetchEngineerDashboardData().then(res => {
+        ENGINEER_WORKSPACE.isFetching = false;
+        if (!res) {
+          ENGINEER_WORKSPACE.dashboardData = {
+            status: 'success',
+            engineer: { id: ENGINEER_WORKSPACE.activeEngineerId, name: ENGINEER_WORKSPACE.activeEngineerName || activeEng.name },
+            metrics: { allocated: 0, in_progress: 0, due_today: 0, overdue: 0, submitted: 0, total: 0 },
+            inspections: []
+          };
+        }
+        if (typeof render === 'function') render(false);
+      }).catch(() => {
+        ENGINEER_WORKSPACE.isFetching = false;
+        ENGINEER_WORKSPACE.dashboardData = {
+          status: 'success',
+          engineer: { id: ENGINEER_WORKSPACE.activeEngineerId, name: ENGINEER_WORKSPACE.activeEngineerName || activeEng.name },
+          metrics: { allocated: 0, in_progress: 0, due_today: 0, overdue: 0, submitted: 0, total: 0 },
+          inspections: []
+        };
+        if (typeof render === 'function') render(false);
+      });
+    }
     return `
       <div style="padding:48px 16px; text-align:center">
         <div style="font-size:18px; font-weight:700; color:var(--mint)">Loading Inspection Engineer Workspace...</div>

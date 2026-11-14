@@ -76,17 +76,18 @@ class CreateUserRequest(BaseModel):
     phone: Optional[str] = None
 
 class ProjectCreate(BaseModel):
-    id: str
-    code: str
+    id: Optional[str] = None
+    code: Optional[str] = None
     name: str
-    type: str
+    type: str = "Commercial & Residential"
     loc: str
-    geo: str
+    geo: Optional[str] = "28.5383° N, 77.3720° E"
     status: str = "live"
     progress: int = 0
     start_date: str
     end_date: str
     hold_reason: Optional[str] = None
+    org_id: Optional[str] = None
 
 class NCActionRequest(BaseModel):
     action: str  # verify, close, reopen, remind
@@ -434,7 +435,10 @@ def register_user_endpoint(req: CreateUserRequest):
     hashed_pw = hash_password(req.password)
     parts = req.full_name.strip().split()
     initials = (parts[0][0] + (parts[1][0] if len(parts) > 1 else "")).upper() if parts else "QC"
-    emp_id = req.employee_id or f"EMP-{int(time.time()) % 10000}"
+    cur.execute("SELECT COUNT(*) as count FROM users")
+    count_row = cur.fetchone()
+    next_num = ((dict(count_row)["count"] if count_row else 1) + 1001)
+    emp_id = req.employee_id or f"EMP-{next_num}"
 
     cur.execute("""
         INSERT INTO users (id, org_id, email, password_hash, full_name, role, employee_id, specialization, avatar_initials, phone, status)
@@ -524,9 +528,12 @@ def list_projects(status: Optional[str] = None, q: Optional[str] = None, user: O
     params = []
 
     # Enforce Multi-Tenant Organization Isolation
-    if user and user.get("role") != "admin" and user.get("org_id"):
-        query += " AND (org_id = ? OR org_id IS NULL)"
+    if user and user.get("org_id"):
+        query += " AND org_id = ?"
         params.append(user["org_id"])
+    elif not user:
+        # Default preview for unauthenticated demo visitors
+        query += " AND (org_id = 'org-psv' OR org_id IS NULL)"
 
     if status and status != "all":
         query += " AND status = ?"
@@ -579,6 +586,57 @@ def list_projects(status: Optional[str] = None, q: Optional[str] = None, user: O
 
     conn.close()
     return projects
+
+@app.post("/api/projects")
+def create_project_endpoint(req: ProjectCreate, user: Dict[str, Any] = Depends(get_current_user)):
+    org_id = req.org_id or user.get("org_id")
+    if not org_id:
+        raise HTTPException(status_code=400, detail="Organization ID is required to create a project.")
+
+    conn = get_connection()
+    cur = conn.cursor()
+
+    ts = int(time.time())
+    clean_name = "".join(c.lower() if c.isalnum() else "" for c in req.name)[:8] or "prj"
+    pid = req.id or f"prj-{clean_name}-{ts % 1000}"
+    pcode = req.code or f"PRJ-{ts % 10000:04d}"
+
+    cur.execute("SELECT id FROM projects WHERE id = ? OR code = ?", (pid, pcode))
+    if cur.fetchone():
+        pid = f"prj-{clean_name}-{ts % 10000}"
+        pcode = f"PRJ-{ts % 100000:05d}"
+
+    now_iso = datetime.now().isoformat()
+    actor = user.get("full_name") or "QC Lead"
+
+    cur.execute("""
+        INSERT INTO projects (id, code, name, type, loc, geo, status, progress, start_date, end_date, hold_reason, closed_extra, upd_at, upd_by, org_id)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 0, ?, ?, ?)
+    """, (pid, pcode, req.name, req.type, req.loc, req.geo or "28.5383° N, 77.3720° E", req.status, req.progress, req.start_date, req.end_date, req.hold_reason, now_iso, actor, org_id))
+    conn.commit()
+    conn.close()
+
+    return {
+        "status": "success",
+        "message": f"Project '{req.name}' created successfully.",
+        "project": {
+            "id": pid,
+            "code": pcode,
+            "name": req.name,
+            "type": req.type,
+            "loc": req.loc,
+            "geo": req.geo,
+            "status": req.status,
+            "progress": req.progress,
+            "start": req.start_date,
+            "end": req.end_date,
+            "org_id": org_id,
+            "ncs": [],
+            "ins": [],
+            "approvals": [],
+            "actions": []
+        }
+    }
 
 @app.get("/api/projects/{project_id}")
 def get_project_detail(project_id: str):
@@ -753,7 +811,7 @@ def execute_nc_action(code: str, req: NCActionRequest):
 # ----------------- INSPECTIONS -----------------
 
 @app.get("/api/inspections")
-def list_inspections(project_id: Optional[str] = None, status: Optional[str] = None):
+def list_inspections(project_id: Optional[str] = None, status: Optional[str] = None, user: Optional[Dict[str, Any]] = Depends(get_current_user_optional)):
     conn = get_connection()
     cur = conn.cursor()
 
@@ -764,6 +822,12 @@ def list_inspections(project_id: Optional[str] = None, status: Optional[str] = N
         WHERE 1=1
     """
     params = []
+    if user and user.get("org_id"):
+        query += " AND p.org_id = ?"
+        params.append(user["org_id"])
+    elif not user:
+        query += " AND (p.org_id = 'org-psv' OR p.org_id IS NULL)"
+
     if project_id:
         query += " AND i.project_id = ?"
         params.append(project_id)
@@ -1042,16 +1106,19 @@ def get_engineer_dashboard_endpoint(
     project_id: Optional[str] = None,
     stage: Optional[str] = None,
     priority: Optional[str] = None,
-    search: Optional[str] = None
+    search: Optional[str] = None,
+    user: Optional[Dict[str, Any]] = Depends(get_current_user_optional)
 ):
     try:
+        user_org = user.get("org_id") if user else None
         data = AllocationService.get_engineer_dashboard_data(
             engineer_id_or_name=engineer_id,
             status_filter=status,
             project_filter=project_id,
             stage_filter=stage,
             priority_filter=priority,
-            search_q=search
+            search_q=search,
+            org_id=user_org
         )
         return data
     except Exception as e:
@@ -1151,7 +1218,7 @@ async def upload_evidence_endpoint(
 # ----------------- APPROVALS -----------------
 
 @app.get("/api/approvals")
-def list_approvals(project_id: Optional[str] = None):
+def list_approvals(project_id: Optional[str] = None, user: Optional[Dict[str, Any]] = Depends(get_current_user_optional)):
     conn = get_connection()
     cur = conn.cursor()
 
@@ -1162,6 +1229,12 @@ def list_approvals(project_id: Optional[str] = None):
         WHERE a.status = 'Pending'
     """
     params = []
+    if user and user.get("org_id"):
+        query += " AND p.org_id = ?"
+        params.append(user["org_id"])
+    elif not user:
+        query += " AND (p.org_id = 'org-psv' OR p.org_id IS NULL)"
+
     if project_id:
         query += " AND a.project_id = ?"
         params.append(project_id)

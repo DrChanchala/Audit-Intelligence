@@ -1045,7 +1045,8 @@ class AllocationService:
                                     project_filter: Optional[str] = None,
                                     stage_filter: Optional[str] = None,
                                     priority_filter: Optional[str] = None,
-                                    search_q: Optional[str] = None) -> Dict[str, Any]:
+                                    search_q: Optional[str] = None,
+                                    org_id: Optional[str] = None) -> Dict[str, Any]:
         """
         Phase 6: Returns the dedicated My Inspections dashboard data for an Inspection Engineer.
         Includes metrics (Allocated, In Progress, Due Today, Overdue, Submitted) and filtered inspection cards.
@@ -1053,23 +1054,35 @@ class AllocationService:
         conn = get_connection()
         cur = conn.cursor()
 
-        # Resolve engineer profile
+        # Resolve engineer profile from registry or users table
         eng_id = engineer_id_or_name
         eng_profile = ENGINEER_REGISTRY.get(eng_id)
         if not eng_profile:
-            eng_id = NAME_TO_ID.get(engineer_id_or_name, engineer_id_or_name)
-            eng_profile = ENGINEER_REGISTRY.get(eng_id, {
-                "id": eng_id,
-                "name": engineer_id_or_name,
-                "role": "QC Inspection Engineer",
-                "specialty": "Civil & Finishes"
-            })
+            cur.execute("SELECT employee_id, full_name, role, specialization, org_id FROM users WHERE employee_id = ? OR id = ? OR full_name = ?", (engineer_id_or_name, engineer_id_or_name, engineer_id_or_name))
+            u_row = cur.fetchone()
+            if u_row:
+                eng_profile = {
+                    "id": u_row["employee_id"] or engineer_id_or_name,
+                    "name": u_row["full_name"],
+                    "role": "QC Inspection Engineer",
+                    "specialty": u_row["specialization"] or "Civil & Finishes"
+                }
+                if not org_id and u_row["org_id"]:
+                    org_id = u_row["org_id"]
+            else:
+                eng_id = NAME_TO_ID.get(engineer_id_or_name, engineer_id_or_name)
+                eng_profile = ENGINEER_REGISTRY.get(eng_id, {
+                    "id": eng_id,
+                    "name": engineer_id_or_name,
+                    "role": "QC Inspection Engineer",
+                    "specialty": "Civil & Finishes"
+                })
 
         eng_name = eng_profile['name']
         today_str = datetime.now().strftime("%Y-%m-%d")
 
-        # Fetch all allocations assigned to this engineer
-        cur.execute("""
+        # Fetch all allocations assigned to this engineer, strictly scoped to organization if provided
+        query = """
             SELECT a.*, p.name as project_name, p.code as project_code,
                    (SELECT COUNT(*) FROM allocation_checkpoints WHERE allocation_id = a.allocation_id) as total_checkpoints,
                    (SELECT COUNT(*) FROM allocation_checkpoints WHERE allocation_id = a.allocation_id AND result_status = 'OK') as ok_count,
@@ -1078,9 +1091,15 @@ class AllocationService:
                    (SELECT COUNT(*) FROM allocation_checkpoints WHERE allocation_id = a.allocation_id AND (result_status = 'Pending' OR result_status IS NULL)) as pending_count
             FROM inspection_allocations a
             JOIN projects p ON a.project_id = p.id
-            WHERE a.engineer_id = ? OR a.engineer_name = ?
-            ORDER BY a.due_date ASC, a.created_at DESC
-        """, (eng_id, eng_name))
+            WHERE (a.engineer_id = ? OR a.engineer_name = ?)
+        """
+        params = [eng_id, eng_name]
+        if org_id:
+            query += " AND p.org_id = ?"
+            params.append(org_id)
+
+        query += " ORDER BY a.due_date ASC, a.created_at DESC"
+        cur.execute(query, tuple(params))
 
         raw_allocs = [dict(r) for r in cur.fetchall()]
 

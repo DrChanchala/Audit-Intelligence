@@ -2178,23 +2178,60 @@ const gone = what => `<div class="empty">This ${what} is no longer pending.<br><
 const VIEWS = {};
 VIEWS.home = () => {
   const h = new Date().getHours(), greet = h < 12 ? 'Good morning' : h < 17 ? 'Good afternoon' : 'Good evening';
+  const authUser = getAuthenticatedUser();
+  const authOrg = getAuthenticatedOrg();
+  const leadFirst = authUser?.full_name ? authUser.full_name.split(' ')[0] : 'QC Lead';
+  const orgName = authOrg?.name || 'Purvanchal Group';
   const resume = S.ctx ? (() => { const p = byId(S.ctx); return p ? `<button class="resume" type="button" data-go="project:${p.id}"><span class="ri">${ico('clock',18)}</span><span class="rt"><span class="muted">Continue where you left off</span><b>${esc(p.name)}</b></span>${ico('chev',18)}</button>` : ''; })() : '';
-  return `<section class="hello"><div class="eyebrow">QC Lead · Quality Assurance & Governance</div><h1>${greet}, Priya</h1><p>${new Date().toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' })}</p></section>
-  <section class="sum" aria-label="Needs your attention">
-    <button class="sum-btn crit" type="button" data-sheet="critical"><span class="v num">${critOpen().length}</span><span class="l">Critical NCs open</span></button>
-    <button class="sum-btn" type="button" data-sheet="approvals"><span class="v num">${allApprovals().length}</span><span class="l">Awaiting your approval</span></button>
-    <button class="sum-btn warn" type="button" data-sheet="overdue"><span class="v num">${overdueNC().length + overdueIns().length}</span><span class="l">Overdue items</span></button>
-  </section>
-  ${resume}
-  <section class="projects" aria-labelledby="mp">
-    <div class="sec-head"><h2 id="mp">My projects</h2><span class="muted num">${P.length} projects</span></div>
-    <div class="proj-tools">
-      <label class="search">${ico('search',18)}<input id="q" type="search" placeholder="Search by name, ID or location" value="${esc(S.q)}" autocomplete="off" aria-label="Search projects"></label>
-      <div class="cats" id="cats" role="tablist" aria-label="Project category"></div>
+
+  const emptyProjectsBanner = P.length === 0 ? `
+    <div style="background:var(--surface); border:1.5px dashed var(--line); border-radius:16px; padding:36px 20px; text-align:center; margin-top:16px">
+      <div style="font-size:38px; margin-bottom:8px">🏗️</div>
+      <h3 style="font-size:18px; font-weight:700; color:var(--ink); margin-bottom:6px">No Construction Projects Yet</h3>
+      <p style="font-size:13.5px; color:var(--ink-2); max-width:460px; margin:0 auto 18px; line-height:1.5">
+        <strong>${esc(orgName)}</strong> currently has no projects configured in this tenant. Create your first project to begin stage quality inspections.
+      </p>
+      <button class="btn primary" type="button" onclick="openCreateProjectModal()" style="height:40px; padding:0 20px; font-size:13px; font-weight:700; background:var(--mint); color:var(--on-mint)">
+        + Create First Project
+      </button>
     </div>
-    <div class="cards" id="cards"></div>
-  </section>
-  <p class="sample">Audit Intelligence • Real-time API Connected Platform</p>`;
+  ` : '';
+
+  return `
+    <section class="hello">
+      <div class="eyebrow">${esc(orgName)} · Quality Assurance & Governance</div>
+      <h1>${greet}, ${esc(leadFirst)}</h1>
+      <p>${new Date().toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' })}</p>
+    </section>
+
+    <section class="sum" aria-label="Needs your attention">
+      <button class="sum-btn crit" type="button" data-sheet="critical"><span class="v num">${critOpen().length}</span><span class="l">Critical NCs open</span></button>
+      <button class="sum-btn" type="button" data-sheet="approvals"><span class="v num">${allApprovals().length}</span><span class="l">Awaiting your approval</span></button>
+      <button class="sum-btn warn" type="button" data-sheet="overdue"><span class="v num">${overdueNC().length + overdueIns().length}</span><span class="l">Overdue items</span></button>
+    </section>
+
+    ${resume}
+
+    <section class="projects" aria-labelledby="mp">
+      <div class="sec-head">
+        <h2 id="mp">My projects</h2>
+        <div style="display:flex; align-items:center; gap:8px">
+          <span class="muted num">${P.length} projects</span>
+          <button class="btn primary" type="button" onclick="openCreateProjectModal()" style="height:32px; padding:0 12px; font-size:12px; font-weight:700; background:var(--mint); color:var(--on-mint)">
+            + Create Project
+          </button>
+        </div>
+      </div>
+      ${P.length > 0 ? `
+        <div class="proj-tools">
+          <label class="search">${ico('search',18)}<input id="q" type="search" placeholder="Search by name, ID or location" value="${esc(S.q)}" autocomplete="off" aria-label="Search projects"></label>
+          <div class="cats" id="cats" role="tablist" aria-label="Project category"></div>
+        </div>
+        <div class="cards" id="cards"></div>
+      ` : emptyProjectsBanner}
+    </section>
+    <p class="sample">Audit Intelligence • Real-time Multi-Tenant API Platform</p>
+  `;
 };
 
 function renderCards(){
@@ -2629,7 +2666,8 @@ function renderChrome(){
   const activeEngId = typeof ENGINEER_WORKSPACE !== 'undefined' ? ENGINEER_WORKSPACE.activeEngineerId : (authUser?.employee_id || 'EMP-1004');
   const engInitials = activeEngName.split(' ').map(n=>n[0]).join('').slice(0,2).toUpperCase();
   const adminName = authUser?.full_name || 'Administrator';
-  const leadName = authUser?.full_name || 'Priya Deshmukh';
+  const leadName = authUser?.full_name || 'QC Lead';
+  const leadEmpId = authUser?.employee_id || 'EMP-1001';
 
   // Branding
   const brandEl = $('brand');
@@ -2845,7 +2883,7 @@ function renderChrome(){
         
         <div class="suser" style="margin-top:auto">
           <span class="avatar">${(leadName.slice(0,2)).toUpperCase()}</span>
-          <span><b>${esc(leadName)}</b><small>QC Lead · EMP-1001</small></span>
+          <span><b>${esc(leadName)}</b><small>QC Lead · ${esc(leadEmpId)}</small></span>
         </div>
       `;
     }
@@ -3337,6 +3375,157 @@ async function handleProvisionMemberSubmit(ev) {
   }
 }
 
+/* ---------- project provisioning modal ---------- */
+function openCreateProjectModal() {
+  const authOrg = getAuthenticatedOrg();
+  const orgName = authOrg?.name || 'Current Organization';
+
+  const modalHtml = `
+    <div id="createProjectModalBackdrop" style="position:fixed; inset:0; background:rgba(0,0,0,0.6); backdrop-filter:blur(6px); z-index:9999; display:grid; place-items:center; padding:16px; animation:loginCardEnter 0.2s ease">
+      <div style="background:var(--surface); border:1px solid var(--line); border-radius:20px; width:100%; max-width:540px; padding:28px; box-shadow:0 24px 60px rgba(0,0,0,0.25)">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px">
+          <div>
+            <div style="font-size:11px; font-weight:800; color:var(--mint); text-transform:uppercase; letter-spacing:0.08em">Enterprise Project Setup</div>
+            <h2 style="font-size:20px; font-weight:700; color:var(--ink); margin:2px 0 0">Create New Project</h2>
+          </div>
+          <button type="button" class="icon-btn" onclick="closeCreateProjectModal()" aria-label="Close modal">✕</button>
+        </div>
+
+        <p style="font-size:12.5px; color:var(--ink-2); margin-bottom:18px">
+          Configure a construction project under <strong>${esc(orgName)}</strong>. QC Leads can subsequently allocate inspections and track quality checkpoints.
+        </p>
+
+        <form id="createProjectForm" onsubmit="handleCreateProjectSubmit(event)" style="display:flex; flex-direction:column; gap:12px">
+          <div id="createProjErrorBox" style="display:none; padding:10px 12px; border-radius:8px; background:var(--crit-soft); color:var(--crit); font-size:12px; font-weight:700"></div>
+
+          <div>
+            <label style="display:block; font-size:12px; font-weight:700; color:var(--ink); margin-bottom:4px">Project Name *</label>
+            <input type="text" id="cpName" required placeholder="e.g. Zenith Skyrise Towers" style="width:100%; height:40px; padding:0 12px; border-radius:8px; border:1px solid var(--line); font-size:13px; background:var(--surface)">
+          </div>
+
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px">
+            <div>
+              <label style="display:block; font-size:12px; font-weight:700; color:var(--ink); margin-bottom:4px">Project Code (Optional)</label>
+              <input type="text" id="cpCode" placeholder="e.g. PRJ-0025" style="width:100%; height:40px; padding:0 12px; border-radius:8px; border:1px solid var(--line); font-size:13px; background:var(--surface)">
+            </div>
+            <div>
+              <label style="display:block; font-size:12px; font-weight:700; color:var(--ink); margin-bottom:4px">Project Type</label>
+              <select id="cpType" style="width:100%; height:40px; padding:0 10px; border-radius:8px; border:1px solid var(--line); font-size:12.5px; background:var(--surface)">
+                <option value="Luxury Residential" selected>Luxury Residential</option>
+                <option value="Commercial Complex">Commercial Complex</option>
+                <option value="Industrial Logistics">Industrial Logistics</option>
+                <option value="Telecom & Infrastructure">Telecom & Infrastructure</option>
+                <option value="Institutional & Public Works">Institutional & Public Works</option>
+              </select>
+            </div>
+          </div>
+
+          <div>
+            <label style="display:block; font-size:12px; font-weight:700; color:var(--ink); margin-bottom:4px">Site Location / City *</label>
+            <input type="text" id="cpLoc" required placeholder="e.g. Sector 128, Noida" style="width:100%; height:40px; padding:0 12px; border-radius:8px; border:1px solid var(--line); font-size:13px; background:var(--surface)">
+          </div>
+
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px">
+            <div>
+              <label style="display:block; font-size:12px; font-weight:700; color:var(--ink); margin-bottom:4px">Construction Start Date *</label>
+              <input type="date" id="cpStartDate" required style="width:100%; height:40px; padding:0 10px; border-radius:8px; border:1px solid var(--line); font-size:13px; background:var(--surface)">
+            </div>
+            <div>
+              <label style="display:block; font-size:12px; font-weight:700; color:var(--ink); margin-bottom:4px">Target Completion Date *</label>
+              <input type="date" id="cpEndDate" required style="width:100%; height:40px; padding:0 10px; border-radius:8px; border:1px solid var(--line); font-size:13px; background:var(--surface)">
+            </div>
+          </div>
+
+          <div style="display:flex; justify-content:flex-end; gap:8px; margin-top:10px">
+            <button type="button" class="btn ghost" onclick="closeCreateProjectModal()" style="height:38px; padding:0 14px; font-size:12.5px">Cancel</button>
+            <button type="submit" id="cpSubmitBtn" class="btn primary" style="height:38px; padding:0 18px; font-size:12.5px; font-weight:700; background:var(--mint); color:var(--on-mint)">
+              Create Project →
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  `;
+
+  let existing = $('projectModalContainer');
+  if (!existing) {
+    existing = document.createElement('div');
+    existing.id = 'projectModalContainer';
+    document.body.appendChild(existing);
+  }
+  existing.innerHTML = modalHtml;
+
+  const today = new Date().toISOString().slice(0,10);
+  const nextYear = new Date(Date.now() + 365*864e5*2).toISOString().slice(0,10);
+  if ($('cpStartDate')) $('cpStartDate').value = today;
+  if ($('cpEndDate')) $('cpEndDate').value = nextYear;
+}
+
+function closeCreateProjectModal() {
+  const container = $('projectModalContainer');
+  if (container) container.innerHTML = '';
+}
+
+async function handleCreateProjectSubmit(ev) {
+  ev.preventDefault();
+  const name = $('cpName')?.value.trim();
+  const code = $('cpCode')?.value.trim() || undefined;
+  const type = $('cpType')?.value || 'Commercial & Residential';
+  const loc = $('cpLoc')?.value.trim();
+  const startDate = $('cpStartDate')?.value;
+  const endDate = $('cpEndDate')?.value;
+  const errBox = $('createProjErrorBox');
+  const submitBtn = $('cpSubmitBtn');
+
+  if (errBox) errBox.style.display = 'none';
+  if (submitBtn) {
+    submitBtn.disabled = true;
+    submitBtn.innerHTML = '<span class="spinner"></span> Creating project...';
+  }
+
+  try {
+    const token = getStoredToken();
+    const res = await fetch('/api/projects', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        ...(token ? { 'Authorization': `Bearer ${token}` } : {})
+      },
+      body: JSON.stringify({
+        name: name,
+        code: code,
+        type: type,
+        loc: loc,
+        start_date: startDate,
+        end_date: endDate,
+        status: 'live'
+      })
+    });
+
+    const data = await res.json();
+    if (!res.ok || data.status !== 'success') {
+      throw new Error(data.detail || 'Failed to create project.');
+    }
+
+    closeCreateProjectModal();
+    if (typeof toast === 'function') {
+      toast(`Project '${name}' created successfully!`);
+    }
+
+    await syncFromBackend();
+    render();
+  } catch(err) {
+    if (errBox) {
+      errBox.textContent = err.message;
+      errBox.style.display = 'block';
+    }
+    if (submitBtn) {
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Create Project →';
+    }
+  }
+}
+
 VIEWS.engineer_dashboard = e => typeof renderEngineerWorkspaceView === 'function' ? renderEngineerWorkspaceView() : '<div style="padding:40px; text-align:center">Loading Engineer Workspace...</div>';
 VIEWS.inspection_execution = e => typeof renderInspectionExecutionView === 'function' ? renderInspectionExecutionView(e.id) : '<div style="padding:40px; text-align:center">Loading Execution View...</div>';
 
@@ -3369,6 +3558,8 @@ function push(spec, pushHistory = true){
 
 function back(){
   if (S.sheet) { closeSheet(); return; }
+  const projModal = $('projectModalContainer');
+  if (projModal && projModal.innerHTML.trim()) { closeCreateProjectModal(); return; }
   const provModal = $('provisionModalContainer');
   if (provModal && provModal.innerHTML.trim()) { closeProvisionMemberModal(); return; }
   const loginGate = $('loginGatewayContainer');
@@ -3388,6 +3579,8 @@ function back(){
 
 window.addEventListener('popstate', ev => {
   if (S.sheet) { closeSheet(false); return; }
+  const projModal = $('projectModalContainer');
+  if (projModal && projModal.innerHTML.trim()) { closeCreateProjectModal(); return; }
   const provModal = $('provisionModalContainer');
   if (provModal && provModal.innerHTML.trim()) { closeProvisionMemberModal(); return; }
   const loginGate = $('loginGatewayContainer');
@@ -3541,23 +3734,25 @@ async function doAct(spec){
     return;
   }
   
+  const actorName = getAuthenticatedUser()?.full_name || 'QC Lead';
+  
   // Call REST backend if connected
   if (API_AVAILABLE) {
     try {
       if (['verify','close','remind','reopen'].includes(k)) {
         await fetch(`/api/ncs/${code}/action`, {
           method: 'POST',
-          headers: {'Content-Type': 'application/json'},
-          body: JSON.stringify({action: k, user: 'Priya Deshmukh'})
+          headers: {'Content-Type': 'application/json', ...getAuthHeaders()},
+          body: JSON.stringify({action: k, user: actorName})
         });
       } else if (['approve','return'].includes(k)) {
         await fetch(`/api/approvals/${code}/action`, {
           method: 'POST',
-          headers: {'Content-Type': 'application/json'},
-          body: JSON.stringify({action: k, user: 'Priya Deshmukh'})
+          headers: {'Content-Type': 'application/json', ...getAuthHeaders()},
+          body: JSON.stringify({action: k, user: actorName})
         });
       } else if (k === 'nudge') {
-        await fetch(`/api/inspections/${code}/nudge`, { method: 'POST' });
+        await fetch(`/api/inspections/${code}/nudge`, { method: 'POST', headers: getAuthHeaders() });
       }
     } catch (e) {
       console.warn("Backend update error, applying locally:", e);
@@ -3568,8 +3763,8 @@ async function doAct(spec){
   if (['verify','close','remind','reopen'].includes(k)){
     const {x:n, p} = find('ncs', code);
     if (k === 'verify'){ n.status = 'Under verification'; log(n,'Sent for verification',`Re-inspection by ${n.by}`); toast(`Sent to ${n.by} for verification`); }
-    if (k === 'close'){ n.status = 'Closed'; n.closed = TODAY_ISO; p.approvals = (p.approvals || []).filter(a => a.nc !== code); p.actions = (p.actions || []).filter(t => t.target.nc !== code); p.upd = ['2026-11-01T15:00','Priya Deshmukh']; toast(`${code} closed`); }
-    if (k === 'reopen'){ n.status = 'Reopened'; p.approvals = (p.approvals || []).filter(a => a.nc !== code); log(n,'Reopened by Priya Deshmukh',`Back with ${n.assigned}`); toast(`${code} reopened and sent back to ${n.assigned}`); }
+    if (k === 'close'){ n.status = 'Closed'; n.closed = TODAY_ISO; p.approvals = (p.approvals || []).filter(a => a.nc !== code); p.actions = (p.actions || []).filter(t => t.target.nc !== code); p.upd = [new Date().toISOString(), actorName]; toast(`${code} closed`); }
+    if (k === 'reopen'){ n.status = 'Reopened'; p.approvals = (p.approvals || []).filter(a => a.nc !== code); log(n,`Reopened by ${actorName}`,`Back with ${n.assigned}`); toast(`${code} reopened and sent back to ${n.assigned}`); }
     if (k === 'remind'){ const late = ncLate(n); log(n, late ? 'Escalated' : 'Reminder sent', `To ${n.assigned}`); toast(late ? `Escalated to ${n.assigned}` : `Reminder sent to ${n.assigned}`); }
     render(false); return;
   }
@@ -3581,11 +3776,11 @@ async function doAct(spec){
       if (i) i.status = 'Report issued';
       if (n){ n.status = 'Closed'; n.closed = TODAY_ISO; }
       if (!i && !n) p.actions = (p.actions || []).filter(t => !t.title.startsWith('Approve'));
-      p.upd = ['2026-11-01T15:00','Priya Deshmukh'];
+      p.upd = [new Date().toISOString(), actorName];
       toast(i ? `Report issued for ${i.code}` : n ? `${n.code} closed` : 'ITP approved and published');
     } else {
       if (i) i.status = 'In progress';
-      if (n){ n.status = 'Reopened'; log(n,'Closure returned by Priya Deshmukh','Verification evidence not sufficient'); }
+      if (n){ n.status = 'Reopened'; log(n,`Closure returned by ${actorName}`,'Verification evidence not sufficient'); }
       toast(`Returned to ${a.by}`);
     }
     back(); return;
@@ -3595,13 +3790,14 @@ async function doAct(spec){
 
 async function allocate(spec){
   const [code, nm] = spec.split('|'), {x:i, p} = find('ins', code);
+  const actorName = getAuthenticatedUser()?.full_name || 'QC Lead';
   
   if (API_AVAILABLE) {
     try {
       await fetch(`/api/inspections/${code}/allocate`, {
         method: 'POST',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({engineer_name: nm, user: 'Priya Deshmukh'})
+        headers: {'Content-Type': 'application/json', ...getAuthHeaders()},
+        body: JSON.stringify({engineer_name: nm, user: actorName})
       });
     } catch (e) {
       console.warn("Backend allocate error:", e);
@@ -3624,8 +3820,12 @@ async function syncFromBackend(){
     ]);
     if (pRes && pRes.ok) {
       const liveProjects = await pRes.json();
-      if (Array.isArray(liveProjects) && liveProjects.length > 0) {
-        P = liveProjects;
+      if (Array.isArray(liveProjects)) {
+        if (getStoredToken()) {
+          P = liveProjects;
+        } else if (liveProjects.length > 0) {
+          P = liveProjects;
+        }
         console.log(`Loaded ${P.length} live multi-tenant projects from API`);
       }
     }
