@@ -7,76 +7,61 @@
 <meta name="theme-color" content="#0F2236">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Noto+Sans:wght@400;500;600;700&display=swap">
 <script defer src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 <script src="/static/js/allocation_module.js?v=20261114_03"></script>
 <style>
 /* AI Report Markdown Styling */
 .report-content { font-size:14px; line-height:1.65; color:var(--ink); }
 .report-content h1 { font-family:var(--font-display); font-size:22px; margin-top:16px; margin-bottom:8px; border-bottom:2px solid var(--line); padding-bottom:6px; color:var(--band-1); }
-.report-content h2 { font-family:var(--font-display); font-size:18px; margin-top:20px; margin-bottom:8px; color:var(--band-2); border-left:4px solid var(--safety); padding-left:8px; }
+.report-content h2 { font-family:var(--font-display); font-size:18px; margin-top:20px; margin-bottom:8px; color:var(--band-2); border-left:4px solid var(--mint); padding-left:8px; }
 .report-content h3 { font-size:15px; font-weight:700; margin-top:14px; margin-bottom:6px; }
 .report-content p { margin-bottom:10px; }
 .report-content ul, .report-content ol { margin:0 0 12px 20px; padding:0; }
 .report-content li { margin-bottom:4px; }
-.report-content table { width:100%; border-collapse:collapse; margin:14px 0; font-size:12.5px; border-radius:0; overflow:hidden; border:1.5px solid var(--navy); }
+.report-content table { width:100%; border-collapse:collapse; margin:14px 0; font-size:12.5px; border-radius:8px; overflow:hidden; }
 .report-content th, .report-content td { border:1px solid var(--line); padding:7px 10px; text-align:left; }
 .report-content th { background:var(--surface-2); font-weight:700; color:var(--ink); }
 .report-content hr { border:0; border-top:1px solid var(--line); margin:18px 0; }
-.report-content code { background:var(--surface-2); padding:2px 5px; border-radius:0; border:1px solid var(--navy); font-size:12px; font-family:monospace; }
-.ai-badge { display:inline-flex; align-items:center; gap:6px; background:var(--navy); color:#fff; border:1px solid var(--navy); font-size:11px; font-weight:700; padding:3px 8px; border-radius:0; letter-spacing:0.04em; }
-/* Layout: mobile-first single column — industrial blueprint theme matching Site Progress Reader reference. Detail lives in bottom sheets (mobile) / side panel (desktop). */
+.report-content code { background:var(--surface-2); padding:2px 5px; border-radius:4px; font-size:12px; font-family:monospace; }
+.ai-badge { display:inline-flex; align-items:center; gap:6px; background:linear-gradient(135deg, #0F2236, #163E39); color:#5CCB9F; font-size:11px; font-weight:700; padding:4px 10px; border-radius:999px; letter-spacing:0.04em; }
+/* Layout: mobile-first single column — dark navy-teal top bar, project cards, bottom nav; desktop adds a dark sidebar and a card grid. Detail lives in bottom sheets (mobile) / side panel (desktop). */
 :root{
-  --navy:#0B2545; --navy-light:#13355e; --paper:#F5F2EA; --grid:rgba(141,169,196,0.35);
-  --safety:#E8632C; --safety-dim:#c44f1e; --safety-soft:#FDE8DC;
-  --bg:var(--paper); --surface:#FFFFFF; --surface-2:#F0EDE4; --ink:#1B2733; --ink-2:#4A5E6E; --ink-3:#7A8E9E; --line:#0B2545;
-  --band-1:#0B2545; --band-2:#13355e; --band-ink:#FFFFFF; --band-ink-2:#B9CCC6; --band-line:rgba(255,255,255,.18);
-  --mint:var(--safety); --mint-ink:var(--safety-dim); --mint-soft:var(--safety-soft); --on-mint:#FFFFFF;
-  --crit:#a02c2c; --crit-soft:#fbeaea; --major:#C48A1B; --major-soft:#f7ecd8; --minor:#2F62CC; --minor-soft:#E3EBFB; --ofi:#3E7C59; --ofi-soft:#E4EEEA;
+  --bg:#EDF3F0; --surface:#FFFFFF; --surface-2:#F3F7F5; --ink:#10201E; --ink-2:#4D5E5A; --ink-3:#6F807B; --line:#DAE5E0;
+  --band-1:#0F2236; --band-2:#163E39; --band-ink:#F2F7F5; --band-ink-2:#B9CCC6; --band-line:rgba(255,255,255,.15);
+  --mint:#4FB892; --mint-ink:#257A5B; --mint-soft:#E0F2EA; --on-mint:#0B2A21;
+  --crit:#C93C24; --crit-soft:#FBE5E0; --major:#A0650B; --major-soft:#FBEFD9; --minor:#2F62CC; --minor-soft:#E3EBFB; --ofi:#4F7468; --ofi-soft:#E4EEEA;
   --st-live:var(--mint); --st-hold:var(--major); --st-upcoming:var(--minor); --st-completed:var(--ofi);
-  --scrim:rgba(11,37,69,.55); --shadow:4px 4px 0 rgba(11,37,69,0.14);
-  --photo-1:#7C8683; --photo-2:#AAB1AD; --photo-3:#6A7370; --stamp-bg:rgba(11,37,69,.8); --stamp-ink:#FFFFFF;
-  --font-display:'Inter', system-ui, -apple-system, sans-serif;
-  --font-body:'Inter', system-ui, -apple-system, sans-serif;
-  --font-mono:'JetBrains Mono', 'IBM Plex Mono', 'SF Mono', Consolas, monospace;
+  --scrim:rgba(6,16,14,.48); --shadow:0 1px 2px rgba(16,32,30,.05),0 8px 24px rgba(16,32,30,.06);
+  --photo-1:#7C8683; --photo-2:#AAB1AD; --photo-3:#6A7370; --stamp-bg:rgba(0,0,0,.58); --stamp-ink:#FFFFFF;
+  --font-display:"DM Serif Display", Georgia, "Times New Roman", serif;
+  --font-body:"Noto Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
   --side:248px; --ease:cubic-bezier(.2,.8,.2,1);
 }
 @media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
-  --bg:var(--paper); --surface:#FFFFFF; --surface-2:#F0EDE4; --ink:#1B2733; --ink-2:#4A5E6E; --ink-3:#7A8E9E; --line:#0B2545;
-  --band-1:#0B2545; --band-2:#13355e; --band-ink:#FFFFFF; --band-ink-2:#B9CCC6; --band-line:rgba(255,255,255,.18);
-  --mint:var(--safety); --mint-ink:var(--safety-dim); --mint-soft:var(--safety-soft); --on-mint:#FFFFFF;
-  --crit:#a02c2c; --crit-soft:#fbeaea; --major:#C48A1B; --major-soft:#f7ecd8; --minor:#2F62CC; --minor-soft:#E3EBFB; --ofi:#3E7C59; --ofi-soft:#E4EEEA;
-  --shadow:4px 4px 0 rgba(11,37,69,0.14); } }
+  --bg:#0A1412; --surface:#11201D; --surface-2:#172925; --ink:#E5EEEB; --ink-2:#A6B8B3; --ink-3:#869994; --line:#25413C;
+  --band-1:#0A1828; --band-2:#12332F; --band-ink:#F2F7F5; --band-ink-2:#B9CCC6; --band-line:rgba(255,255,255,.13);
+  --mint:#5CCB9F; --mint-ink:#72D8AE; --mint-soft:#15382E; --on-mint:#0B2A21;
+  --crit:#F27058; --crit-soft:#3B1C16; --major:#E6A84A; --major-soft:#392A13; --minor:#7A9DF0; --minor-soft:#1A2744; --ofi:#94B7AB; --ofi-soft:#1B302A;
+  --scrim:rgba(0,0,0,.6); --shadow:0 1px 2px rgba(0,0,0,.35); color-scheme:dark; } }
 :root[data-theme="dark"]{
-  --bg:var(--paper); --surface:#FFFFFF; --surface-2:#F0EDE4; --ink:#1B2733; --ink-2:#4A5E6E; --ink-3:#7A8E9E; --line:#0B2545;
-  --band-1:#0B2545; --band-2:#13355e; --band-ink:#FFFFFF; --band-ink-2:#B9CCC6; --band-line:rgba(255,255,255,.18);
-  --mint:var(--safety); --mint-ink:var(--safety-dim); --mint-soft:var(--safety-soft); --on-mint:#FFFFFF;
-  --crit:#a02c2c; --crit-soft:#fbeaea; --major:#C48A1B; --major-soft:#f7ecd8; --minor:#2F62CC; --minor-soft:#E3EBFB; --ofi:#3E7C59; --ofi-soft:#E4EEEA;
-  --shadow:4px 4px 0 rgba(11,37,69,0.14); }
+  --bg:#0A1412; --surface:#11201D; --surface-2:#172925; --ink:#E5EEEB; --ink-2:#A6B8B3; --ink-3:#869994; --line:#25413C;
+  --band-1:#0A1828; --band-2:#12332F; --band-ink:#F2F7F5; --band-ink-2:#B9CCC6; --band-line:rgba(255,255,255,.13);
+  --mint:#5CCB9F; --mint-ink:#72D8AE; --mint-soft:#15382E; --on-mint:#0B2A21;
+  --crit:#F27058; --crit-soft:#3B1C16; --major:#E6A84A; --major-soft:#392A13; --minor:#7A9DF0; --minor-soft:#1A2744; --ofi:#94B7AB; --ofi-soft:#1B302A;
+  --scrim:rgba(0,0,0,.6); --shadow:0 1px 2px rgba(0,0,0,.35); color-scheme:dark; }
 
 *{box-sizing:border-box}
 html.locked{overflow:hidden}
-body{
-  background:var(--bg);
-  color:var(--ink);
-  font-family:var(--font-body);
-  font-size:14px;
-  line-height:1.5;
-  -webkit-font-smoothing:antialiased;
-  background-image:
-    linear-gradient(var(--grid) 1px, transparent 1px),
-    linear-gradient(90deg, var(--grid) 1px, transparent 1px);
-  background-size:28px 28px;
-  min-height:100vh;
-}
+body{background:var(--bg);color:var(--ink);font-family:var(--font-body);font-size:14px;line-height:1.5;-webkit-font-smoothing:antialiased}
 body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--band-1)}
 button{font:inherit;color:inherit;background:none;border:0;padding:0;margin:0;cursor:pointer;text-align:inherit}
-:focus-visible{outline:2px solid var(--mint);outline-offset:2px;border-radius:0}
+:focus-visible{outline:2px solid var(--mint);outline-offset:2px;border-radius:8px}
 h1,h2,h3,p{margin:0}
-.num{font-family:var(--font-mono);font-variant-numeric:tabular-nums;font-weight:700}
-.serif{font-family:var(--font-display);font-weight:700}
-.eyebrow{font-family:var(--font-mono);font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--safety)}
-.muted{color:var(--ink-2);font-size:12.5px}
+.num{font-variant-numeric:tabular-nums}
+.serif{font-family:var(--font-display);font-weight:400}
+.eyebrow{font-size:11px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--mint-ink)}
+.muted{color:var(--ink-3);font-size:12.5px}
 svg{flex-shrink:0}
 
 /* Top bar */
@@ -84,19 +69,19 @@ svg{flex-shrink:0}
   padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
 .top-in{display:flex;align-items:center;gap:8px;min-height:56px}
 .brand{display:flex;align-items:center;gap:9px}
-.logo-chip{background:#fff;border-radius:0;border:1.5px solid var(--navy);padding:4px 7px;display:flex;align-items:center;gap:5px}
-.logo-chip b{width:11px;height:11px;border:2.5px solid var(--safety);border-radius:0;display:block}
-.logo-chip span{font-size:8.5px;line-height:1.05;color:var(--navy);font-weight:700}
+.logo-chip{background:#fff;border-radius:6px;padding:4px 7px;display:flex;align-items:center;gap:5px}
+.logo-chip b{width:11px;height:11px;border:2.5px solid #D9472E;border-radius:2px;display:block}
+.logo-chip span{font-size:8.5px;line-height:1.05;color:#1b1b1b;font-weight:700}
 .wordmark{font-family:var(--font-display);font-size:21px;letter-spacing:.01em}
-.live-badge{font-size:9.5px;background:var(--safety);color:#fff;font-weight:700;padding:2px 6px;border-radius:0;margin-left:4px;letter-spacing:0.04em}
+.live-badge{font-size:9.5px;background:#4FB892;color:#0B2A21;font-weight:700;padding:2px 6px;border-radius:999px;margin-left:4px;letter-spacing:0.04em}
 .tt{min-width:0;flex:1;line-height:1.25}
 .tt .c{font-size:11.5px;color:var(--band-ink-2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .tt .t{font-weight:700;font-size:15.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .spacer{flex:1}
 .crumbs{display:none}
-.icon-btn{width:40px;height:40px;border-radius:0;display:grid;place-items:center;flex-shrink:0}
+.icon-btn{width:40px;height:40px;border-radius:12px;display:grid;place-items:center;flex-shrink:0}
 .top .icon-btn:hover{background:rgba(255,255,255,.1)}
-.avatar{width:34px;height:34px;border-radius:0;background:var(--safety);color:#fff;display:grid;place-items:center;font-weight:700;font-size:12.5px;flex-shrink:0;border:1.5px solid var(--navy)}
+.avatar{width:34px;height:34px;border-radius:50%;background:var(--mint);color:var(--on-mint);display:grid;place-items:center;font-weight:700;font-size:12.5px;flex-shrink:0}
 
 /* Sidebar (desktop only) */
 .side{display:none}
@@ -108,194 +93,193 @@ main{padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px
 @keyframes rise{from{opacity:.35;transform:translateY(8px)}to{opacity:1;transform:none}}
 
 /* Bottom nav */
-.bnav{position:fixed;left:0;right:0;bottom:0;z-index:8;background:var(--surface);border-top:1.5px solid var(--navy);display:grid;grid-template-columns:repeat(4,1fr);
+.bnav{position:fixed;left:0;right:0;bottom:0;z-index:8;background:var(--surface);border-top:1px solid var(--line);display:grid;grid-template-columns:repeat(4,1fr);
   padding:6px max(16px,env(safe-area-inset-right,0px)) calc(6px + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px))}
 .bn{display:flex;flex-direction:column;align-items:center;gap:3px;padding:4px 0;font-size:11.5px;font-weight:600;color:var(--ink-3);position:relative;min-height:52px;text-align:center}
-.bn-ic{width:52px;height:30px;border-radius:0;display:grid;place-items:center;transition:background-color .2s}
+.bn-ic{width:52px;height:30px;border-radius:15px;display:grid;place-items:center;transition:background-color .2s}
 .bn[aria-current="page"]{color:var(--ink)}
-.bn[aria-current="page"] .bn-ic{background:var(--safety-soft);color:var(--safety);font-weight:700}
-.bn .cnt{position:absolute;top:0;left:calc(50% + 10px);background:var(--crit);color:#fff;border-radius:0;font-size:10.5px;font-weight:700;min-width:18px;line-height:17px;padding:0 5px}
+.bn[aria-current="page"] .bn-ic{background:var(--mint-soft);color:var(--mint-ink)}
+.bn .cnt{position:absolute;top:0;left:calc(50% + 10px);background:var(--crit);color:#fff;border-radius:999px;font-size:10.5px;font-weight:700;min-width:18px;line-height:17px;padding:0 5px}
 
 /* Home */
 .hello h1{font-family:var(--font-display);font-weight:400;font-size:29px;line-height:1.12;margin-top:4px;text-wrap:balance}
 .hello p{color:var(--ink-2);margin-top:2px}
 .sum{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
-.sum-btn{background:var(--surface);border:1.5px solid var(--navy);border-radius:0;padding:12px 14px;display:flex;flex-direction:column;gap:3px;min-height:70px;box-shadow:3px 3px 0 rgba(11,37,69,0.1);transition:border-color .15s,box-shadow .15s}
-.sum-btn:hover{border-color:var(--safety);box-shadow:4px 4px 0 rgba(11,37,69,0.18)}
-.sum-btn .v{font-family:var(--font-mono);font-size:26px;font-weight:800;line-height:1}
-.sum-btn .l{font-size:11.5px;color:var(--ink-2);font-weight:700;letter-spacing:.04em;text-transform:uppercase;line-height:1.25}
+.sum-btn{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:11px 12px;display:flex;flex-direction:column;gap:3px;min-height:70px;transition:border-color .15s}
+.sum-btn:hover{border-color:var(--mint)}
+.sum-btn .v{font-family:var(--font-display);font-size:28px;line-height:1}
+.sum-btn .l{font-size:12px;color:var(--ink-2);font-weight:600;line-height:1.25}
 .sum-btn.crit .v{color:var(--crit)} .sum-btn.warn .v{color:var(--major)}
-.resume{display:flex;align-items:center;gap:12px;background:var(--surface);border:1.5px solid var(--navy);border-radius:0;padding:12px 14px;width:100%;box-shadow:3px 3px 0 rgba(11,37,69,0.1)}
+.resume{display:flex;align-items:center;gap:12px;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:12px 14px;width:100%}
 .resume .rt{flex:1;min-width:0}
 .resume .rt b{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.resume .ri{width:34px;height:34px;border-radius:0;background:var(--safety-soft);color:var(--safety-dim);display:grid;place-items:center;border:1px solid var(--navy)}
+.resume .ri{width:34px;height:34px;border-radius:10px;background:var(--mint-soft);color:var(--mint-ink);display:grid;place-items:center}
 .sec-head{display:flex;align-items:baseline;justify-content:space-between;gap:12px}
-.sec-head h2{font-family:var(--font-display);font-weight:800;font-size:22px;color:var(--navy)}
+.sec-head h2{font-family:var(--font-display);font-weight:400;font-size:23px}
 .projects{display:flex;flex-direction:column;gap:12px}
 .proj-tools{display:flex;flex-direction:column;gap:10px}
-.search{display:flex;align-items:center;gap:8px;background:var(--surface);border:1.5px solid var(--navy);border-radius:0;padding:0 12px;height:44px;color:var(--ink-3)}
-.search:focus-within{border-color:var(--safety);box-shadow:3px 3px 0 rgba(11,37,69,0.15)}
-.search input{flex:1;min-width:0;border:0;background:transparent;font:inherit;font-size:14px;color:var(--ink);outline:none;height:100%}
+.search{display:flex;align-items:center;gap:8px;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:0 12px;height:46px;color:var(--ink-3)}
+.search:focus-within{border-color:var(--mint)}
+.search input{flex:1;min-width:0;border:0;background:transparent;font:inherit;font-size:15px;color:var(--ink);outline:none;height:100%}
 .search input::placeholder{color:var(--ink-3)}
 .cats{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;margin-inline:-16px;padding:2px 16px;scroll-snap-type:x proximity}
 .cats::-webkit-scrollbar{display:none}
-.cat{flex-shrink:0;scroll-snap-align:start;display:flex;gap:8px;align-items:center;height:36px;padding:0 14px;border-radius:0;border:1.5px solid var(--navy);background:var(--surface);font-weight:700;font-size:12.5px;color:var(--navy);white-space:nowrap;box-shadow:2px 2px 0 rgba(11,37,69,0.1);transition:background-color .15s,color .15s}
-.cat i{width:8px;height:8px;border-radius:0;background:var(--st)}
-.cat .n{font-size:11px;font-family:var(--font-mono);background:var(--surface-2);border-radius:0;padding:0 6px;line-height:18px}
-.cat[aria-selected="true"]{background:var(--navy);color:#fff;border-color:var(--navy)}
-.cat[aria-selected="true"] .n{background:rgba(255,255,255,0.2)}
-.cards{display:grid;grid-template-columns:minmax(0,1fr);gap:14px}
+.cat{flex-shrink:0;scroll-snap-align:start;display:flex;gap:8px;align-items:center;height:40px;padding:0 14px;border-radius:999px;border:1px solid var(--line);background:var(--surface);font-weight:600;color:var(--ink-2);white-space:nowrap;transition:background-color .15s,color .15s}
+.cat i{width:8px;height:8px;border-radius:50%;background:var(--st)}
+.cat .n{font-size:12px;background:var(--surface-2);border-radius:999px;padding:0 8px;line-height:20px}
+.cat[aria-selected="true"]{background:var(--ink);color:var(--surface);border-color:var(--ink)}
+.cat[aria-selected="true"] .n{background:color-mix(in srgb,var(--surface) 22%,transparent)}
+.cards{display:grid;grid-template-columns:minmax(0,1fr);gap:12px}
 
-/* Project card - Blueprint Industrial */
-.card{position:relative;background:var(--surface);border:1.5px solid var(--navy);border-radius:0;padding:18px;display:flex;flex-direction:column;gap:12px;box-shadow:4px 4px 0 rgba(11,37,69,0.12);transition:border-color .15s,box-shadow .15s,transform .15s}
-.card:hover{border-color:var(--safety);box-shadow:6px 6px 0 rgba(11,37,69,0.2);transform:translateY(-1px)}
-.card:has(.stretch:focus-visible){outline:2px solid var(--safety);outline-offset:2px}
+/* Project card */
+.card{position:relative;background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:16px;display:flex;flex-direction:column;gap:12px;box-shadow:var(--shadow);transition:border-color .15s,transform .15s}
+.card:hover{border-color:color-mix(in srgb,var(--mint) 60%,var(--line))}
+.card:has(.stretch:focus-visible){outline:2px solid var(--mint);outline-offset:2px}
 .card-top{display:flex;justify-content:space-between;align-items:center;gap:8px}
-.code{font-family:var(--font-mono);font-size:12px;color:var(--safety-dim);font-weight:800;letter-spacing:.05em}
-.card h3{font-family:var(--font-display);font-size:17px;line-height:1.3;font-weight:800;color:var(--navy);margin-top:-4px}
+.code{font-size:12px;color:var(--ink-3);font-weight:700;letter-spacing:.05em}
+.card h3{font-size:17px;line-height:1.3;font-weight:700;margin-top:-4px}
 .stretch:focus-visible{outline:none}
-.stretch::after{content:"";position:absolute;inset:0;border-radius:0}
+.stretch::after{content:"";position:absolute;inset:0;border-radius:18px}
 .card-sub{margin-top:-8px;color:var(--ink-2);font-size:13px}
-.pill{display:inline-flex;align-items:center;gap:6px;border-radius:0;padding:3px 8px;font-family:var(--font-mono);font-size:11px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;white-space:nowrap;border:1px solid currentColor}
-.pill::before{content:"";width:5px;height:5px;background:currentColor}
-.st-live{color:var(--ok);background:#e2f0e7;border-color:var(--ok)} .st-hold{color:var(--major);background:var(--major-soft);border-color:var(--major)}
-.st-upcoming{color:var(--minor);background:var(--minor-soft);border-color:var(--minor)} .st-completed{color:var(--ofi);background:var(--ofi-soft);border-color:var(--ofi)}
+.pill{display:inline-flex;align-items:center;gap:6px;border-radius:999px;padding:2px 10px;font-size:12px;font-weight:600;white-space:nowrap}
+.pill::before{content:"";width:6px;height:6px;border-radius:50%;background:currentColor}
+.st-live{color:var(--mint-ink);background:var(--mint-soft)} .st-hold{color:var(--major);background:var(--major-soft)}
+.st-upcoming{color:var(--minor);background:var(--minor-soft)} .st-completed{color:var(--ofi);background:var(--ofi-soft)}
 .prog{display:flex;align-items:center;gap:10px}
-.bar{flex:1;height:8px;border-radius:0;border:1px solid var(--navy);background:var(--paper);overflow:hidden}
-.bar i{display:block;height:100%;background:var(--safety);border-radius:0}
-.prog b{font-family:var(--font-mono);font-size:12.5px;min-width:36px;text-align:right}
+.bar{flex:1;height:6px;border-radius:999px;background:var(--surface-2);overflow:hidden}
+.bar i{display:block;height:100%;background:var(--mint);border-radius:999px}
+.prog b{font-size:13px;min-width:36px;text-align:right}
 .dates{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:0}
-dt{font-family:var(--font-mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--navy-light);font-weight:700}
-dd{margin:0;font-weight:700;font-size:13px;color:var(--navy)}
-.note{font-size:13px;border-radius:0;border:1px solid var(--navy);padding:8px 11px;color:var(--ink);line-height:1.4}
+dt{font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);font-weight:700}
+dd{margin:0;font-weight:600;font-size:13.5px}
+.note{font-size:13px;border-radius:10px;padding:8px 11px;color:var(--ink);line-height:1.4}
 .note b{font-weight:700}
 .note.hold{background:var(--major-soft)} .note.hold b{color:var(--major)}
 .note.up{background:var(--minor-soft)} .note.up b{color:var(--minor)}
 .note.done{background:var(--ofi-soft)} .note.done b{color:var(--ofi)}
 .metrics{position:relative;z-index:1;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
-.metric{background:var(--surface-2);border:1.5px solid var(--navy);border-radius:0;padding:9px 10px;display:flex;flex-direction:column;gap:1px;min-height:66px;box-shadow:2px 2px 0 rgba(11,37,69,0.08);transition:border-color .15s,background-color .15s}
-.metric:hover{border-color:var(--safety);background:var(--surface)}
-.metric .v{font-family:var(--font-mono);font-size:22px;font-weight:800;color:var(--navy);line-height:1.05}
-.metric .l{font-size:11px;color:var(--ink-2);font-weight:700;text-transform:uppercase;letter-spacing:.03em}
-.metric .s{font-size:11px;font-weight:700;color:var(--crit)}
+.metric{background:var(--surface-2);border:1px solid var(--line);border-radius:12px;padding:9px 10px;display:flex;flex-direction:column;gap:1px;min-height:66px;transition:border-color .15s,background-color .15s}
+.metric:hover{border-color:var(--mint);background:var(--surface)}
+.metric .v{font-family:var(--font-display);font-size:24px;line-height:1.05}
+.metric .l{font-size:12px;color:var(--ink-2);font-weight:600}
+.metric .s{font-size:11.5px;font-weight:700;color:var(--crit)}
 .metric.zero .v{color:var(--ink-3)}
-.updated{font-family:var(--font-mono);font-size:11px;color:var(--ink-3)}
-.empty{background:var(--surface);border:1.5px dashed var(--navy);border-radius:0;padding:24px;text-align:center;color:var(--ink-2)}
+.updated{font-size:12px;color:var(--ink-3)}
+.empty{background:var(--surface);border:1px dashed var(--line);border-radius:14px;padding:22px;text-align:center;color:var(--ink-2)}
 
 /* Rows */
-.rows{background:var(--surface);border:1.5px solid var(--navy);border-radius:0;box-shadow:4px 4px 0 rgba(11,37,69,0.1);overflow:hidden}
-.row{display:flex;align-items:center;gap:10px;width:100%;padding:12px 14px;border-bottom:1px solid rgba(11,37,69,0.15);position:relative;color:var(--ink);transition:background-color .15s}
+.rows{background:var(--surface);border:1px solid var(--line);border-radius:14px;overflow:hidden}
+.row{display:flex;align-items:center;gap:10px;width:100%;padding:12px 12px 12px 16px;border-bottom:1px solid var(--line);position:relative;color:var(--ink);transition:background-color .15s}
 .row:last-child{border-bottom:0}
 .row:hover{background:var(--surface-2)}
-.row::before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--sev,transparent)}
-.row svg{color:var(--navy)}
+.row::before{content:"";position:absolute;left:0;top:12px;bottom:12px;width:3px;border-radius:0 3px 3px 0;background:var(--sev,transparent)}
+.row svg{color:var(--ink-3)}
 .rc{display:flex;flex-direction:column;gap:2px;min-width:0;flex:1}
-.r1{font-family:var(--font-mono);font-size:11.5px;color:var(--navy-light);font-weight:700;display:flex;gap:6px;flex-wrap:wrap;align-items:center}
-.r2{font-weight:700;font-size:14px;color:var(--navy);line-height:1.35}
+.r1{font-size:12px;color:var(--ink-3);font-weight:600;display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+.r2{font-weight:600;font-size:14px;line-height:1.35}
 .r3{font-size:12.5px;color:var(--ink-2)}
 .r4{display:flex;gap:6px;flex-wrap:wrap;margin-top:3px}
 .late{color:var(--crit);font-weight:700}
-.sev{font-family:var(--font-mono);font-size:10px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;border-radius:0;padding:2px 7px;line-height:16px;border:1px solid currentColor}
+.sev{font-size:11px;font-weight:700;border-radius:6px;padding:0 7px;line-height:18px}
 .sev-critical{color:var(--crit);background:var(--crit-soft)} .sev-major{color:var(--major);background:var(--major-soft)}
 .sev-minor{color:var(--minor);background:var(--minor-soft)} .sev-ofi{color:var(--ofi);background:var(--ofi-soft)}
-.stt{font-family:var(--font-mono);font-size:11px;font-weight:700;padding:2px 8px;line-height:18px;border-radius:0;background:var(--surface-2);color:var(--navy);border:1.5px solid var(--navy)}
-.stt.bad{background:var(--crit-soft);color:var(--crit);border-color:var(--crit)}
-.stt.good{background:#e2f0e7;color:var(--ok);border-color:var(--ok)}
-.stt.info{background:var(--minor-soft);color:var(--minor);border-color:var(--minor)}
+.stt{font-size:11.5px;font-weight:600;padding:0 9px;line-height:20px;border-radius:999px;background:var(--surface-2);color:var(--ink-2);border:1px solid var(--line)}
+.stt.bad{background:var(--crit-soft);color:var(--crit);border-color:transparent}
+.stt.good{background:var(--mint-soft);color:var(--mint-ink);border-color:transparent}
+.stt.info{background:var(--minor-soft);color:var(--minor);border-color:transparent}
 
 /* Project workspace */
-.phero{border-radius:0;border:1.5px solid var(--navy);padding:18px;color:var(--band-ink);display:flex;flex-direction:column;gap:12px;box-shadow:4px 4px 0 rgba(11,37,69,0.12);
-  background:linear-gradient(125deg,var(--band-1),var(--band-2))}
+.phero{border-radius:20px;padding:18px;color:var(--band-ink);display:flex;flex-direction:column;gap:12px;
+  background:radial-gradient(380px 220px at 100% 0%,rgba(79,184,146,.3),transparent 70%),linear-gradient(125deg,var(--band-1),var(--band-2))}
 .phero .code{color:var(--band-ink-2)}
-.phero h1{font-family:var(--font-display);font-weight:800;font-size:26px;line-height:1.15;text-wrap:balance}
+.phero h1{font-family:var(--font-display);font-weight:400;font-size:27px;line-height:1.12;text-wrap:balance}
 .phero .sub{color:var(--band-ink-2);font-size:13px;margin-top:-6px}
-.phero .bar{background:rgba(255,255,255,.14);border-color:rgba(255,255,255,.3)}
+.phero .bar{background:rgba(255,255,255,.14)}
 .phero dt{color:var(--band-ink-2)}
 .phero .updated{color:var(--band-ink-2)}
-.ptabs{display:flex;gap:4px;overflow-x:auto;scrollbar-width:none;background:var(--surface);border:1.5px solid var(--navy);border-radius:0;padding:4px;box-shadow:3px 3px 0 rgba(11,37,69,0.1)}
+.ptabs{display:flex;gap:4px;overflow-x:auto;scrollbar-width:none;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:4px}
 .ptabs::-webkit-scrollbar{display:none}
-.ptab{flex:1 0 auto;padding:9px 12px;border-radius:0;font-weight:700;color:var(--navy-light);font-size:13px;white-space:nowrap;text-align:center;transition:background-color .15s,color .15s}
-.ptab .n{font-size:11px;font-family:var(--font-mono);margin-left:4px;opacity:.85}
-.ptab[aria-selected="true"]{background:var(--navy);color:#fff}
+.ptab{flex:1 0 auto;padding:9px 12px;border-radius:10px;font-weight:600;color:var(--ink-2);font-size:13.5px;white-space:nowrap;text-align:center;transition:background-color .15s,color .15s}
+.ptab .n{font-size:11.5px;margin-left:4px;opacity:.75}
+.ptab[aria-selected="true"]{background:var(--ink);color:var(--surface)}
 .block{display:flex;flex-direction:column;gap:10px}
 .block-h{display:flex;align-items:baseline;justify-content:space-between;gap:10px}
-.block-h h2{font-family:var(--font-mono);font-size:11px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--navy)}
-.block-h h2::before{content:'';width:6px;height:6px;background:var(--safety);display:inline-block;margin-right:6px}
-.link{color:var(--safety);font-weight:800;font-size:13px}
+.block-h h2{font-size:11.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3)}
+.link{color:var(--mint-ink);font-weight:700;font-size:13px}
 .pipe{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:6px}
-.pipe button{background:var(--surface);border:1.5px solid var(--navy);border-radius:0;padding:10px 8px;display:flex;flex-direction:column;gap:2px;box-shadow:2px 2px 0 rgba(11,37,69,0.08);transition:border-color .15s}
-.pipe button:hover{border-color:var(--safety)}
-.pipe .v{font-family:var(--font-mono);font-size:22px;font-weight:800;line-height:1}
-.pipe .l{font-size:10.5px;color:var(--ink-2);font-weight:700;text-transform:uppercase;line-height:1.2}
-.pipe .hot{border-color:var(--safety);background:var(--safety-soft)}
+.pipe button{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:10px 8px;display:flex;flex-direction:column;gap:2px;transition:border-color .15s}
+.pipe button:hover{border-color:var(--mint)}
+.pipe .v{font-family:var(--font-display);font-size:22px;line-height:1}
+.pipe .l{font-size:11px;color:var(--ink-2);font-weight:600;line-height:1.2}
+.pipe .hot{border-color:var(--mint);background:var(--mint-soft)}
 .chips{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;padding-bottom:2px}
 .chips::-webkit-scrollbar{display:none}
-.chip{flex-shrink:0;height:34px;padding:0 13px;border-radius:0;border:1.5px solid var(--navy);background:var(--surface);font-weight:700;font-size:12.5px;color:var(--navy);white-space:nowrap;box-shadow:2px 2px 0 rgba(11,37,69,0.08)}
-.chip[aria-pressed="true"]{background:var(--safety);border-color:var(--safety);color:#fff}
+.chip{flex-shrink:0;height:34px;padding:0 13px;border-radius:999px;border:1px solid var(--line);background:var(--surface);font-weight:600;font-size:13px;color:var(--ink-2);white-space:nowrap}
+.chip[aria-pressed="true"]{background:var(--mint-soft);border-color:var(--mint);color:var(--mint-ink)}
 .seg{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.seg button{border:1.5px solid var(--navy);border-radius:0;padding:10px 12px;background:var(--surface);display:flex;flex-direction:column;box-shadow:2px 2px 0 rgba(11,37,69,0.08)}
-.seg button[aria-pressed="true"]{border-color:var(--safety);background:var(--safety-soft)}
-.seg .v{font-family:var(--font-mono);font-size:24px;font-weight:800;line-height:1.05}
-.seg .l{font-size:11px;color:var(--ink-2);font-weight:700;text-transform:uppercase}
+.seg button{border:1px solid var(--line);border-radius:12px;padding:10px 12px;background:var(--surface);display:flex;flex-direction:column}
+.seg button[aria-pressed="true"]{border-color:var(--mint);background:var(--mint-soft)}
+.seg .v{font-family:var(--font-display);font-size:24px;line-height:1.05}
+.seg .l{font-size:12px;color:var(--ink-2);font-weight:600}
 
 /* Detail pages */
 .dhead{display:flex;flex-direction:column;gap:8px}
 .dhead .tags{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
-.dhead h1{font-family:var(--font-display);font-weight:800;font-size:26px;color:var(--navy);line-height:1.15;text-wrap:balance}
-.ctxlink{display:inline-flex;align-items:center;gap:6px;align-self:flex-start;font-size:12px;font-weight:700;color:var(--safety-dim);background:var(--safety-soft);border-radius:0;border:1px solid var(--safety-dim);padding:3px 10px}
-.facts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px 16px;background:var(--surface);border:1.5px solid var(--navy);border-radius:0;padding:16px;box-shadow:3px 3px 0 rgba(11,37,69,0.1);margin:0}
+.dhead h1{font-family:var(--font-display);font-weight:400;font-size:27px;line-height:1.15;text-wrap:balance}
+.ctxlink{display:inline-flex;align-items:center;gap:6px;align-self:flex-start;font-size:13px;font-weight:600;color:var(--mint-ink);background:var(--mint-soft);border-radius:999px;padding:4px 12px}
+.facts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px 16px;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px;margin:0}
 .facts dd{overflow-wrap:anywhere}
 .actions{display:flex;gap:8px;flex-wrap:wrap}
-.btn{height:44px;padding:0 18px;border-radius:0;font-weight:700;letter-spacing:0.02em;display:inline-flex;align-items:center;justify-content:center;gap:8px;flex:1 1 140px;box-shadow:3px 3px 0 rgba(11,37,69,0.14);transition:all .15s}
-.btn.primary{background:var(--safety);color:#fff;border:1.5px solid var(--safety-dim)}
-.btn.primary:hover{background:var(--safety-dim);box-shadow:4px 4px 0 rgba(11,37,69,0.22)}
-.btn.ghost{border:1.5px solid var(--navy);background:var(--surface);color:var(--navy)}
-.btn.ghost:hover{background:var(--surface-2)}
-.panel{background:var(--surface);border:1.5px solid var(--navy);border-radius:0;padding:18px;display:flex;flex-direction:column;gap:12px;box-shadow:4px 4px 0 rgba(11,37,69,0.12)}
+.btn{height:46px;padding:0 18px;border-radius:12px;font-weight:700;display:inline-flex;align-items:center;justify-content:center;gap:8px;flex:1 1 140px;transition:filter .15s,border-color .15s}
+.btn.primary{background:var(--mint);color:var(--on-mint)}
+.btn.primary:hover{filter:brightness(1.06)}
+.btn.ghost{border:1px solid var(--line);background:var(--surface);color:var(--ink)}
+.btn.ghost:hover{border-color:var(--mint)}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px;display:flex;flex-direction:column;gap:12px}
 .photos{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.photo{margin:0;aspect-ratio:4/3;max-width:100%;border-radius:0;border:1.5px solid var(--navy);position:relative;overflow:hidden;
+.photo{margin:0;aspect-ratio:4/3;max-width:100%;border-radius:12px;position:relative;overflow:hidden;
   background:radial-gradient(circle at 20% 30%,var(--photo-3) 0 2px,transparent 3px) 0 0/13px 13px,radial-gradient(circle at 70% 60%,var(--photo-2) 0 1.5px,transparent 2.5px) 0 0/9px 9px,linear-gradient(140deg,var(--photo-1),var(--photo-2) 55%,var(--photo-3))}
 .photo.after{background:linear-gradient(90deg,transparent 47%,var(--photo-3) 47% 53%,transparent 53%) 0 0/100% 100%,radial-gradient(circle at 50% 40%,var(--photo-2) 0 1px,transparent 2px) 0 0/7px 7px,linear-gradient(140deg,var(--photo-2),var(--photo-1))}
-.ptag{position:absolute;top:8px;left:8px;background:var(--navy);color:#fff;font-family:var(--font-mono);font-size:10px;font-weight:700;border-radius:0;padding:2px 7px}
-.stamp{position:absolute;left:0;right:0;bottom:0;padding:6px 8px;background:rgba(11,37,69,.85);color:#fff;font-family:var(--font-mono);font-size:10.5px;line-height:1.35;font-variant-numeric:tabular-nums}
+.ptag{position:absolute;top:8px;left:8px;background:var(--stamp-bg);color:var(--stamp-ink);font-size:11px;font-weight:700;border-radius:6px;padding:2px 8px}
+.stamp{position:absolute;left:0;right:0;bottom:0;padding:6px 8px;background:var(--stamp-bg);color:var(--stamp-ink);font-size:10.5px;line-height:1.35;font-variant-numeric:tabular-nums}
 .tl{list-style:none;margin:0;padding:0;display:flex;flex-direction:column}
 .tl li{position:relative;padding:0 0 16px 24px}
-.tl li::before{content:"";position:absolute;left:0;top:5px;width:10px;height:10px;border-radius:0;border:2px solid var(--safety);background:var(--surface)}
-.tl li::after{content:"";position:absolute;left:4.5px;top:18px;bottom:2px;width:2px;background:var(--navy)}
+.tl li::before{content:"";position:absolute;left:0;top:5px;width:11px;height:11px;border-radius:50%;border:2px solid var(--mint);background:var(--surface)}
+.tl li::after{content:"";position:absolute;left:5.5px;top:18px;bottom:2px;width:2px;background:var(--line)}
 .tl li:last-child{padding-bottom:0}
 .tl li:last-child::after{display:none}
-.tl li:last-child::before{background:var(--safety)}
-.tl .w{font-weight:700;color:var(--navy)}
+.tl li:last-child::before{background:var(--mint)}
+.tl .w{font-weight:600}
 .tl .m{font-size:12.5px;color:var(--ink-2)}
-.tl .d{font-family:var(--font-mono);font-size:11px;color:var(--ink-3)}
-.stack{display:flex;height:10px;border-radius:0;border:1px solid var(--navy);overflow:hidden;background:var(--surface-2)}
+.tl .d{font-size:12px;color:var(--ink-3)}
+.stack{display:flex;height:10px;border-radius:999px;overflow:hidden;background:var(--surface-2)}
 .stack i{display:block;height:100%}
-.legend{display:flex;flex-wrap:wrap;gap:4px 14px;font-size:12px;color:var(--ink-2)}
-.legend span::before{content:"";display:inline-block;width:7px;height:7px;border-radius:0;margin-right:6px;background:var(--dot)}
+.legend{display:flex;flex-wrap:wrap;gap:4px 14px;font-size:12.5px;color:var(--ink-2)}
+.legend span::before{content:"";display:inline-block;width:8px;height:8px;border-radius:2px;margin-right:6px;background:var(--dot)}
 .lh{display:flex;flex-direction:column;gap:2px}
-.lh h1{font-family:var(--font-display);font-weight:800;font-size:26px;color:var(--navy);line-height:1.1}
-.ctxchip{display:inline-flex;align-items:center;gap:6px;height:34px;padding:0 12px;border-radius:0;border:1.5px solid var(--navy);background:var(--surface);font-weight:700;font-size:12.5px;align-self:flex-start;max-width:100%;box-shadow:2px 2px 0 rgba(11,37,69,0.08)}
-.ctxchip.on{background:var(--safety);border-color:var(--safety);color:#fff}
+.lh h1{font-family:var(--font-display);font-weight:400;font-size:28px;line-height:1.1}
+.ctxchip{display:inline-flex;align-items:center;gap:6px;height:34px;padding:0 12px;border-radius:999px;border:1px solid var(--line);background:var(--surface);font-weight:600;font-size:13px;align-self:flex-start;max-width:100%}
+.ctxchip.on{background:var(--mint-soft);border-color:var(--mint);color:var(--mint-ink)}
 .ctxchip span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
 
 /* Sheet */
 .scrim{position:fixed;inset:0;background:var(--scrim);opacity:0;pointer-events:none;transition:opacity .25s;z-index:20}
 .scrim.open{opacity:1;pointer-events:auto}
-.sheet{position:fixed;left:0;right:0;bottom:0;z-index:21;max-height:86dvh;background:var(--bg);border-top:3px solid var(--navy);border-radius:0;display:flex;flex-direction:column;
+.sheet{position:fixed;left:0;right:0;bottom:0;z-index:21;max-height:86dvh;background:var(--bg);border-radius:22px 22px 0 0;display:flex;flex-direction:column;
   padding:0 max(16px,env(safe-area-inset-right,0px)) calc(14px + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px));
-  transform:translateY(105%);transition:transform .3s var(--ease);box-shadow:0 -8px 30px rgba(11,37,69,.22);visibility:hidden}
+  transform:translateY(105%);transition:transform .3s var(--ease);box-shadow:0 -10px 40px rgba(0,0,0,.18);visibility:hidden}
 .sheet.open{transform:none;visibility:visible}
 .grab{padding:10px 0 6px;cursor:grab;touch-action:none;display:flex;justify-content:center}
-.grab span{width:40px;height:4px;border-radius:0;background:var(--navy)}
-.sheet-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;padding:6px 0 12px;border-bottom:1.5px solid var(--navy);margin-bottom:12px}
-.sheet-head h2{font-family:var(--font-display);font-weight:800;font-size:22px;color:var(--navy);line-height:1.15}
+.grab span{width:40px;height:5px;border-radius:3px;background:var(--line)}
+.sheet-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;padding:2px 0 12px}
+.sheet-head h2{font-family:var(--font-display);font-weight:400;font-size:23px;line-height:1.15}
 .sheet-head .icon-btn{background:var(--surface);border:1px solid var(--line)}
 .sheet-body{overflow-y:auto;overscroll-behavior:contain;flex:1;min-height:0;display:flex;flex-direction:column;gap:12px;padding-bottom:4px}
 .sheet-foot{padding-top:12px}
 .sheet-foot:empty{display:none}
 .sub-h{font-size:11px;font-weight:700;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-3);margin-top:4px}
 
-.toast{position:fixed;left:50%;bottom:calc(92px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--navy);color:#fff;padding:10px 16px;border-radius:0;border:1.5px solid var(--navy);font-size:13.5px;font-weight:700;box-shadow:4px 4px 0 rgba(11,37,69,0.2);z-index:30;max-width:calc(100% - 32px)}
+.toast{position:fixed;left:50%;bottom:calc(92px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--ink);color:var(--surface);padding:10px 16px;border-radius:12px;font-size:13.5px;font-weight:600;box-shadow:var(--shadow);z-index:30;max-width:calc(100% - 32px)}
 .sample{font-size:12px;color:var(--ink-3);text-align:center;margin-top:8px}
 
 @media (min-width:640px){
@@ -307,25 +291,25 @@ dd{margin:0;font-weight:700;font-size:13px;color:var(--navy)}
     background:linear-gradient(170deg,var(--band-1),var(--band-2));padding:20px 14px calc(18px + env(safe-area-inset-bottom,0px)) max(14px,env(safe-area-inset-left,0px));overflow-y:auto}
   .side .brand{padding:0 6px}
   .snav{display:flex;flex-direction:column;gap:3px}
-  .sn{display:flex;align-items:center;gap:11px;padding:10px 12px;border-radius:0;color:var(--band-ink-2);font-weight:600;transition:background-color .15s,color .15s}
+  .sn{display:flex;align-items:center;gap:11px;padding:10px 12px;border-radius:11px;color:var(--band-ink-2);font-weight:600;transition:background-color .15s,color .15s}
   .sn:hover{background:rgba(255,255,255,.08);color:var(--band-ink)}
-  .sn[aria-current="page"]{background:var(--safety);color:#fff;font-weight:700}
-  .sn .cnt{margin-left:auto;font-size:11.5px;background:rgba(255,255,255,.2);border-radius:0;padding:0 8px;line-height:20px;font-family:var(--font-mono)}
+  .sn[aria-current="page"]{background:rgba(79,184,146,.2);color:var(--band-ink)}
+  .sn .cnt{margin-left:auto;font-size:11.5px;background:rgba(255,255,255,.12);border-radius:999px;padding:0 8px;line-height:20px}
   .sn .cnt.hot{background:var(--crit);color:#fff}
-  .sctx{border:1.5px solid rgba(255,255,255,.25);border-radius:0;padding:12px;display:flex;flex-direction:column;gap:8px;background:rgba(0,0,0,0.15)}
+  .sctx{border:1px solid var(--band-line);border-radius:12px;padding:12px;display:flex;flex-direction:column;gap:8px}
   .sctx .lbl{font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--band-ink-2);font-weight:700}
   .sctx .nm{font-weight:600;text-align:left;line-height:1.35}
-  .sctx .nm:hover{color:var(--safety)}
+  .sctx .nm:hover{color:var(--mint)}
   .sctx .clr{font-size:12px;color:var(--band-ink-2);text-align:left}
   .sctx .clr:hover{color:var(--band-ink)}
   .suser{margin-top:auto;display:flex;gap:10px;align-items:center;padding:0 6px}
   .suser small{display:block;color:var(--band-ink-2);font-size:12px}
   .shell{margin-left:var(--side)}
-  .top{background:color-mix(in srgb,var(--bg) 90%,transparent);backdrop-filter:blur(8px);color:var(--ink);border-bottom:1.5px solid var(--navy);padding-left:32px;padding-right:max(32px,env(safe-area-inset-right,0px))}
+  .top{background:color-mix(in srgb,var(--bg) 90%,transparent);backdrop-filter:blur(8px);color:var(--ink);border-bottom:1px solid var(--line);padding-left:32px;padding-right:max(32px,env(safe-area-inset-right,0px))}
   .top .brand,.top .tt,.top .avatar{display:none}
   .top .icon-btn:hover{background:var(--surface-2)}
   .crumbs{display:flex;align-items:center;gap:6px;min-width:0;font-size:13.5px;color:var(--ink-3);white-space:nowrap;overflow:hidden}
-  .crumbs button:hover{color:var(--safety)}
+  .crumbs button:hover{color:var(--mint-ink)}
   .crumbs [aria-current]{color:var(--ink);font-weight:600;overflow:hidden;text-overflow:ellipsis}
   main{padding-left:32px;padding-right:max(32px,env(safe-area-inset-right,0px));padding-block:26px 48px}
   .bnav{display:none}
@@ -338,7 +322,7 @@ dd{margin:0;font-weight:700;font-size:13px;color:var(--navy)}
   .actions .btn{flex:0 0 auto}
   .detail{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);gap:18px;align-items:start}
   .detail > div{display:flex;flex-direction:column;gap:18px;min-width:0}
-  .sheet{top:0;left:auto;right:0;bottom:0;width:440px;max-height:none;border-radius:0;border-left:2px solid var(--navy);box-shadow:-8px 0 24px rgba(11,37,69,0.15);transform:translateX(105%);
+  .sheet{top:0;left:auto;right:0;bottom:0;width:440px;max-height:none;border-radius:20px 0 0 20px;transform:translateX(105%);
     padding:calc(18px + env(safe-area-inset-top,0px)) max(22px,env(safe-area-inset-right,0px)) calc(18px + env(safe-area-inset-bottom,0px)) 22px}
   .grab{display:none}
 }
@@ -532,11 +516,12 @@ html, body {
   position: sticky;
   bottom: 12px;
   z-index: 10;
-  background: var(--surface);
-  border: 1.5px solid var(--navy);
-  border-radius: 0;
+  background: color-mix(in srgb, var(--surface) 95%, transparent);
+  backdrop-filter: blur(8px);
+  border: 1px solid var(--line);
+  border-radius: 14px;
   padding: 12px 16px;
-  box-shadow: 4px 4px 0 rgba(11,37,69,0.15);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.15);
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -555,7 +540,7 @@ html, body {
   padding: 0 16px;
   font-size: 12.5px;
   font-weight: 800;
-  border-radius: 0;
+  border-radius: 8px;
   flex: 1 1 0;
   min-width: 68px;
   display: inline-flex;
@@ -594,8 +579,7 @@ html, body {
 @media (max-width: 959px) {
   .sheet {
     max-height: 92dvh !important;
-    border-radius: 0 !important;
-    border-top: 2px solid var(--navy) !important;
+    border-radius: 20px 20px 0 0 !important;
   }
   .sheet-body {
     -webkit-overflow-scrolling: touch;
@@ -610,11 +594,7 @@ html, body {
   position: fixed;
   inset: 0;
   z-index: 9999;
-  background: var(--paper);
-  background-image: 
-    linear-gradient(var(--grid) 1px, transparent 1px),
-    linear-gradient(90deg, var(--grid) 1px, transparent 1px);
-  background-size: 28px 28px;
+  background: radial-gradient(ellipse at 50% 35%, #D6EFE5 0%, #C4E5D8 45%, #AFDACB 100%);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -622,8 +602,22 @@ html, body {
   overflow-y: auto;
 }
 
+/* Subtle architectural isometric background lines matching screenshot */
 .login-isometric-bg {
-  display: none;
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.35;
+  background-image: 
+    radial-gradient(circle at 15% 25%, rgba(255,255,255,0.7) 0%, transparent 45%),
+    radial-gradient(circle at 85% 75%, rgba(255,255,255,0.6) 0%, transparent 50%),
+    linear-gradient(30deg, rgba(32, 122, 97, 0.08) 12%, transparent 12.5%, transparent 87%, rgba(32, 122, 97, 0.08) 87.5%),
+    linear-gradient(150deg, rgba(32, 122, 97, 0.08) 12%, transparent 12.5%, transparent 87%, rgba(32, 122, 97, 0.08) 87.5%),
+    linear-gradient(30deg, rgba(32, 122, 97, 0.08) 12%, transparent 12.5%, transparent 87%, rgba(32, 122, 97, 0.08) 87.5%),
+    linear-gradient(150deg, rgba(32, 122, 97, 0.08) 12%, transparent 12.5%, transparent 87%, rgba(32, 122, 97, 0.08) 87.5%),
+    linear-gradient(60deg, rgba(32, 122, 97, 0.05) 25%, transparent 25.5%, transparent 75%, rgba(32, 122, 97, 0.05) 75%),
+    linear-gradient(60deg, rgba(32, 122, 97, 0.05) 25%, transparent 25.5%, transparent 75%, rgba(32, 122, 97, 0.05) 75%);
+  background-size: 80px 140px;
 }
 
 .login-card {
@@ -631,17 +625,17 @@ html, body {
   width: 100%;
   max-width: 580px;
   background: #FFFFFF;
-  border-radius: 0;
-  padding: 40px 44px;
-  border: 2px solid var(--navy);
-  box-shadow: 6px 6px 0 rgba(11,37,69,0.2);
-  animation: loginCardEnter 0.22s cubic-bezier(.2, .8, .2, 1);
+  border-radius: 28px;
+  padding: 40px 48px 44px;
+  box-shadow: 0 24px 60px rgba(16, 32, 30, 0.08), 0 4px 18px rgba(16, 32, 30, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  animation: loginCardEnter 0.26s cubic-bezier(.2, .8, .2, 1);
   text-align: left;
 }
 
 @keyframes loginCardEnter {
-  from { opacity: 0; transform: translateY(14px); }
-  to { opacity: 1; transform: translateY(0); }
+  from { opacity: 0; transform: translateY(14px) scale(0.98); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
 }
 
 .login-back-btn {
@@ -650,7 +644,7 @@ html, body {
   gap: 6px;
   font-size: 13.5px;
   font-weight: 700;
-  color: var(--navy);
+  color: #10201E;
   background: none;
   border: none;
   padding: 0;
@@ -663,21 +657,20 @@ html, body {
 }
 
 .login-eyebrow {
-  font-family: var(--font-mono);
   font-size: 11px;
   font-weight: 800;
-  letter-spacing: 0.14em;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: var(--safety);
+  color: #1B7A61;
   margin-bottom: 8px;
 }
 
 .login-title {
   font-family: var(--font-display);
-  font-size: 34px;
-  font-weight: 800;
+  font-size: 38px;
+  font-weight: 400;
   line-height: 1.15;
-  color: var(--navy);
+  color: #10201E;
   margin: 0 0 14px;
   letter-spacing: -0.01em;
 }
@@ -685,7 +678,7 @@ html, body {
 .login-desc {
   font-size: 14.5px;
   line-height: 1.55;
-  color: var(--ink-2);
+  color: #4D5E5A;
   margin: 0 0 26px;
 }
 
@@ -697,7 +690,7 @@ html, body {
   display: block;
   font-size: 13px;
   font-weight: 700;
-  color: var(--navy);
+  color: #10201E;
   margin-bottom: 8px;
 }
 
@@ -710,20 +703,20 @@ html, body {
   width: 100%;
   appearance: none;
   -webkit-appearance: none;
-  background: #FFFFFF !important;
-  border: 1.5px solid var(--navy) !important;
-  border-radius: 0;
-  padding: 13px 44px 13px 14px;
+  background: #EEF4F1 !important;
+  border: 1.5px solid #A8C9BD !important;
+  border-radius: 14px;
+  padding: 14px 44px 14px 16px;
   font-size: 15px !important;
-  font-weight: 600;
-  color: var(--navy) !important;
+  font-weight: 500;
+  color: #10201E !important;
   cursor: pointer;
   outline: none;
-  transition: border-color 0.15s, box-shadow 0.15s;
+  transition: border-color 0.2s, box-shadow 0.2s;
 }
 .login-select:focus {
-  border-color: var(--safety) !important;
-  box-shadow: 3px 3px 0 rgba(11,37,69,0.18) !important;
+  border-color: #257A5B !important;
+  box-shadow: 0 0 0 3px rgba(79, 184, 146, 0.25) !important;
 }
 
 .login-select-chevron {
@@ -732,22 +725,21 @@ html, body {
   top: 50%;
   transform: translateY(-50%);
   pointer-events: none;
-  color: var(--navy);
+  color: #3C4D49;
   font-size: 16px;
   font-weight: 700;
 }
 
 .login-help-text {
-  font-family: var(--font-mono);
-  font-size: 11.5px;
+  font-size: 12.5px;
   line-height: 1.45;
-  color: var(--ink-2);
+  color: #6F807B;
   margin-top: 10px;
 }
 
 .login-link {
-  color: var(--safety);
-  font-weight: 800;
+  color: #1B7A61;
+  font-weight: 700;
   text-decoration: underline;
   background: none;
   border: none;
@@ -756,25 +748,24 @@ html, body {
   font-size: inherit;
 }
 .login-link:hover {
-  color: var(--safety-dim);
+  color: #10201E;
 }
 
 .login-continue-btn {
   width: 100%;
-  height: 48px;
-  border-radius: 0;
-  font-size: 14.5px;
+  height: 52px;
+  border-radius: 14px;
+  font-size: 15px;
   font-weight: 700;
-  letter-spacing: 0.02em;
   border: none;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
-  transition: all 0.15s ease;
+  transition: all 0.2s cubic-bezier(.2, .8, .2, 1);
 }
 
-/* Inactive button */
+/* Inactive button matching screenshot (#D5CFC3) */
 .login-continue-btn:disabled,
 .login-continue-btn.inactive {
   background: #D5CFC3 !important;
@@ -785,15 +776,14 @@ html, body {
 
 /* Active button when organization is selected */
 .login-continue-btn:not(:disabled):not(.inactive) {
-  background: var(--safety) !important;
-  color: #FFFFFF !important;
-  border: 1.5px solid var(--safety-dim);
+  background: var(--mint) !important;
+  color: var(--on-mint) !important;
   cursor: pointer;
-  box-shadow: 4px 4px 0 rgba(11,37,69,0.22);
+  box-shadow: 0 8px 22px rgba(79, 184, 146, 0.35);
 }
 .login-continue-btn:not(:disabled):not(.inactive):hover {
-  background: var(--safety-dim) !important;
-  box-shadow: 5px 5px 0 rgba(11,37,69,0.28);
+  filter: brightness(1.05);
+  transform: translateY(-1px);
 }
 
 /* Step 2 Role Choice Cards */
@@ -804,35 +794,35 @@ html, body {
   margin-bottom: 20px;
 }
 .role-card-item {
-  border: 1.5px solid var(--navy);
-  border-radius: 0;
+  border: 1.5px solid var(--line);
+  border-radius: 16px;
   padding: 16px 18px;
-  background: var(--surface);
-  box-shadow: 3px 3px 0 rgba(11,37,69,0.1);
+  background: var(--surface-2);
   display: flex;
   align-items: center;
   gap: 14px;
   cursor: pointer;
-  transition: all 0.15s ease;
+  transition: all 0.18s cubic-bezier(.2, .8, .2, 1);
   text-align: left;
 }
 .role-card-item:hover {
-  border-color: var(--safety);
-  box-shadow: 4px 4px 0 rgba(11,37,69,0.18);
-  transform: translateY(-1px);
+  border-color: var(--mint);
+  background: var(--surface);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow);
 }
 .role-card-item.selected {
-  border-color: var(--safety);
-  background: var(--safety-soft);
+  border-color: var(--mint);
+  background: var(--mint-soft);
 }
 
 @media (max-width: 640px) {
   .login-card {
     padding: 28px 20px 32px;
-    border-radius: 0;
+    border-radius: 22px;
   }
   .login-title {
-    font-size: 28px;
+    font-size: 30px;
   }
 }
 
@@ -849,17 +839,16 @@ html, body {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  background: var(--safety-soft);
-  color: var(--safety-dim);
-  font-family: var(--font-mono);
-  font-size: 11px;
+  background: var(--mint-soft);
+  color: var(--mint-ink);
+  font-size: 11.5px;
   font-weight: 800;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  padding: 6px 14px;
-  border-radius: 0;
+  padding: 6px 16px;
+  border-radius: 999px;
   margin-bottom: 20px;
-  border: 1.5px solid var(--safety);
+  border: 1px solid rgba(32, 122, 97, 0.2);
 }
 .landing-hero {
   text-align: center;
@@ -869,15 +858,15 @@ html, body {
 }
 .landing-hero h1 {
   font-family: var(--font-display);
-  font-size: clamp(32px, 5vw, 50px);
-  font-weight: 800;
+  font-size: clamp(34px, 5vw, 54px);
+  font-weight: 400;
   line-height: 1.15;
-  color: var(--navy);
+  color: var(--ink);
   letter-spacing: -0.02em;
   margin-bottom: 20px;
 }
 .landing-hero p {
-  font-size: clamp(15px, 2vw, 18px);
+  font-size: clamp(16px, 2vw, 19px);
   line-height: 1.6;
   color: var(--ink-2);
   margin: 0 auto 32px;
@@ -891,47 +880,43 @@ html, body {
   flex-wrap: wrap;
 }
 .landing-btn-primary {
-  height: 48px;
-  padding: 0 26px;
-  background: var(--safety);
-  color: #fff;
-  font-size: 14.5px;
+  height: 50px;
+  padding: 0 28px;
+  background: var(--mint);
+  color: var(--on-mint);
+  font-size: 15px;
   font-weight: 700;
-  letter-spacing: 0.02em;
-  border-radius: 0;
-  border: 1.5px solid var(--safety-dim);
+  border-radius: 12px;
+  border: none;
   cursor: pointer;
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  box-shadow: 4px 4px 0 rgba(11,37,69,0.22);
-  transition: all 0.15s ease;
+  box-shadow: 0 8px 24px rgba(79, 184, 146, 0.35);
+  transition: all 0.2s cubic-bezier(.2, .8, .2, 1);
 }
 .landing-btn-primary:hover {
-  background: var(--safety-dim);
-  box-shadow: 5px 5px 0 rgba(11,37,69,0.28);
-  transform: translateY(-1px);
+  transform: translateY(-2px);
+  filter: brightness(1.06);
 }
 .landing-btn-ghost {
-  height: 48px;
+  height: 50px;
   padding: 0 24px;
   background: var(--surface);
-  color: var(--navy);
-  font-size: 14.5px;
+  color: var(--ink);
+  font-size: 15px;
   font-weight: 700;
-  letter-spacing: 0.02em;
-  border-radius: 0;
-  border: 1.5px solid var(--navy);
+  border-radius: 12px;
+  border: 1.5px solid var(--line);
   cursor: pointer;
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  box-shadow: 3px 3px 0 rgba(11,37,69,0.12);
-  transition: all 0.15s ease;
+  transition: all 0.2s cubic-bezier(.2, .8, .2, 1);
 }
 .landing-btn-ghost:hover {
+  border-color: var(--mint);
   background: var(--surface-2);
-  box-shadow: 4px 4px 0 rgba(11,37,69,0.18);
 }
 
 .landing-section {
@@ -943,9 +928,9 @@ html, body {
 }
 .landing-section-head h2 {
   font-family: var(--font-display);
-  font-size: 30px;
-  font-weight: 800;
-  color: var(--navy);
+  font-size: 32px;
+  font-weight: 400;
+  color: var(--ink);
   margin-bottom: 10px;
 }
 .landing-section-head p {
@@ -961,26 +946,25 @@ html, body {
   gap: 20px;
 }
 .hierarchy-card {
-  background: #FFFFFF;
-  border: 1.5px solid var(--navy);
-  border-radius: 0;
-  padding: 26px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  padding: 28px;
   position: relative;
-  transition: all 0.15s ease;
-  box-shadow: 4px 4px 0 rgba(11,37,69,0.12);
+  transition: all 0.2s cubic-bezier(.2, .8, .2, 1);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.03);
 }
 .hierarchy-card:hover {
-  border-color: var(--safety);
-  transform: translateY(-2px);
-  box-shadow: 6px 6px 0 rgba(11,37,69,0.2);
+  border-color: var(--mint);
+  transform: translateY(-3px);
+  box-shadow: 0 12px 30px rgba(0,0,0,0.07);
 }
 .hierarchy-step-num {
   width: 32px;
   height: 32px;
-  border-radius: 0;
-  background: var(--safety);
-  color: #fff;
-  font-family: var(--font-mono);
+  border-radius: 8px;
+  background: var(--mint-soft);
+  color: var(--mint-ink);
   font-weight: 800;
   font-size: 14px;
   display: grid;
@@ -995,10 +979,10 @@ html, body {
   right: 16px;
   width: 290px;
   background: var(--surface);
-  border: 1.5px solid var(--navy);
-  border-radius: 0;
+  border: 1px solid var(--line);
+  border-radius: 16px;
   padding: 16px;
-  box-shadow: 5px 5px 0 rgba(11,37,69,0.18);
+  box-shadow: 0 16px 40px rgba(0,0,0,0.12);
   z-index: 1000;
   animation: loginCardEnter 0.18s cubic-bezier(.2, .8, .2, 1);
 }
@@ -1012,25 +996,22 @@ html, body {
 }
 .admin-stat-card {
   background: var(--surface);
-  border: 1.5px solid var(--navy);
-  border-radius: 0;
+  border: 1px solid var(--line);
+  border-radius: 16px;
   padding: 18px 20px;
   display: flex;
   flex-direction: column;
   gap: 4px;
-  box-shadow: 4px 4px 0 rgba(11,37,69,0.12);
 }
 .admin-stat-val {
-  font-family: var(--font-mono);
+  font-family: var(--font-num);
   font-size: 32px;
   font-weight: 800;
-  color: var(--navy);
+  color: var(--ink);
 }
 .admin-stat-lbl {
-  font-size: 11.5px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: .05em;
+  font-size: 12.5px;
+  font-weight: 600;
   color: var(--ink-2);
 }
 
@@ -1039,9 +1020,8 @@ html, body {
   border-collapse: separate;
   border-spacing: 0;
   background: var(--surface);
-  border: 1.5px solid var(--navy);
-  border-radius: 0;
-  box-shadow: 4px 4px 0 rgba(11,37,69,0.1);
+  border: 1px solid var(--line);
+  border-radius: 16px;
   overflow: hidden;
 }
 .admin-members-table th {
@@ -1496,7 +1476,7 @@ function renderLoginStepRoles(container) {
         <!-- Eyebrow with Active Org Tag -->
         <div class="login-eyebrow" style="display:flex; align-items:center; gap:8px; flex-wrap:wrap">
           <span>QC FLOW</span>
-          <span style="background:var(--navy); color:#fff; padding:2px 10px; border-radius:0; font-size:11px; font-weight:700; text-transform:none">
+          <span style="background:var(--mint-soft); color:var(--mint-ink); padding:2px 10px; border-radius:999px; font-size:11px; font-weight:700; text-transform:none">
             🏢 ${esc(orgName)}
           </span>
         </div>
@@ -1509,13 +1489,13 @@ function renderLoginStepRoles(container) {
 
         <!-- Secure Credentials Form -->
         <form id="loginForm" onsubmit="handleRealLoginSubmit(event)" style="display:flex; flex-direction:column; gap:14px">
-          <div id="loginErrorMessage" style="display:none; padding:10px 12px; border-radius:0; border:1px solid var(--crit); background:var(--crit-soft); color:var(--crit); font-size:12.5px; font-weight:700"></div>
+          <div id="loginErrorMessage" style="display:none; padding:10px 12px; border-radius:8px; background:var(--crit-soft); color:var(--crit); font-size:12.5px; font-weight:700"></div>
 
           <div>
             <label style="display:block; font-size:12px; font-weight:700; color:var(--ink); margin-bottom:4px">
               Corporate Email Address *
             </label>
-            <input type="email" id="loginEmailInput" required placeholder="name@company.com" style="width:100%; height:44px; padding:0 12px; border-radius:0; border:1.5px solid var(--navy); font-size:14px; background:var(--surface)">
+            <input type="email" id="loginEmailInput" required placeholder="name@company.com" style="width:100%; height:44px; padding:0 12px; border-radius:10px; border:1px solid var(--line); font-size:14px; background:var(--surface)">
           </div>
 
           <div>
@@ -1523,11 +1503,11 @@ function renderLoginStepRoles(container) {
               <label style="font-size:12px; font-weight:700; color:var(--ink)">Password *</label>
               <button type="button" class="login-link" onclick="handleForgotPassword()" style="font-size:11.5px">Forgot password?</button>
             </div>
-            <input type="password" id="loginPasswordInput" required placeholder="Enter password" style="width:100%; height:44px; padding:0 12px; border-radius:0; border:1.5px solid var(--navy); font-size:14px; background:var(--surface)">
+            <input type="password" id="loginPasswordInput" required placeholder="Enter password" style="width:100%; height:44px; padding:0 12px; border-radius:10px; border:1px solid var(--line); font-size:14px; background:var(--surface)">
           </div>
 
           <!-- Quick Fill Demo Profiles -->
-          <div style="background:var(--surface-2); border:1.5px solid var(--navy); border-radius:0; padding:10px 12px; font-size:11.5px; color:var(--ink-2)">
+          <div style="background:var(--surface-2); border-radius:10px; padding:10px 12px; font-size:11.5px; color:var(--ink-2)">
             <strong style="color:var(--ink)">Verified Enterprise Profiles for ${esc(orgName)}:</strong>
             <div style="display:flex; gap:6px; flex-wrap:wrap; margin-top:6px">
               <button type="button" class="btn ghost" onclick="quickFillCredentials('priya.deshmukh@purvanchal.com', 'Lead@123')" style="height:28px; padding:0 8px; font-size:11px">
@@ -1580,7 +1560,7 @@ function renderLoginStepRegister(container) {
 
         <div class="login-eyebrow" style="display:flex; align-items:center; gap:8px; flex-wrap:wrap">
           <span>QC FLOW</span>
-          <span style="background:var(--navy); color:#fff; padding:2px 10px; border-radius:0; font-size:11px; font-weight:700; text-transform:none">
+          <span style="background:var(--mint-soft); color:var(--mint-ink); padding:2px 10px; border-radius:999px; font-size:11px; font-weight:700; text-transform:none">
             🏢 ${esc(orgName)}
           </span>
         </div>
@@ -1591,27 +1571,27 @@ function renderLoginStepRegister(container) {
         </p>
 
         <form id="registerForm" onsubmit="handleRealRegisterSubmit(event)" style="display:flex; flex-direction:column; gap:12px">
-          <div id="registerErrorMessage" style="display:none; padding:10px 12px; border-radius:0; border:1px solid var(--crit); background:var(--crit-soft); color:var(--crit); font-size:12.5px; font-weight:700"></div>
+          <div id="registerErrorMessage" style="display:none; padding:10px 12px; border-radius:8px; background:var(--crit-soft); color:var(--crit); font-size:12.5px; font-weight:700"></div>
 
           <div>
             <label style="display:block; font-size:12px; font-weight:700; color:var(--ink); margin-bottom:4px">Full Name *</label>
-            <input type="text" id="regFullNameInput" required placeholder="e.g. Ramesh Kumar" style="width:100%; height:42px; padding:0 12px; border-radius:0; border:1.5px solid var(--navy); font-size:13.5px; background:var(--surface)">
+            <input type="text" id="regFullNameInput" required placeholder="e.g. Ramesh Kumar" style="width:100%; height:42px; padding:0 12px; border-radius:10px; border:1px solid var(--line); font-size:13.5px; background:var(--surface)">
           </div>
 
           <div>
             <label style="display:block; font-size:12px; font-weight:700; color:var(--ink); margin-bottom:4px">Corporate Email Address *</label>
-            <input type="email" id="regEmailInput" required placeholder="name@company.com" style="width:100%; height:42px; padding:0 12px; border-radius:0; border:1.5px solid var(--navy); font-size:13.5px; background:var(--surface)">
+            <input type="email" id="regEmailInput" required placeholder="name@company.com" style="width:100%; height:42px; padding:0 12px; border-radius:10px; border:1px solid var(--line); font-size:13.5px; background:var(--surface)">
           </div>
 
           <div>
             <label style="display:block; font-size:12px; font-weight:700; color:var(--ink); margin-bottom:4px">Password (min 6 characters) *</label>
-            <input type="password" id="regPasswordInput" required minlength="6" placeholder="Set a secure password" style="width:100%; height:42px; padding:0 12px; border-radius:0; border:1.5px solid var(--navy); font-size:13.5px; background:var(--surface)">
+            <input type="password" id="regPasswordInput" required minlength="6" placeholder="Set a secure password" style="width:100%; height:42px; padding:0 12px; border-radius:10px; border:1px solid var(--line); font-size:13.5px; background:var(--surface)">
           </div>
 
           <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px">
             <div>
               <label style="display:block; font-size:12px; font-weight:700; color:var(--ink); margin-bottom:4px">Operational Role *</label>
-              <select id="regRoleSelect" style="width:100%; height:42px; padding:0 10px; border-radius:0; border:1.5px solid var(--navy); font-size:13px; background:var(--surface)">
+              <select id="regRoleSelect" style="width:100%; height:42px; padding:0 10px; border-radius:10px; border:1px solid var(--line); font-size:13px; background:var(--surface)">
                 <option value="engineer" selected>QC Inspection Engineer</option>
                 <option value="qc_lead">QC Lead / Quality Manager</option>
                 <option value="admin">System Administrator</option>
@@ -1619,16 +1599,16 @@ function renderLoginStepRegister(container) {
             </div>
             <div>
               <label style="display:block; font-size:12px; font-weight:700; color:var(--ink); margin-bottom:4px">Employee ID</label>
-              <input type="text" id="regEmpIdInput" placeholder="e.g. EMP-1010" style="width:100%; height:42px; padding:0 12px; border-radius:0; border:1.5px solid var(--navy); font-size:13px; background:var(--surface)">
+              <input type="text" id="regEmpIdInput" placeholder="e.g. EMP-1010" style="width:100%; height:42px; padding:0 12px; border-radius:10px; border:1px solid var(--line); font-size:13px; background:var(--surface)">
             </div>
           </div>
 
           <div>
             <label style="display:block; font-size:12px; font-weight:700; color:var(--ink); margin-bottom:4px">Specialization / Trade</label>
-            <input type="text" id="regSpecInput" placeholder="e.g. RCC & Structural, Finishes, Façade" style="width:100%; height:42px; padding:0 12px; border-radius:0; border:1.5px solid var(--navy); font-size:13px; background:var(--surface)">
+            <input type="text" id="regSpecInput" placeholder="e.g. RCC & Structural, Finishes, Façade" style="width:100%; height:42px; padding:0 12px; border-radius:10px; border:1px solid var(--line); font-size:13px; background:var(--surface)">
           </div>
 
-          <button type="submit" id="regSubmitBtn" class="login-continue-btn" style="background:var(--safety); color:#fff; border:1.5px solid var(--safety); border-radius:0; cursor:pointer; margin-top:8px">
+          <button type="submit" id="regSubmitBtn" class="login-continue-btn" style="background:var(--mint); color:var(--on-mint); cursor:pointer; margin-top:8px">
             Create Account & Launch Workspace →
           </button>
         </form>
@@ -1661,23 +1641,23 @@ function renderLoginStepAdminRegister(container) {
         </p>
 
         <form id="adminOrgForm" onsubmit="handleAdminOrgSubmit(event)" style="display:flex; flex-direction:column; gap:13px">
-          <div id="adminRegErrorBox" style="display:none; padding:10px 12px; border-radius:0; border:1px solid var(--crit); background:var(--crit-soft); color:var(--crit); font-size:12.5px; font-weight:700"></div>
+          <div id="adminRegErrorBox" style="display:none; padding:10px 12px; border-radius:8px; background:var(--crit-soft); color:var(--crit); font-size:12.5px; font-weight:700"></div>
 
           <div style="display:grid; grid-template-columns:1.5fr 1fr; gap:10px">
             <div>
               <label style="display:block; font-size:12px; font-weight:700; color:var(--ink); margin-bottom:4px">Organization Name *</label>
-              <input type="text" id="adminOrgName" required placeholder="e.g. Apex Infra Projects Ltd" style="width:100%; height:42px; padding:0 12px; border-radius:0; border:1.5px solid var(--navy); font-size:13.5px; background:var(--surface)">
+              <input type="text" id="adminOrgName" required placeholder="e.g. Apex Infra Projects Ltd" style="width:100%; height:42px; padding:0 12px; border-radius:10px; border:1px solid var(--line); font-size:13.5px; background:var(--surface)">
             </div>
             <div>
               <label style="display:block; font-size:12px; font-weight:700; color:var(--ink); margin-bottom:4px">Org Code (Optional)</label>
-              <input type="text" id="adminOrgCode" placeholder="e.g. APEX" style="width:100%; height:42px; padding:0 12px; border-radius:0; border:1.5px solid var(--navy); font-size:13.5px; background:var(--surface)">
+              <input type="text" id="adminOrgCode" placeholder="e.g. APEX" style="width:100%; height:42px; padding:0 12px; border-radius:10px; border:1px solid var(--line); font-size:13.5px; background:var(--surface)">
             </div>
           </div>
 
           <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px">
             <div>
               <label style="display:block; font-size:12px; font-weight:700; color:var(--ink); margin-bottom:4px">Industry</label>
-              <select id="adminOrgIndustry" style="width:100%; height:42px; padding:0 10px; border-radius:0; border:1.5px solid var(--navy); font-size:13px; background:var(--surface)">
+              <select id="adminOrgIndustry" style="width:100%; height:42px; padding:0 10px; border-radius:10px; border:1px solid var(--line); font-size:13px; background:var(--surface)">
                 <option value="Commercial & Luxury Residential" selected>Commercial & Residential</option>
                 <option value="Industrial Logistics & PEB">Industrial & Logistics</option>
                 <option value="Highways & Telecom Infrastructure">Infrastructure & Telecom</option>
@@ -1686,32 +1666,32 @@ function renderLoginStepAdminRegister(container) {
             </div>
             <div>
               <label style="display:block; font-size:12px; font-weight:700; color:var(--ink); margin-bottom:4px">City / Head Office</label>
-              <input type="text" id="adminOrgCity" placeholder="e.g. Mumbai, Maharashtra" style="width:100%; height:42px; padding:0 12px; border-radius:0; border:1.5px solid var(--navy); font-size:13.5px; background:var(--surface)">
+              <input type="text" id="adminOrgCity" placeholder="e.g. Mumbai, Maharashtra" style="width:100%; height:42px; padding:0 12px; border-radius:10px; border:1px solid var(--line); font-size:13.5px; background:var(--surface)">
             </div>
           </div>
 
-          <div style="border-top:1.5px solid var(--navy); padding-top:12px; margin-top:2px">
+          <div style="border-top:1px solid var(--line); padding-top:12px; margin-top:2px">
             <strong style="display:block; font-size:13px; color:var(--ink); margin-bottom:10px">Master Administrator Credentials:</strong>
             
             <div style="display:flex; flex-direction:column; gap:10px">
               <div>
                 <label style="display:block; font-size:12px; font-weight:700; color:var(--ink); margin-bottom:4px">Administrator Full Name *</label>
-                <input type="text" id="adminFullName" required placeholder="e.g. Sunil Mehra" style="width:100%; height:42px; padding:0 12px; border-radius:0; border:1.5px solid var(--navy); font-size:13.5px; background:var(--surface)">
+                <input type="text" id="adminFullName" required placeholder="e.g. Sunil Mehra" style="width:100%; height:42px; padding:0 12px; border-radius:10px; border:1px solid var(--line); font-size:13.5px; background:var(--surface)">
               </div>
 
               <div>
                 <label style="display:block; font-size:12px; font-weight:700; color:var(--ink); margin-bottom:4px">Corporate Email Address *</label>
-                <input type="email" id="adminEmail" required placeholder="admin@company.com" style="width:100%; height:42px; padding:0 12px; border-radius:0; border:1.5px solid var(--navy); font-size:13.5px; background:var(--surface)">
+                <input type="email" id="adminEmail" required placeholder="admin@company.com" style="width:100%; height:42px; padding:0 12px; border-radius:10px; border:1px solid var(--line); font-size:13.5px; background:var(--surface)">
               </div>
 
               <div>
                 <label style="display:block; font-size:12px; font-weight:700; color:var(--ink); margin-bottom:4px">Password (min 6 characters) *</label>
-                <input type="password" id="adminPassword" required minlength="6" placeholder="Set a secure master password" style="width:100%; height:42px; padding:0 12px; border-radius:0; border:1.5px solid var(--navy); font-size:13.5px; background:var(--surface)">
+                <input type="password" id="adminPassword" required minlength="6" placeholder="Set a secure master password" style="width:100%; height:42px; padding:0 12px; border-radius:10px; border:1px solid var(--line); font-size:13.5px; background:var(--surface)">
               </div>
             </div>
           </div>
 
-          <button type="submit" id="adminRegSubmitBtn" class="login-continue-btn" style="background:var(--safety); color:#fff; border:1.5px solid var(--safety); border-radius:0; cursor:pointer; margin-top:10px">
+          <button type="submit" id="adminRegSubmitBtn" class="login-continue-btn" style="background:var(--mint); color:var(--on-mint); cursor:pointer; margin-top:10px">
             Register Organization & Launch Console →
           </button>
         </form>
@@ -2125,9 +2105,9 @@ function insRow(i, p, showP){
   const isAlloc = i.code && (i.code.startsWith('ALC-') || i.code.startsWith('INS-'));
   const chkCount = i.items_count || (i.res ? i.res.items : (isAlloc ? 1 : null));
   const pri = i.priority || (isAlloc ? 'High' : 'High');
-  const priColor = pri === 'High' ? 'var(--crit)' : pri === 'Medium' ? 'var(--major)' : 'var(--navy)';
-  const priBg = pri === 'High' ? 'var(--crit-soft)' : pri === 'Medium' ? 'var(--major-soft)' : 'var(--navy-soft, #EDF2F7)';
-  const priBadge = `<span style="font-size:10px; font-weight:800; padding:1px 6px; border-radius:0; border:1px solid currentColor; background:${priBg}; color:${priColor}; text-transform:uppercase">${pri}</span>`;
+  const priColor = pri === 'High' ? 'var(--crit)' : pri === 'Medium' ? 'var(--major)' : 'var(--mint-ink)';
+  const priBg = pri === 'High' ? 'var(--crit-soft)' : pri === 'Medium' ? 'var(--major-soft)' : 'var(--mint-soft)';
+  const priBadge = `<span style="font-size:10px; font-weight:800; padding:1px 6px; border-radius:4px; background:${priBg}; color:${priColor}; text-transform:uppercase">${pri}</span>`;
 
   let progressPct = 0;
   if (i.res && i.res.items) {
@@ -2144,11 +2124,11 @@ function insRow(i, p, showP){
   const stClass = ['Report issued', 'Done'].includes(i.status) ? 'good' : ['Pending review', 'In progress'].includes(i.status) ? 'info' : ['On hold', 'Returned for Reinspection', 'Returned'].includes(i.status) ? 'bad' : '';
 
   return `
-    <article class="card" style="position:relative; background:var(--surface); border:1.5px solid var(--navy); border-radius:0; padding:14px; margin-bottom:10px; display:flex; flex-direction:column; gap:10px; box-shadow:4px 4px 0 rgba(11,37,69,0.12)">
+    <article class="card" style="position:relative; background:var(--surface); border:1px solid var(--line); border-radius:12px; padding:14px; margin-bottom:10px; display:flex; flex-direction:column; gap:10px">
       <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:8px">
         <div>
           <div style="display:flex; gap:6px; align-items:center; flex-wrap:wrap; margin-bottom:4px">
-            <span class="code" style="font-weight:800; color:var(--safety); font-size:12.5px">${i.code}</span>
+            <span class="code" style="font-weight:800; color:var(--mint); font-size:12.5px">${i.code}</span>
             ${showP ? `<span style="font-size:12px; font-weight:700">· ${esc(p.name)}</span>` : ''}
             ${priBadge}
             <span class="stt ${stClass}">${i.status}</span>
@@ -2158,12 +2138,12 @@ function insRow(i, p, showP){
             ${i.tpl ? `<span class="muted" style="font-weight:400; font-size:12.5px">· ${esc(i.tpl)}</span>` : ''}
           </h3>
         </div>
-        ${chkCount ? `<span class="pill" style="font-size:11px; font-weight:700; background:var(--navy-soft, #EDF2F7); color:var(--navy); border-radius:0; border:1px solid var(--navy); flex-shrink:0">${chkCount} Checkpoints</span>` : ''}
+        ${chkCount ? `<span class="pill" style="font-size:11px; font-weight:700; background:var(--mint-soft); color:var(--mint-ink); flex-shrink:0">${chkCount} Checkpoints</span>` : ''}
       </div>
 
-      <div style="background:var(--surface-2); border:1px solid var(--line); border-radius:0; padding:8px 10px; font-size:12px; display:grid; grid-template-columns:1fr 1fr; gap:6px">
+      <div style="background:var(--surface-2); border-radius:8px; padding:8px 10px; font-size:12px; display:grid; grid-template-columns:1fr 1fr; gap:6px">
         <div><strong>Location:</strong> ${esc(i.zone || 'General Site')}</div>
-        <div><strong>Engineer:</strong> <strong style="color:var(--navy)">${esc(i.eng || 'Unassigned')}</strong></div>
+        <div><strong>Engineer:</strong> <strong style="color:var(--mint)">${esc(i.eng || 'Unassigned')}</strong></div>
         <div><strong>Schedule:</strong> ${dueText(i.due, insLate(i), ['Report issued', 'Done'].includes(i.status) ? i.due : null)}</div>
         <div><strong>Progress:</strong> <span class="num">${progressPct}%</span></div>
       </div>
@@ -2206,13 +2186,13 @@ VIEWS.home = () => {
   const resume = S.ctx ? (() => { const p = byId(S.ctx); return p ? `<button class="resume" type="button" data-go="project:${p.id}"><span class="ri">${ico('clock',18)}</span><span class="rt"><span class="muted">Continue where you left off</span><b>${esc(p.name)}</b></span>${ico('chev',18)}</button>` : ''; })() : '';
 
   const emptyProjectsBanner = P.length === 0 ? `
-    <div style="background:var(--surface); border:1.5px dashed var(--navy); border-radius:0; padding:36px 20px; text-align:center; margin-top:16px; box-shadow:4px 4px 0 rgba(11,37,69,0.1)">
+    <div style="background:var(--surface); border:1.5px dashed var(--line); border-radius:16px; padding:36px 20px; text-align:center; margin-top:16px">
       <div style="font-size:38px; margin-bottom:8px">🏗️</div>
       <h3 style="font-size:18px; font-weight:700; color:var(--ink); margin-bottom:6px">No Construction Projects Yet</h3>
       <p style="font-size:13.5px; color:var(--ink-2); max-width:460px; margin:0 auto 18px; line-height:1.5">
         <strong>${esc(orgName)}</strong> currently has no projects configured in this tenant. Create your first project to begin stage quality inspections.
       </p>
-      <button class="btn primary" type="button" onclick="openCreateProjectModal()" style="height:40px; padding:0 20px; font-size:13px; font-weight:700; background:var(--safety); color:#fff; border-radius:0; border:1.5px solid var(--safety); box-shadow:3px 3px 0 rgba(11,37,69,0.15)">
+      <button class="btn primary" type="button" onclick="openCreateProjectModal()" style="height:40px; padding:0 20px; font-size:13px; font-weight:700; background:var(--mint); color:var(--on-mint)">
         + Create First Project
       </button>
     </div>
@@ -2419,18 +2399,18 @@ VIEWS.inspection = e => {
   const changeEngBtn = `<button class="btn ghost" type="button" onclick="openChangeEngineerModal('${i.code}')">👤 Change Inspection Engineer</button>`;
   if (['Draft','Required'].includes(i.status)) btns = `<button class="btn primary" type="button" onclick="openCreateInspectionWizard('${p.id}', '${i.code}')">Edit Inspection</button>${changeEngBtn}`;
   else if (i.status === 'Pending review' && ap) btns = `<button class="btn primary" type="button" data-go="approval:${ap.code}">Review report</button>${changeEngBtn}`;
-  else if (['Allocated','In progress'].includes(i.status)) btns = `<button class="btn primary" type="button" onclick="openAllocationDetail('${i.code}')" style="background:var(--safety); color:#fff; border-radius:0; border:1.5px solid var(--safety)">📋 Inspect Checkpoints</button><button class="btn ghost" type="button" data-act="nudge:${i.code}">${insLate(i) ? 'Chase engineer' : 'Send reminder'}</button>${changeEngBtn}`;
+  else if (['Allocated','In progress'].includes(i.status)) btns = `<button class="btn primary" type="button" onclick="openAllocationDetail('${i.code}')" style="background:var(--mint); color:var(--on-mint)">📋 Inspect Checkpoints</button><button class="btn ghost" type="button" data-act="nudge:${i.code}">${insLate(i) ? 'Chase engineer' : 'Send reminder'}</button>${changeEngBtn}`;
   else btns = changeEngBtn;
 
-  const aiReportBtn = `<button class="btn" type="button" data-act="genReport:${i.code}" style="background:var(--navy); color:#fff; border:1.5px solid var(--navy); font-weight:700; border-radius:0; box-shadow:3px 3px 0 rgba(11,37,69,0.15)">✨ Generate Detailed AI Audit Report</button>
+  const aiReportBtn = `<button class="btn" type="button" data-act="genReport:${i.code}" style="background:linear-gradient(135deg, var(--band-1), var(--band-2)); color:#5CCB9F; border:1px solid #4FB892; font-weight:700">✨ Generate Detailed AI Audit Report</button>
   <button class="btn ghost" type="button" data-sheet="report:${i.code}">📄 View Report</button>`;
 
   // Render allocated checkpoints breakdown if available
   let allocatedCheckpointsSection = '';
   if (alloc && alloc.checkpoints && alloc.checkpoints.length) {
     const chkListHtml = alloc.checkpoints.map(chk => {
-      const priColor = chk.priority === 'H' ? 'var(--crit)' : chk.priority === 'M' ? 'var(--major)' : 'var(--navy)';
-      const priBg = chk.priority === 'H' ? 'var(--crit-soft)' : chk.priority === 'M' ? 'var(--major-soft)' : 'var(--navy-soft, #EDF2F7)';
+      const priColor = chk.priority === 'H' ? 'var(--crit)' : chk.priority === 'M' ? 'var(--major)' : 'var(--mint-ink)';
+      const priBg = chk.priority === 'H' ? 'var(--crit-soft)' : chk.priority === 'M' ? 'var(--major-soft)' : 'var(--mint-soft)';
 
       let photosHtml = '';
       if (chk.evidence_photo_url) {
@@ -2443,7 +2423,7 @@ VIEWS.inspection = e => {
           photosHtml = `
             <div style="display:flex; gap:6px; margin-top:8px; flex-wrap:wrap">
               ${photos.map(u => `
-                <img src="${u}" alt="Evidence" style="width:54px; height:54px; object-fit:cover; border-radius:0; border:1.5px solid var(--navy); cursor:pointer" onclick="window.open('${u}','_blank')">
+                <img src="${u}" alt="Evidence" style="width:54px; height:54px; object-fit:cover; border-radius:6px; border:1px solid var(--line); cursor:pointer" onclick="window.open('${u}','_blank')">
               `).join('')}
             </div>
           `;
@@ -2451,7 +2431,7 @@ VIEWS.inspection = e => {
       }
 
       const obsHtml = chk.observations ? `
-        <div style="font-size:12px; margin-top:6px; padding:6px 10px; border-radius:0; border:1px solid var(--navy); background:${chk.result_status === 'NC' ? 'var(--crit-soft)' : 'var(--surface-2)'}; color:${chk.result_status === 'NC' ? 'var(--crit)' : 'var(--ink)'}; line-height:1.4">
+        <div style="font-size:12px; margin-top:6px; padding:6px 10px; border-radius:6px; background:${chk.result_status === 'NC' ? 'var(--crit-soft)' : 'var(--surface-2)'}; color:${chk.result_status === 'NC' ? 'var(--crit)' : 'var(--ink)'}; line-height:1.4">
           <strong>${chk.result_status === 'NC' ? 'Defect Observation' : chk.result_status === 'NA' ? 'NA Justification' : 'Engineer Notes'}:</strong> ${esc(chk.observations)}
         </div>
       ` : '';
@@ -2461,13 +2441,13 @@ VIEWS.inspection = e => {
           <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:10px">
             <div style="flex:1; min-width:0">
               <div style="display:flex; gap:6px; align-items:center; margin-bottom:3px">
-                <span style="font-size:10px; font-weight:800; padding:1px 5px; border-radius:0; border:1px solid currentColor; background:${priBg}; color:${priColor}">[${chk.priority}]</span>
+                <span style="font-size:10px; font-weight:800; padding:1px 5px; border-radius:4px; background:${priBg}; color:${priColor}">[${chk.priority}]</span>
                 <span class="code" style="font-size:11px">${chk.checkpoint_id}</span>
                 <span style="font-size:11px; color:var(--ink-3)">${chk.subgroup_name || ''}</span>
               </div>
               <div style="font-size:13px; font-weight:600; line-height:1.4">${chk.checkpoint_text_snapshot || chk.checkpoint_description}</div>
             </div>
-            <span class="pill" style="font-size:11px; font-weight:700; ${chk.result_status === 'OK' ? 'background:var(--ok); color:#fff' : chk.result_status === 'NC' ? 'background:var(--crit); color:#fff' : chk.result_status === 'NA' ? 'background:var(--ink-3); color:#fff' : 'background:var(--navy-soft, #EDF2F7); color:var(--navy)'}; border-radius:0; border:1px solid var(--navy); flex-shrink:0">
+            <span class="pill" style="font-size:11px; font-weight:700; ${chk.result_status === 'OK' ? 'background:var(--mint); color:#0B2A21' : chk.result_status === 'NC' ? 'background:var(--crit); color:#fff' : chk.result_status === 'NA' ? 'background:var(--ink-3); color:#fff' : 'background:var(--mint-soft); color:var(--mint-ink)'}; flex-shrink:0">
               ${chk.result_status || 'Pending'}
             </span>
           </div>
@@ -2478,10 +2458,10 @@ VIEWS.inspection = e => {
     }).join('');
 
     allocatedCheckpointsSection = `
-      <section class="panel" style="background:var(--surface); border:1.5px solid var(--navy); border-radius:0; box-shadow:4px 4px 0 rgba(11,37,69,0.12); overflow:hidden; margin-top:14px">
-        <div class="block-h" style="padding:12px 14px; background:var(--surface-2); border-bottom:1.5px solid var(--navy); display:flex; justify-content:space-between; align-items:center">
+      <section class="panel" style="background:var(--surface); border:1px solid var(--line); border-radius:14px; overflow:hidden; margin-top:14px">
+        <div class="block-h" style="padding:12px 14px; background:var(--surface-2); border-bottom:1px solid var(--line); display:flex; justify-content:space-between; align-items:center">
           <h2 class="sub-h" style="margin:0; font-size:14px">Allocated Scope (${alloc.checkpoints.length} Checkpoint${alloc.checkpoints.length === 1 ? '' : 's'})</h2>
-          <span style="font-size:11.5px; font-weight:700; color:var(--navy)">Stage: ${alloc.stages ? alloc.stages.join(', ') : alloc.stage_name || ''}</span>
+          <span style="font-size:11.5px; font-weight:700; color:var(--mint-ink)">Stage: ${alloc.stages ? alloc.stages.join(', ') : alloc.stage_name || ''}</span>
         </div>
         <div>
           ${chkListHtml}
@@ -2560,18 +2540,18 @@ VIEWS.list = e => {
     let attentionBanner = '';
     if (attentionItems.length > 0) {
       attentionBanner = `
-        <div style="background:var(--warn-soft, rgba(234,179,8,0.08)); border:1.5px solid var(--major); border-radius:0; box-shadow:3px 3px 0 rgba(11,37,69,0.1); padding:12px 14px; margin-bottom:14px">
+        <div style="background:var(--warn-soft, rgba(234,179,8,0.08)); border:1px solid var(--warn, #eab308); border-radius:10px; padding:12px 14px; margin-bottom:14px">
           <div style="display:flex; align-items:center; gap:8px; margin-bottom:8px">
             <span style="font-size:14px">⚠️</span>
-            <span style="font-weight:700; font-size:13px; color:var(--major)">Needs Your Attention (${attentionItems.length})</span>
+            <span style="font-weight:700; font-size:13px; color:var(--warn-ink, #ca8a04)">Needs Your Attention (${attentionItems.length})</span>
           </div>
           <div style="display:flex; flex-direction:column; gap:6px">
             ${attentionItems.map(o => `
-              <div style="display:flex; justify-content:space-between; align-items:center; background:var(--surface); padding:8px 12px; border-radius:0; font-size:12px; border:1px solid var(--navy)">
-                <div><strong>${esc(o.p.name)}</strong> · <span class="code" style="color:var(--safety)">${esc(o.i.code)}</span>: ${esc(o.i.title)}</div>
+              <div style="display:flex; justify-content:space-between; align-items:center; background:var(--surface); padding:8px 12px; border-radius:6px; font-size:12px; border:1px solid var(--line)">
+                <div><strong>${esc(o.p.name)}</strong> · <span class="code">${esc(o.i.code)}</span>: ${esc(o.i.title)}</div>
                 <div style="display:flex; gap:6px; align-items:center">
                   <span class="stt ${o.i.status === 'Pending review' ? 'info' : 'bad'}" style="font-size:11px">${o.i.status}</span>
-                  <button class="btn ghost" style="padding:2px 8px; font-size:11px; border-radius:0" onclick="go('inspection:${o.i.code}')">View</button>
+                  <button class="btn ghost" style="padding:2px 8px; font-size:11px" onclick="go('inspection:${o.i.code}')">View</button>
                 </div>
               </div>
             `).join('')}
@@ -2736,32 +2716,32 @@ function renderChrome(){
     if (isLanding || !S.role) {
       roleSlot.innerHTML = `
         <div style="display:flex; align-items:center; gap:8px">
-          <button type="button" class="btn ghost" onclick="renderLoginGateway('org')" style="height:32px; padding:0 12px; font-size:12px; font-weight:700; border-radius:0; border:1.5px solid var(--navy); color:var(--ink)">
+          <button type="button" class="btn ghost" onclick="renderLoginGateway('org')" style="height:32px; padding:0 12px; font-size:12px; font-weight:700; border-radius:16px; border:1px solid var(--line); color:var(--ink)">
             Sign In
           </button>
-          <button type="button" class="btn primary" onclick="renderLoginGateway('admin_register')" style="height:32px; padding:0 14px; font-size:12px; font-weight:700; border-radius:0; background:var(--safety); color:#fff; border:1.5px solid var(--safety); box-shadow:2px 2px 0 rgba(11,37,69,0.15)">
+          <button type="button" class="btn primary" onclick="renderLoginGateway('admin_register')" style="height:32px; padding:0 14px; font-size:12px; font-weight:700; border-radius:16px; background:var(--mint); color:var(--on-mint)">
             Admin Setup →
           </button>
         </div>
       `;
     } else if (isAdmin) {
       roleSlot.innerHTML = `
-        <div style="display:flex; align-items:center; gap:6px; background:rgba(0,0,0,0.25); border:1.5px solid rgba(255,255,255,0.25); border-radius:0; padding:2px 8px 2px 4px">
-          <span style="font-size:10px; font-weight:800; background:var(--safety); color:#fff; padding:2px 6px; border-radius:0; text-transform:uppercase">ADMIN</span>
+        <div style="display:flex; align-items:center; gap:6px; background:rgba(0,0,0,0.25); border:1px solid rgba(255,255,255,0.18); border-radius:20px; padding:2px 10px 2px 4px">
+          <span style="font-size:10px; font-weight:800; background:var(--mint); color:var(--on-mint); padding:2px 7px; border-radius:12px; text-transform:uppercase">ADMIN</span>
           <span class="role-badge-name" style="font-size:12px; font-weight:700; color:var(--band-ink)">${esc(adminName)}</span>
         </div>
       `;
     } else if (isEng) {
       roleSlot.innerHTML = `
-        <div style="display:flex; align-items:center; gap:6px; background:rgba(0,0,0,0.25); border:1.5px solid rgba(255,255,255,0.25); border-radius:0; padding:2px 8px 2px 4px">
-          <span style="font-size:10px; font-weight:800; background:var(--safety); color:#fff; padding:2px 6px; border-radius:0; text-transform:uppercase">FIELD</span>
+        <div style="display:flex; align-items:center; gap:6px; background:rgba(0,0,0,0.25); border:1px solid rgba(255,255,255,0.18); border-radius:20px; padding:2px 10px 2px 4px">
+          <span style="font-size:10px; font-weight:800; background:var(--mint); color:var(--on-mint); padding:2px 7px; border-radius:12px; text-transform:uppercase">FIELD</span>
           <span class="role-badge-name" style="font-size:12px; font-weight:700; color:var(--band-ink)">${esc(activeEngName)}</span>
         </div>
       `;
     } else {
       roleSlot.innerHTML = `
-        <div style="display:flex; align-items:center; gap:6px; background:rgba(0,0,0,0.25); border:1.5px solid rgba(255,255,255,0.25); border-radius:0; padding:2px 8px 2px 4px">
-          <span style="font-size:10px; font-weight:800; background:var(--safety); color:#fff; padding:2px 6px; border-radius:0; text-transform:uppercase">LEAD</span>
+        <div style="display:flex; align-items:center; gap:6px; background:rgba(0,0,0,0.25); border:1px solid rgba(255,255,255,0.18); border-radius:20px; padding:2px 10px 2px 4px">
+          <span style="font-size:10px; font-weight:800; background:var(--mint); color:var(--on-mint); padding:2px 7px; border-radius:12px; text-transform:uppercase">LEAD</span>
           <span class="role-badge-name" style="font-size:12px; font-weight:700; color:var(--band-ink)">${esc(leadName)}</span>
         </div>
       `;
@@ -3009,8 +2989,8 @@ VIEWS.landing = () => {
         </div>
       </section>
 
-      <!-- Platform Capabilities Highlights - Industrial Blueprint -->
-      <section class="landing-section" style="background:var(--surface); border:1.5px solid var(--navy); border-radius:0; box-shadow:4px 4px 0 rgba(11,37,69,0.12); padding:36px; margin-top:50px">
+      <!-- Platform Capabilities Highlights -->
+      <section class="landing-section" style="background:var(--surface); border:1px solid var(--line); border-radius:24px; padding:36px; margin-top:50px">
         <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(240px, 1fr)); gap:24px">
           <div>
             <div style="font-size:24px; margin-bottom:8px">🔐</div>
@@ -3090,7 +3070,7 @@ VIEWS.admin_dashboard = () => {
         <div>
           <div class="eyebrow" style="display:flex; align-items:center; gap:6px">
             <span>Enterprise Organization Administration</span>
-            <span style="background:var(--navy); color:#fff; font-size:10.5px; font-weight:800; padding:1px 6px; border-radius:0">MASTER ADMIN</span>
+            <span style="background:var(--mint-soft); color:var(--mint-ink); font-size:10.5px; font-weight:800; padding:1px 6px; border-radius:4px">MASTER ADMIN</span>
           </div>
           <h1 style="font-size:28px; font-weight:400; margin-top:4px">
             🏢 <strong style="font-weight:700; color:var(--ink)">${esc(orgName)}</strong>
@@ -3101,21 +3081,21 @@ VIEWS.admin_dashboard = () => {
         </div>
 
         <div style="display:flex; gap:10px; align-items:center; flex-wrap:wrap">
-          <button type="button" class="btn ghost" onclick="push('home')" style="height:38px; padding:0 14px; font-size:12.5px; font-weight:700; border-radius:0; border:1.5px solid var(--navy)">
+          <button type="button" class="btn ghost" onclick="push('home')" style="height:38px; padding:0 14px; font-size:12.5px; font-weight:700; border-color:var(--line)">
             🏗️ View Quality Projects Console →
           </button>
-          <button type="button" class="btn primary" onclick="openProvisionMemberModal()" style="height:38px; padding:0 16px; font-size:12.5px; font-weight:700; border-radius:0; background:var(--safety); color:#fff; border:1.5px solid var(--safety); box-shadow:3px 3px 0 rgba(11,37,69,0.15)">
+          <button type="button" class="btn primary" onclick="openProvisionMemberModal()" style="height:38px; padding:0 16px; font-size:12.5px; font-weight:700; background:var(--mint); color:var(--on-mint)">
             + Provision Team Member
           </button>
         </div>
       </section>
 
       <!-- Hierarchy Notice -->
-      <div style="background:var(--surface); border:1.5px solid var(--navy); border-radius:0; padding:12px 16px; display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap; box-shadow:3px 3px 0 rgba(11,37,69,0.1)">
+      <div style="background:var(--surface-2); border:1px solid var(--line); border-radius:12px; padding:12px 16px; display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap">
         <div style="display:flex; align-items:center; gap:8px">
           <span style="font-size:16px">🏛️</span>
           <span style="font-size:13px; color:var(--ink)">
-            <strong>Organizational Hierarchy Active:</strong> <span style="color:var(--safety); font-weight:700">${esc(orgName)}</span> → Admins (You) → QC Leads → Field Inspection Engineers
+            <strong>Organizational Hierarchy Active:</strong> <span style="color:var(--mint-ink); font-weight:700">${esc(orgName)}</span> → Admins (You) → QC Leads → Field Inspection Engineers
           </span>
         </div>
         <div style="font-size:11.5px; color:var(--ink-2)">
@@ -3134,7 +3114,7 @@ VIEWS.admin_dashboard = () => {
           <div class="admin-stat-lbl">QC Leads / Managers</div>
         </div>
         <div class="admin-stat-card">
-          <div class="admin-stat-val" style="color:var(--safety)">${engCount}</div>
+          <div class="admin-stat-val" style="color:var(--mint)">${engCount}</div>
           <div class="admin-stat-lbl">Field Inspection Engineers</div>
         </div>
         <div class="admin-stat-card">
@@ -3147,16 +3127,16 @@ VIEWS.admin_dashboard = () => {
       <section style="display:flex; flex-direction:column; gap:12px">
         <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px">
           <div class="chips" role="tablist" style="margin-bottom:0">
-            <button class="chip ${currentTab === 'all' ? 'active' : ''}" type="button" onclick="setAdminTab('all')" style="${currentTab === 'all' ? 'background:var(--safety); color:#fff; border-color:var(--safety);' : ''}">
+            <button class="chip ${currentTab === 'all' ? 'active' : ''}" type="button" onclick="setAdminTab('all')" style="${currentTab === 'all' ? 'background:var(--mint); color:var(--on-mint);' : ''}">
               All Members (${totalCount})
             </button>
-            <button class="chip ${currentTab === 'qc_lead' ? 'active' : ''}" type="button" onclick="setAdminTab('qc_lead')" style="${currentTab === 'qc_lead' ? 'background:var(--safety); color:#fff; border-color:var(--safety);' : ''}">
+            <button class="chip ${currentTab === 'qc_lead' ? 'active' : ''}" type="button" onclick="setAdminTab('qc_lead')" style="${currentTab === 'qc_lead' ? 'background:var(--mint); color:var(--on-mint);' : ''}">
               QC Leads (${leadsCount})
             </button>
-            <button class="chip ${currentTab === 'engineer' ? 'active' : ''}" type="button" onclick="setAdminTab('engineer')" style="${currentTab === 'engineer' ? 'background:var(--safety); color:#fff; border-color:var(--safety);' : ''}">
+            <button class="chip ${currentTab === 'engineer' ? 'active' : ''}" type="button" onclick="setAdminTab('engineer')" style="${currentTab === 'engineer' ? 'background:var(--mint); color:var(--on-mint);' : ''}">
               Field Engineers (${engCount})
             </button>
-            <button class="chip ${currentTab === 'admin' ? 'active' : ''}" type="button" onclick="setAdminTab('admin')" style="${currentTab === 'admin' ? 'background:var(--safety); color:#fff; border-color:var(--safety);' : ''}">
+            <button class="chip ${currentTab === 'admin' ? 'active' : ''}" type="button" onclick="setAdminTab('admin')" style="${currentTab === 'admin' ? 'background:var(--mint); color:var(--on-mint);' : ''}">
               Administrators (${adminCount})
             </button>
           </div>
@@ -3185,16 +3165,16 @@ VIEWS.admin_dashboard = () => {
                 const isE = m.role === 'engineer';
                 const isA = m.role === 'admin';
                 const roleBadge = isA 
-                  ? `<span class="pill" style="background:var(--navy); color:#fff; font-weight:800; font-size:10.5px; border-radius:0; border:1px solid var(--navy)">ADMIN</span>`
+                  ? `<span class="pill" style="background:rgba(0,0,0,0.1); color:var(--ink); font-weight:800; font-size:10.5px">ADMIN</span>`
                   : isL 
-                  ? `<span class="pill" style="background:var(--major-soft); color:var(--major); font-weight:800; font-size:10.5px; border-radius:0; border:1px solid var(--major)">QC LEAD</span>`
-                  : `<span class="pill" style="background:var(--safety-soft); color:var(--safety); font-weight:800; font-size:10.5px; border-radius:0; border:1px solid var(--safety)">INSPECTION ENGINEER</span>`;
+                  ? `<span class="pill" style="background:var(--major-soft); color:var(--major); font-weight:800; font-size:10.5px">QC LEAD</span>`
+                  : `<span class="pill" style="background:var(--mint-soft); color:var(--mint-ink); font-weight:800; font-size:10.5px">INSPECTION ENGINEER</span>`;
                 const initials = (m.avatar_initials || m.full_name.slice(0,2)).toUpperCase();
                 return `
                   <tr>
                     <td>
                       <div style="display:flex; align-items:center; gap:10px">
-                        <div class="avatar" style="width:32px; height:32px; font-size:12px; border-radius:0; background:var(--safety); color:#fff; border:1px solid var(--navy)">${initials}</div>
+                        <div class="avatar" style="width:32px; height:32px; font-size:12px; ${isE ? 'background:var(--mint); color:var(--on-mint)' : ''}">${initials}</div>
                         <div>
                           <strong style="color:var(--ink)">${esc(m.full_name)}</strong>
                         </div>
@@ -3255,13 +3235,13 @@ function openProvisionMemberModal() {
 
   const modalHtml = `
     <div id="provisionModalBackdrop" style="position:fixed; inset:0; background:rgba(0,0,0,0.6); backdrop-filter:blur(6px); z-index:9999; display:grid; place-items:center; padding:16px; animation:loginCardEnter 0.2s ease">
-      <div style="background:var(--surface); border:2px solid var(--navy); border-radius:0; width:100%; max-width:520px; padding:28px; box-shadow:8px 8px 0 rgba(11,37,69,0.2)">
+      <div style="background:var(--surface); border:1px solid var(--line); border-radius:20px; width:100%; max-width:520px; padding:28px; box-shadow:0 24px 60px rgba(0,0,0,0.25)">
         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px">
           <div>
-            <div style="font-size:11px; font-weight:800; color:var(--safety); text-transform:uppercase; letter-spacing:0.08em">Provision Team Member</div>
+            <div style="font-size:11px; font-weight:800; color:var(--mint); text-transform:uppercase; letter-spacing:0.08em">Provision Team Member</div>
             <h2 style="font-size:20px; font-weight:700; color:var(--ink); margin:2px 0 0">Add Member to ${esc(orgName)}</h2>
           </div>
-          <button type="button" class="icon-btn" onclick="closeProvisionMemberModal()" aria-label="Close modal" style="border-radius:0">✕</button>
+          <button type="button" class="icon-btn" onclick="closeProvisionMemberModal()" aria-label="Close modal">✕</button>
         </div>
 
         <p style="font-size:12.5px; color:var(--ink-2); margin-bottom:18px">
@@ -3269,45 +3249,45 @@ function openProvisionMemberModal() {
         </p>
 
         <form id="provisionMemberForm" onsubmit="handleProvisionMemberSubmit(event)" style="display:flex; flex-direction:column; gap:12px">
-          <div id="provisionErrorBox" style="display:none; padding:10px 12px; border-radius:0; border:1px solid var(--crit); background:var(--crit-soft); color:var(--crit); font-size:12px; font-weight:700"></div>
+          <div id="provisionErrorBox" style="display:none; padding:10px 12px; border-radius:8px; background:var(--crit-soft); color:var(--crit); font-size:12px; font-weight:700"></div>
 
           <div>
             <label style="display:block; font-size:12px; font-weight:700; color:var(--ink); margin-bottom:4px">Full Name *</label>
-            <input type="text" id="provFullName" required placeholder="e.g. Rahul Sharma" style="width:100%; height:40px; padding:0 12px; border-radius:0; border:1.5px solid var(--navy); font-size:13px; background:var(--surface)">
+            <input type="text" id="provFullName" required placeholder="e.g. Rahul Sharma" style="width:100%; height:40px; padding:0 12px; border-radius:8px; border:1px solid var(--line); font-size:13px; background:var(--surface)">
           </div>
 
           <div>
             <label style="display:block; font-size:12px; font-weight:700; color:var(--ink); margin-bottom:4px">Corporate Email *</label>
-            <input type="email" id="provEmail" required placeholder="rahul@company.com" style="width:100%; height:40px; padding:0 12px; border-radius:0; border:1.5px solid var(--navy); font-size:13px; background:var(--surface)">
+            <input type="email" id="provEmail" required placeholder="rahul@company.com" style="width:100%; height:40px; padding:0 12px; border-radius:8px; border:1px solid var(--line); font-size:13px; background:var(--surface)">
           </div>
 
           <div>
             <label style="display:block; font-size:12px; font-weight:700; color:var(--ink); margin-bottom:4px">Temporary Password *</label>
-            <input type="password" id="provPassword" required minlength="6" placeholder="Min 6 characters" style="width:100%; height:40px; padding:0 12px; border-radius:0; border:1.5px solid var(--navy); font-size:13px; background:var(--surface)">
+            <input type="password" id="provPassword" required minlength="6" placeholder="Min 6 characters" style="width:100%; height:40px; padding:0 12px; border-radius:8px; border:1px solid var(--line); font-size:13px; background:var(--surface)">
           </div>
 
           <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px">
             <div>
               <label style="display:block; font-size:12px; font-weight:700; color:var(--ink); margin-bottom:4px">Role in Hierarchy *</label>
-              <select id="provRole" style="width:100%; height:40px; padding:0 10px; border-radius:0; border:1.5px solid var(--navy); font-size:12.5px; background:var(--surface)">
+              <select id="provRole" style="width:100%; height:40px; padding:0 10px; border-radius:8px; border:1px solid var(--line); font-size:12.5px; background:var(--surface)">
                 <option value="engineer" selected>QC Inspection Engineer</option>
                 <option value="qc_lead">QC Lead / Quality Manager</option>
               </select>
             </div>
             <div>
               <label style="display:block; font-size:12px; font-weight:700; color:var(--ink); margin-bottom:4px">Employee ID</label>
-              <input type="text" id="provEmpId" placeholder="e.g. EMP-1015" style="width:100%; height:40px; padding:0 12px; border-radius:0; border:1.5px solid var(--navy); font-size:12.5px; background:var(--surface)">
+              <input type="text" id="provEmpId" placeholder="e.g. EMP-1015" style="width:100%; height:40px; padding:0 12px; border-radius:8px; border:1px solid var(--line); font-size:12.5px; background:var(--surface)">
             </div>
           </div>
 
           <div>
             <label style="display:block; font-size:12px; font-weight:700; color:var(--ink); margin-bottom:4px">Specialization / Trade</label>
-            <input type="text" id="provSpec" placeholder="e.g. RCC & Structural, Finishes, Façade" style="width:100%; height:40px; padding:0 12px; border-radius:0; border:1.5px solid var(--navy); font-size:12.5px; background:var(--surface)">
+            <input type="text" id="provSpec" placeholder="e.g. RCC & Structural, Finishes, Façade" style="width:100%; height:40px; padding:0 12px; border-radius:8px; border:1px solid var(--line); font-size:12.5px; background:var(--surface)">
           </div>
 
           <div style="display:flex; justify-content:flex-end; gap:8px; margin-top:8px">
-            <button type="button" class="btn ghost" onclick="closeProvisionMemberModal()" style="height:38px; padding:0 14px; font-size:12.5px; border-radius:0; border:1.5px solid var(--navy)">Cancel</button>
-            <button type="submit" id="provSubmitBtn" class="btn primary" style="height:38px; padding:0 18px; font-size:12.5px; font-weight:700; border-radius:0; background:var(--safety); color:#fff; border:1.5px solid var(--safety); box-shadow:3px 3px 0 rgba(11,37,69,0.15)">
+            <button type="button" class="btn ghost" onclick="closeProvisionMemberModal()" style="height:38px; padding:0 14px; font-size:12.5px">Cancel</button>
+            <button type="submit" id="provSubmitBtn" class="btn primary" style="height:38px; padding:0 18px; font-size:12.5px; font-weight:700; background:var(--mint); color:var(--on-mint)">
               Provision Member →
             </button>
           </div>
@@ -3403,13 +3383,13 @@ function openCreateProjectModal() {
 
   const modalHtml = `
     <div id="createProjectModalBackdrop" style="position:fixed; inset:0; background:rgba(0,0,0,0.6); backdrop-filter:blur(6px); z-index:9999; display:grid; place-items:center; padding:16px; animation:loginCardEnter 0.2s ease">
-      <div style="background:var(--surface); border:2px solid var(--navy); border-radius:0; width:100%; max-width:540px; padding:28px; box-shadow:8px 8px 0 rgba(11,37,69,0.2)">
+      <div style="background:var(--surface); border:1px solid var(--line); border-radius:20px; width:100%; max-width:540px; padding:28px; box-shadow:0 24px 60px rgba(0,0,0,0.25)">
         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px">
           <div>
-            <div style="font-size:11px; font-weight:800; color:var(--safety); text-transform:uppercase; letter-spacing:0.08em">Enterprise Project Setup</div>
+            <div style="font-size:11px; font-weight:800; color:var(--mint); text-transform:uppercase; letter-spacing:0.08em">Enterprise Project Setup</div>
             <h2 style="font-size:20px; font-weight:700; color:var(--ink); margin:2px 0 0">Create New Project</h2>
           </div>
-          <button type="button" class="icon-btn" onclick="closeCreateProjectModal()" aria-label="Close modal" style="border-radius:0">✕</button>
+          <button type="button" class="icon-btn" onclick="closeCreateProjectModal()" aria-label="Close modal">✕</button>
         </div>
 
         <p style="font-size:12.5px; color:var(--ink-2); margin-bottom:18px">
@@ -3417,21 +3397,21 @@ function openCreateProjectModal() {
         </p>
 
         <form id="createProjectForm" onsubmit="handleCreateProjectSubmit(event)" style="display:flex; flex-direction:column; gap:12px">
-          <div id="createProjErrorBox" style="display:none; padding:10px 12px; border-radius:0; border:1px solid var(--crit); background:var(--crit-soft); color:var(--crit); font-size:12px; font-weight:700"></div>
+          <div id="createProjErrorBox" style="display:none; padding:10px 12px; border-radius:8px; background:var(--crit-soft); color:var(--crit); font-size:12px; font-weight:700"></div>
 
           <div>
             <label style="display:block; font-size:12px; font-weight:700; color:var(--ink); margin-bottom:4px">Project Name *</label>
-            <input type="text" id="cpName" required placeholder="e.g. Zenith Skyrise Towers" style="width:100%; height:40px; padding:0 12px; border-radius:0; border:1.5px solid var(--navy); font-size:13px; background:var(--surface)">
+            <input type="text" id="cpName" required placeholder="e.g. Zenith Skyrise Towers" style="width:100%; height:40px; padding:0 12px; border-radius:8px; border:1px solid var(--line); font-size:13px; background:var(--surface)">
           </div>
 
           <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px">
             <div>
               <label style="display:block; font-size:12px; font-weight:700; color:var(--ink); margin-bottom:4px">Project Code (Optional)</label>
-              <input type="text" id="cpCode" placeholder="e.g. PRJ-0025" style="width:100%; height:40px; padding:0 12px; border-radius:0; border:1.5px solid var(--navy); font-size:13px; background:var(--surface)">
+              <input type="text" id="cpCode" placeholder="e.g. PRJ-0025" style="width:100%; height:40px; padding:0 12px; border-radius:8px; border:1px solid var(--line); font-size:13px; background:var(--surface)">
             </div>
             <div>
               <label style="display:block; font-size:12px; font-weight:700; color:var(--ink); margin-bottom:4px">Project Type</label>
-              <select id="cpType" style="width:100%; height:40px; padding:0 10px; border-radius:0; border:1.5px solid var(--navy); font-size:12.5px; background:var(--surface)">
+              <select id="cpType" style="width:100%; height:40px; padding:0 10px; border-radius:8px; border:1px solid var(--line); font-size:12.5px; background:var(--surface)">
                 <option value="Luxury Residential" selected>Luxury Residential</option>
                 <option value="Commercial Complex">Commercial Complex</option>
                 <option value="Industrial Logistics">Industrial Logistics</option>
@@ -3443,23 +3423,23 @@ function openCreateProjectModal() {
 
           <div>
             <label style="display:block; font-size:12px; font-weight:700; color:var(--ink); margin-bottom:4px">Site Location / City *</label>
-            <input type="text" id="cpLoc" required placeholder="e.g. Sector 128, Noida" style="width:100%; height:40px; padding:0 12px; border-radius:0; border:1.5px solid var(--navy); font-size:13px; background:var(--surface)">
+            <input type="text" id="cpLoc" required placeholder="e.g. Sector 128, Noida" style="width:100%; height:40px; padding:0 12px; border-radius:8px; border:1px solid var(--line); font-size:13px; background:var(--surface)">
           </div>
 
           <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px">
             <div>
               <label style="display:block; font-size:12px; font-weight:700; color:var(--ink); margin-bottom:4px">Construction Start Date *</label>
-              <input type="date" id="cpStartDate" required style="width:100%; height:40px; padding:0 10px; border-radius:0; border:1.5px solid var(--navy); font-size:13px; background:var(--surface)">
+              <input type="date" id="cpStartDate" required style="width:100%; height:40px; padding:0 10px; border-radius:8px; border:1px solid var(--line); font-size:13px; background:var(--surface)">
             </div>
             <div>
               <label style="display:block; font-size:12px; font-weight:700; color:var(--ink); margin-bottom:4px">Target Completion Date *</label>
-              <input type="date" id="cpEndDate" required style="width:100%; height:40px; padding:0 10px; border-radius:0; border:1.5px solid var(--navy); font-size:13px; background:var(--surface)">
+              <input type="date" id="cpEndDate" required style="width:100%; height:40px; padding:0 10px; border-radius:8px; border:1px solid var(--line); font-size:13px; background:var(--surface)">
             </div>
           </div>
 
           <div style="display:flex; justify-content:flex-end; gap:8px; margin-top:10px">
-            <button type="button" class="btn ghost" onclick="closeCreateProjectModal()" style="height:38px; padding:0 14px; font-size:12.5px; border-radius:0; border:1.5px solid var(--navy)">Cancel</button>
-            <button type="submit" id="cpSubmitBtn" class="btn primary" style="height:38px; padding:0 18px; font-size:12.5px; font-weight:700; border-radius:0; background:var(--safety); color:#fff; border:1.5px solid var(--safety); box-shadow:3px 3px 0 rgba(11,37,69,0.15)">
+            <button type="button" class="btn ghost" onclick="closeCreateProjectModal()" style="height:38px; padding:0 14px; font-size:12.5px">Cancel</button>
+            <button type="submit" id="cpSubmitBtn" class="btn primary" style="height:38px; padding:0 18px; font-size:12.5px; font-weight:700; background:var(--mint); color:var(--on-mint)">
               Create Project →
             </button>
           </div>
@@ -3568,10 +3548,10 @@ function render(anim = true){
     const v = $('view');
     if (v) {
       v.innerHTML = `
-        <div style="padding:48px 20px; text-align:center; max-width:600px; margin:40px auto; background:var(--surface); border:1.5px solid var(--navy); border-radius:0; box-shadow:4px 4px 0 rgba(11,37,69,0.15)">
+        <div style="padding:48px 20px; text-align:center; max-width:600px; margin:40px auto; background:var(--surface); border:1px solid var(--line); border-radius:16px">
           <h2 style="font-size:20px; font-weight:700; margin-bottom:8px">SiteIQ Platform Recovery</h2>
           <p class="muted" style="margin-bottom:18px">A client session anomaly occurred. Click below to reset view to the landing page.</p>
-          <button class="btn primary" onclick="localStorage.clear(); window.location.href='/';" style="height:38px; padding:0 20px; font-size:13px; font-weight:700; background:var(--safety); color:#fff; border-radius:0; border:1.5px solid var(--safety); box-shadow:3px 3px 0 rgba(11,37,69,0.15)">Reset & Reload Platform →</button>
+          <button class="btn primary" onclick="localStorage.clear(); window.location.href='/';" style="height:38px; padding:0 20px; font-size:13px; font-weight:700; background:var(--mint); color:var(--on-mint); border-radius:8px">Reset & Reload Platform →</button>
         </div>
       `;
     }
