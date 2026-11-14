@@ -461,8 +461,8 @@ function renderCreateInspectionSheet() {
         const isActive = sNum === step;
         const isDone = sNum < step;
         return `
-          <button type="button" onclick="setCreateStep(${sNum})" style="border:none; background:none; cursor:pointer; display:flex; align-items:center; gap:5px; font-size:12px; font-weight:${isActive ? '800' : '600'}; color:${isActive ? 'var(--mint)' : isDone ? 'var(--mint-ink)' : 'var(--ink-3)'}">
-            <span style="width:20px; height:20px; border-radius:50%; display:grid; place-items:center; font-size:11px; font-weight:800; ${isActive ? 'background:var(--mint); color:var(--on-mint)' : isDone ? 'background:var(--mint-soft); color:var(--mint-ink)' : 'background:var(--surface-2); color:var(--ink-3)'}">
+          <button type="button" onclick="setCreateStep(${sNum})" style="border:none; background:none; cursor:pointer; display:flex; align-items:center; gap:5px; font-size:12px; font-weight:${isActive ? '800' : '600'}; color:${isActive ? 'var(--safety)' : isDone ? 'var(--safety-dim)' : 'var(--ink-3)'}">
+            <span style="width:20px; height:20px; border-radius:50%; display:grid; place-items:center; font-size:11px; font-weight:800; ${isActive ? 'background:var(--safety); color:#ffffff' : isDone ? 'background:var(--safety-soft); color:var(--safety-dim)' : 'background:var(--surface-2); color:var(--ink-3)'}">
               ${isDone ? '✓' : sNum}
             </span>
             <span>${l}</span>
@@ -482,7 +482,7 @@ function renderCreateInspectionSheet() {
         <button class="btn ghost" type="button" onclick="saveInspectionAsDraft()" style="flex:1; font-weight:700">
           💾 Save as Draft
         </button>
-        <button class="btn primary" type="button" onclick="setCreateStep(2)" style="flex:1.2; font-weight:700; background:var(--mint); color:var(--on-mint)">
+        <button class="btn primary" type="button" onclick="setCreateStep(2)" style="flex:1.2; font-weight:700; background:var(--safety); color:#ffffff">
           Next: Select Checklist →
         </button>
       </div>
@@ -497,7 +497,7 @@ function renderCreateInspectionSheet() {
         <button class="btn ghost" type="button" onclick="saveInspectionAsDraft()" style="flex:1; font-weight:700">
           💾 Save Draft
         </button>
-        <button class="btn primary" type="button" onclick="setCreateStep(3)" style="flex:1.2; font-weight:700; background:var(--mint); color:var(--on-mint)">
+        <button class="btn primary" type="button" onclick="setCreateStep(3)" style="flex:1.2; font-weight:700; background:var(--safety); color:#ffffff">
           Next: Assign Engineer →
         </button>
       </div>
@@ -512,7 +512,7 @@ function renderCreateInspectionSheet() {
         <button class="btn ghost" type="button" onclick="saveInspectionAsDraft()" style="flex:1; font-weight:700">
           💾 Save Draft
         </button>
-        <button class="btn primary" type="button" onclick="setCreateStep(4)" style="flex:1.2; font-weight:700; background:var(--mint); color:var(--on-mint)">
+        <button class="btn primary" type="button" onclick="setCreateStep(4)" style="flex:1.2; font-weight:700; background:var(--safety); color:#ffffff">
           Next: Review & Confirm →
         </button>
       </div>
@@ -527,7 +527,7 @@ function renderCreateInspectionSheet() {
         <button class="btn ghost" type="button" onclick="saveInspectionAsDraft()" style="flex:1; font-weight:700">
           💾 Save Draft
         </button>
-        <button id="ci_confirm_btn" class="btn primary" type="button" onclick="submitCreateInspection()" style="flex:1.5; font-weight:800; background:linear-gradient(135deg, var(--mint), #38BDF8); color:#0B2A21">
+        <button id="ci_confirm_btn" class="btn primary" type="button" onclick="submitCreateInspection()" style="flex:1.5; font-weight:800; background:linear-gradient(135deg, var(--safety), #38BDF8); color:#0B2A21">
           ✓ Confirm & Create Inspection
         </button>
       </div>
@@ -553,18 +553,18 @@ function renderCreateStep1(p) {
   return `
     <div style="display:flex; flex-direction:column; gap:14px; font-size:13px">
       <!-- Generated ID Badge -->
-      <div style="background:var(--surface-2); border:1px solid var(--line); border-left:4px solid var(--mint); border-radius:8px; padding:10px 12px; display:flex; justify-content:space-between; align-items:center">
+      <div style="background:var(--surface-2); border:1px solid var(--line); border-left:4px solid var(--safety); border-radius:0; padding:10px 12px; display:flex; justify-content:space-between; align-items:center">
         <div>
-          <div style="font-size:10.5px; font-weight:800; text-transform:uppercase; color:var(--mint-ink); letter-spacing:0.06em">Unique Inspection Identifier</div>
-          <div class="code" style="font-size:15px; font-weight:800; color:var(--mint)">${w.inspectionId || 'Generating...'}</div>
+          <div style="font-size:10.5px; font-weight:800; text-transform:uppercase; color:var(--safety-dim); letter-spacing:0.06em">Unique Inspection Identifier</div>
+          <div class="code" style="font-size:15px; font-weight:800; color:var(--safety)">${w.inspectionId || 'Generating...'}</div>
         </div>
-        <span class="pill" style="background:var(--mint-soft); color:var(--mint-ink); font-size:11px; font-weight:700">Auto-Generated ID</span>
+        <span class="pill" style="background:var(--safety-soft); color:var(--safety-dim); font-size:11px; font-weight:700">Auto-Generated ID</span>
       </div>
 
       <!-- Project Selection -->
       <div>
         <label style="display:block; font-weight:700; margin-bottom:4px">Target Project *</label>
-        <select id="ci_project" onchange="CREATE_INSP_WIZARD.projectId = this.value; openCreateInspectionWizard(this.value);" style="width:100%; padding:8px 10px; border-radius:8px; border:1px solid var(--line); background:var(--surface); font-size:13px">
+        <select id="ci_project" onchange="CREATE_INSP_WIZARD.projectId = this.value; openCreateInspectionWizard(this.value);" style="width:100%; padding:8px 10px; border-radius:0; border:1px solid var(--line); background:var(--surface); font-size:13px">
           ${projectsList.map(proj => `
             <option value="${proj.id}" ${proj.id === w.projectId ? 'selected' : ''}>${proj.name} (${proj.code})</option>
           `).join('')}
@@ -575,7 +575,7 @@ function renderCreateStep1(p) {
       <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px">
         <div>
           <label style="display:block; font-weight:700; margin-bottom:4px">Construction Activity *</label>
-          <select id="ci_activity" style="width:100%; padding:8px 10px; border-radius:8px; border:1px solid var(--line); background:var(--surface); font-size:12.5px">
+          <select id="ci_activity" style="width:100%; padding:8px 10px; border-radius:0; border:1px solid var(--line); background:var(--surface); font-size:12.5px">
             <option value="RCC Structural Works" ${w.activityType === 'RCC Structural Works' ? 'selected' : ''}>RCC Structural Works</option>
             <option value="Site Preparation & Survey" ${w.activityType === 'Site Preparation & Survey' ? 'selected' : ''}>Site Preparation & Survey</option>
             <option value="Foundation & Substructure" ${w.activityType === 'Foundation & Substructure' ? 'selected' : ''}>Foundation & Substructure</option>
@@ -587,7 +587,7 @@ function renderCreateStep1(p) {
         </div>
         <div>
           <label style="display:block; font-weight:700; margin-bottom:4px">Inspection Type *</label>
-          <select id="ci_type" style="width:100%; padding:8px 10px; border-radius:8px; border:1px solid var(--line); background:var(--surface); font-size:12.5px">
+          <select id="ci_type" style="width:100%; padding:8px 10px; border-radius:0; border:1px solid var(--line); background:var(--surface); font-size:12.5px">
             <option value="Stage Quality Inspection">Stage Quality Inspection</option>
             <option value="Pre-Pour Hold Point">Pre-Pour Hold Point</option>
             <option value="Material Verification">Material Verification</option>
@@ -599,35 +599,35 @@ function renderCreateStep1(p) {
       <!-- Inspection Title -->
       <div>
         <label style="display:block; font-weight:700; margin-bottom:4px">Inspection Title *</label>
-        <input type="text" id="ci_title" value="${esc(w.title)}" placeholder="e.g. RCC Beam & Slab Quality Inspection" style="width:100%; padding:8px 10px; border-radius:8px; border:1px solid var(--line); background:var(--surface); font-size:13px">
+        <input type="text" id="ci_title" value="${esc(w.title)}" placeholder="e.g. RCC Beam & Slab Quality Inspection" style="width:100%; padding:8px 10px; border-radius:0; border:1px solid var(--line); background:var(--surface); font-size:13px">
       </div>
 
       <!-- Location Hierarchy -->
-      <div style="background:var(--surface-2); border-radius:10px; padding:12px; display:flex; flex-direction:column; gap:10px">
+      <div style="background:var(--surface-2); border-radius:0; padding:12px; display:flex; flex-direction:column; gap:10px">
         <div style="font-weight:700; font-size:12px; text-transform:uppercase; color:var(--ink-2)">Exact Site Location Scope</div>
         <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px">
           <div>
             <label style="font-size:11.5px; color:var(--ink-3)">Tower / Block *</label>
-            <input type="text" id="ci_tower" value="${esc(w.location.tower)}" placeholder="Tower 3" style="width:100%; padding:6px 8px; border-radius:6px; border:1px solid var(--line); background:var(--surface); font-size:12.5px">
+            <input type="text" id="ci_tower" value="${esc(w.location.tower)}" placeholder="Tower 3" style="width:100%; padding:6px 8px; border-radius:0; border:1px solid var(--line); background:var(--surface); font-size:12.5px">
           </div>
           <div>
             <label style="font-size:11.5px; color:var(--ink-3)">Floor Level *</label>
-            <input type="text" id="ci_floor" value="${esc(w.location.floor)}" placeholder="Floor 8" style="width:100%; padding:6px 8px; border-radius:6px; border:1px solid var(--line); background:var(--surface); font-size:12.5px">
+            <input type="text" id="ci_floor" value="${esc(w.location.floor)}" placeholder="Floor 8" style="width:100%; padding:6px 8px; border-radius:0; border:1px solid var(--line); background:var(--surface); font-size:12.5px">
           </div>
         </div>
         <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px">
           <div>
             <label style="font-size:11.5px; color:var(--ink-3)">Zone / Area *</label>
-            <input type="text" id="ci_zone" value="${esc(w.location.zone)}" placeholder="Zone B · Sunken Slab" style="width:100%; padding:6px 8px; border-radius:6px; border:1px solid var(--line); background:var(--surface); font-size:12.5px">
+            <input type="text" id="ci_zone" value="${esc(w.location.zone)}" placeholder="Zone B · Sunken Slab" style="width:100%; padding:6px 8px; border-radius:0; border:1px solid var(--line); background:var(--surface); font-size:12.5px">
           </div>
           <div>
             <label style="font-size:11.5px; color:var(--ink-3)">Grid / Element</label>
-            <input type="text" id="ci_grid" value="${esc(w.location.grid)}" placeholder="Grids B4–B8 · Column C7" style="width:100%; padding:6px 8px; border-radius:6px; border:1px solid var(--line); background:var(--surface); font-size:12.5px">
+            <input type="text" id="ci_grid" value="${esc(w.location.grid)}" placeholder="Grids B4–B8 · Column C7" style="width:100%; padding:6px 8px; border-radius:0; border:1px solid var(--line); background:var(--surface); font-size:12.5px">
           </div>
         </div>
         <div>
           <label style="font-size:11.5px; color:var(--ink-3)">Special Engineer Instructions</label>
-          <input type="text" id="ci_instructions" value="${esc(w.location.instructions)}" placeholder="Instructions for field engineer..." style="width:100%; padding:6px 8px; border-radius:6px; border:1px solid var(--line); background:var(--surface); font-size:12.5px">
+          <input type="text" id="ci_instructions" value="${esc(w.location.instructions)}" placeholder="Instructions for field engineer..." style="width:100%; padding:6px 8px; border-radius:0; border:1px solid var(--line); background:var(--surface); font-size:12.5px">
         </div>
       </div>
 
@@ -635,15 +635,15 @@ function renderCreateStep1(p) {
       <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:8px">
         <div>
           <label style="display:block; font-weight:700; font-size:12px; margin-bottom:4px">Planned Date *</label>
-          <input type="date" id="ci_pdate" value="${w.plannedDate}" style="width:100%; padding:6px 8px; border-radius:6px; border:1px solid var(--line); background:var(--surface); font-size:12.5px">
+          <input type="date" id="ci_pdate" value="${w.plannedDate}" style="width:100%; padding:6px 8px; border-radius:0; border:1px solid var(--line); background:var(--surface); font-size:12.5px">
         </div>
         <div>
           <label style="display:block; font-weight:700; font-size:12px; margin-bottom:4px">Due Date *</label>
-          <input type="date" id="ci_ddate" value="${w.dueDate}" style="width:100%; padding:6px 8px; border-radius:6px; border:1px solid var(--line); background:var(--surface); font-size:12.5px">
+          <input type="date" id="ci_ddate" value="${w.dueDate}" style="width:100%; padding:6px 8px; border-radius:0; border:1px solid var(--line); background:var(--surface); font-size:12.5px">
         </div>
         <div>
           <label style="display:block; font-weight:700; font-size:12px; margin-bottom:4px">Priority *</label>
-          <select id="ci_priority" style="width:100%; padding:7px 8px; border-radius:6px; border:1px solid var(--line); background:var(--surface); font-size:12.5px; font-weight:700">
+          <select id="ci_priority" style="width:100%; padding:7px 8px; border-radius:0; border:1px solid var(--line); background:var(--surface); font-size:12.5px; font-weight:700">
             <option value="High" ${w.priority === 'High' ? 'selected' : ''}>High</option>
             <option value="Medium" ${w.priority === 'Medium' ? 'selected' : ''}>Medium</option>
             <option value="Low" ${w.priority === 'Low' ? 'selected' : ''}>Low</option>
@@ -685,7 +685,7 @@ function renderCreateStep2(p) {
 
       const checkpointsHtml = (sub.checkpoints || []).map(chk => {
         const isChecked = w.selectedCheckpoints.has(chk.checkpoint_id);
-        const priColor = chk.priority === 'H' ? 'var(--crit)' : chk.priority === 'M' ? 'var(--major)' : 'var(--mint-ink)';
+        const priColor = chk.priority === 'H' ? 'var(--crit)' : chk.priority === 'M' ? 'var(--major)' : 'var(--safety-dim)';
         return `
           <div style="display:flex; align-items:flex-start; gap:8px; padding:6px 0; border-bottom:1px dashed var(--line); font-size:12px">
             <input type="checkbox" id="chk_${chk.checkpoint_id}" ${isChecked ? 'checked' : ''} onchange="toggleCheckpointSelect('${chk.checkpoint_id}')" style="margin-top:2px">
@@ -699,7 +699,7 @@ function renderCreateStep2(p) {
       }).join('');
 
       return `
-        <div style="border:1px solid var(--line); border-radius:8px; padding:8px 10px; margin-bottom:8px; background:var(--surface)">
+        <div style="border:1px solid var(--line); border-radius:0; padding:8px 10px; margin-bottom:8px; background:var(--surface)">
           <div style="display:flex; justify-content:space-between; align-items:center">
             <div style="display:flex; align-items:center; gap:6px; cursor:pointer" onclick="toggleSubgroupExpand('${sub.subgroup_id}')">
               <span>${isSubExpanded ? '▾' : '▸'}</span>
@@ -716,12 +716,12 @@ function renderCreateStep2(p) {
     }).join('');
 
     return `
-      <div style="border:1px solid var(--line); border-radius:10px; margin-bottom:10px; overflow:hidden; background:var(--surface)">
+      <div style="border:1px solid var(--line); border-radius:0; margin-bottom:10px; overflow:hidden; background:var(--surface)">
         <div style="background:var(--surface-2); padding:10px 12px; display:flex; justify-content:space-between; align-items:center">
           <div style="display:flex; align-items:center; gap:8px; cursor:pointer" onclick="toggleStageExpand('${stg.stage_id}')">
             <span>${isExpanded ? '▾' : '▸'}</span>
             <span style="font-weight:800; font-size:13px; color:var(--ink)">${esc(stg.stage_name)}</span>
-            <span class="pill" style="font-size:10.5px; font-weight:700; background:var(--mint-soft); color:var(--mint-ink)">
+            <span class="pill" style="font-size:10.5px; font-weight:700; background:var(--safety-soft); color:var(--safety-dim)">
               ${selectedInStage}/${chkCount}
             </span>
           </div>
@@ -737,9 +737,9 @@ function renderCreateStep2(p) {
   return `
     <div style="display:flex; flex-direction:column; gap:12px">
       <!-- Scope Preview Pill Bar -->
-      <div style="display:flex; justify-content:space-between; align-items:center; background:var(--surface-2); padding:8px 12px; border-radius:8px; border:1px solid var(--line)">
+      <div style="display:flex; justify-content:space-between; align-items:center; background:var(--surface-2); padding:8px 12px; border-radius:0; border:1px solid var(--line)">
         <div style="font-size:12.5px; font-weight:700">
-          Selected Scope: <span style="color:var(--mint); font-weight:800">${w.selectedCheckpoints.size} Checkpoints</span>
+          Selected Scope: <span style="color:var(--safety); font-weight:800">${w.selectedCheckpoints.size} Checkpoints</span>
         </div>
         ${w.selectedCheckpoints.size > 0 ? `
           <button type="button" class="btn ghost" onclick="clearAllSelectedCheckpoints()" style="height:24px; padding:0 8px; font-size:11px; color:var(--crit)">
@@ -769,23 +769,23 @@ function renderCreateStep3(p) {
     }, 0);
 
     return `
-      <div onclick="CREATE_INSP_WIZARD.engineerId = '${eng.id}'; CREATE_INSP_WIZARD.engineer = '${eng.name}'; if(typeof drawSheet === 'function') drawSheet();" style="border:1.5px solid ${isSelected ? 'var(--mint)' : 'var(--line)'}; background:${isSelected ? 'color-mix(in srgb, var(--mint) 8%, var(--surface))' : 'var(--surface)'}; border-radius:10px; padding:12px; cursor:pointer; display:flex; justify-content:space-between; align-items:center; transition:border-color .15s">
+      <div onclick="CREATE_INSP_WIZARD.engineerId = '${eng.id}'; CREATE_INSP_WIZARD.engineer = '${eng.name}'; if(typeof drawSheet === 'function') drawSheet();" style="border:1.5px solid ${isSelected ? 'var(--safety)' : 'var(--line)'}; background:${isSelected ? 'color-mix(in srgb, var(--safety) 8%, var(--surface))' : 'var(--surface)'}; border-radius:0; padding:12px; cursor:pointer; display:flex; justify-content:space-between; align-items:center; transition:border-color .15s">
         <div style="display:flex; align-items:center; gap:10px">
-          <div style="width:36px; height:36px; border-radius:50%; background:${isSelected ? 'var(--mint)' : 'var(--surface-2)'}; color:${isSelected ? 'var(--on-mint)' : 'var(--ink)'}; display:grid; place-items:center; font-weight:800; font-size:13px">
+          <div style="width:36px; height:36px; border-radius:50%; background:${isSelected ? 'var(--safety)' : 'var(--surface-2)'}; color:${isSelected ? '#ffffff' : 'var(--ink)'}; display:grid; place-items:center; font-weight:800; font-size:13px">
             ${eng.name.split(' ').map(n=>n[0]).join('')}
           </div>
           <div>
             <div style="font-weight:700; font-size:13.5px; color:var(--ink)">
-              ${eng.name} <span class="code" style="font-size:11px; color:var(--mint)">${eng.id}</span>
+              ${eng.name} <span class="code" style="font-size:11px; color:var(--safety)">${eng.id}</span>
             </div>
             <div class="muted" style="font-size:12px">${eng.role} · ${eng.spec}</div>
           </div>
         </div>
         <div style="text-align:right">
-          <span class="pill" style="font-size:11px; font-weight:700; background:${activeLoad >= 3 ? 'var(--major-soft)' : 'var(--mint-soft)'}; color:${activeLoad >= 3 ? 'var(--major)' : 'var(--mint-ink)'}">
+          <span class="pill" style="font-size:11px; font-weight:700; background:${activeLoad >= 3 ? 'var(--major-soft)' : 'var(--safety-soft)'}; color:${activeLoad >= 3 ? 'var(--major)' : 'var(--safety-dim)'}">
             ${activeLoad} Active Task${activeLoad === 1 ? '' : 's'}
           </span>
-          <div style="font-size:11px; margin-top:3px; color:${isSelected ? 'var(--mint)' : 'transparent'}; font-weight:800">
+          <div style="font-size:11px; margin-top:3px; color:${isSelected ? 'var(--safety)' : 'transparent'}; font-weight:800">
             ✓ SELECTED
           </div>
         </div>
@@ -795,7 +795,7 @@ function renderCreateStep3(p) {
 
   return `
     <div style="display:flex; flex-direction:column; gap:12px">
-      <div style="background:var(--surface-2); border-radius:8px; padding:10px 12px; font-size:12.5px; border-left:4px solid var(--mint)">
+      <div style="background:var(--surface-2); border-radius:0; padding:10px 12px; font-size:12.5px; border-left:4px solid var(--safety)">
         <strong>Notice:</strong> Engineer assignment is mandatory before activating the inspection, but optional when saving a draft.
       </div>
 
@@ -817,27 +817,27 @@ function renderCreateStep4(p) {
   return `
     <div style="display:flex; flex-direction:column; gap:12px; font-size:13px">
       <!-- Inspection Profile Overview -->
-      <section style="background:var(--surface-2); border:1px solid var(--line); border-radius:10px; padding:14px; display:flex; flex-direction:column; gap:8px">
+      <section style="background:var(--surface-2); border:1px solid var(--line); border-radius:0; padding:14px; display:flex; flex-direction:column; gap:8px">
         <div style="display:flex; justify-content:space-between; align-items:center">
-          <span class="code" style="font-size:14px; font-weight:800; color:var(--mint)">${w.inspectionId}</span>
-          <span class="pill" style="font-size:11px; font-weight:800; background:var(--mint-soft); color:var(--mint-ink)">Ready to Create</span>
+          <span class="code" style="font-size:14px; font-weight:800; color:var(--safety)">${w.inspectionId}</span>
+          <span class="pill" style="font-size:11px; font-weight:800; background:var(--safety-soft); color:var(--safety-dim)">Ready to Create</span>
         </div>
         <div style="font-size:16px; font-weight:700">${esc(w.title)}</div>
         <div class="muted" style="font-size:12.5px">${w.activityType} · ${w.inspectionType}</div>
       </section>
 
       <!-- Key Parameters Grid -->
-      <dl class="facts" style="grid-template-columns:1fr 1fr; background:var(--surface); border:1px solid var(--line); border-radius:10px; padding:12px; margin:0">
+      <dl class="facts" style="grid-template-columns:1fr 1fr; background:var(--surface); border:1px solid var(--line); border-radius:0; padding:12px; margin:0">
         <div><dt>Project</dt><dd><strong>${p.name}</strong> (${p.code})</dd></div>
-        <div><dt>Assigned Engineer</dt><dd><strong style="color:var(--mint)">${eng.name}</strong> (${eng.id})</dd></div>
+        <div><dt>Assigned Engineer</dt><dd><strong style="color:var(--safety)">${eng.name}</strong> (${eng.id})</dd></div>
         <div><dt>Location</dt><dd>${w.location.tower} · ${w.location.floor} · ${w.location.zone}</dd></div>
         <div><dt>Schedule</dt><dd>Planned ${w.plannedDate} · Due ${w.dueDate}</dd></div>
-        <div><dt>Priority</dt><dd><span style="font-weight:800; color:${w.priority === 'High' ? 'var(--crit)' : 'var(--mint-ink)'}">${w.priority}</span></dd></div>
+        <div><dt>Priority</dt><dd><span style="font-weight:800; color:${w.priority === 'High' ? 'var(--crit)' : 'var(--safety-dim)'}">${w.priority}</span></dd></div>
         <div><dt>Checkpoints</dt><dd><strong>${w.selectedCheckpoints.size} Items Selected</strong></dd></div>
       </dl>
 
       <!-- Action Confirmation Note -->
-      <div style="background:color-mix(in srgb, var(--mint) 10%, var(--surface)); border:1px solid var(--mint); border-radius:8px; padding:10px 12px; font-size:12px">
+      <div style="background:color-mix(in srgb, var(--safety) 10%, var(--surface)); border:1px solid var(--safety); border-radius:0; padding:10px 12px; font-size:12px">
         <strong>Persistence Guarantee:</strong> On confirmation, this inspection will be saved permanently under ID <strong>${w.inspectionId}</strong> and immediately synced with ${eng.name}'s Field Workspace.
       </div>
     </div>
@@ -875,9 +875,9 @@ function renderChangeEngineerSheet(inspectionId) {
   const bodyHtml = `
     <div style="display:flex; flex-direction:column; gap:14px; font-size:13px">
       <!-- Target Inspection Summary -->
-      <div style="background:var(--surface-2); border-radius:10px; padding:12px; border:1px solid var(--line)">
+      <div style="background:var(--surface-2); border-radius:0; padding:12px; border:1px solid var(--line)">
         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px">
-          <span class="code" style="font-size:13px; font-weight:800; color:var(--mint)">${code}</span>
+          <span class="code" style="font-size:13px; font-weight:800; color:var(--safety)">${code}</span>
           <span class="stt info">${currentStatus}</span>
         </div>
         <div style="font-weight:700; font-size:14px">${esc(ins.title)}</div>
@@ -887,7 +887,7 @@ function renderChangeEngineerSheet(inspectionId) {
       <!-- Select New Engineer -->
       <div>
         <label style="display:block; font-weight:700; margin-bottom:4px">Select New Inspection Engineer *</label>
-        <select id="ce_new_eng" style="width:100%; padding:8px 10px; border-radius:8px; border:1px solid var(--line); background:var(--surface); font-size:13px">
+        <select id="ce_new_eng" style="width:100%; padding:8px 10px; border-radius:0; border:1px solid var(--line); background:var(--surface); font-size:13px">
           <option value="">-- Choose Engineer from Directory --</option>
           ${engineerOptionsHtml}
         </select>
@@ -896,7 +896,7 @@ function renderChangeEngineerSheet(inspectionId) {
       <!-- New Due Date (Optional) -->
       <div>
         <label style="display:block; font-weight:700; margin-bottom:4px">Adjust Due Date (Optional)</label>
-        <input type="date" id="ce_due_date" value="${ins.due || '2026-11-06'}" style="width:100%; padding:7px 10px; border-radius:8px; border:1px solid var(--line); background:var(--surface); font-size:12.5px">
+        <input type="date" id="ce_due_date" value="${ins.due || '2026-11-06'}" style="width:100%; padding:7px 10px; border-radius:0; border:1px solid var(--line); background:var(--surface); font-size:12.5px">
       </div>
 
       <!-- Reassignment Reason (MANDATORY) -->
@@ -904,10 +904,10 @@ function renderChangeEngineerSheet(inspectionId) {
         <label style="display:block; font-weight:700; margin-bottom:4px; color:var(--ink)">
           Reassignment Reason <span style="color:var(--crit); font-weight:800">* Mandatory</span>
         </label>
-        <textarea id="ce_reason" rows="3" placeholder="State reason for engineer change (e.g. Workload reallocation, civil specialization required, engineer on leave)..." style="width:100%; padding:8px 10px; border-radius:8px; border:1px solid var(--line); background:var(--surface); font-size:12.5px; font-family:inherit"></textarea>
+        <textarea id="ce_reason" rows="3" placeholder="State reason for engineer change (e.g. Workload reallocation, civil specialization required, engineer on leave)..." style="width:100%; padding:8px 10px; border-radius:0; border:1px solid var(--line); background:var(--surface); font-size:12.5px; font-family:inherit"></textarea>
       </div>
 
-      <div style="background:var(--surface-2); border-radius:8px; padding:10px; font-size:12px; color:var(--ink-2)">
+      <div style="background:var(--surface-2); border-radius:0; padding:10px; font-size:12px; color:var(--ink-2)">
         <strong>Integrity Protection:</strong> Changing the engineer preserves the unique inspection ID (<strong>${code}</strong>), all existing checklist findings, photographs, defect observations, and full audit logs.
       </div>
     </div>
@@ -918,7 +918,7 @@ function renderChangeEngineerSheet(inspectionId) {
       <button class="btn ghost" type="button" onclick="closeSheet()" style="flex:1">
         Cancel
       </button>
-      <button id="ce_submit_btn" class="btn primary" type="button" onclick="submitChangeEngineer('${code}')" style="flex:1.5; font-weight:800; background:var(--mint); color:var(--on-mint)">
+      <button id="ce_submit_btn" class="btn primary" type="button" onclick="submitChangeEngineer('${code}')" style="flex:1.5; font-weight:800; background:var(--safety); color:#ffffff">
         Confirm Change Inspection Engineer
       </button>
     </div>
@@ -1054,10 +1054,10 @@ function renderAllocationDetailSheet(allocId) {
     const isOK = chk.result_status === 'OK';
     const isNC = chk.result_status === 'NC';
     const isNA = chk.result_status === 'NA';
-    const priColor = chk.priority === 'H' ? 'var(--crit)' : chk.priority === 'M' ? 'var(--major)' : 'var(--mint-ink)';
+    const priColor = chk.priority === 'H' ? 'var(--crit)' : chk.priority === 'M' ? 'var(--major)' : 'var(--safety-dim)';
 
     return `
-      <div style="border:1px solid var(--line); border-radius:10px; padding:10px; margin-bottom:8px; background:var(--surface)">
+      <div style="border:1px solid var(--line); border-radius:0; padding:10px; margin-bottom:8px; background:var(--surface)">
         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px">
           <div style="display:flex; gap:6px; align-items:center">
             <span style="font-size:10px; font-weight:800; color:${priColor}">[${chk.priority}]</span>
@@ -1068,12 +1068,12 @@ function renderAllocationDetailSheet(allocId) {
         <div style="font-size:13px; font-weight:600; line-height:1.4; margin-bottom:8px">${chk.checkpoint_text_snapshot || chk.checkpoint_description}</div>
         
         <div style="display:flex; gap:6px; align-items:center; flex-wrap:wrap">
-          <span class="pill" style="font-size:11px; font-weight:700; ${isOK ? 'background:var(--mint); color:#0B2A21' : isNC ? 'background:var(--crit); color:#fff' : 'background:var(--surface-2); color:var(--ink-2)'}">
+          <span class="pill" style="font-size:11px; font-weight:700; ${isOK ? 'background:var(--safety); color:#0B2A21' : isNC ? 'background:var(--crit); color:#fff' : 'background:var(--surface-2); color:var(--ink-2)'}">
             ${chk.result_status || 'Pending'}
           </span>
           <span style="font-size:11.5px; color:var(--ink-3)">Stage: ${chk.stage_name || ''}</span>
         </div>
-        ${chk.observations ? `<div style="font-size:12px; color:var(--crit); margin-top:6px; background:var(--crit-soft); padding:4px 8px; border-radius:6px"><strong>Observation:</strong> ${chk.observations}</div>` : ''}
+        ${chk.observations ? `<div style="font-size:12px; color:var(--crit); margin-top:6px; background:var(--crit-soft); padding:4px 8px; border-radius:0"><strong>Observation:</strong> ${chk.observations}</div>` : ''}
       </div>
     `;
   }).join('');
@@ -1086,7 +1086,7 @@ function renderAllocationDetailSheet(allocId) {
          <span class="stt ${alloc.status === 'Report issued' ? 'good' : alloc.status === 'Pending review' ? 'info' : 'bad'}">${alloc.status}</span>
          <span style="font-size:12px; color:var(--ink-2)">Due ${alloc.due_date} · <strong>${alloc.engineer_name}</strong></span>
        </div>
-       <div style="background:var(--surface-2); border-radius:10px; padding:10px 12px; margin-bottom:12px; font-size:12.5px">
+       <div style="background:var(--surface-2); border-radius:0; padding:10px 12px; margin-bottom:12px; font-size:12.5px">
          <div><strong>Location:</strong> ${alloc.location_scope}</div>
          <div><strong>Allocated By:</strong> ${alloc.allocated_by || 'Priya Deshmukh (QC Lead)'}</div>
          <div><strong>Schedule:</strong> Planned ${alloc.planned_date} · Due ${alloc.due_date}</div>
@@ -1327,7 +1327,7 @@ function renderEngineerWorkspaceView() {
     }
     return `
       <div style="padding:48px 16px; text-align:center">
-        <div style="font-size:18px; font-weight:700; color:var(--mint)">Loading Inspection Engineer Workspace...</div>
+        <div style="font-size:18px; font-weight:700; color:var(--safety)">Loading Inspection Engineer Workspace...</div>
         <div class="muted" style="margin-top:6px">Connecting to SiteIQ quality database</div>
       </div>
     `;
@@ -1356,15 +1356,15 @@ function renderEngineerWorkspaceView() {
   // Summary Metrics Cards (Allocated, In Progress, Due Today, Overdue, Submitted)
   const metricCardsHtml = `
     <section class="sum sum-engineer" aria-label="Inspection Metrics">
-      <button class="sum-btn ${currFilter === 'allocated' ? 'hot' : ''}" type="button" onclick="setEngineerStatusFilter('allocated')" style="border-color:${currFilter === 'allocated' ? 'var(--mint)' : 'var(--line)'}; background:var(--surface)">
+      <button class="sum-btn ${currFilter === 'allocated' ? 'hot' : ''}" type="button" onclick="setEngineerStatusFilter('allocated')" style="border-color:${currFilter === 'allocated' ? 'var(--safety)' : 'var(--line)'}; background:var(--surface)">
         <span class="v num" style="color:var(--ink)">${m.allocated}</span>
         <span class="l">Allocated</span>
       </button>
-      <button class="sum-btn ${currFilter === 'in_progress' ? 'hot' : ''}" type="button" onclick="setEngineerStatusFilter('in_progress')" style="border-color:${currFilter === 'in_progress' ? 'var(--mint)' : 'var(--line)'}; background:var(--surface)">
-        <span class="v num" style="color:var(--mint)">${m.in_progress}</span>
+      <button class="sum-btn ${currFilter === 'in_progress' ? 'hot' : ''}" type="button" onclick="setEngineerStatusFilter('in_progress')" style="border-color:${currFilter === 'in_progress' ? 'var(--safety)' : 'var(--line)'}; background:var(--surface)">
+        <span class="v num" style="color:var(--safety)">${m.in_progress}</span>
         <span class="l">In Progress</span>
       </button>
-      <button class="sum-btn ${currFilter === 'due_today' ? 'hot' : ''}" type="button" onclick="setEngineerStatusFilter('due_today')" style="border-color:${currFilter === 'due_today' ? 'var(--mint)' : 'var(--line)'}; background:var(--surface)">
+      <button class="sum-btn ${currFilter === 'due_today' ? 'hot' : ''}" type="button" onclick="setEngineerStatusFilter('due_today')" style="border-color:${currFilter === 'due_today' ? 'var(--safety)' : 'var(--line)'}; background:var(--surface)">
         <span class="v num" style="color:var(--major)">${m.due_today}</span>
         <span class="l">Due Today</span>
       </button>
@@ -1372,8 +1372,8 @@ function renderEngineerWorkspaceView() {
         <span class="v num">${m.overdue}</span>
         <span class="l">Overdue</span>
       </button>
-      <button class="sum-btn ${currFilter === 'submitted' ? 'hot' : ''}" type="button" onclick="setEngineerStatusFilter('submitted')" style="border-color:${currFilter === 'submitted' ? 'var(--mint)' : 'var(--line)'}; background:var(--surface)">
-        <span class="v num" style="color:#4FB892">${m.submitted}</span>
+      <button class="sum-btn ${currFilter === 'submitted' ? 'hot' : ''}" type="button" onclick="setEngineerStatusFilter('submitted')" style="border-color:${currFilter === 'submitted' ? 'var(--safety)' : 'var(--line)'}; background:var(--surface)">
+        <span class="v num" style="color:var(--ok)">${m.submitted}</span>
         <span class="l">Submitted</span>
       </button>
     </section>
@@ -1383,7 +1383,7 @@ function renderEngineerWorkspaceView() {
   let inspectionCardsHtml = '';
   if (inspections.length === 0) {
     inspectionCardsHtml = `
-      <div style="background:var(--surface); border:1px dashed var(--line); border-radius:14px; padding:36px 20px; text-align:center">
+      <div style="background:var(--surface); border:1px dashed var(--line); border-radius:0; padding:36px 20px; text-align:center">
         <div style="font-size:15px; font-weight:700">No inspections match the current filters</div>
         <p class="muted" style="margin-top:4px">Assigned to ${activeEng.name} · ${activeEng.id}</p>
         <button class="btn ghost" type="button" onclick="setEngineerStatusFilter('all'); setEngineerProjectFilter('all');" style="margin-top:10px">
@@ -1396,8 +1396,8 @@ function renderEngineerWorkspaceView() {
       const isOverdue = a.is_overdue;
       const isDueToday = a.is_due_today;
       const statusClass = a.status === 'Report issued' ? 'good' : a.status === 'Pending review' ? 'info' : a.status === 'In progress' ? 'info' : '';
-      const priColor = a.priority === 'High' ? 'var(--crit)' : a.priority === 'Medium' ? 'var(--major)' : 'var(--mint-ink)';
-      const priBg = a.priority === 'High' ? 'var(--crit-soft)' : a.priority === 'Medium' ? 'var(--major-soft)' : 'var(--mint-soft)';
+      const priColor = a.priority === 'High' ? 'var(--crit)' : a.priority === 'Medium' ? 'var(--major)' : 'var(--safety-dim)';
+      const priBg = a.priority === 'High' ? 'var(--crit-soft)' : a.priority === 'Medium' ? 'var(--major-soft)' : 'var(--safety-soft)';
 
       const dateLabel = isOverdue
         ? `<span class="late" style="font-weight:700">Due ${a.due_date} · Overdue</span>`
@@ -1409,32 +1409,32 @@ function renderEngineerWorkspaceView() {
       const subgroupsDisplay = a.subgroups && a.subgroups.length ? a.subgroups.join(' · ') : a.primary_subgroup;
 
       return `
-        <article class="card" style="position:relative; display:flex; flex-direction:column; gap:12px; background:var(--surface); border:1px solid var(--line); border-radius:14px; padding:16px; transition:border-color .15s">
+        <article class="card" style="position:relative; display:flex; flex-direction:column; gap:12px; background:var(--surface); border:1.5px solid var(--navy); border-radius:0; padding:16px; box-shadow:4px 4px 0 rgba(11,37,69,0.12); transition:border-color .15s,box-shadow .15s">
           <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:8px">
             <div>
               <div style="display:flex; gap:6px; align-items:center; flex-wrap:wrap; margin-bottom:4px">
-                <span class="code" style="font-weight:800; color:var(--mint); font-size:13px">${a.allocation_id}</span>
-                <span style="font-size:11px; font-weight:700; background:${priBg}; color:${priColor}; padding:1px 6px; border-radius:4px; text-transform:uppercase">${a.priority} Priority</span>
+                <span class="code" style="font-family:var(--font-mono); font-weight:800; color:var(--safety-dim); font-size:13px">${a.allocation_id}</span>
+                <span style="font-family:var(--font-mono); font-size:10px; font-weight:800; background:${priBg}; color:${priColor}; padding:2px 6px; border:1px solid currentColor; text-transform:uppercase">${a.priority} Priority</span>
                 <span class="stt ${statusClass}">${a.status}</span>
               </div>
-              <h3 style="font-size:16px; font-weight:700; margin:0; line-height:1.25">
+              <h3 style="font-family:var(--font-display); font-size:16px; font-weight:800; color:var(--navy); margin:0; line-height:1.25">
                 ${a.project_name} <span class="muted" style="font-size:13px; font-weight:400">(${a.project_code})</span>
               </h3>
             </div>
-            <span class="pill" style="font-size:11.5px; font-weight:700; background:var(--mint-soft); color:var(--mint-ink); flex-shrink:0">
+            <span class="pill" style="font-family:var(--font-mono); font-size:11px; font-weight:800; background:var(--safety-soft); color:var(--safety-dim); border:1px solid var(--safety); flex-shrink:0">
               ${a.total_checkpoints} Checkpoint${a.total_checkpoints === 1 ? '' : 's'}
             </span>
           </div>
 
-          <div style="background:var(--surface-2); border-radius:8px; padding:10px 12px; font-size:12.5px; display:flex; flex-direction:column; gap:4px">
-            <div><strong>Stage:</strong> <span style="color:var(--mint-ink); font-weight:600">${stagesDisplay}</span></div>
+          <div style="background:var(--surface-2); border:1px solid var(--navy); border-radius:0; padding:10px 12px; font-size:12.5px; display:flex; flex-direction:column; gap:4px">
+            <div><strong>Stage:</strong> <span style="color:var(--safety-dim); font-weight:700">${stagesDisplay}</span></div>
             <div><strong>Subgroup:</strong> ${subgroupsDisplay}</div>
             <div><strong>Location:</strong> ${a.location_scope}</div>
             <div style="margin-top:2px; font-size:12px; color:var(--ink-2)">${dateLabel}</div>
           </div>
 
           <div style="display:flex; flex-direction:column; gap:6px">
-            <div style="display:flex; justify-content:space-between; font-size:12px; font-weight:600">
+            <div style="display:flex; justify-content:space-between; font-size:12px; font-weight:700">
               <span>Progress: ${a.completed_count || 0}/${a.total_checkpoints} completed</span>
               <span class="num">${a.progress_pct || 0}%</span>
             </div>
@@ -1442,13 +1442,13 @@ function renderEngineerWorkspaceView() {
           </div>
 
           <div style="display:flex; justify-content:space-between; align-items:center; margin-top:auto; pt:6px">
-            <div style="display:flex; gap:6px; font-size:11px; font-weight:700">
-              <span style="color:var(--mint)">${a.ok_count || 0} OK</span>
+            <div style="display:flex; gap:6px; font-family:var(--font-mono); font-size:11px; font-weight:800">
+              <span style="color:var(--ok)">${a.ok_count || 0} OK</span>
               <span style="color:var(--crit)">${a.nc_count || 0} NC</span>
               <span style="color:var(--ink-3)">${a.na_count || 0} NA</span>
               <span style="color:var(--ink-2)">${a.pending_count || 0} Pending</span>
             </div>
-            <button class="btn primary" type="button" onclick="openInspectionExecution('${a.allocation_id}')" style="height:34px; padding:0 14px; font-size:12.5px; font-weight:700; background:var(--mint); color:var(--on-mint)">
+            <button class="btn primary" type="button" onclick="openInspectionExecution('${a.allocation_id}')" style="height:36px; padding:0 14px; font-size:12.5px; font-weight:700; background:var(--safety); color:#fff; border:1.5px solid var(--safety-dim); border-radius:0; box-shadow:3px 3px 0 rgba(11,37,69,0.14)">
               Open Inspection →
             </button>
           </div>
@@ -1462,10 +1462,10 @@ function renderEngineerWorkspaceView() {
       <div>
         <div class="eyebrow" style="display:flex; align-items:center; gap:6px">
           <span>Inspection Engineer Workspace</span>
-          <span style="background:var(--mint-soft); color:var(--mint-ink); font-size:10.5px; font-weight:800; padding:1px 6px; border-radius:4px">FIELD MODE</span>
+          <span style="background:var(--safety-soft); color:var(--safety-dim); font-size:10.5px; font-weight:800; padding:1px 6px; border-radius:0">FIELD MODE</span>
         </div>
         <h1 style="font-size:26px; font-weight:400; margin-top:4px">
-          My Assigned Inspections · <span style="font-weight:700; color:var(--mint)">${activeEng.name}</span>
+          My Assigned Inspections · <span style="font-weight:700; color:var(--safety)">${activeEng.name}</span>
         </h1>
         <p class="muted" style="font-size:13px">
           ${activeEng.id} · ${activeEng.role} (${activeEng.spec})
@@ -1473,7 +1473,7 @@ function renderEngineerWorkspaceView() {
       </div>
 
       <div style="display:flex; align-items:center; gap:8px">
-        <span class="pill" style="background:var(--mint-soft); color:var(--mint-ink); font-size:11px; font-weight:700">
+        <span class="pill" style="background:var(--safety-soft); color:var(--safety-dim); font-size:11px; font-weight:700">
           🔒 Authenticated Engineer Session
         </span>
       </div>
@@ -1488,11 +1488,11 @@ function renderEngineerWorkspaceView() {
       </label>
 
       <div style="display:flex; gap:8px; align-items:center; flex-wrap:wrap">
-        <select onchange="setEngineerProjectFilter(this.value)" style="padding:7px 10px; border-radius:8px; border:1px solid var(--line); background:var(--surface); font-size:12px; font-weight:600">
+        <select onchange="setEngineerProjectFilter(this.value)" style="padding:7px 10px; border-radius:0; border:1px solid var(--line); background:var(--surface); font-size:12px; font-weight:600">
           ${projectOptionsHtml}
         </select>
 
-        <select onchange="setEngineerPriorityFilter(this.value)" style="padding:7px 10px; border-radius:8px; border:1px solid var(--line); background:var(--surface); font-size:12px; font-weight:600">
+        <select onchange="setEngineerPriorityFilter(this.value)" style="padding:7px 10px; border-radius:0; border:1px solid var(--line); background:var(--surface); font-size:12px; font-weight:600">
           <option value="all" ${ENGINEER_WORKSPACE.filterPriority === 'all' ? 'selected' : ''}>All Priorities</option>
           <option value="High" ${ENGINEER_WORKSPACE.filterPriority === 'High' ? 'selected' : ''}>High</option>
           <option value="Medium" ${ENGINEER_WORKSPACE.filterPriority === 'Medium' ? 'selected' : ''}>Medium</option>
@@ -1537,7 +1537,7 @@ function renderInspectionExecutionView(allocId) {
     });
     return `
       <div style="padding:48px 16px; text-align:center">
-        <div style="font-size:18px; font-weight:700; color:var(--mint)">Opening Inspection ${targetId}...</div>
+        <div style="font-size:18px; font-weight:700; color:var(--safety)">Opening Inspection ${targetId}...</div>
         <div class="muted" style="margin-top:6px">Loading assigned checklist checkpoints</div>
       </div>
     `;
@@ -1596,16 +1596,16 @@ function renderInspectionExecutionView(allocId) {
         const photos = state.photos || [];
 
         const priBadge = cp.priority === 'H'
-          ? `<span style="font-size:10.5px; font-weight:800; color:var(--crit); background:var(--crit-soft); padding:1px 6px; border-radius:4px">HIGH</span>`
+          ? `<span style="font-size:10.5px; font-weight:800; color:var(--crit); background:var(--crit-soft); padding:1px 6px; border-radius:0">HIGH</span>`
           : cp.priority === 'M'
-          ? `<span style="font-size:10.5px; font-weight:800; color:var(--major); background:var(--major-soft); padding:1px 6px; border-radius:4px">MED</span>`
-          : `<span style="font-size:10.5px; font-weight:800; color:var(--mint-ink); background:var(--mint-soft); padding:1px 6px; border-radius:4px">LOW</span>`;
+          ? `<span style="font-size:10.5px; font-weight:800; color:var(--major); background:var(--major-soft); padding:1px 6px; border-radius:0">MED</span>`
+          : `<span style="font-size:10.5px; font-weight:800; color:var(--safety-dim); background:var(--safety-soft); padding:1px 6px; border-radius:0">LOW</span>`;
 
         // Photographs Gallery
         const photosGalleryHtml = photos.length ? `
           <div style="display:flex; gap:8px; flex-wrap:wrap; margin-top:8px">
             ${photos.map((pUrl, pIdx) => `
-              <div style="position:relative; width:80px; height:80px; border-radius:8px; overflow:hidden; border:1px solid var(--line); background:#000">
+              <div style="position:relative; width:80px; height:80px; border-radius:0; overflow:hidden; border:1px solid var(--line); background:#000">
                 <img src="${pUrl}" alt="Evidence" style="width:100%; height:100%; object-fit:cover" onclick="window.open('${pUrl}','_blank')">
                 ${!isLocked ? `
                   <button type="button" onclick="removeCheckpointEvidencePhoto('${cp.checkpoint_id}', '${pUrl}')" style="position:absolute; top:2px; right:2px; background:rgba(0,0,0,0.7); color:#fff; border:none; border-radius:50%; width:20px; height:20px; font-size:11px; cursor:pointer; display:grid; place-items:center">
@@ -1618,45 +1618,45 @@ function renderInspectionExecutionView(allocId) {
         ` : '';
 
         return `
-          <div id="card_${cp.checkpoint_id}" style="border:1px solid var(--line); border-radius:12px; padding:14px; margin-bottom:12px; background:var(--surface)">
+          <div id="card_${cp.checkpoint_id}" style="border:1.5px solid var(--navy); border-radius:0; box-shadow:3px 3px 0 rgba(11,37,69,0.1); padding:16px; margin-bottom:14px; background:var(--surface)">
             <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:8px; margin-bottom:6px">
               <div style="display:flex; align-items:center; gap:6px; flex-wrap:wrap">
-                <span class="code" style="font-size:11px; font-weight:800; color:var(--mint)">${cp.checkpoint_id}</span>
+                <span class="code" style="font-family:var(--font-mono); font-size:11.5px; font-weight:800; color:var(--safety-dim)">${cp.checkpoint_id}</span>
                 ${priBadge}
               </div>
-              <span class="pill" style="font-size:11px; font-weight:700; ${currRes === 'OK' ? 'background:var(--mint); color:#0B2A21' : currRes === 'NC' ? 'background:var(--crit); color:#fff' : currRes === 'NA' ? 'background:var(--ink-3); color:#fff' : 'background:var(--surface-2); color:var(--ink-2)'}">
+              <span class="pill" style="font-family:var(--font-mono); font-size:11px; font-weight:800; border-radius:0; ${currRes === 'OK' ? 'background:var(--ok); color:#fff; border:1px solid var(--ok)' : currRes === 'NC' ? 'background:var(--crit); color:#fff; border:1px solid var(--crit)' : currRes === 'NA' ? 'background:var(--ink-3); color:#fff; border:1px solid var(--ink-3)' : 'background:var(--surface-2); color:var(--navy); border:1.5px solid var(--navy)'}">
                 ${currRes || 'Pending'}
               </span>
             </div>
 
-            <div style="font-size:13.5px; font-weight:600; line-height:1.45; margin-bottom:12px; color:var(--ink)">
-              <strong>Checkpoint ${idx + 1}:</strong> ${esc(cp.checkpoint_text_snapshot || cp.checkpoint_description)}
+            <div style="font-size:13.5px; font-weight:700; line-height:1.45; margin-bottom:12px; color:var(--navy)">
+              <strong style="color:var(--safety)">Checkpoint ${idx + 1}:</strong> ${esc(cp.checkpoint_text_snapshot || cp.checkpoint_description)}
             </div>
 
-            <!-- Result Buttons [OK] [NC] [NA] -->
+            <!-- Result Buttons [OK] [NC] [NA] - Industrial Blueprint Styling -->
             <div style="display:flex; gap:8px; margin-bottom:10px; align-items:center; flex-wrap:wrap">
-              <span style="font-size:12px; font-weight:700; color:var(--ink-2); margin-right:4px">Result:</span>
-              <button type="button" class="btn chk-eval-btn" onclick="setCheckpointExecutionResult('${cp.checkpoint_id}', 'OK')" ${isLocked ? 'disabled' : ''} style="${currRes === 'OK' ? 'background:var(--mint); color:#0B2A21; border:1px solid var(--mint)' : 'background:var(--surface-2); color:var(--ink); border:1px solid var(--line)'}">
+              <span style="font-family:var(--font-mono); font-size:11px; font-weight:800; color:var(--navy); text-transform:uppercase; margin-right:4px">Result:</span>
+              <button type="button" class="btn chk-eval-btn" onclick="setCheckpointExecutionResult('${cp.checkpoint_id}', 'OK')" ${isLocked ? 'disabled' : ''} style="${currRes === 'OK' ? 'background:#3E7C59; color:#fff; border:1.5px solid #2d5a41; border-radius:0; box-shadow:2px 2px 0 rgba(11,37,69,0.15)' : 'background:#fff; color:var(--navy); border:1.5px solid var(--navy); border-radius:0'}">
                 ✓ OK
               </button>
-              <button type="button" class="btn chk-eval-btn" onclick="setCheckpointExecutionResult('${cp.checkpoint_id}', 'NC')" ${isLocked ? 'disabled' : ''} style="${currRes === 'NC' ? 'background:var(--crit); color:#fff; border:1px solid var(--crit)' : 'background:var(--surface-2); color:var(--ink); border:1px solid var(--line)'}">
+              <button type="button" class="btn chk-eval-btn" onclick="setCheckpointExecutionResult('${cp.checkpoint_id}', 'NC')" ${isLocked ? 'disabled' : ''} style="${currRes === 'NC' ? 'background:#a02c2c; color:#fff; border:1.5px solid #7a1f1f; border-radius:0; box-shadow:2px 2px 0 rgba(11,37,69,0.15)' : 'background:#fff; color:var(--navy); border:1.5px solid var(--navy); border-radius:0'}">
                 ⚠ NC
               </button>
-              <button type="button" class="btn chk-eval-btn" onclick="setCheckpointExecutionResult('${cp.checkpoint_id}', 'NA')" ${isLocked ? 'disabled' : ''} style="${currRes === 'NA' ? 'background:var(--ink-3); color:#fff; border:1px solid var(--ink-3)' : 'background:var(--surface-2); color:var(--ink); border:1px solid var(--line)'}">
+              <button type="button" class="btn chk-eval-btn" onclick="setCheckpointExecutionResult('${cp.checkpoint_id}', 'NA')" ${isLocked ? 'disabled' : ''} style="${currRes === 'NA' ? 'background:#7A8E9E; color:#fff; border:1.5px solid #5a6d7d; border-radius:0; box-shadow:2px 2px 0 rgba(11,37,69,0.15)' : 'background:#fff; color:var(--navy); border:1.5px solid var(--navy); border-radius:0'}">
                 — NA
               </button>
             </div>
 
             <!-- Structured NC Details if NC -->
             ${currRes === 'NC' ? `
-              <div style="background:var(--surface-2); border:1px solid rgba(239, 68, 68, 0.3); border-left:4px solid var(--crit); border-radius:8px; padding:10px 12px; margin-bottom:10px">
+              <div style="background:var(--surface-2); border:1px solid rgba(239, 68, 68, 0.3); border-left:4px solid var(--crit); border-radius:0; padding:10px 12px; margin-bottom:10px">
                 <div style="font-size:11.5px; font-weight:800; color:var(--crit); text-transform:uppercase; letter-spacing:0.04em; margin-bottom:8px; display:flex; align-items:center; gap:5px">
                   <span>⚠</span> Non-Conformity Classification & Rectification Scope
                 </div>
                 <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(170px, 1fr)); gap:8px">
                   <div>
                     <label style="display:block; font-size:11px; font-weight:700; color:var(--ink-2); margin-bottom:3px">Defect Severity *</label>
-                    <select ${isLocked ? 'disabled' : ''} onchange="updateCheckpointNCAttr('${cp.checkpoint_id}', 'nc_severity', this.value)" style="width:100%; height:32px; font-size:12px; border-radius:6px; border:1px solid var(--line); background:var(--surface); color:var(--ink); padding:0 8px">
+                    <select ${isLocked ? 'disabled' : ''} onchange="updateCheckpointNCAttr('${cp.checkpoint_id}', 'nc_severity', this.value)" style="width:100%; height:32px; font-size:12px; border-radius:0; border:1px solid var(--line); background:var(--surface); color:var(--ink); padding:0 8px">
                       <option value="Critical" ${(state.nc_severity || 'Major') === 'Critical' ? 'selected' : ''}>Critical (Hold Point / Safety)</option>
                       <option value="Major" ${(state.nc_severity || 'Major') === 'Major' ? 'selected' : ''}>Major (Non-Compliant Work)</option>
                       <option value="Minor" ${state.nc_severity === 'Minor' ? 'selected' : ''}>Minor (Surface / Cosmetic)</option>
@@ -1664,7 +1664,7 @@ function renderInspectionExecutionView(allocId) {
                   </div>
                   <div>
                     <label style="display:block; font-size:11px; font-weight:700; color:var(--ink-2); margin-bottom:3px">Responsible Trade / Agency</label>
-                    <select ${isLocked ? 'disabled' : ''} onchange="updateCheckpointNCAttr('${cp.checkpoint_id}', 'nc_trade', this.value)" style="width:100%; height:32px; font-size:12px; border-radius:6px; border:1px solid var(--line); background:var(--surface); color:var(--ink); padding:0 8px">
+                    <select ${isLocked ? 'disabled' : ''} onchange="updateCheckpointNCAttr('${cp.checkpoint_id}', 'nc_trade', this.value)" style="width:100%; height:32px; font-size:12px; border-radius:0; border:1px solid var(--line); background:var(--surface); color:var(--ink); padding:0 8px">
                       <option value="Civil Structure Agency" ${(state.nc_trade || '') === 'Civil Structure Agency' ? 'selected' : ''}>Civil Structure Agency</option>
                       <option value="Rebar & Steel Contractor" ${state.nc_trade === 'Rebar & Steel Contractor' ? 'selected' : ''}>Rebar & Steel Contractor</option>
                       <option value="Formwork & Shuttering Vendor" ${state.nc_trade === 'Formwork & Shuttering Vendor' ? 'selected' : ''}>Formwork & Shuttering Vendor</option>
@@ -1675,7 +1675,7 @@ function renderInspectionExecutionView(allocId) {
                   </div>
                   <div>
                     <label style="display:block; font-size:11px; font-weight:700; color:var(--ink-2); margin-bottom:3px">Target Rectification Date</label>
-                    <input type="date" ${isLocked ? 'disabled' : ''} value="${esc(state.nc_target_date || '')}" onchange="updateCheckpointNCAttr('${cp.checkpoint_id}', 'nc_target_date', this.value)" style="width:100%; height:32px; font-size:12px; border-radius:6px; border:1px solid var(--line); background:var(--surface); color:var(--ink); padding:0 8px">
+                    <input type="date" ${isLocked ? 'disabled' : ''} value="${esc(state.nc_target_date || '')}" onchange="updateCheckpointNCAttr('${cp.checkpoint_id}', 'nc_target_date', this.value)" style="width:100%; height:32px; font-size:12px; border-radius:0; border:1px solid var(--line); background:var(--surface); color:var(--ink); padding:0 8px">
                   </div>
                 </div>
               </div>
@@ -1693,7 +1693,7 @@ function renderInspectionExecutionView(allocId) {
                 placeholder="${currRes === 'NC' ? 'Describe defect, severity, and rectification required...' : currRes === 'NA' ? 'State engineering justification why this checkpoint is not applicable...' : 'Observation remarks (optional)...'}" 
                 ${isLocked ? 'disabled' : ''}
                 oninput="updateCheckpointObservationText('${cp.checkpoint_id}', this.value)"
-                style="width:100%; border:1px solid ${currRes === 'NC' && !state.observations.trim() ? 'var(--crit)' : currRes === 'NA' && !state.observations.trim() ? 'var(--major)' : 'var(--line)'}; border-radius:8px; padding:8px 10px; font-size:12.5px; background:var(--surface); font-family:inherit"
+                style="width:100%; border:1px solid ${currRes === 'NC' && !state.observations.trim() ? 'var(--crit)' : currRes === 'NA' && !state.observations.trim() ? 'var(--major)' : 'var(--line)'}; border-radius:0; padding:8px 10px; font-size:12.5px; background:var(--surface); font-family:inherit"
               >${esc(state.observations)}</textarea>
             </div>
 
@@ -1724,7 +1724,7 @@ function renderInspectionExecutionView(allocId) {
       return `
         <div style="margin-bottom:18px">
           <div style="font-size:14px; font-weight:700; color:var(--ink); margin-bottom:8px; display:flex; align-items:center; gap:6px">
-            <span style="width:4px; height:16px; background:var(--mint); border-radius:2px; display:inline-block"></span>
+            <span style="width:4px; height:16px; background:var(--safety); border-radius:0; display:inline-block"></span>
             Subgroup: ${sub.name}
             <span class="muted" style="font-size:12px; font-weight:400">(${sub.checkpoints.length} checkpoint${sub.checkpoints.length === 1 ? '' : 's'})</span>
           </div>
@@ -1734,12 +1734,12 @@ function renderInspectionExecutionView(allocId) {
     }).join('');
 
     return `
-      <section class="panel" style="background:var(--surface); border:1px solid var(--line); border-radius:14px; padding:16px; margin-bottom:16px">
+      <section class="panel" style="background:var(--surface); border:1px solid var(--line); border-radius:0; padding:16px; margin-bottom:16px">
         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px; padding-bottom:8px; border-bottom:1px solid var(--line)">
-          <h2 style="font-size:16px; font-weight:800; color:var(--mint-ink); margin:0">
+          <h2 style="font-size:16px; font-weight:800; color:var(--safety-dim); margin:0">
             ${stage.name}
           </h2>
-          <span class="pill" style="font-size:11px; font-weight:700; background:var(--mint-soft); color:var(--mint-ink)">
+          <span class="pill" style="font-size:11px; font-weight:700; background:var(--safety-soft); color:var(--safety-dim)">
             Stage Checkpoints
           </span>
         </div>
@@ -1750,9 +1750,9 @@ function renderInspectionExecutionView(allocId) {
 
   // Lock Banner if submitted
   const lockBannerHtml = isLocked ? `
-    <div style="background:var(--surface-2); border:1px solid var(--line); border-left:4px solid var(--mint); border-radius:8px; padding:12px 16px; margin-bottom:14px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px">
+    <div style="background:var(--surface-2); border:1px solid var(--line); border-left:4px solid var(--safety); border-radius:0; padding:12px 16px; margin-bottom:14px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px">
       <div>
-        <div style="font-weight:700; font-size:13.5px; color:var(--mint-ink)">🔒 Inspection Submitted — Read-Only Mode</div>
+        <div style="font-weight:700; font-size:13.5px; color:var(--safety-dim)">🔒 Inspection Submitted — Read-Only Mode</div>
         <div class="muted" style="font-size:12px">All findings and evidence are locked. Currently awaiting QC Lead sign-off.</div>
       </div>
       <span class="stt info">${alloc.status}</span>
@@ -1771,37 +1771,37 @@ function renderInspectionExecutionView(allocId) {
 
       ${lockBannerHtml}
 
-      <!-- Top Summary Card (Follows user specified layout) -->
-      <section style="background:var(--surface); border:1px solid var(--line); border-radius:14px; padding:18px">
+      <!-- Top Summary Card (Follows blueprint industrial layout) -->
+      <section style="background:var(--surface); border:1.5px solid var(--navy); border-radius:0; box-shadow:4px 4px 0 rgba(11,37,69,0.12); padding:18px">
         <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:10px; margin-bottom:12px">
           <div>
-            <div style="font-size:12px; font-weight:700; color:var(--mint-ink); text-transform:uppercase; letter-spacing:0.05em">Quality Inspection Execution</div>
-            <h1 style="font-size:22px; font-weight:700; margin:2px 0 4px">Project: ${alloc.project_name}</h1>
+            <div style="font-family:var(--font-mono); font-size:11px; font-weight:800; color:var(--safety); text-transform:uppercase; letter-spacing:0.08em">Quality Inspection Execution</div>
+            <h1 style="font-family:var(--font-display); font-size:22px; font-weight:800; color:var(--navy); margin:2px 0 4px">Project: ${alloc.project_name}</h1>
             <div style="font-size:13.5px; color:var(--ink-2); display:flex; gap:8px; align-items:center; flex-wrap:wrap">
-              <span><strong>Inspection:</strong> <span class="code" style="font-size:13px">${alloc.allocation_id}</span></span>
+              <span><strong>Inspection:</strong> <span class="code" style="font-family:var(--font-mono); font-weight:800; font-size:13px; color:var(--safety-dim)">${alloc.allocation_id}</span></span>
               <span>·</span>
               <span><strong>Location:</strong> ${alloc.location_scope}</span>
             </div>
           </div>
           <div style="display:flex; flex-direction:column; align-items:flex-end; gap:4px">
-            <span class="stt ${alloc.status === 'Report issued' ? 'good' : alloc.status === 'Pending review' ? 'info' : 'bad'}" style="font-size:12px; padding:3px 10px">
+            <span class="stt ${alloc.status === 'Report issued' ? 'good' : alloc.status === 'Pending review' ? 'info' : 'bad'}" style="font-family:var(--font-mono); font-size:11px; font-weight:800; padding:3px 10px">
               ${alloc.status}
             </span>
-            <span style="font-size:11.5px; color:var(--ink-3)">Engineer: <strong>${alloc.engineer_name}</strong></span>
+            <span style="font-size:11.5px; color:var(--ink-2)">Engineer: <strong style="color:var(--navy)">${alloc.engineer_name}</strong></span>
           </div>
         </div>
 
         <!-- Inspection Progress Bar -->
-        <div style="background:var(--surface-2); border-radius:10px; padding:12px 14px">
+        <div style="background:var(--surface-2); border:1px solid var(--navy); border-radius:0; padding:12px 14px">
           <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px">
-            <span style="font-weight:700; font-size:13px">
+            <span style="font-weight:700; font-size:13px; color:var(--navy)">
               Inspection Progress: ${completedCount}/${totalCount} checkpoints completed — ${progressPct}%
             </span>
-            <div style="display:flex; gap:6px; font-size:11px; font-weight:800">
-              <span class="pill" style="background:var(--mint); color:#0B2A21">[OK: ${okCount}]</span>
-              <span class="pill" style="background:var(--crit); color:#fff">[NC: ${ncCount}]</span>
-              <span class="pill" style="background:var(--ink-3); color:#fff">[NA: ${naCount}]</span>
-              <span class="pill" style="background:var(--surface); color:var(--ink-2); border:1px solid var(--line)">[Pending: ${pendingCount}]</span>
+            <div style="display:flex; gap:6px; font-family:var(--font-mono); font-size:11px; font-weight:800">
+              <span class="pill" style="background:#3E7C59; color:#fff">[OK: ${okCount}]</span>
+              <span class="pill" style="background:#a02c2c; color:#fff">[NC: ${ncCount}]</span>
+              <span class="pill" style="background:#7A8E9E; color:#fff">[NA: ${naCount}]</span>
+              <span class="pill" style="background:var(--surface); color:var(--navy); border:1.5px solid var(--navy)">[Pending: ${pendingCount}]</span>
             </div>
           </div>
           <div class="prog" style="margin:0; height:8px"><div class="bar"><i style="width:${progressPct}%"></i></div></div>
@@ -1812,17 +1812,25 @@ function renderInspectionExecutionView(allocId) {
       ${stagesHtml}
 
       <!-- Sticky Bottom Action Footer -->
-      <div class="execution-sticky-bar">
+      <div class="execution-sticky-bar" style="border:1.5px solid var(--navy); border-radius:0; box-shadow:4px 4px 0 rgba(11,37,69,0.15)">
         <div style="font-size:12.5px; color:var(--ink-2)">
-          ${pendingCount > 0 ? `<span style="color:var(--major); font-weight:700">⚠ ${pendingCount} checkpoint(s) pending evaluation</span>` : `<span style="color:var(--mint); font-weight:700">✓ All checkpoints evaluated</span>`}
+          ${pendingCount > 0 ? `<span style="color:var(--major); font-weight:800">⚠ ${pendingCount} checkpoint(s) pending evaluation</span>` : `<span style="color:var(--ok); font-weight:800">✓ All checkpoints evaluated</span>`}
         </div>
 
         <div style="display:flex; gap:10px; align-items:center">
+          <button class="btn ghost" type="button" onclick="saveCheckpointExecutionProgress(false)" ${isLocked ? 'disabled' : ''} style="height:40px; padding:0 16px; font-size:13px; font-weight:700">
+            💾 Save Progress
+          </button>
+          <button class="btn primary" type="button" onclick="submitCheckpointExecutionForReview()" ${isLocked ? 'disabled' : ''} style="height:40px; padding:0 18px; font-size:13px; font-weight:700; background:var(--safety); color:#fff; border:1.5px solid var(--safety-dim); box-shadow:3px 3px 0 rgba(11,37,69,0.18)">
+            🚀 Submit for Sign-off →
+          </button>
+        </div>
+      </div>
           ${!isLocked ? `
             <button class="btn ghost" type="button" onclick="saveInspectionProgress('${alloc.allocation_id}', false)" style="height:38px; font-weight:700; padding:0 16px">
               💾 Save Progress
             </button>
-            <button class="btn primary" type="button" onclick="submitInspectionFromWorkspace('${alloc.allocation_id}')" style="height:38px; font-weight:700; padding:0 18px; background:var(--mint); color:var(--on-mint)">
+            <button class="btn primary" type="button" onclick="submitInspectionFromWorkspace('${alloc.allocation_id}')" style="height:38px; font-weight:700; padding:0 18px; background:var(--safety); color:#ffffff">
               🚀 Submit Inspection
             </button>
           ` : `

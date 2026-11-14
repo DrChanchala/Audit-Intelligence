@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SiteIQ Enterprise - QC Lead Console</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-[#0a0f18] text-slate-100 font-sans min-h-screen p-6">
+  <div class="max-w-6xl mx-auto">
+    <!-- Header -->
+    <header class="flex items-center justify-between pb-6 border-b border-slate-800">
+      <div>
+        <div class="flex items-center gap-2 text-xs font-semibold text-emerald-400 uppercase tracking-wider mb-1">
+          <span>Quality Assurance & Governance</span>
+          <span class="bg-purple-500/20 text-purple-300 text-[10px] px-2 py-0.5 rounded-full">TIER 2 LEAD</span>
+        </div>
+        <h1 class="text-2xl font-bold text-white">Purvanchal Skyline Vista · QC Leadership</h1>
+        <p class="text-xs text-slate-400 mt-1">Logged in as: <strong class="text-slate-200">Priya Deshmukh</strong> (QC Lead) · 4,000+ Master Checkpoints Active</p>
+      </div>
+      <div class="flex items-center gap-2">
+        <button class="px-4 py-2 text-xs font-bold text-slate-950 bg-emerald-400 hover:bg-emerald-300 rounded-lg transition">
+          ⚡ Allocate Inspection
+        </button>
+        <button class="px-4 py-2 text-xs font-semibold text-slate-300 bg-slate-800 hover:bg-slate-700 border border-slate-700 rounded-lg transition">
+          Generate AI Audit Report
+        </button>
+      </div>
+    </header>
+
+    <!-- Inspection Status Summary -->
+    <div class="grid grid-cols-2 sm:grid-cols-5 gap-3 my-6">
+      <div class="p-3.5 rounded-xl bg-[#0f172a] border border-slate-800 text-center">
+        <div class="text-xl font-bold text-white">37</div>
+        <div class="text-[11px] text-slate-400 mt-0.5">Total Checks</div>
+      </div>
+      <div class="p-3.5 rounded-xl bg-[#0f172a] border border-slate-800 text-center">
+        <div class="text-xl font-bold text-emerald-400">12</div>
+        <div class="text-[11px] text-slate-400 mt-0.5">Allocated</div>
+      </div>
+      <div class="p-3.5 rounded-xl bg-[#0f172a] border border-slate-800 text-center">
+        <div class="text-xl font-bold text-blue-400">8</div>
+        <div class="text-[11px] text-slate-400 mt-0.5">In Progress</div>
+      </div>
+      <div class="p-3.5 rounded-xl bg-[#0f172a] border border-rose-900/40 bg-rose-950/10 text-center">
+        <div class="text-xl font-bold text-rose-400">3</div>
+        <div class="text-[11px] text-slate-400 mt-0.5">Overdue</div>
+      </div>
+      <div class="p-3.5 rounded-xl bg-[#0f172a] border border-slate-800 text-center">
+        <div class="text-xl font-bold text-emerald-400">14</div>
+        <div class="text-[11px] text-slate-400 mt-0.5">Approved</div>
+      </div>
+    </div>
+
+    <!-- Inspections Table -->
+    <div class="bg-[#0f172a] border border-slate-800 rounded-2xl p-5">
+      <div class="flex items-center justify-between mb-4">
+        <h3 class="text-sm font-bold text-white">Active Site Inspection Allocations</h3>
+        <span class="text-xs text-slate-400">Filter: All Stages</span>
+      </div>
+      <div class="space-y-3">
+        <div class="p-4 rounded-xl bg-[#132034] border border-slate-800 flex items-center justify-between">
+          <div>
+            <div class="flex items-center gap-2 mb-1">
+              <span class="text-xs font-mono font-bold text-emerald-400">INS-0012-0002</span>
+              <span class="text-[10px] uppercase font-bold px-2 py-0.5 rounded bg-rose-500/20 text-rose-300">HIGH PRIORITY</span>
+              <span class="text-[10px] font-semibold px-2 py-0.5 rounded bg-slate-800 text-slate-300">Allocated</span>
+            </div>
+            <div class="text-sm font-bold text-white">Tower 3 · Floor 8 · Zone B · Sunken Slab Waterproofing</div>
+            <div class="text-xs text-slate-400 mt-1">Assigned to: <strong class="text-slate-200">Anjali Rao (EMP-1004)</strong> · Due: 2026-11-06</div>
+          </div>
+          <button class="px-3 py-1.5 text-xs font-bold bg-slate-800 hover:bg-slate-700 text-slate-200 rounded-lg border border-slate-700">
+            Review Checks →
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
