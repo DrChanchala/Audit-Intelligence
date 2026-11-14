@@ -1,16 +1,25 @@
 """Sign-in, organization sign-up, session and user provisioning."""
 from __future__ import annotations
 
-from typing import Optional
-
 from fastapi import APIRouter, Depends, Request, Response
 
 from app.core.config import get_settings
 from app.core.deps import admin_or_qc, any_user
 from app.core.errors import Forbidden, Gone
-from app.core.security import SESSION_COOKIE, Principal, Role, create_token, login_limiter, signup_limiter
+from app.core.security import (
+    SESSION_COOKIE,
+    Principal,
+    Role,
+    create_token,
+    login_limiter,
+    signup_limiter,
+)
 from app.db.connection import Session, get_db
-from app.schemas.requests import CreateUserRequest, LoginRequest, RegisterOrgAdminRequest
+from app.schemas.requests import (
+    CreateUserRequest,
+    LoginRequest,
+    RegisterOrgAdminRequest,
+)
 from app.services import auth as svc
 
 router = APIRouter(prefix="/api/auth", tags=["auth"])
@@ -56,7 +65,7 @@ def register_org_admin(req: RegisterOrgAdminRequest, request: Request, response:
 
 
 @router.post("/logout")
-def logout(response: Response):
+def logout(response: Response, _: Principal = Depends(any_user)):
     response.delete_cookie(SESSION_COOKIE, path="/")
     return {"status": "success"}
 
@@ -75,7 +84,7 @@ def my_organization(p: Principal = Depends(any_user), db: Session = Depends(get_
 
 
 @router.post("/organizations")
-def create_organization_disabled(_: Principal = Depends(any_user)):
+def create_organization_disabled():
     raise Gone("Creating organizations from inside another organization is not supported. Use sign-up.")
 
 
@@ -86,7 +95,7 @@ def public_register_disabled():
 
 
 @router.get("/users")
-def list_users(role: Optional[str] = None, org_id: Optional[str] = None, p: Principal = Depends(admin_or_qc),
+def list_users(role: str | None = None, org_id: str | None = None, p: Principal = Depends(admin_or_qc),
                db: Session = Depends(get_db)):
     # org_id is accepted for compatibility but always pinned to the caller's org.
     return {"status": "success", "users": svc.list_users(db, p, role)}

@@ -1,13 +1,14 @@
 # =================================================================
 # SiteIQ — Production Multi-Stage Container Image
-# Optimized for Railway, FastAPI, Static Serving, and Supabase Postgres
+# Optimized for Railway, FastAPI, and Postgres
 # =================================================================
 
 FROM python:3.12-slim as runtime
 
 ENV PYTHONUNBUFFERED=1 \
     PYTHONDONTWRITEBYTECODE=1 \
-    PORT=8000
+    PORT=8000 \
+    UPLOAD_DIR=/data/uploads
 
 WORKDIR /app
 
@@ -20,24 +21,20 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 COPY requirements.txt /app/
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy application files
-COPY app_audit.py /app/
-COPY database_audit.py /app/
-COPY auth_service.py /app/
-COPY allocation_service.py /app/
-COPY inspection_report_service.py /app/
-COPY ai_agent.py /app/
-COPY progress_engine.py /app/
-COPY database.py /app/
-COPY master_checklist_parsed.json /app/
-COPY migrate_sqlite_to_postgres.py /app/
-COPY seed_master_checklist.py /app/
-COPY seed_auth_data.py /app/
-COPY migrations /app/migrations
+# Copy application directories only
+COPY app /app/app
+COPY templates /app/templates
 COPY static /app/static
+COPY scripts /app/scripts
+COPY migrations /app/migrations
+COPY archive /app/archive
 
-# Create uploads evidence directory
-RUN mkdir -p /app/static/uploads/evidence
+# Non-root user and persistent volume mount point
+RUN useradd -m -u 1000 appuser && \
+    mkdir -p /data/uploads && \
+    chown -R appuser:appuser /app /data/uploads
+
+USER appuser
 
 # Expose default port
 EXPOSE 8000
@@ -47,4 +44,4 @@ HEALTHCHECK --interval=30s --timeout=5s --start-period=10s --retries=3 \
     CMD curl -f http://localhost:${PORT:-8000}/api/health || exit 1
 
 # Start FastAPI server on dynamic Railway PORT
-CMD ["sh", "-c", "uvicorn app_audit:app --host 0.0.0.0 --port ${PORT:-8000}"]
+CMD ["sh", "-c", "uvicorn app.main:app --host 0.0.0.0 --port ${PORT:-8000}"]

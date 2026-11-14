@@ -6,11 +6,13 @@ applied in Python, so repeated wizard loads cost no database round-trips.
 from __future__ import annotations
 
 import copy
+import json
 import threading
 
 from app.db.connection import Session
 
 _cache: list[dict] | None = None
+_cache_json: str | None = None
 _lock = threading.Lock()
 
 
@@ -24,32 +26,49 @@ def _load(db: Session) -> list[dict]:
     by_stage: dict[str, list[dict]] = {}
     for s in subs:
         s["checkpoints"] = by_sub.get(s["subgroup_id"], [])
+        s["checkpoint_count"] = len(s["checkpoints"])
         by_stage.setdefault(s["stage_id"], []).append(s)
     for st in stages:
         st["subgroups"] = by_stage.get(st["stage_id"], [])
+        st["total_checkpoints"] = sum(s["checkpoint_count"] for s in st["subgroups"])
     return stages
 
 
 def tree(db: Session) -> list[dict]:
-    global _cache
+    global _cache, _cache_json
     if _cache is None:
         with _lock:
             if _cache is None:
                 _cache = _load(db)
+                _cache_json = json.dumps({"status": "success", "stages": _cache})
     return _cache
 
 
+def json_tree(db: Session) -> str:
+    global _cache_json
+    if _cache_json is None:
+        tree(db)
+    assert _cache_json is not None
+    return _cache_json
+
+
 def invalidate() -> None:
-    global _cache
+    global _cache, _cache_json
     _cache = None
+    _cache_json = None
 
 
 def filtered(db: Session, stage_id=None, building_type=None, priority=None, search_q=None) -> list[dict]:
     pri = priority.upper()[:1] if priority and priority != "all" else None
     bt = building_type.lower() if building_type and building_type != "all" else None
     q = search_q.lower().strip() if search_q else None
+
+    cached_tree = tree(db)
+    if not stage_id and not pri and not bt and not q:
+        return cached_tree
+
     result = []
-    for st in tree(db):
+    for st in cached_tree:
         if stage_id and stage_id not in (st["stage_id"], st["stage_num"]):
             continue
         out_subs = []

@@ -6,7 +6,12 @@ import uuid
 from datetime import datetime
 
 from app.core.errors import Conflict, Forbidden, Unauthorized, ValidationFailed
-from app.core.security import Principal, Role, hash_password, verify_password_constant_time
+from app.core.security import (
+    Principal,
+    Role,
+    hash_password,
+    verify_password_constant_time,
+)
 from app.db.connection import Session
 from app.schemas.requests import CreateUserRequest, RegisterOrgAdminRequest
 

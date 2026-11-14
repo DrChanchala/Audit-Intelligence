@@ -12,7 +12,7 @@ custom CSRF header, which cross-site pages cannot send. API clients may use
 """
 from __future__ import annotations
 
-from typing import Callable
+from collections.abc import Callable
 
 from fastapi import Depends, Request
 

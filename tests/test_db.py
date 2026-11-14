@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import sqlite3
+
 import pytest
 
 from app.db.connection import Row, Session, to_pg_sql

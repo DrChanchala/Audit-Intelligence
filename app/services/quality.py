@@ -6,7 +6,13 @@ from datetime import datetime
 from app.core.errors import ValidationFailed
 from app.core.security import Principal
 from app.db.connection import Session
-from app.services.tenancy import approval_in_org, engineer_in_org, inspection_in_org, nc_in_org, project_in_org
+from app.services.tenancy import (
+    approval_in_org,
+    engineer_in_org,
+    inspection_in_org,
+    nc_in_org,
+    project_in_org,
+)
 
 
 def _today() -> str:

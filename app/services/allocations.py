@@ -12,15 +12,20 @@
 """
 from __future__ import annotations
 
+from collections.abc import Iterable
 from datetime import date, datetime
-from typing import Iterable
 
 from app.core.errors import Conflict, ValidationFailed
 from app.core.security import Principal, Role
 from app.db.connection import Row, Session
 from app.schemas.requests import CheckpointProgressItem, CreateAllocationRequest
 from app.services import checklist
-from app.services.tenancy import allocation_in_scope, engineer_in_org, engineer_keys, project_in_org
+from app.services.tenancy import (
+    allocation_in_scope,
+    engineer_in_org,
+    engineer_keys,
+    project_in_org,
+)
 
 EDITABLE = ("Allocated", "In progress", "Returned for Reinspection")
 LOCKED = ("Pending review", "Report issued", "Done")
@@ -407,9 +412,9 @@ def review(db: Session, p: Principal, alloc_id: str, decision: str, comments: st
 
 
 def reassign(db: Session, p: Principal, alloc_id: str, target: str, reason: str, new_due: date | None) -> dict:
+    alloc = allocation_in_scope(db, p, alloc_id)
     if not reason.strip():
         raise ValidationFailed("Reassignment reason is mandatory.")
-    alloc = allocation_in_scope(db, p, alloc_id)
     eng = engineer_in_org(db, p, target)
     due = new_due.isoformat() if new_due else alloc["due_date"]
     db.execute("UPDATE inspection_allocations SET engineer_id = ?, engineer_name = ?, due_date = ?, updated_at = ? "

@@ -1,8 +1,6 @@
 """Organization admin console APIs and projects."""
 from __future__ import annotations
 
-from typing import Optional
-
 from fastapi import APIRouter, Depends
 
 from app.core.deps import admin_only, admin_or_qc, any_user
@@ -21,7 +19,7 @@ def admin_overview(p: Principal = Depends(admin_only), db: Session = Depends(get
 
 
 @router.get("/api/projects")
-def list_projects(status: Optional[str] = None, q: Optional[str] = None, p: Principal = Depends(any_user),
+def list_projects(status: str | None = None, q: str | None = None, p: Principal = Depends(any_user),
                   db: Session = Depends(get_db)):
     return svc.list_projects(db, p, status, q)
 
