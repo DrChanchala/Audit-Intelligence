@@ -4,10 +4,11 @@
  * and Inspection Engineer Workspace synchronization.
  */
 
-// Universal safe esc helper
-const esc = typeof window !== 'undefined' && typeof window.esc === 'function' 
-  ? window.esc 
-  : s => String(s || '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+// Universal safe HTML escape helper
+function esc(s) {
+  return String(s || '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+window.esc = esc;
 
 // Master Checklist cache
 let MASTER_STAGES = [];

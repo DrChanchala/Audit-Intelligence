@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Noto+Sans:wght@400;500;600;700&display=swap">
-<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 <script src="/static/js/allocation_module.js"></script>
 <style>
 /* AI Report Markdown Styling */
@@ -1121,7 +1121,8 @@ const fmt = (s, yr = true) => { if (!s) return '—'; const [y,m,d] = parts(s); 
 const local = s => { const [a,b='00:00'] = s.split('T'); const [y,m,d] = a.split('-').map(Number); const [h,mi] = b.split(':').map(Number); return new Date(y,m-1,d,h,mi); };
 const rel = s => { if (!s) return ''; const mins = Math.round((TODAY - local(s)) / 6e4); if (mins < 60) return `${Math.max(1,mins)} min ago`; if (ago(s) === 0) return `${Math.round(mins/60)} h ago`; if (ago(s) === 1) return 'yesterday'; return `${ago(s)} d ago`; };
 const addDays = (s,k) => new Date(d0(s) + k*864e5).toISOString().slice(0,10);
-const esc = s => String(s || '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+function esc(s) { return String(s || '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+window.esc = esc;
 
 /* ---------- icons ---------- */
 const IC = {
@@ -2662,9 +2663,9 @@ function renderChrome(){
 
   const authUser = getAuthenticatedUser();
   const authOrg = getAuthenticatedOrg();
-  const activeEngName = typeof ENGINEER_WORKSPACE !== 'undefined' ? ENGINEER_WORKSPACE.activeEngineerName : (authUser?.full_name || 'Anjali Rao');
-  const activeEngId = typeof ENGINEER_WORKSPACE !== 'undefined' ? ENGINEER_WORKSPACE.activeEngineerId : (authUser?.employee_id || 'EMP-1004');
-  const engInitials = activeEngName.split(' ').map(n=>n[0]).join('').slice(0,2).toUpperCase();
+  const activeEngName = (typeof ENGINEER_WORKSPACE !== 'undefined' && ENGINEER_WORKSPACE.activeEngineerName) ? ENGINEER_WORKSPACE.activeEngineerName : (authUser?.full_name || 'Anjali Rao');
+  const activeEngId = (typeof ENGINEER_WORKSPACE !== 'undefined' && ENGINEER_WORKSPACE.activeEngineerId) ? ENGINEER_WORKSPACE.activeEngineerId : (authUser?.employee_id || 'EMP-1004');
+  const engInitials = String(activeEngName || 'AR').split(' ').map(n=>n ? n[0] : '').join('').slice(0,2).toUpperCase() || 'AR';
   const adminName = authUser?.full_name || 'Administrator';
   const leadName = authUser?.full_name || 'QC Lead';
   const leadEmpId = authUser?.employee_id || 'EMP-1001';
@@ -3530,16 +3531,31 @@ VIEWS.engineer_dashboard = e => typeof renderEngineerWorkspaceView === 'function
 VIEWS.inspection_execution = e => typeof renderInspectionExecutionView === 'function' ? renderInspectionExecutionView(e.id) : '<div style="padding:40px; text-align:center">Loading Execution View...</div>';
 
 function render(anim = true){
-  const e = cur() || { v: 'landing' };
-  const v = $('view');
-  if (VIEWS[e.v]) {
-    v.innerHTML = VIEWS[e.v](e);
-  } else {
-    v.innerHTML = VIEWS.landing();
+  try {
+    const e = cur() || { v: 'landing' };
+    const v = $('view');
+    if (!v) return;
+    if (VIEWS[e.v]) {
+      v.innerHTML = VIEWS[e.v](e);
+    } else {
+      v.innerHTML = VIEWS.landing();
+    }
+    if (e.v === 'home') renderCards();
+    if (anim){ v.classList.remove('enter'); void v.offsetWidth; v.classList.add('enter'); }
+    renderChrome();
+  } catch(err) {
+    console.error("Critical render error:", err);
+    const v = $('view');
+    if (v) {
+      v.innerHTML = `
+        <div style="padding:48px 20px; text-align:center; max-width:600px; margin:40px auto; background:var(--surface); border:1px solid var(--line); border-radius:16px">
+          <h2 style="font-size:20px; font-weight:700; margin-bottom:8px">SiteIQ Platform Recovery</h2>
+          <p class="muted" style="margin-bottom:18px">A client session anomaly occurred. Click below to reset view to the landing page.</p>
+          <button class="btn primary" onclick="localStorage.clear(); window.location.href='/';" style="height:38px; padding:0 20px; font-size:13px; font-weight:700; background:var(--mint); color:var(--on-mint); border-radius:8px">Reset & Reload Platform →</button>
+        </div>
+      `;
+    }
   }
-  if (e.v === 'home') renderCards();
-  if (anim){ v.classList.remove('enter'); void v.offsetWidth; v.classList.add('enter'); }
-  renderChrome();
 }
 
 /* ---------- unified navigation & back buttons ---------- */
