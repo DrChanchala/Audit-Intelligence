@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}SiteIQ — Quality Governance Platform{% endblock %}</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Noto+Sans:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/static/css/app.css?v={{ asset_version }}">
+  {% block extra_head %}{% endblock %}
+</head>
+<body
+  data-authenticated="{% if user %}true{% else %}false{% endif %}"
+  data-user-id="{{ user.id if user else '' }}"
+  data-user-name="{{ user.name if user else '' }}"
+  data-user-role="{{ user.role if user else '' }}"
+  data-org-id="{{ user.org_id if user else '' }}"
+  data-org-name="{{ user.org_name if user else '' }}"
+>
+  {% block header %}
+  <header class="top-bar">
+    <div class="top-bar-inner">
+      <a href="/" class="brand-link">
+        <div class="brand-logo-icon">Q</div>
+        <span class="brand-wordmark">SiteIQ</span>
+        <span class="brand-badge">CQMS</span>
+      </a>
+
+      {% if user %}
+      <div class="user-nav">
+        {% if user.org_name %}
+        <span class="user-nav-org" title="Organization">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M3 21h18M3 7v14M21 7v14M6 7V3h12v4M9 11h2M9 15h2M13 11h2M13 15h2"/>
+          </svg>
+          {{ user.org_name }}
+        </span>
+        {% endif %}
+        <span class="user-nav-role">{{ user.role }}</span>
+        <div class="user-avatar" title="{{ user.name }} ({{ user.email }})">
+          {{ user.name[0] | upper if user.name else 'U' }}
+        </div>
+        <button type="button" class="btn btn-ghost btn-sm text-band-sub" id="signOutBtn" title="Sign out of SiteIQ">
+          Sign out
+        </button>
+      </div>
+      {% endif %}
+    </div>
+  </header>
+  {% endblock %}
+
+  <main class="app-container">
+    {% block content %}{% endblock %}
+  </main>
+
+  <div id="toast-container" class="toast-container" aria-live="polite"></div>
+
+  {% block scripts %}{% endblock %}
+</body>
+</html>

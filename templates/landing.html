@@ -1,0 +1,121 @@
+{% extends "base.html" %}
+
+{% block title %}SiteIQ — Autonomous Quality Governance from Organization to Field{% endblock %}
+
+{% block content %}
+<div class="hero-wrapper">
+  <span class="hero-tag">Enterprise Construction Quality</span>
+  <h1 class="hero-title">Autonomous Quality Governance from Organization to Field</h1>
+  <p class="hero-desc">
+    Enforce ISO 9001:2015 compliant digital quality control across your projects.
+    Multi-tenant isolation, real-time field checkpoint verification, and tamper-resistant audit trails.
+  </p>
+
+  <div class="auth-card-container">
+    <div class="card">
+      <div class="card-header">
+        <h2 class="card-title">Sign In to Your Workspace</h2>
+      </div>
+      <div class="card-body">
+        <form id="signInForm" autocomplete="on">
+          <div class="form-group">
+            <label class="form-label" for="signInEmail">Work Email</label>
+            <input
+              type="email"
+              id="signInEmail"
+              name="email"
+              class="form-control"
+              placeholder="name@company.com"
+              required
+              autocomplete="username"
+            >
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="signInPassword">Password</label>
+            <input
+              type="password"
+              id="signInPassword"
+              name="password"
+              class="form-control"
+              placeholder="Enter your password"
+              required
+              autocomplete="current-password"
+            >
+          </div>
+
+          <button type="submit" class="btn btn-primary w-full mt-sm" id="signInSubmitBtn">
+            Sign In to Workspace
+          </button>
+        </form>
+
+        <div class="auth-toggle-link">
+          <span>New organization? </span>
+          <button type="button" class="btn-ghost text-mint" id="openRegisterModalBtn">
+            Register your organization
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Register Organization Modal -->
+<div class="modal-backdrop" id="registerOrgModal" aria-hidden="true">
+  <div class="modal-box">
+    <div class="modal-header">
+      <h3 class="modal-title">Register Your Organization</h3>
+      <button type="button" class="btn btn-ghost btn-sm" data-modal-close="registerOrgModal" aria-label="Close modal">✕</button>
+    </div>
+    <form id="registerOrgForm">
+      <div class="modal-body">
+        <div class="form-group">
+          <label class="form-label" for="regOrgName">Organization / Company Name *</label>
+          <input type="text" id="regOrgName" class="form-control" required placeholder="e.g. Apex Construction Infra">
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label" for="regIndustry">Industry / Sector</label>
+            <input type="text" id="regIndustry" class="form-control" placeholder="e.g. Commercial Real Estate">
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="regAddress">Headquarters Address</label>
+            <input type="text" id="regAddress" class="form-control" placeholder="e.g. Mumbai, India">
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label" for="regAdminName">Admin Full Name *</label>
+            <input type="text" id="regAdminName" class="form-control" required placeholder="e.g. Anand Sharma">
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="regAdminPhone">Admin Phone</label>
+            <input type="tel" id="regAdminPhone" class="form-control" placeholder="e.g. +91 98765 43210">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="regAdminEmail">Admin Corporate Email *</label>
+          <input type="email" id="regAdminEmail" class="form-control" required placeholder="admin@apexinfra.com">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="regAdminPassword">Admin Master Password *</label>
+          <input type="password" id="regAdminPassword" class="form-control" required minlength="10" placeholder="Minimum 10 characters">
+          <div class="form-hint">Must contain at least 10 characters for enterprise security.</div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-modal-close="registerOrgModal">Cancel</button>
+        <button type="submit" class="btn btn-primary" id="registerSubmitBtn">Create Organization</button>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script type="module" src="/static/js/landing/main.js?v={{ asset_version }}"></script>
+{% endblock %}

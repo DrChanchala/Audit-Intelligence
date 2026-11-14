@@ -1,0 +1,259 @@
+{% extends "base.html" %}
+
+{% block title %}SiteIQ — Organization Admin Console{% endblock %}
+
+{% block content %}
+<div class="page-header">
+  <div>
+    <span class="eyebrow">Enterprise Governance</span>
+    <h1 class="page-title">Organization Console</h1>
+    <div class="page-subtitle" id="adminOrgSubtitle">Managing quality operations for {{ user.org_name if user else 'Organization' }}</div>
+  </div>
+  <div class="flex-gap">
+    <button type="button" class="btn btn-secondary btn-sm" id="refreshDashboardBtn">
+      ↻ Refresh Data
+    </button>
+  </div>
+</div>
+
+<!-- KPI Cards -->
+<section class="kpi-grid" id="kpiContainer" aria-label="Organization KPI Summary">
+  <div class="kpi-card">
+    <div class="kpi-label">Total Projects</div>
+    <div class="kpi-value" id="kpiProjects">—</div>
+    <div class="kpi-sub" id="kpiProjectsSub">Active projects</div>
+  </div>
+  <div class="kpi-card">
+    <div class="kpi-label">Team Members</div>
+    <div class="kpi-value" id="kpiUsers">—</div>
+    <div class="kpi-sub" id="kpiUsersSub">Engineers & QC Leads</div>
+  </div>
+  <div class="kpi-card">
+    <div class="kpi-label">Total Allocations</div>
+    <div class="kpi-value" id="kpiAllocations">—</div>
+    <div class="kpi-sub" id="kpiAllocationsSub">Field inspection tasks</div>
+  </div>
+  <div class="kpi-card">
+    <div class="kpi-label">Open Non-Conformities</div>
+    <div class="kpi-value text-crit" id="kpiOpenNCs">—</div>
+    <div class="kpi-sub" id="kpiOpenNCsSub">Unresolved field defects</div>
+  </div>
+</section>
+
+<!-- Main Admin Tabs -->
+<div class="tabs-nav" role="tablist">
+  <button type="button" class="tab-btn active" id="tabBtnProjects" role="tab" aria-selected="true" aria-controls="tabProjects">
+    Projects (<span id="projectsCount">0</span>)
+  </button>
+  <button type="button" class="tab-btn" id="tabBtnTeam" role="tab" aria-selected="false" aria-controls="tabTeam">
+    Team & Provisioning (<span id="teamCount">0</span>)
+  </button>
+</div>
+
+<!-- Tab: Projects -->
+<div id="tabProjects" role="tabpanel" aria-labelledby="tabBtnProjects">
+  <div class="card">
+    <div class="card-header">
+      <h2 class="card-title">Organization Projects</h2>
+      <button type="button" class="btn btn-primary btn-sm" id="openCreateProjectModalBtn">
+        + New Project
+      </button>
+    </div>
+    <div class="table-wrap">
+      <table class="data-table" id="projectsTable">
+        <thead>
+          <tr>
+            <th>Project Name</th>
+            <th>Type</th>
+            <th>Location</th>
+            <th>Status</th>
+            <th>Schedule</th>
+            <th>Coordinates</th>
+          </tr>
+        </thead>
+        <tbody id="projectsTableBody">
+          <tr><td colspan="6" class="muted table-empty-cell">Loading organization projects...</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- Tab: Team -->
+<div id="tabTeam" class="d-none" role="tabpanel" aria-labelledby="tabBtnTeam">
+  <div class="card">
+    <div class="card-header">
+      <div class="card-header-left">
+        <h2 class="card-title">Team Directory</h2>
+        <select id="roleFilterSelect" class="form-select select-compact">
+          <option value="all">All Roles</option>
+          <option value="admin">Administrators</option>
+          <option value="qc_lead">QC Leads</option>
+          <option value="engineer">Inspection Engineers</option>
+        </select>
+      </div>
+      <button type="button" class="btn btn-primary btn-sm" id="openProvisionUserModalBtn">
+        + Provision Member
+      </button>
+    </div>
+    <div class="table-wrap">
+      <table class="data-table" id="teamTable">
+        <thead>
+          <tr>
+            <th>Full Name</th>
+            <th>Corporate Email</th>
+            <th>Role</th>
+            <th>Employee ID</th>
+            <th>Specialization</th>
+            <th>Phone</th>
+            <th>Status</th>
+            <th>Joined</th>
+          </tr>
+        </thead>
+        <tbody id="teamTableBody">
+          <tr><td colspan="8" class="muted table-empty-cell">Loading team members...</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- Create Project Modal -->
+<div class="modal-backdrop" id="createProjectModal" aria-hidden="true">
+  <div class="modal-box">
+    <div class="modal-header">
+      <h3 class="modal-title">Create New Project</h3>
+      <button type="button" class="btn btn-ghost btn-sm" data-modal-close="createProjectModal" aria-label="Close modal">✕</button>
+    </div>
+    <form id="createProjectForm">
+      <div class="modal-body">
+        <div class="form-group">
+          <label class="form-label" for="projName">Project Name *</label>
+          <input type="text" id="projName" class="form-control" required placeholder="e.g. Apex Horizon Tower B">
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label" for="projCode">Project Code *</label>
+            <input type="text" id="projCode" class="form-control" required placeholder="e.g. PRJ-HORIZON">
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="projBuildingType">Building Type *</label>
+            <select id="projBuildingType" class="form-select" required>
+              <option value="residential">Residential High-Rise</option>
+              <option value="commercial">Commercial / Office</option>
+              <option value="industrial">Industrial / Warehouse</option>
+              <option value="infrastructure">Infrastructure</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label" for="projLocation">City / Location *</label>
+            <input type="text" id="projLocation" class="form-control" required placeholder="e.g. Bengaluru, Karnataka">
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="projStatus">Initial Status *</label>
+            <select id="projStatus" class="form-select" required>
+              <option value="live">Live (Active)</option>
+              <option value="upcoming">Upcoming</option>
+              <option value="on_hold">On Hold</option>
+              <option value="completed">Completed</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label" for="projStartDate">Target Start Date</label>
+            <input type="date" id="projStartDate" class="form-control">
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="projEndDate">Target Completion Date</label>
+            <input type="date" id="projEndDate" class="form-control">
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label" for="projLat">Latitude</label>
+            <input type="number" step="any" id="projLat" class="form-control" placeholder="e.g. 12.9716">
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="projLng">Longitude</label>
+            <input type="number" step="any" id="projLng" class="form-control" placeholder="e.g. 77.5946">
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-modal-close="createProjectModal">Cancel</button>
+        <button type="submit" class="btn btn-primary" id="saveProjectBtn">Create Project</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Provision Member Modal -->
+<div class="modal-backdrop" id="provisionUserModal" aria-hidden="true">
+  <div class="modal-box">
+    <div class="modal-header">
+      <h3 class="modal-title">Provision Team Member</h3>
+      <button type="button" class="btn btn-ghost btn-sm" data-modal-close="provisionUserModal" aria-label="Close modal">✕</button>
+    </div>
+    <form id="provisionUserForm">
+      <div class="modal-body">
+        <div class="form-group">
+          <label class="form-label" for="userFullName">Full Name *</label>
+          <input type="text" id="userFullName" class="form-control" required placeholder="e.g. Sarah Jenkins">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="userEmail">Corporate Email *</label>
+          <input type="email" id="userEmail" class="form-control" required placeholder="name@company.com">
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label" for="userRole">Operational Role *</label>
+            <select id="userRole" class="form-select" required>
+              <option value="engineer" selected>Inspection Engineer</option>
+              <option value="qc_lead">QC Lead / Quality Manager</option>
+              <option value="admin">System Administrator</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="userEmpId">Employee ID</label>
+            <input type="text" id="userEmpId" class="form-control" placeholder="e.g. EMP-204">
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label" for="userSpec">Trade / Specialization</label>
+            <input type="text" id="userSpec" class="form-control" placeholder="e.g. Structural RCC, MEP, Finishes">
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="userPhone">Contact Phone</label>
+            <input type="tel" id="userPhone" class="form-control" placeholder="e.g. +91 98765 00000">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="userPassword">Temporary Password *</label>
+          <input type="password" id="userPassword" class="form-control" required minlength="10" placeholder="Minimum 10 characters">
+          <div class="form-hint">Member will use this temporary password for their initial sign in.</div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-modal-close="provisionUserModal">Cancel</button>
+        <button type="submit" class="btn btn-primary" id="saveUserBtn">Provision Member</button>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script type="module" src="/static/js/admin/main.js?v={{ asset_version }}"></script>
+{% endblock %}
